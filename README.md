@@ -1,6 +1,7 @@
 [home]: https://pufferfish.host
 [knowledgebase]: https://docs.airplane.gg
 [discord]: https://discord.gg/reZw4vQV9H
+[downloads]: https://ci.pufferfish.host/job/Pufferfish
 
 # Pufferfish
 A highly optimized Paper/Airplane fork designed for large servers requiring both maximum performance, stability, and "enterprise" features.
