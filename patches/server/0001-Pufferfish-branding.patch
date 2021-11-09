@@ -40,6 +40,21 @@ index f5d01bce4d5547b4aeca96b7962b2090f47ea541..81ca70330d1b7aacdad00a212fbb2397
  
                  metrics.addCustomChart(new Metrics.SimplePie("minecraft_version", () -> {
                      String minecraftVersion = Bukkit.getVersion();
+diff --git a/src/main/java/gg/airplane/AirplaneVersionFetcher.java b/src/main/java/gg/airplane/AirplaneVersionFetcher.java
+index e79ec7919e6cf160fec1cb981d85f0f33c316b41..3ccec064c0edd4a5a0ebe3ef676d8fe9619ab3e4 100644
+--- a/src/main/java/gg/airplane/AirplaneVersionFetcher.java
++++ b/src/main/java/gg/airplane/AirplaneVersionFetcher.java
+@@ -31,8 +31,8 @@ public class AirplaneVersionFetcher implements VersionFetcher {
+     private static final Logger LOGGER = Logger.getLogger("AirplaneVersionFetcher");
+     private static final HttpClient client = HttpClient.newHttpClient();
+ 
+-    private static final URI JENKINS_URI = URI.create("https://ci.tivy.ca/job/Airplane-1.17/lastSuccessfulBuild/buildNumber");
+-    private static final String GITHUB_FORMAT = "https://api.github.com/repos/TECHNOVE/Airplane/compare/ver/1.17...%s";
++    private static final URI JENKINS_URI = URI.create("https://ci.pufferfish.host/job/Pufferfish/lastSuccessfulBuild/buildNumber");
++    private static final String GITHUB_FORMAT = "https://api.github.com/repos/pufferfish-gg/Pufferfish/compare/master...%s";
+ 
+     private static final HttpResponse.BodyHandler<JsonObject> JSON_OBJECT_BODY_HANDLER = responseInfo -> HttpResponse.BodySubscribers.mapping(
+             HttpResponse.BodySubscribers.ofString(StandardCharsets.UTF_8),
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
 index ee0c53740cf412c1275f229a321e2f22dff38113..bfa82c6f62ae5a46192d1563d1a27c8a39e51c90 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
