@@ -94,10 +94,10 @@ index 0000000000000000000000000000000000000000..020368da69b9a492155f6de6297f7473
 +}
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..5e69763e07da98520f7bdd7d9eab1102ce9191be
+index 0000000000000000000000000000000000000000..f81a4985a24520ab5c7dce0b49a864e09c01e5b7
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -0,0 +1,146 @@
+@@ -0,0 +1,135 @@
 +package gg.pufferfish.pufferfish;
 +
 +import java.io.File;
@@ -230,17 +230,6 @@ index 0000000000000000000000000000000000000000..5e69763e07da98520f7bdd7d9eab1102
 +	private static List<String> getStringList(String key, @Nullable String oldKey, List<String> defaultValue, String... comment) {
 +		ensureDefault(key, defaultValue, comment);
 +		return config.getStringList(key);
-+	}
-+	
-+	public static int maxProjectileLoadsPerTick;
-+	public static int maxProjectileLoadsPerProjectile;
-+	
-+	
-+	private static void projectileLoading() {
-+		maxProjectileLoadsPerTick = getInt("projectile.max-loads-per-tick", 10, "Controls how many chunks are allowed", "to be sync loaded by projectiles in a tick.");
-+		maxProjectileLoadsPerProjectile = getInt("projectile.max-loads-per-projectile", 10, "Controls how many chunks a projectile", "can load in its lifetime before it gets", "automatically removed.");
-+		
-+		setComment("projectile", "Optimizes projectile settings");
 +	}
 +	
 +}

@@ -1,0 +1,183 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kevin Raneri <kevin.raneri@gmail.com>
+Date: Tue, 9 Nov 2021 14:08:14 -0500
+Subject: [PATCH] Add Sentry
+
+
+diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+index f81a4985a24520ab5c7dce0b49a864e09c01e5b7..5a74fbfbb5dd7ec4f617ac553e5a95cbec435b2b 100644
+--- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
++++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+@@ -132,4 +132,12 @@ public class PufferfishConfig {
+ 		return config.getStringList(key);
+ 	}
+ 	
++	public static String sentryDsn;
++	private static void sentry() {
++		sentryDsn = getString("sentry-dsn", "", "Sentry DSN for improved error logging, leave blank to disable", "Obtain from https://sentry.io/");
++		if (sentryDsn != null && !sentryDsn.isBlank()) {
++			gg.pufferfish.pufferfish.sentry.SentryManager.init();
++		}
++	}
++	
+ }
+diff --git a/src/main/java/gg/pufferfish/pufferfish/sentry/PufferfishSentryAppender.java b/src/main/java/gg/pufferfish/pufferfish/sentry/PufferfishSentryAppender.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..151984c5384b9211fc8cf6ac0ceef1f70a582507
+--- /dev/null
++++ b/src/main/java/gg/pufferfish/pufferfish/sentry/PufferfishSentryAppender.java
+@@ -0,0 +1,108 @@
++package gg.pufferfish.pufferfish.sentry;
++
++import io.sentry.Breadcrumb;
++import io.sentry.Sentry;
++import io.sentry.SentryEvent;
++import io.sentry.SentryLevel;
++import io.sentry.protocol.Message;
++import org.apache.logging.log4j.Level;
++import org.apache.logging.log4j.LogManager;
++import org.apache.logging.log4j.Marker;
++import org.apache.logging.log4j.core.LogEvent;
++import org.apache.logging.log4j.core.Logger;
++import org.apache.logging.log4j.core.appender.AbstractAppender;
++import org.apache.logging.log4j.core.filter.AbstractFilter;
++
++public class PufferfishSentryAppender extends AbstractAppender {
++	
++	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(PufferfishSentryAppender.class);
++	
++	public PufferfishSentryAppender() {
++		super("PufferfishSentryAdapter", new SentryFilter(), null);
++	}
++	
++	@Override
++	public void append(LogEvent logEvent) {
++		if (logEvent.getThrown() != null && logEvent.getLevel().isMoreSpecificThan(Level.WARN)) {
++			try {
++				logException(logEvent);
++			} catch (Exception e) {
++				logger.warn("Failed to log event with sentry", e);
++			}
++		} else {
++			try {
++				logBreadcrumb(logEvent);
++			} catch (Exception e) {
++				logger.warn("Failed to log event with sentry", e);
++			}
++		}
++	}
++	
++	private void logException(LogEvent e) {
++		SentryEvent event = new SentryEvent(e.getThrown());
++		
++		Message sentryMessage = new Message();
++		sentryMessage.setMessage(e.getMessage().getFormattedMessage());
++		
++		event.setThrowable(e.getThrown());
++		event.setLevel(getLevel(e.getLevel()));
++		event.setLogger(e.getLoggerName());
++		event.setTransaction(e.getLoggerName());
++		event.setExtra("thread_name", e.getThreadName());
++		
++		Sentry.captureEvent(event);
++	}
++	
++	private void logBreadcrumb(LogEvent e) {
++		Breadcrumb breadcrumb = new Breadcrumb();
++		
++		breadcrumb.setLevel(getLevel(e.getLevel()));
++		breadcrumb.setCategory(e.getLoggerName());
++		breadcrumb.setType(e.getLoggerName());
++		breadcrumb.setMessage(e.getMessage().getFormattedMessage());
++		
++		Sentry.addBreadcrumb(breadcrumb);
++	}
++	
++	private SentryLevel getLevel(Level level) {
++		switch (level.getStandardLevel()) {
++			case TRACE:
++			case DEBUG:
++				return SentryLevel.DEBUG;
++			case WARN:
++				return SentryLevel.WARNING;
++			case ERROR:
++				return SentryLevel.ERROR;
++			case FATAL:
++				return SentryLevel.FATAL;
++			case INFO:
++			default:
++				return SentryLevel.INFO;
++		}
++	}
++	
++	private static class SentryFilter extends AbstractFilter {
++		
++		@Override
++		public Result filter(Logger logger, org.apache.logging.log4j.Level level, Marker marker, String msg,
++				Object... params) {
++			return this.filter(logger.getName());
++		}
++		
++		@Override
++		public Result filter(Logger logger, org.apache.logging.log4j.Level level, Marker marker, Object msg, Throwable t) {
++			return this.filter(logger.getName());
++		}
++		
++		@Override
++		public Result filter(LogEvent event) {
++			return this.filter(event == null ? null : event.getLoggerName());
++		}
++		
++		private Result filter(String loggerName) {
++			return loggerName != null && loggerName.startsWith("gg.castaway.pufferfish.sentry") ? Result.DENY
++					: Result.NEUTRAL;
++		}
++		
++	}
++}
+diff --git a/src/main/java/gg/pufferfish/pufferfish/sentry/SentryManager.java b/src/main/java/gg/pufferfish/pufferfish/sentry/SentryManager.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..1b29210ad0bbb4ada150f23357f0c80d331c996d
+--- /dev/null
++++ b/src/main/java/gg/pufferfish/pufferfish/sentry/SentryManager.java
+@@ -0,0 +1,40 @@
++package gg.pufferfish.pufferfish.sentry;
++
++import gg.pufferfish.pufferfish.PufferfishConfig;
++import io.sentry.Sentry;
++import org.apache.logging.log4j.LogManager;
++import org.apache.logging.log4j.Logger;
++
++public class SentryManager {
++	
++	private static final Logger logger = LogManager.getLogger(SentryManager.class);
++	
++	private SentryManager() {
++	
++	}
++	
++	private static boolean initialized = false;
++	
++	public static synchronized void init() {
++		if (initialized) {
++			return;
++		}
++		try {
++			initialized = true;
++			
++			Sentry.init(options -> {
++				options.setDsn(PufferfishConfig.sentryDsn);
++				options.setMaxBreadcrumbs(100);
++			});
++			
++			PufferfishSentryAppender appender = new PufferfishSentryAppender();
++			appender.start();
++			((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger()).addAppender(appender);
++			logger.info("Sentry logging started!");
++		} catch (Exception e) {
++			logger.warn("Failed to initialize sentry!", e);
++			initialized = false;
++		}
++	}
++	
++}

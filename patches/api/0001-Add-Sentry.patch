@@ -1,0 +1,18 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kevin Raneri <kevin.raneri@gmail.com>
+Date: Tue, 9 Nov 2021 14:01:56 -0500
+Subject: [PATCH] Add Sentry
+
+
+diff --git a/build.gradle.kts b/build.gradle.kts
+index 92b612126a6bac0b89198a92bbb73b742ec9d064..0b7dd596bf4ad5e3d58df6927ec0772cbf85446e 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -39,6 +39,7 @@ dependencies {
+     apiAndDocs("net.kyori:adventure-text-serializer-plain")
+     api("org.apache.logging.log4j:log4j-api:2.14.1") // Paper
+     api("org.slf4j:slf4j-api:1.7.30") // Paper
++    api("io.sentry:sentry:4.3.0") // Pufferfish
+ 
+     implementation("org.ow2.asm:asm:9.1")
+     implementation("org.ow2.asm:asm-commons:9.1")
