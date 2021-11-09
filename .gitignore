@@ -1,0 +1,9 @@
+Pufferfish-API
+Pufferfish-Server
+Pufferfish-MojangAPI
+
+build/
+.gradle/
+
+.idea/
+
