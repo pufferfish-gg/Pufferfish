@@ -1,0 +1,111 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kevin Raneri <kevin.raneri@gmail.com>
+Date: Tue, 9 Nov 2021 23:36:56 -0500
+Subject: [PATCH] Pufferfish Utils
+
+
+diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishLogger.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishLogger.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..53f2df00c6809618a9ee3d2ea72e85e8052fbcf1
+--- /dev/null
++++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishLogger.java
+@@ -0,0 +1,16 @@
++package gg.pufferfish.pufferfish;
++
++import java.util.logging.Level;
++import java.util.logging.Logger;
++import org.bukkit.Bukkit;
++
++public class PufferfishLogger extends Logger {
++    public static final PufferfishLogger LOGGER = new PufferfishLogger();
++
++    private PufferfishLogger() {
++        super("Pufferfish", null);
++
++        setParent(Bukkit.getLogger());
++        setLevel(Level.ALL);
++    }
++}
+diff --git a/src/main/java/gg/pufferfish/pufferfish/util/AsyncExecutor.java b/src/main/java/gg/pufferfish/pufferfish/util/AsyncExecutor.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..9d6dc2c80945bec9bea74714c657c7a2e0bdde9e
+--- /dev/null
++++ b/src/main/java/gg/pufferfish/pufferfish/util/AsyncExecutor.java
+@@ -0,0 +1,51 @@
++package gg.pufferfish.pufferfish.util;
++
++import com.google.common.collect.Queues;
++import gg.pufferfish.pufferfish.PufferfishLogger;
++import java.util.Queue;
++import java.util.concurrent.locks.LockSupport;
++import java.util.function.BooleanSupplier;
++import java.util.logging.Level;
++
++public class AsyncExecutor implements Runnable {
++	
++	private Queue<Runnable> jobs = Queues.newConcurrentLinkedQueue();
++	private final Thread thread;
++	private final BooleanSupplier shouldRun;
++	private volatile boolean killswitch = false;
++	
++	public AsyncExecutor(String threadName, BooleanSupplier shouldRun) {
++		this.thread = new Thread(this, threadName);
++		this.shouldRun = shouldRun;
++	}
++	
++	public void start() {
++		thread.start();
++	}
++	
++	public void kill() {
++		killswitch = true;
++	}
++	
++	public void submit(Runnable runnable) {
++		jobs.offer(runnable);
++	}
++	
++	@Override
++	public void run() {
++		while (!killswitch) {
++			if (shouldRun.getAsBoolean()) {
++				try {
++					Runnable runnable;
++					while ((runnable = jobs.poll()) != null) {
++						runnable.run();
++					}
++				} catch (Exception e) {
++					PufferfishLogger.LOGGER.log(Level.SEVERE, e, () -> "Failed to execute async job for thread " + thread.getName());
++				}
++			}
++			LockSupport.parkNanos("executing tasks", 1000L);
++		}
++	}
++	
++}
+diff --git a/src/main/java/gg/pufferfish/pufferfish/util/IterableWrapper.java b/src/main/java/gg/pufferfish/pufferfish/util/IterableWrapper.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..c1929840254a3e6d721816f4a20415bea1742580
+--- /dev/null
++++ b/src/main/java/gg/pufferfish/pufferfish/util/IterableWrapper.java
+@@ -0,0 +1,20 @@
++package gg.pufferfish.pufferfish.util;
++
++import java.util.Iterator;
++import org.jetbrains.annotations.NotNull;
++
++public class IterableWrapper<T> implements Iterable<T> {
++
++	private final Iterator<T> iterator;
++
++	public IterableWrapper(Iterator<T> iterator) {
++		this.iterator = iterator;
++	}
++
++	@NotNull
++	@Override
++	public Iterator<T> iterator() {
++		return iterator;
++	}
++
++}
