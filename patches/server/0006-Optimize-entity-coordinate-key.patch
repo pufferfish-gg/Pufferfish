@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kevin Raneri <kevin.raneri@gmail.com>
 Date: Tue, 9 Nov 2021 14:33:16 -0500
-Subject: [PATCH] Optimze entity coordinate key
+Subject: [PATCH] Optimize entity coordinate key
 
 When executing getCoordinateKey for entities (a hotpath), the JVM is
 required to repeatedly cast doubles to longs. The performance impact of
