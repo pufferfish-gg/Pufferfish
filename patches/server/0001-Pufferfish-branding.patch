@@ -28,48 +28,49 @@ index fd3528be3d90733e826bcbeae967b95cedf92dfe..3f6898e43ea4578fdb9ee06301148dee
              "Specification-Title" to "Bukkit",
              "Specification-Version" to project.version,
 diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
-index f5d01bce4d5547b4aeca96b7962b2090f47ea541..81ca70330d1b7aacdad00a212fbb239765e78cd7 100644
+index 05f1b6d103ec20f196b60944f5bc007384c449f1..9be6ff6b190c0d4db3119317ffdfc3fdbf209c44 100644
 --- a/src/main/java/com/destroystokyo/paper/Metrics.java
 +++ b/src/main/java/com/destroystokyo/paper/Metrics.java
-@@ -593,7 +593,7 @@ public class Metrics {
+@@ -593,7 +593,8 @@ public class Metrics {
              boolean logFailedRequests = config.getBoolean("logFailedRequests", false);
              // Only start Metrics, if it's enabled in the config
              if (config.getBoolean("enabled", true)) {
--                Metrics metrics = new Metrics("Airplane", serverUUID, logFailedRequests, Bukkit.getLogger()); // Tuinity - we have our own bstats page // Airplane
-+                Metrics metrics = new Metrics("Pufferfish", serverUUID, logFailedRequests, Bukkit.getLogger()); // Tuinity - we have our own bstats page // Airplane // Pufferfish
- 
+-                Metrics metrics = new Metrics("Purpur", serverUUID, logFailedRequests, Bukkit.getLogger()); // Airplane // Purpur
++                Metrics metrics = new Metrics("Pufferfish", serverUUID, logFailedRequests, Bukkit.getLogger()); // Tuinity - we have our own bstats page // Airplane // Purpur // Pufferfish
++
                  metrics.addCustomChart(new Metrics.SimplePie("minecraft_version", () -> {
                      String minecraftVersion = Bukkit.getVersion();
+                     minecraftVersion = minecraftVersion.substring(minecraftVersion.indexOf("MC: ") + 4, minecraftVersion.length() - 1);
 diff --git a/src/main/java/gg/airplane/AirplaneVersionFetcher.java b/src/main/java/gg/airplane/AirplaneVersionFetcher.java
-index e79ec7919e6cf160fec1cb981d85f0f33c316b41..3ccec064c0edd4a5a0ebe3ef676d8fe9619ab3e4 100644
+index f6982d8b0a552d13674be4ff9d65ea872e1a8e08..6b21e4d6fee3ea5406d75b76a2b9470c3d76c9f9 100644
 --- a/src/main/java/gg/airplane/AirplaneVersionFetcher.java
 +++ b/src/main/java/gg/airplane/AirplaneVersionFetcher.java
 @@ -31,8 +31,8 @@ public class AirplaneVersionFetcher implements VersionFetcher {
      private static final Logger LOGGER = Logger.getLogger("AirplaneVersionFetcher");
      private static final HttpClient client = HttpClient.newHttpClient();
  
--    private static final URI JENKINS_URI = URI.create("https://ci.tivy.ca/job/Airplane-1.17/lastSuccessfulBuild/buildNumber");
--    private static final String GITHUB_FORMAT = "https://api.github.com/repos/TECHNOVE/Airplane/compare/ver/1.17...%s";
-+    private static final URI JENKINS_URI = URI.create("https://ci.pufferfish.host/job/Pufferfish/lastSuccessfulBuild/buildNumber");
-+    private static final String GITHUB_FORMAT = "https://api.github.com/repos/pufferfish-gg/Pufferfish/compare/master...%s";
+-    private static final URI JENKINS_URI = URI.create("https://ci.tivy.ca/job/Airplane-Purpur-1.17/lastSuccessfulBuild/buildNumber");
+-    private static final String GITHUB_FORMAT = "https://api.github.com/repos/TECHNOVE/Airplane/compare/purpur/1.17...%s";
++    private static final URI JENKINS_URI = URI.create("https://ci.pufferfish.host/job/Pufferfish-Purpur/lastSuccessfulBuild/buildNumber");
++    private static final String GITHUB_FORMAT = "https://api.github.com/repos/pufferfish-gg/Pufferfish/compare/ver/purpur-1.17...%s";
  
      private static final HttpResponse.BodyHandler<JsonObject> JSON_OBJECT_BODY_HANDLER = responseInfo -> HttpResponse.BodySubscribers.mapping(
              HttpResponse.BodySubscribers.ofString(StandardCharsets.UTF_8),
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index ee0c53740cf412c1275f229a321e2f22dff38113..bfa82c6f62ae5a46192d1563d1a27c8a39e51c90 100644
+index 3cb77c2255bd1e836c17175531a870e1fe810e78..521d4e3eb28293b0f82d9326fd3ffae983419551 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1726,7 +1726,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
- 
-     @DontObfuscate
+@@ -1744,7 +1744,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      public String getServerModName() {
--        return "Airplane"; // Airplane // Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
-+        return "Pufferfish"; // Pufferfish // Airplane // Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
+         // Airplane start
+         String purpurName = net.pl3x.purpur.PurpurConfig.serverModName;
+-        return purpurName.equals("Purpur") ? "AirplanePurpur" : purpurName; // Purpur - Purpur > // Airplane > //Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
++        return purpurName.equals("Purpur") ? "PufferfishPurpur" : purpurName; // Purpur - Purpur > // Pufferfish // Airplane > //Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
+         // Airplane end
      }
  
-     public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index c3a256d0ccb9fb44a5a1f9ffa2d48542ef4e857b..329a5cd5a9b73ef9bebea6765deb4e635e45277a 100644
+index db2916c67a3b34e944282ba6b4cbd463fdbceff2..5ef03a4645064b388642ddc64236e7f05ed9f8da 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -251,7 +251,7 @@ import javax.annotation.Nullable; // Paper

@@ -5,19 +5,19 @@ Subject: [PATCH] Pufferfish Config and Command
 
 
 diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
-index 6e8001c7ff6497c9e5c274a5fe85cc204f3ba4c5..052910be0bdd5e3eda1d062c729b01e5a4021d5c 100644
+index c5803537b23d44bad5f447bd2f98d54226d3e80e..f6ac90b6bed66c896951c07b6e16158697797d5e 100644
 --- a/src/main/java/co/aikar/timings/TimingsExport.java
 +++ b/src/main/java/co/aikar/timings/TimingsExport.java
-@@ -229,7 +229,8 @@ public class TimingsExport extends Thread {
+@@ -232,7 +232,8 @@ public class TimingsExport extends Thread {
              pair("spigot", mapAsJSON(Bukkit.spigot().getSpigotConfig(), null)),
-             pair("bukkit", mapAsJSON(Bukkit.spigot().getBukkitConfig(), null)),
              pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)), // Airplane
--            pair("airplane", mapAsJSON(gg.airplane.AirplaneConfig.getConfigCopy(), null)) // Airplane
-+            pair("airplane", mapAsJSON(gg.airplane.AirplaneConfig.getConfigCopy(), null)), // Airplane // Pufferfish
-+            pair("pufferfish", mapAsJSON(gg.pufferfish.pufferfish.PufferfishConfig.getConfigCopy(), null))
+             pair("airplane", mapAsJSON(gg.airplane.AirplaneConfig.getConfigCopy(), null)), // Airplane
+-            pair("purpur", mapAsJSON(Bukkit.spigot().getPurpurConfig(), null))
++            pair("purpur", mapAsJSON(Bukkit.spigot().getPurpurConfig(), null)),
++            pair("pufferfish", mapAsJSON(gg.pufferfish.pufferfish.PufferfishConfig.getConfigCopy(), null)) // Pufferfish
+             // Purpur end
          ));
  
-         new TimingsExport(listeners, parent, history).start();
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishCommand.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishCommand.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..020368da69b9a492155f6de6297f74732f4ab6ea
@@ -234,10 +234,10 @@ index 0000000000000000000000000000000000000000..f81a4985a24520ab5c7dce0b49a864e0
 +	
 +}
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index e2901132b78126c0a4eb04363dfe6a0dccd1313f..ab6e496d6d2aa11caca82b52c7e92715988455db 100644
+index 7f08d3b6743de6c8281bcc2e7ac12757ef842de2..93c7c4160604d2a6f8dcd3049c414ab5333510b4 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -236,6 +236,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -245,6 +245,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
          // Paper end
          gg.airplane.AirplaneConfig.load(); // Airplane - config
          gg.airplane.commands.AirplaneCommands.init(); // Airplane - command
