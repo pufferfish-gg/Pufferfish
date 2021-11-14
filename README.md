@@ -1,5 +1,5 @@
 [home]: https://pufferfish.host
-[knowledgebase]: https://docs.airplane.gg
+[knowledgebase]: https://docs.pufferfish.host
 [discord]: https://discord.gg/reZw4vQV9H
 [downloads]: https://ci.pufferfish.host/job/Pufferfish
 
@@ -10,7 +10,7 @@ A highly optimized Paper/Airplane fork designed for large servers requiring both
 
 ## Features
 
-- **Sentry Integration** Easily track all errors coming from your server
+- **Sentry Integration** Easily track all errors coming from your server in excruciating detail
 - **Better Entity Performance** Reduces the performance impact of entities by skipping useless work and making barely-noticeable changes
 - **Partial Asynchronous Processing** Partially offloads some heavy work to other threads where possible without sacraficing stability
 - Complete compatibility with any plugin compatible with Paper

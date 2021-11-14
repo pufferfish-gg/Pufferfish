@@ -23,17 +23,21 @@ index f81a4985a24520ab5c7dce0b49a864e09c01e5b7..5a74fbfbb5dd7ec4f617ac553e5a95cb
  }
 diff --git a/src/main/java/gg/pufferfish/pufferfish/sentry/PufferfishSentryAppender.java b/src/main/java/gg/pufferfish/pufferfish/sentry/PufferfishSentryAppender.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..151984c5384b9211fc8cf6ac0ceef1f70a582507
+index 0000000000000000000000000000000000000000..731ef11c7a025ae95ed8a757b530d834733d0621
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/sentry/PufferfishSentryAppender.java
-@@ -0,0 +1,108 @@
+@@ -0,0 +1,135 @@
 +package gg.pufferfish.pufferfish.sentry;
 +
++import com.google.common.reflect.TypeToken;
++import com.google.gson.Gson;
 +import io.sentry.Breadcrumb;
 +import io.sentry.Sentry;
 +import io.sentry.SentryEvent;
 +import io.sentry.SentryLevel;
 +import io.sentry.protocol.Message;
++import io.sentry.protocol.User;
++import java.util.Map;
 +import org.apache.logging.log4j.Level;
 +import org.apache.logging.log4j.LogManager;
 +import org.apache.logging.log4j.Marker;
@@ -45,6 +49,7 @@ index 0000000000000000000000000000000000000000..151984c5384b9211fc8cf6ac0ceef1f7
 +public class PufferfishSentryAppender extends AbstractAppender {
 +	
 +	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(PufferfishSentryAppender.class);
++	private static final Gson GSON = new Gson();
 +	
 +	public PufferfishSentryAppender() {
 +		super("PufferfishSentryAdapter", new SentryFilter(), null);
@@ -78,6 +83,28 @@ index 0000000000000000000000000000000000000000..151984c5384b9211fc8cf6ac0ceef1f7
 +		event.setLogger(e.getLoggerName());
 +		event.setTransaction(e.getLoggerName());
 +		event.setExtra("thread_name", e.getThreadName());
++		
++		boolean hasContext = e.getContextData() != null;
++		
++		if (hasContext && e.getContextData().containsKey("pufferfishsentry_playerid")) {
++			User user = new User();
++			user.setId(e.getContextData().getValue("pufferfishsentry_playerid"));
++			user.setUsername(e.getContextData().getValue("pufferfishsentry_playername"));
++			event.setUser(user);
++		}
++		
++		if (hasContext && e.getContextData().containsKey("pufferfishsentry_pluginname")) {
++			event.setExtra("plugin.name", e.getContextData().getValue("pufferfishsentry_pluginname"));
++			event.setExtra("plugin.version", e.getContextData().getValue("pufferfishsentry_pluginversion"));
++			event.setTransaction(e.getContextData().getValue("pufferfishsentry_pluginname"));
++		}
++		
++		if (hasContext && e.getContextData().containsKey("pufferfishsentry_eventdata")) {
++			Map<String, String> eventFields = GSON.fromJson((String) e.getContextData().getValue("pufferfishsentry_eventdata"), new TypeToken<Map<String, String>>() {}.getType());
++			if (eventFields != null) {
++				event.setExtra("event", eventFields);
++			}
++		}
 +		
 +		Sentry.captureEvent(event);
 +	}

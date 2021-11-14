@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kevin Raneri <kevin.raneri@gmail.com>
 Date: Tue, 9 Nov 2021 14:50:57 -0500
-Subject: [PATCH] Optimze suffocation
+Subject: [PATCH] Optimize suffocation
 
 The isInWall check to determine suffocation is quite expensive, and
 often is completely unnecessary to check. We do two things here to
