@@ -70,7 +70,7 @@ index 95b05af7935cbe9d280a1e2cf7d8e384653613d0..6dfe919c2fddb3d55728ac90d92778d8
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index bfa82c6f62ae5a46192d1563d1a27c8a39e51c90..4b9493a9f9a6fe056adc2c12d67cd8ada33b993a 100644
+index 8944f3ed83e2b9b083374992fb9bf63c1b9e648b..6d8782ff3b6da2a50ba8670b3b8ab1ee405bb88e 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -312,6 +312,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -95,7 +95,7 @@ index ab6e496d6d2aa11caca82b52c7e92715988455db..d0a46e50ab79d3bae1635d02d0d608c9
          }
      }
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 35f27e9a7c82eaec5b4a1a71696dac8485b2cd6d..4113d9bf8648f2a81d2fc7330442326bfd0d3346 100644
+index 5116b1f90c0f27ce1d3cee6632563f32356a1eb6..e70136688a03b24bffbfbf1855efbedd00326980 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 @@ -73,6 +73,9 @@ public class ServerChunkCache extends ChunkSource {
@@ -108,7 +108,7 @@ index 35f27e9a7c82eaec5b4a1a71696dac8485b2cd6d..4113d9bf8648f2a81d2fc7330442326b
  
      private static int getChunkCacheKey(int x, int z) {
          return x & 3 | ((z & 3) << 2);
-@@ -997,18 +1000,25 @@ public class ServerChunkCache extends ChunkSource {
+@@ -998,18 +1001,25 @@ public class ServerChunkCache extends ChunkSource {
                  this.level.timings.playerMobDistanceMapUpdate.startTiming();
                  this.chunkMap.playerMobDistanceMap.update(this.level.players, this.chunkMap.viewDistance);
                  this.level.timings.playerMobDistanceMapUpdate.stopTiming();
@@ -140,7 +140,7 @@ index 35f27e9a7c82eaec5b4a1a71696dac8485b2cd6d..4113d9bf8648f2a81d2fc7330442326b
              this.level.getProfiler().pop();
              // Paper - moved down, enabled if per-player = false
              // Paper - moved natural spawn event up
-@@ -1041,8 +1051,8 @@ public class ServerChunkCache extends ChunkSource {
+@@ -1042,8 +1052,8 @@ public class ServerChunkCache extends ChunkSource {
  
                      if ((true || this.level.isPositionEntityTicking(chunkcoordintpair)) && !this.chunkMap.isOutsideOfRange(playerchunk, chunkcoordintpair, false)) { // Paper - optimise isOutsideOfRange // Paper - we only iterate entity ticking chunks
                          chunk.setInhabitedTime(chunk.getInhabitedTime() + j);
@@ -151,7 +151,7 @@ index 35f27e9a7c82eaec5b4a1a71696dac8485b2cd6d..4113d9bf8648f2a81d2fc7330442326b
                          }
  
                          // this.level.timings.doTickTiles.startTiming(); // Spigot // Paper
-@@ -1088,6 +1098,30 @@ public class ServerChunkCache extends ChunkSource {
+@@ -1089,6 +1099,30 @@ public class ServerChunkCache extends ChunkSource {
              }
          }
          // Paper end - controlled flush for entity tracker packets
@@ -183,7 +183,7 @@ index 35f27e9a7c82eaec5b4a1a71696dac8485b2cd6d..4113d9bf8648f2a81d2fc7330442326b
  
      private void getFullChunk(long pos, Consumer<LevelChunk> chunkConsumer) {
 diff --git a/src/main/java/net/minecraft/world/level/NaturalSpawner.java b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-index dc613142603fca4cf5c8e47c084e1439d0450424..f064eab889c23c1f9f9a80a70a34abfd6a3caf48 100644
+index a0db30970adebb244ff41913e8ec1df1eb472a4d..e216d9a3750b7a914433551ef37315dee2708bdc 100644
 --- a/src/main/java/net/minecraft/world/level/NaturalSpawner.java
 +++ b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
 @@ -167,7 +167,7 @@ public final class NaturalSpawner {

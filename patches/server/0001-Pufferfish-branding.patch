@@ -56,10 +56,10 @@ index e79ec7919e6cf160fec1cb981d85f0f33c316b41..3ccec064c0edd4a5a0ebe3ef676d8fe9
      private static final HttpResponse.BodyHandler<JsonObject> JSON_OBJECT_BODY_HANDLER = responseInfo -> HttpResponse.BodySubscribers.mapping(
              HttpResponse.BodySubscribers.ofString(StandardCharsets.UTF_8),
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index ee0c53740cf412c1275f229a321e2f22dff38113..bfa82c6f62ae5a46192d1563d1a27c8a39e51c90 100644
+index 7120a77ec93009faf1f18fd6c9bc020de66a5f73..8944f3ed83e2b9b083374992fb9bf63c1b9e648b 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1726,7 +1726,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1729,7 +1729,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
