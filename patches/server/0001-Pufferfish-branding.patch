@@ -57,10 +57,10 @@ index f6982d8b0a552d13674be4ff9d65ea872e1a8e08..6b21e4d6fee3ea5406d75b76a2b9470c
      private static final HttpResponse.BodyHandler<JsonObject> JSON_OBJECT_BODY_HANDLER = responseInfo -> HttpResponse.BodySubscribers.mapping(
              HttpResponse.BodySubscribers.ofString(StandardCharsets.UTF_8),
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 3cb77c2255bd1e836c17175531a870e1fe810e78..521d4e3eb28293b0f82d9326fd3ffae983419551 100644
+index b69c7ba7fd9fa1f008ae7a282de5aa4ebc6c6a47..0950f256d8e1cc8e3008cddba91ce79be55c2d5b 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1744,7 +1744,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1747,7 +1747,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      public String getServerModName() {
          // Airplane start
          String purpurName = net.pl3x.purpur.PurpurConfig.serverModName;
