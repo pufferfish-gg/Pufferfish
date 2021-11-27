@@ -11,7 +11,7 @@ data is already available in the blockPosition struct, so we use that
 instead of re-doing the casting.
 
 diff --git a/src/main/java/net/minecraft/server/MCUtil.java b/src/main/java/net/minecraft/server/MCUtil.java
-index b5be0486d1cffe60808948b4b0bfd709664b2ae4..32ed9432998764c20147d6060314a2da0784d7f8 100644
+index 15f0c85ba9f4f9666e94e67dde43eb2e945ecfbf..74003e8887624736b154807e07835c315e836cf3 100644
 --- a/src/main/java/net/minecraft/server/MCUtil.java
 +++ b/src/main/java/net/minecraft/server/MCUtil.java
 @@ -203,7 +203,7 @@ public final class MCUtil {
@@ -24,15 +24,15 @@ index b5be0486d1cffe60808948b4b0bfd709664b2ae4..32ed9432998764c20147d6060314a2da
  
      public static long getCoordinateKey(final ChunkPos pair) {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index aac9dd19237d0708990960d03328e7530cd7bc8e..cd7b868149390570dbb3455b7085998e25f218b3 100644
+index 3febcc7e88b74d4bdb45e633fdaa9d3313a6ae0b..805bcc8e9e17eda1e994573f7df780ce00541f55 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -223,7 +223,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, n
+@@ -222,7 +222,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
      public double yo;
      public double zo;
      private Vec3 position;
 -    private BlockPos blockPosition;
 +    public BlockPos blockPosition; // Pufferfish - private->public
+     private ChunkPos chunkPosition;
      private Vec3 deltaMovement;
      public float yRot; // Paper - private->public
-     private float xRot;

@@ -1,6 +1,5 @@
-Pufferfish-API
-Pufferfish-Server
-Pufferfish-MojangAPI
+pufferfish-api
+pufferfish-server
 
 build/
 .gradle/

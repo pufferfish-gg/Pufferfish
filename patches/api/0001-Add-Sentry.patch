@@ -5,17 +5,17 @@ Subject: [PATCH] Add Sentry
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 92b612126a6bac0b89198a92bbb73b742ec9d064..7ff6d49d844b86b64903d6d11ae3775336ee2290 100644
+index 591f30a41d6f39683c60758c2e9f32bb6b476a62..b48776043d6afacd4c92ea81ac8c16c2741a1db4 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -39,6 +39,7 @@ dependencies {
+@@ -40,6 +40,7 @@ dependencies {
      apiAndDocs("net.kyori:adventure-text-serializer-plain")
-     api("org.apache.logging.log4j:log4j-api:2.14.1") // Paper
-     api("org.slf4j:slf4j-api:1.7.30") // Paper
+     api("org.apache.logging.log4j:log4j-api:2.14.1")
+     api("org.slf4j:slf4j-api:1.8.0-beta4")
 +    api("io.sentry:sentry:5.4.0") // Pufferfish
  
-     implementation("org.ow2.asm:asm:9.1")
-     implementation("org.ow2.asm:asm-commons:9.1")
+     implementation("org.ow2.asm:asm:9.2")
+     implementation("org.ow2.asm:asm-commons:9.2")
 diff --git a/src/main/java/gg/pufferfish/pufferfish/sentry/SentryContext.java b/src/main/java/gg/pufferfish/pufferfish/sentry/SentryContext.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..10310fdd53de28efb8a8250f6d3b0c8eb08fb68a

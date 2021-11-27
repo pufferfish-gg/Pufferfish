@@ -1,28 +1,34 @@
 plugins {
     java
     id("com.github.johnrengelman.shadow") version "7.1.0" apply false
-    id("io.papermc.paperweight.patcher") version "1.2.0"
+    id("io.papermc.paperweight.patcher") version "1.3.0-SNAPSHOT"
 }
 
 repositories {
     mavenCentral()
-    maven("https://papermc.io/repo/repository/maven-public/")
+    maven("https://papermc.io/repo/repository/maven-public/") {
+        content { onlyForConfigurations("paperclip") }
+    }
 }
 
 dependencies {
-    remapper("net.fabricmc:tiny-remapper:0.6.0:fat")
-    decompiler("net.minecraftforge:forgeflower:1.5.498.12")
-    paperclip("io.papermc:paperclip:2.0.1")
+    remapper("net.fabricmc:tiny-remapper:0.7.0:fat")
+    decompiler("net.minecraftforge:forgeflower:1.5.498.22")
+    paperclip("io.papermc:paperclip:3.0.0-SNAPSHOT")
 }
 
 subprojects {
     apply(plugin = "java")
 
-    java { toolchain { languageVersion.set(JavaLanguageVersion.of(16)) } }
+    java {
+        sourceCompatibility = JavaVersion.VERSION_16
+        targetCompatibility = JavaVersion.VERSION_16
+        toolchain { languageVersion.set(JavaLanguageVersion.of(17)) }
+    }
 
     tasks.withType<JavaCompile>().configureEach {
         options.encoding = "UTF-8"
-        options.release.set(16)
+        options.release.set(17)
     }
 
     repositories {
@@ -39,22 +45,18 @@ subprojects {
 }
 
 paperweight {
-    serverProject.set(project(":Pufferfish-Server"))
+    serverProject.set(project(":pufferfish-server"))
 
-    useStandardUpstream("airplane") {
-        url.set(github("TECHNOVE", "Airplane"))
-        ref.set(providers.gradleProperty("airplaneRef"))
-
-        withStandardPatcher {
-            baseName("Airplane")
+    usePaperUpstream(providers.gradleProperty("paperRef")) {
+        withPaperPatcher {
             remapRepo.set("https://maven.quiltmc.org/repository/release/")
             decompileRepo.set("https://files.minecraftforge.net/maven/")
 
             apiPatchDir.set(layout.projectDirectory.dir("patches/api"))
             serverPatchDir.set(layout.projectDirectory.dir("patches/server"))
 
-            apiOutputDir.set(layout.projectDirectory.dir("Pufferfish-API"))
-            serverOutputDir.set(layout.projectDirectory.dir("Pufferfish-Server"))
+            apiOutputDir.set(layout.projectDirectory.dir("pufferfish-api"))
+            serverOutputDir.set(layout.projectDirectory.dir("pufferfish-server"))
         }
     }
 }
