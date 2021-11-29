@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Paul Sauve <paul@technove.co>
+Date: Tue, 9 Feb 2021 17:17:39 -0600
+Subject: [PATCH] Disable Paper timings by default
+
+
+diff --git a/src/main/java/com/destroystokyo/paper/PaperConfig.java b/src/main/java/com/destroystokyo/paper/PaperConfig.java
+index cd918cec00d8202252af0d20b1a8891371c538e3..9b12693b07b1fd3a634f865ac4ec612bb890f7ff 100644
+--- a/src/main/java/com/destroystokyo/paper/PaperConfig.java
++++ b/src/main/java/com/destroystokyo/paper/PaperConfig.java
+@@ -232,6 +232,15 @@ public class PaperConfig {
+     public static String timingsServerName;
+     private static void timings() {
+         boolean timings = getBoolean("timings.enabled", true);
++        // Pufferfish start
++        boolean reallyEnableTimings = getBoolean("timings.really-enabled", false);
++        if (timings && !reallyEnableTimings) {
++            Bukkit.getLogger().log(Level.WARNING, "[Pufferfish] To improve performance, timings have been disabled by default");
++            Bukkit.getLogger().log(Level.WARNING, "[Pufferfish] You can still use timings by using /timings on, but they will not start on server startup unless you set timings.really-enabled to true in paper.yml");
++            Bukkit.getLogger().log(Level.WARNING, "[Pufferfish] If you would like to disable this message, either set timings.really-enabled to true or timings.enabled to false.");
++        }
++        timings = reallyEnableTimings;
++        // Pufferfish end
+         boolean verboseTimings = getBoolean("timings.verbose", true);
+         TimingsManager.url = getString("timings.url", "https://timings.aikar.co/");
+         if (!TimingsManager.url.endsWith("/")) {

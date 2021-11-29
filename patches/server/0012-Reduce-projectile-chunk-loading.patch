@@ -1,0 +1,82 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Paul Sauve <paul@technove.co>
+Date: Sun, 13 Dec 2020 17:52:35 -0600
+Subject: [PATCH] Reduce projectile chunk loading
+
+Airplane
+Copyright (C) 2020 Technove LLC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+index 6dfe919c2fddb3d55728ac90d92778d8db73cc6c..6ebcbad1e37a2058f722f404c86dae8e1dfa0dc8 100644
+--- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
++++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+@@ -169,4 +169,15 @@ public class PufferfishConfig {
+ 		}
+ 	}
+ 	
++    public static int maxProjectileLoadsPerTick;
++    public static int maxProjectileLoadsPerProjectile;
++    private static void projectileLoading() {
++        maxProjectileLoadsPerTick = getInt("projectile.max-loads-per-tick", 10, "Controls how many chunks are allowed", "to be sync loaded by projectiles in a tick.");
++        maxProjectileLoadsPerProjectile = getInt("projectile.max-loads-per-projectile", 10, "Controls how many chunks a projectile", "can load in its lifetime before it gets", "automatically removed.");
++
++        setComment("projectile", "Optimizes projectile settings");
++    }
++
++
+ }
++
+diff --git a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
+index 15744949537430d8d8ae71ea72481126c9aff7bd..11bf1f257395438b57cca2ff20c9a33e6b67f14e 100644
+--- a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
++++ b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
+@@ -42,6 +42,36 @@ public abstract class Projectile extends Entity {
+         super(type, world);
+     }
+ 
++    // Pufferfish start
++    private static int loadedThisTick = 0;
++    private static int loadedTick;
++
++    private int loadedLifetime = 0;
++    @Override
++    public void setPos(double x, double y, double z) {
++        int currentTick = net.minecraft.server.MinecraftServer.currentTick;
++        if (loadedTick != currentTick) {
++            loadedTick = currentTick;
++            loadedThisTick = 0;
++        }
++        int previousX = Mth.floor(this.getX()) >> 4, previousZ = Mth.floor(this.getZ()) >> 4;
++        int newX = Mth.floor(x) >> 4, newZ = Mth.floor(z) >> 4;
++        if (previousX != newX || previousZ != newZ) {
++            boolean isLoaded = ((net.minecraft.server.level.ServerChunkCache) this.level.getChunkSource()).getChunkAtIfLoadedMainThread(newX, newZ) != null;
++            if (!isLoaded) {
++                if (Projectile.loadedThisTick > gg.airplane.AirplaneConfig.maxProjectileLoadsPerTick) {
++                    if (++this.loadedLifetime > gg.airplane.AirplaneConfig.maxProjectileLoadsPerProjectile) {
++                        this.discard();
++                    }
++                    return;
++                }
++                Projectile.loadedThisTick++;
++            }
++        }
++        super.setPos(x, y, z);
++    }
++    // Pufferfish start
++
+     public void setOwner(@Nullable Entity entity) {
+         if (entity != null) {
+             this.ownerUUID = entity.getUUID();
