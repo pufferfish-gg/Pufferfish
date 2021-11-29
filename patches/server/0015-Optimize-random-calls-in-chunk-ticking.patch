@@ -34,7 +34,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 58da8269242f72a700604c8d2c6e2f96df9f6cca..5dcd7684a0b2f54c233720325a3f6899ef4da837 100644
+index 988ee27f8cecbffb1962a75e1eb65cf5f9a26a04..6669858fa75226e9b86056d11734cb0bcf2dbb31 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 @@ -965,6 +965,7 @@ public class ServerChunkCache extends ChunkSource {
@@ -46,7 +46,7 @@ index 58da8269242f72a700604c8d2c6e2f96df9f6cca..5dcd7684a0b2f54c233720325a3f6899
              boolean flag1 = level.ticksPerAnimalSpawns != 0L && worlddata.getGameTime() % level.ticksPerAnimalSpawns == 0L; // CraftBukkit
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 53c3b1abc1acf0b847fa2e52b9941bd003971342..fb57adc4e0c7f88919476a0c147456be2dffdeda 100644
+index f055d25394d20afb208e8612fb31d77af141876b..b6ef057414f8bdfdefa60898c6327147dd82ec28 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -729,6 +729,8 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -77,7 +77,7 @@ index 53c3b1abc1acf0b847fa2e52b9941bd003971342..fb57adc4e0c7f88919476a0c147456be
              this.getRandomBlockPosition(j, 0, k, 15, blockposition);
              int normalY = chunk.getHeight(Heightmap.Types.MOTION_BLOCKING, blockposition.getX() & 15, blockposition.getZ() & 15) + 1;
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-index 5ade22df6f8a2b839f494ab0898a87c3b7cd4e63..df7d8b222f5a6a3259c9c760ebf2f1669b5e3c5a 100644
+index f310678e18a7bb217cb5760a1af1c5a8a1f7e8cd..165e774cc49aca4b9efb06ac1e111932fe8c2e03 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -94,6 +94,18 @@ public class LevelChunk extends ChunkAccess {

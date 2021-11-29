@@ -5,24 +5,22 @@ Subject: [PATCH] Config to disable method profiler
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index a05d741abe95310ea104562ed3a7d8e24f57f591..1e85ae9c00ac921113d24e547a2693ecb652515b 100644
+index 97be3cfd85fbbf4af53bdc94ffdb228825751f5c..42783a321b489aeed7d23a2e5cae2ee44394bbd9 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -212,5 +212,14 @@ public class PufferfishConfig {
+@@ -250,4 +250,10 @@ public class PufferfishConfig {
      }
  
  
+-}
+\ No newline at end of file
 +    public static boolean disableMethodProfiler;
-+
 +    private static void miscSettings() {
 +        disableMethodProfiler = config.getBoolean("misc.disable-method-profiler", true);
-+
 +        config.setComment("misc", "Settings for things that don't belong elsewhere");
 +    }
 +
-+
- }
- 
++}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
 index e0120933ceb6f0707d3aca4915b65765a6161c6f..01600a295ac1f63c14dfee5e3acd34604b721deb 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java

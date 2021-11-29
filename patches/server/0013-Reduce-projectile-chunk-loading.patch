@@ -40,7 +40,7 @@ index 6dfe919c2fddb3d55728ac90d92778d8db73cc6c..6ebcbad1e37a2058f722f404c86dae8e
  }
 +
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-index 15744949537430d8d8ae71ea72481126c9aff7bd..11bf1f257395438b57cca2ff20c9a33e6b67f14e 100644
+index 15744949537430d8d8ae71ea72481126c9aff7bd..4759a6b3d3cd7973744562adf97d110d359ebce3 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
 @@ -42,6 +42,36 @@ public abstract class Projectile extends Entity {
@@ -64,8 +64,8 @@ index 15744949537430d8d8ae71ea72481126c9aff7bd..11bf1f257395438b57cca2ff20c9a33e
 +        if (previousX != newX || previousZ != newZ) {
 +            boolean isLoaded = ((net.minecraft.server.level.ServerChunkCache) this.level.getChunkSource()).getChunkAtIfLoadedMainThread(newX, newZ) != null;
 +            if (!isLoaded) {
-+                if (Projectile.loadedThisTick > gg.airplane.AirplaneConfig.maxProjectileLoadsPerTick) {
-+                    if (++this.loadedLifetime > gg.airplane.AirplaneConfig.maxProjectileLoadsPerProjectile) {
++                if (Projectile.loadedThisTick > gg.pufferfish.pufferfish.PufferfishConfig.maxProjectileLoadsPerTick) {
++                    if (++this.loadedLifetime > gg.pufferfish.pufferfish.PufferfishConfig.maxProjectileLoadsPerProjectile) {
 +                        this.discard();
 +                    }
 +                    return;

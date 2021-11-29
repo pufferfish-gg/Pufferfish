@@ -32,10 +32,10 @@ index 1ac4d1c920cd78728e55deea36a6e8045175b4a8..a99cfde67384a3a005d462691f250172
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
      testImplementation("junit:junit:4.13.1")
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 6ebcbad1e37a2058f722f404c86dae8e1dfa0dc8..a05d741abe95310ea104562ed3a7d8e24f57f591 100644
+index 966f60feb6390f2efafe4aa28d2f9e3125c8cade..97be3cfd85fbbf4af53bdc94ffdb228825751f5c 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -5,6 +5,7 @@ import java.io.IOException;
+@@ -11,6 +11,7 @@ import net.minecraft.world.entity.EntityType;
  import java.lang.reflect.Method;
  import java.lang.reflect.Modifier;
  import java.util.List;
@@ -43,7 +43,7 @@ index 6ebcbad1e37a2058f722f404c86dae8e1dfa0dc8..a05d741abe95310ea104562ed3a7d8e2
  import net.minecraft.server.MinecraftServer;
  import org.apache.logging.log4j.Level;
  import org.bukkit.configuration.ConfigurationSection;
-@@ -13,6 +14,13 @@ import org.jetbrains.annotations.Nullable;
+@@ -19,6 +20,13 @@ import org.jetbrains.annotations.Nullable;
  import org.simpleyaml.configuration.comments.CommentType;
  import org.simpleyaml.configuration.file.YamlFile;
  import org.simpleyaml.exceptions.InvalidConfigurationException;
@@ -57,9 +57,9 @@ index 6ebcbad1e37a2058f722f404c86dae8e1dfa0dc8..a05d741abe95310ea104562ed3a7d8e2
  
  public class PufferfishConfig {
  	
-@@ -179,5 +187,30 @@ public class PufferfishConfig {
+@@ -217,5 +225,29 @@ public class PufferfishConfig {
+         setComment("dab", "Optimizes entity brains when", "they're far away from the player");
      }
- 
  
 +    public static URI profileWebUrl;
 +    private static void profilerOptions() {
@@ -74,7 +74,7 @@ index 6ebcbad1e37a2058f722f404c86dae8e1dfa0dc8..a05d741abe95310ea104562ed3a7d8e2
 +        accessToken = getString("web-services.token", "");
 +        // todo lookup token (off-thread) and let users know if their token is valid
 +        if (accessToken.length() > 0) {
-+            gg.airplane.flare.FlareSetup.init(); // Pufferfish
++            gg.pufferfish.pufferfish.flare.FlareSetup.init(); // Pufferfish
 +            SimpleCommandMap commandMap = MinecraftServer.getServer().server.getCommandMap();
 +            if (commandMap.getCommand("flare") == null) {
 +                commandMap.register("flare", "Pufferfish", new FlareCommand());
@@ -85,9 +85,9 @@ index 6ebcbad1e37a2058f722f404c86dae8e1dfa0dc8..a05d741abe95310ea104562ed3a7d8e2
 +
 +    }
 +
-+
- }
  
+ }
+\ No newline at end of file
 diff --git a/src/main/java/gg/pufferfish/pufferfish/compat/ServerConfigurations.java b/src/main/java/gg/pufferfish/pufferfish/compat/ServerConfigurations.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..f68a4c19f9417a4713bab376ce72127770dbcaf8
@@ -419,7 +419,7 @@ index 0000000000000000000000000000000000000000..74aab5eb4b54ffbaf19b8976ffb8ca4a
 +}
 diff --git a/src/main/java/gg/pufferfish/pufferfish/flare/ProfilingManager.java b/src/main/java/gg/pufferfish/pufferfish/flare/ProfilingManager.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..a2974f9d53e3f6f3ff2b45d4d52b81e61ab634e2
+index 0000000000000000000000000000000000000000..e3f76eb11a261c3347f0cd89b5da309bc2dc82f9
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/flare/ProfilingManager.java
 @@ -0,0 +1,151 @@
@@ -430,7 +430,7 @@ index 0000000000000000000000000000000000000000..a2974f9d53e3f6f3ff2b45d4d52b81e6
 +import co.technove.flare.FlareBuilder;
 +import co.technove.flare.exceptions.UserReportableException;
 +import co.technove.flare.internal.profiling.ProfileType;
-+import gg.pufferfish.pufferfish.PufferfishLogger;
++import gg.pufferfish.pufferfish.PufferfishConfig;
 +import gg.pufferfish.pufferfish.PufferfishLogger;
 +import gg.pufferfish.pufferfish.compat.ServerConfigurations;
 +import gg.pufferfish.pufferfish.flare.collectors.GCEventCollector;

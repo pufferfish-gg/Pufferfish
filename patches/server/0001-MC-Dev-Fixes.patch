@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Initial Source <auto@mated.null>
+Date: Fri, 16 Jul 2021 17:11:36 -0500
+Subject: [PATCH] MC-Dev Fixes
+
+
+diff --git a/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java b/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
+index c5b9c0c650df5f4b7e3d2a431dc900e210104dea..ee0981d2a99c0cebc0a53ac02d2dc5a551b2f7f0 100644
+--- a/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
++++ b/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
+@@ -123,7 +123,7 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
+ 
+     @Override
+     public Brain<Hoglin> getBrain() {
+-        return super.getBrain();
++        return (Brain<Hoglin>) super.getBrain(); // Airplane - decompile fix
+     }
+ 
+     @Override
