@@ -64,10 +64,10 @@ index ae8800a37ecd117126d976bcce1b91d56e7587b8..09cc457d1dc85d2b383a8561ffb568b8
      default BlockHitResult clip(ClipContext raytrace1, BlockPos blockposition) {
              // Paper start - Prevent raytrace from loading chunks
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 929f48675a10fdd64cb351305389d680a16963fb..7341f7aed07505ab878447c589907593d1fce3b5 100644
+index c2220d5157d3065a256cd17410760c6aedf24987..1109a669675b34c07b611e9830ef1365191da352 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -436,6 +436,91 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -438,6 +438,91 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
          return null;
      }
  

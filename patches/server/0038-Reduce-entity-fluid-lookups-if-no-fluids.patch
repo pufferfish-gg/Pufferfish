@@ -116,7 +116,7 @@ index fe702d53418ea1039d374905ce23f42313b77265..401a20fb67e232d1e33b8d9167ba2ba6
              if (vec3d.length() > 0.0D) {
                  if (k1 > 0) {
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
-index c579be24944b310151738d375c53e2d52b32edb7..e0b50062bf53845a315dd935be14c916884208db 100644
+index d5ceebee36885c6470917bc1d0952733e983f030..ed71c57fe629f01b21694b8875b8defd89a9fee6 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
 @@ -25,6 +25,9 @@ public class LevelChunkSection {
@@ -129,7 +129,7 @@ index c579be24944b310151738d375c53e2d52b32edb7..e0b50062bf53845a315dd935be14c916
      public final com.destroystokyo.paper.util.maplist.IBlockDataList tickingList = new com.destroystokyo.paper.util.maplist.IBlockDataList(); // Paper
  
      public LevelChunkSection(int chunkPos, PalettedContainer<BlockState> blockStateContainer, PalettedContainer<Biome> biomeContainer) {
-@@ -88,6 +91,7 @@ public class LevelChunkSection {
+@@ -91,6 +94,7 @@ public class LevelChunkSection {
  
          if (!fluid.isEmpty()) {
              --this.tickingFluidCount;
@@ -137,7 +137,7 @@ index c579be24944b310151738d375c53e2d52b32edb7..e0b50062bf53845a315dd935be14c916
          }
  
          if (!state.isAir()) {
-@@ -102,6 +106,7 @@ public class LevelChunkSection {
+@@ -105,6 +109,7 @@ public class LevelChunkSection {
  
          if (!fluid1.isEmpty()) {
              ++this.tickingFluidCount;
@@ -145,7 +145,7 @@ index c579be24944b310151738d375c53e2d52b32edb7..e0b50062bf53845a315dd935be14c916
          }
  
          return iblockdata1;
-@@ -152,6 +157,7 @@ public class LevelChunkSection {
+@@ -155,6 +160,7 @@ public class LevelChunkSection {
                  if (fluid.isRandomlyTicking()) {
                      this.tickingFluidCount = (short) (this.tickingFluidCount + 1); // Paper
                  }
