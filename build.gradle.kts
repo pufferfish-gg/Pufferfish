@@ -47,11 +47,11 @@ subprojects {
 paperweight {
     serverProject.set(project(":pufferfish-server"))
 
+    remapRepo.set("https://maven.fabricmc.net/")
+    decompileRepo.set("https://files.minecraftforge.net/maven/")
+
     usePaperUpstream(providers.gradleProperty("paperRef")) {
         withPaperPatcher {
-            remapRepo.set("https://maven.quiltmc.org/repository/release/")
-            decompileRepo.set("https://files.minecraftforge.net/maven/")
-
             apiPatchDir.set(layout.projectDirectory.dir("patches/api"))
             serverPatchDir.set(layout.projectDirectory.dir("patches/server"))
 
