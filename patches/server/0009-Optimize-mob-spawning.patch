@@ -95,7 +95,7 @@ index d13f0504841fec85ed8574474d78124197099b93..aae2dadabedb075fd1bc712f0226882b
          }
      }
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 5ca10071d98ee743671f09b57d43d519ea03da19..988ee27f8cecbffb1962a75e1eb65cf5f9a26a04 100644
+index 758bb0fae0f9ba9672250e4a65c27f1175eab12d..c7be266b4a5d6b600c1cf500ce3c8a33c133d51b 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 @@ -77,6 +77,9 @@ public class ServerChunkCache extends ChunkSource {
@@ -108,7 +108,7 @@ index 5ca10071d98ee743671f09b57d43d519ea03da19..988ee27f8cecbffb1962a75e1eb65cf5
  
      private static int getChunkCacheKey(int x, int z) {
          return x & 3 | ((z & 3) << 2);
-@@ -975,18 +978,25 @@ public class ServerChunkCache extends ChunkSource {
+@@ -988,18 +991,25 @@ public class ServerChunkCache extends ChunkSource {
                  this.level.timings.playerMobDistanceMapUpdate.startTiming();
                  this.chunkMap.playerMobDistanceMap.update(this.level.players, this.chunkMap.viewDistance);
                  this.level.timings.playerMobDistanceMapUpdate.stopTiming();
@@ -140,7 +140,7 @@ index 5ca10071d98ee743671f09b57d43d519ea03da19..988ee27f8cecbffb1962a75e1eb65cf5
              gameprofilerfiller.popPush("filteringLoadedChunks");
              List<ServerChunkCache.ChunkAndHolder> list = Lists.newArrayListWithCapacity(l);
              Iterator iterator = this.chunkMap.getChunks().iterator();
-@@ -1015,8 +1025,8 @@ public class ServerChunkCache extends ChunkSource {
+@@ -1028,8 +1038,8 @@ public class ServerChunkCache extends ChunkSource {
  
                  if (this.level.isPositionEntityTicking(chunkcoordintpair) && this.chunkMap.anyPlayerCloseEnoughForSpawning(chunkproviderserver_a.holder, chunkcoordintpair, false)) { // Paper - optimise anyPlayerCloseEnoughForSpawning
                      chunk1.incrementInhabitedTime(j);
@@ -151,7 +151,7 @@ index 5ca10071d98ee743671f09b57d43d519ea03da19..988ee27f8cecbffb1962a75e1eb65cf5
                      }
  
                      if (this.level.shouldTickBlocksAt(chunkcoordintpair.toLong())) {
-@@ -1059,6 +1069,30 @@ public class ServerChunkCache extends ChunkSource {
+@@ -1072,6 +1082,30 @@ public class ServerChunkCache extends ChunkSource {
              }
              // Paper end - controlled flush for entity tracker packets
          }

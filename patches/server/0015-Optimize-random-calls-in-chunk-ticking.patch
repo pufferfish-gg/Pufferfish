@@ -34,10 +34,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 988ee27f8cecbffb1962a75e1eb65cf5f9a26a04..6669858fa75226e9b86056d11734cb0bcf2dbb31 100644
+index c7be266b4a5d6b600c1cf500ce3c8a33c133d51b..ad15de1ac84717a70710d78b3e26849cbe6a9446 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-@@ -965,6 +965,7 @@ public class ServerChunkCache extends ChunkSource {
+@@ -978,6 +978,7 @@ public class ServerChunkCache extends ChunkSource {
              ProfilerFiller gameprofilerfiller = this.level.getProfiler();
  
              gameprofilerfiller.push("pollingChunks");
