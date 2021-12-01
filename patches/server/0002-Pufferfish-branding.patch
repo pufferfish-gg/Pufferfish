@@ -6,7 +6,7 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index cd74406039704e5a880f00b9b60bb7b1dedc5398..39e25c68d0e69055cc608abc764251b5cc747839 100644
+index cd74406039704e5a880f00b9b60bb7b1dedc5398..67873e80a07ba3babaf23d2a115831c738278b08 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -18,8 +18,8 @@ repositories {
@@ -16,7 +16,7 @@ index cd74406039704e5a880f00b9b60bb7b1dedc5398..39e25c68d0e69055cc608abc764251b5
 -    implementation(project(":paper-api"))
 -    implementation(project(":paper-mojangapi"))
 +    implementation(project(":pufferfish-api")) // Pufferfish // Paper
-+    implementation("io.papermc.paper:paper-mojangapi:1.17.1-R0.1-SNAPSHOT") // Pufferfish
++    implementation("io.papermc.paper:paper-mojangapi:1.18-R0.1-SNAPSHOT") // Pufferfish
      // Paper start
      implementation("org.jline:jline-terminal-jansi:3.21.0")
      implementation("net.minecrell:terminalconsoleappender:1.3.0")
@@ -208,7 +208,7 @@ index 893badbe321fa974cb82f5f11ab590bb3827f8b8..f21185209b0e77ed7e04427550521784
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 1d7d3dbf7f6857d9853112844b70692e92e9c89d..f01dbffa9caab7ae306b0cfd63e9e3f297974913 100644
+index d938dc26886aa8a64c11db5e49fe5639bc27e1fb..1f722971d71032c066ac155ba375dccc9ecda0ac 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -255,7 +255,7 @@ import javax.annotation.Nullable; // Paper
@@ -221,7 +221,7 @@ index 1d7d3dbf7f6857d9853112844b70692e92e9c89d..f01dbffa9caab7ae306b0cfd63e9e3f2
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 1bc79507adaab378f7d0a4f3b6e0741ef5f8f624..0fd654680cef158b0f5ceb1f16a3e74b89cfa400 100644
+index d51c63496b55d64ac7ee6175bc364012df897891..ba0377642f09a0d57cc806a1bf8904faaa6cf7bd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 @@ -394,7 +394,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
