@@ -84,19 +84,20 @@ index 6ebcbad1e37a2058f722f404c86dae8e1dfa0dc8..966f60feb6390f2efafe4aa28d2f9e31
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 805bcc8e9e17eda1e994573f7df780ce00541f55..4724d74f2d1847a0547350e55a84ccb9991b9017 100644
+index fa925c1081391b9b1037d3c67053b3d8139b607d..937c63e11d4d873bbb42b8534d0f688dea3100e7 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -341,6 +341,9 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
-     protected int numCollisions = 0; // Paper
-     public void inactiveTick() { }
-     // Spigot end
+@@ -342,6 +342,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
+         return this.originWorld;
+     }
+     // Paper end
 +    // Pufferfish start
 +    public int activatedPriority = gg.pufferfish.pufferfish.PufferfishConfig.maximumActivationPrio; // golf score
 +    // Pufferfish end
- 
++    
      public float getBukkitYaw() {
          return this.yRot;
+     }
 diff --git a/src/main/java/net/minecraft/world/entity/EntityType.java b/src/main/java/net/minecraft/world/entity/EntityType.java
 index 419a7e9614af2328ed401fc954196056243a984c..9bc568a2b0df13f55ee8670839b9e6a6b4f38c2d 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityType.java
@@ -165,7 +166,7 @@ index 42d466f7f162943886078eba3db18f2dfc2d7bee..6c0dda1ce018ec6bb2ebb97147045fff
          }
  
 diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java b/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
-index ad82395c46943e91e7f65d8d67824cc0c965362b..5e44dec6a56376b550095d1fcd8a2ba59607a3e4 100644
+index 7fdc1cbd04a5bba9648272985f51c849b07b8223..02f44b5682b99417f3cd6d6b25dc46cdc2a09093 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
 @@ -51,9 +51,12 @@ public class GoalSelector {
@@ -248,7 +249,7 @@ index 8a2c2b4bd603aae37055abd058feb7ee759078ce..d850f1f57fc7560738f7bd82b37ec888
          this.level.getProfiler().pop();
          PiglinAi.updateActivity(this);
 diff --git a/src/main/java/net/minecraft/world/entity/npc/Villager.java b/src/main/java/net/minecraft/world/entity/npc/Villager.java
-index dbd17107f08c218d88ef075fc04823b83083648b..b3a7da125f0ffac5958e8eea1a993cad508fa5a6 100644
+index 0ac3d6b25857bc5af0a4909a70053eeb86ea48ea..7364a50d440b990fd3ec0939b3cde6dae9bdb88b 100644
 --- a/src/main/java/net/minecraft/world/entity/npc/Villager.java
 +++ b/src/main/java/net/minecraft/world/entity/npc/Villager.java
 @@ -138,6 +138,8 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
@@ -280,7 +281,7 @@ index dbd17107f08c218d88ef075fc04823b83083648b..b3a7da125f0ffac5958e8eea1a993cad
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index 72400204fbeea41e4af8d3a0d5eef6f2e75e7518..0b95762158bf92ca987865b2c4ab8fcbdeb6c2b2 100644
+index feec2b3b832fd2c490276e4360fcf6e2b40f01cf..e7623d92ff3d19b11bc50ed4011580ae704be4f3 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -37,6 +37,10 @@ import co.aikar.timings.MinecraftTimings;
