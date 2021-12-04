@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 02d66bbdfd5f51b55c785f765a55345ada67f798..6fe53c56bb8e58bcdb47f48b62b991719fc81830 100644
+index 7868f0d22f3bebc3334b3a80b4eed00935935bf0..bc42301d161b49eead1d5408183bb04d7f617153 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -60,6 +60,7 @@ dependencies {
@@ -90,7 +90,7 @@ index 966f60feb6390f2efafe4aa28d2f9e3125c8cade..97be3cfd85fbbf4af53bdc94ffdb2288
 \ No newline at end of file
 diff --git a/src/main/java/gg/pufferfish/pufferfish/compat/ServerConfigurations.java b/src/main/java/gg/pufferfish/pufferfish/compat/ServerConfigurations.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..f68a4c19f9417a4713bab376ce72127770dbcaf8
+index 0000000000000000000000000000000000000000..f0ec1f3944c00d38537f6f3b3f13236b22562458
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/compat/ServerConfigurations.java
 @@ -0,0 +1,78 @@
@@ -120,7 +120,7 @@ index 0000000000000000000000000000000000000000..f68a4c19f9417a4713bab376ce721277
 +      "bukkit.yml",
 +      "spigot.yml",
 +      "paper.yml",
-+      "airplane.yml"
++      "pufferfish.yml"
 +    };
 +
 +    public static Map<String, String> getCleanCopies() throws IOException {
