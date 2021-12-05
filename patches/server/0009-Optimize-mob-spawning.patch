@@ -95,7 +95,7 @@ index d13f0504841fec85ed8574474d78124197099b93..aae2dadabedb075fd1bc712f0226882b
          }
      }
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 758bb0fae0f9ba9672250e4a65c27f1175eab12d..c7be266b4a5d6b600c1cf500ce3c8a33c133d51b 100644
+index e7e110b53e79e0606262982555dd9eb096c7c4a8..beb5b3675233a7fd3c05ae65517173b986cc701f 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 @@ -77,6 +77,9 @@ public class ServerChunkCache extends ChunkSource {
@@ -138,20 +138,20 @@ index 758bb0fae0f9ba9672250e4a65c27f1175eab12d..c7be266b4a5d6b600c1cf500ce3c8a33
 -            this.lastSpawnState = spawnercreature_d;
 +            //this.lastSpawnState = spawnercreature_d; // Pufferfish - this is managed asynchronously
              gameprofilerfiller.popPush("filteringLoadedChunks");
-             List<ServerChunkCache.ChunkAndHolder> list = Lists.newArrayListWithCapacity(l);
-             Iterator iterator = this.chunkMap.getChunks().iterator();
-@@ -1028,8 +1038,8 @@ public class ServerChunkCache extends ChunkSource {
+             // Paper - moved down
+             this.level.timings.chunkTicks.startTiming(); // Paper
+@@ -1041,8 +1051,8 @@ public class ServerChunkCache extends ChunkSource {
  
-                 if (this.level.isPositionEntityTicking(chunkcoordintpair) && this.chunkMap.anyPlayerCloseEnoughForSpawning(chunkproviderserver_a.holder, chunkcoordintpair, false)) { // Paper - optimise anyPlayerCloseEnoughForSpawning
+                 if ((true || this.level.isPositionEntityTicking(chunkcoordintpair)) && this.chunkMap.anyPlayerCloseEnoughForSpawning(holder, chunkcoordintpair, false)) { // Paper - optimise anyPlayerCloseEnoughForSpawning & optimise chunk tick iteration
                      chunk1.incrementInhabitedTime(j);
--                    if (flag2 && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isWithinBounds(chunkcoordintpair) && this.chunkMap.anyPlayerCloseEnoughForSpawning(chunkproviderserver_a.holder, chunkcoordintpair, true)) { // Spigot // Paper - optimise anyPlayerCloseEnoughForSpawning
+-                    if (flag2 && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isWithinBounds(chunkcoordintpair) && this.chunkMap.anyPlayerCloseEnoughForSpawning(holder, chunkcoordintpair, true)) { // Spigot // Paper - optimise anyPlayerCloseEnoughForSpawning & optimise chunk tick iteration
 -                        NaturalSpawner.spawnForChunk(this.level, chunk1, spawnercreature_d, this.spawnFriendlies, this.spawnEnemies, flag1);
-+                    if (flag2 && (!gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncMobSpawning || _pufferfish_spawnCountsReady.get()) && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isWithinBounds(chunkcoordintpair) && this.chunkMap.anyPlayerCloseEnoughForSpawning(chunkproviderserver_a.holder, chunkcoordintpair, true)) { // Spigot // Paper - optimise anyPlayerCloseEnoughForSpawning // Pufferfish
++                    if (flag2 && (!gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncMobSpawning || _pufferfish_spawnCountsReady.get()) && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isWithinBounds(chunkcoordintpair) && this.chunkMap.anyPlayerCloseEnoughForSpawning(holder, chunkcoordintpair, true)) { // Spigot // Paper - optimise anyPlayerCloseEnoughForSpawning & optimise chunk tick iteration
 +                        NaturalSpawner.spawnForChunk(this.level, chunk1, lastSpawnState, this.spawnFriendlies, this.spawnEnemies, flag1); // Pufferfish
                      }
  
                      if (this.level.shouldTickBlocksAt(chunkcoordintpair.toLong())) {
-@@ -1072,6 +1082,30 @@ public class ServerChunkCache extends ChunkSource {
+@@ -1089,6 +1099,30 @@ public class ServerChunkCache extends ChunkSource {
              }
              // Paper end - controlled flush for entity tracker packets
          }
@@ -183,7 +183,7 @@ index 758bb0fae0f9ba9672250e4a65c27f1175eab12d..c7be266b4a5d6b600c1cf500ce3c8a33
  
      private void getFullChunk(long pos, Consumer<LevelChunk> chunkConsumer) {
 diff --git a/src/main/java/net/minecraft/world/level/NaturalSpawner.java b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-index 429ed5a583e0332593edd9c073ea1614c595bff0..312d06198691010ffb42befcb39d4598df6ca42b 100644
+index 3ce14f26abb890e0d3fbf9b02747c4614ec46b47..ce229538a22209bda48070a399fb77cd42c3af82 100644
 --- a/src/main/java/net/minecraft/world/level/NaturalSpawner.java
 +++ b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
 @@ -170,7 +170,7 @@ public final class NaturalSpawner {

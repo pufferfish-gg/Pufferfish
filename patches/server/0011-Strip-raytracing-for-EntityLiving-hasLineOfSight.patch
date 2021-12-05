@@ -43,7 +43,7 @@ index 70a015c0d06de0a259f4171c99962b809beca93c..c04b66c99d46acae40d9d4bfefdb36cc
      }
  
 diff --git a/src/main/java/net/minecraft/world/level/BlockGetter.java b/src/main/java/net/minecraft/world/level/BlockGetter.java
-index ae8800a37ecd117126d976bcce1b91d56e7587b8..09cc457d1dc85d2b383a8561ffb568b8dd97cbbe 100644
+index d1eefa6ef3e9abfe7af4d8310aa64465fa2d5463..0f4aa330e5b179bb706a31917c671f165e22b9cd 100644
 --- a/src/main/java/net/minecraft/world/level/BlockGetter.java
 +++ b/src/main/java/net/minecraft/world/level/BlockGetter.java
 @@ -73,6 +73,16 @@ public interface BlockGetter extends LevelHeightAccessor {
@@ -64,7 +64,7 @@ index ae8800a37ecd117126d976bcce1b91d56e7587b8..09cc457d1dc85d2b383a8561ffb568b8
      default BlockHitResult clip(ClipContext raytrace1, BlockPos blockposition) {
              // Paper start - Prevent raytrace from loading chunks
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index c2220d5157d3065a256cd17410760c6aedf24987..1109a669675b34c07b611e9830ef1365191da352 100644
+index 4247dcb003626535dbb997f48ad9f61380bd17e9..a172f7c72cedc8ba8d2e2341d8e2a2cc142de238 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -438,6 +438,91 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
@@ -157,5 +157,5 @@ index c2220d5157d3065a256cd17410760c6aedf24987..1109a669675b34c07b611e9830ef1365
 +    // Pufferfish end
 +
      public boolean isInWorldBounds(BlockPos pos) {
-         return pos.isValidLocation(this); // Paper - use better/optimized check
+         return pos.isInsideBuildHeightAndWorldBoundsHorizontal(this); // Paper - use better/optimized check
      }
