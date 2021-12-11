@@ -201,7 +201,7 @@ index d0edbad76a749163f77723547001e59352654e12..8e6c2aadd7f69dc6bd585242bf4e2354
          this.level.getProfiler().pop();
          this.level.getProfiler().push("axolotlActivityUpdate");
 diff --git a/src/main/java/net/minecraft/world/entity/animal/goat/Goat.java b/src/main/java/net/minecraft/world/entity/animal/goat/Goat.java
-index d8bd81f1c8069f81983ccf0aee8200bd67c913de..266bc978a3a2721d107b156974a7f496dc5ab846 100644
+index d8bd81f1c8069f81983ccf0aee8200bd67c913de..5059d35269331cf3c34598926d810df6e61b7989 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/goat/Goat.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/goat/Goat.java
 @@ -173,10 +173,12 @@ public class Goat extends Animal {
@@ -212,13 +212,14 @@ index d8bd81f1c8069f81983ccf0aee8200bd67c913de..266bc978a3a2721d107b156974a7f496
      @Override
      protected void customServerAiStep() {
          this.level.getProfiler().push("goatBrain");
-         if (getRider() == null) // Purpur - only use brain if no rider
-+        if (this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish
+-        if (getRider() == null) // Purpur - only use brain if no rider
++        // if (getRider() == null) // Purpur - only use brain if no rider // Pufferfish - diff on change
++        if (this.behaviorTick++ % this.activatedPriority == 0 && getRider() == null) // Pufferfish
          this.getBrain().tick((ServerLevel) this.level, this);
          this.level.getProfiler().pop();
          this.level.getProfiler().push("goatActivityUpdate");
 diff --git a/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java b/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
-index 866665186e7dd20a00a635d4675da2e7ac57ae91..ffa12a7519747666680fb221d9aa6f01e20ccdfb 100644
+index 866665186e7dd20a00a635d4675da2e7ac57ae91..fa851bdd1b1dc15e500c8537f91f58904d00c393 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 @@ -153,10 +153,12 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
@@ -229,13 +230,14 @@ index 866665186e7dd20a00a635d4675da2e7ac57ae91..ffa12a7519747666680fb221d9aa6f01
      @Override
      protected void customServerAiStep() {
          this.level.getProfiler().push("hoglinBrain");
-         if (getRider() == null) // Purpur - only use brain if no rider
-+        if (this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish
+-        if (getRider() == null) // Purpur - only use brain if no rider
++        // if (getRider() == null) // Purpur - only use brain if no rider // Pufferfish - diff on change
++        if (this.behaviorTick++ % this.activatedPriority == 0 && getRider() != null) // Pufferfish
          this.getBrain().tick((ServerLevel)this.level, this);
          this.level.getProfiler().pop();
          HoglinAi.updateActivity(this);
 diff --git a/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java b/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
-index 825a2fe1eac36812744b134be76798d8ae3d0bbf..46c63f2a7e82ab4c161e8f85af7b0e627d0c1086 100644
+index 825a2fe1eac36812744b134be76798d8ae3d0bbf..a30ae7edcdac7c3ad56a4d2c4694756a57f58000 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
 @@ -310,10 +310,12 @@ public class Piglin extends AbstractPiglin implements CrossbowAttackMob, Invento
@@ -246,8 +248,9 @@ index 825a2fe1eac36812744b134be76798d8ae3d0bbf..46c63f2a7e82ab4c161e8f85af7b0e62
      @Override
      protected void customServerAiStep() {
          this.level.getProfiler().push("piglinBrain");
-         if (getRider() == null) // Purpur - only use brain if no rider
-+        if (this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish
+-        if (getRider() == null) // Purpur - only use brain if no rider
++        // if (getRider() == null) // Purpur - only use brain if no rider // Pufferfish - diff on change
++        if (this.behaviorTick++ % this.activatedPriority == 0 && getRider() == null) // Pufferfish
          this.getBrain().tick((ServerLevel) this.level, this);
          this.level.getProfiler().pop();
          PiglinAi.updateActivity(this);
