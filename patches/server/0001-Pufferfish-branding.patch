@@ -6,58 +6,52 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index ed05c831fcf8dfb8669ce57248b469fa9c9edef5..844579839a4d2ec68acde94ca48ce2e0f86844d7 100644
+index a387cbf3652a84028dc8be1da7f10c4bb84abf3d..8770b9fba33e59975d69e557bebd643153a0aad0 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -18,8 +18,12 @@ repositories {
- }
+@@ -19,7 +19,7 @@ repositories {
  
  dependencies {
--    implementation(project(":paper-api"))
--    implementation(project(":paper-mojangapi"))
-+    implementation(project(":pufferfish-api")) // Pufferfish // Paper
-+    // Pufferfish start
-+    implementation("io.papermc.paper:paper-mojangapi:1.18-R0.1-SNAPSHOT") {
-+        exclude("io.papermc.paper", "paper-api")
-+    }
-+    // Pufferfish end
-     // Paper start
-     implementation("org.jline:jline-terminal-jansi:3.21.0")
-     implementation("net.minecrell:terminalconsoleappender:1.3.0")
-@@ -68,7 +72,7 @@ tasks.jar {
+     // Purpur start
+-    implementation(project(":purpur-api"))
++    implementation(project(":pufferfish-api")) // Pufferfish
+     implementation("io.papermc.paper:paper-mojangapi:1.18-R0.1-SNAPSHOT") {
+         exclude("io.papermc.paper", "paper-api")
+     }
+@@ -74,7 +74,7 @@ tasks.jar {
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
--            "Implementation-Version" to "git-Paper-$implementationVersion",
-+            "Implementation-Version" to "git-Pufferfish-$implementationVersion", // Pufferfish
+-            "Implementation-Version" to "git-Purpur-$implementationVersion", // Purpur
++            "Implementation-Version" to "git-Pufferfish-$implementationVersion", // Purpur // Pufferfish
              "Implementation-Vendor" to date, // Paper
              "Specification-Title" to "Bukkit",
              "Specification-Version" to project.version,
 diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
-index 218f5bafeed8551b55b91c7fccaf6935c8b631ca..f2fe6ea3719ff8b2913b7a3a939d7a5b75cb8b28 100644
+index 7bc497bcae6a6a752e3c432178cb1e3c633e0bec..c5e58f54444173594d61a7aaa1e7acacf1f30651 100644
 --- a/src/main/java/com/destroystokyo/paper/Metrics.java
 +++ b/src/main/java/com/destroystokyo/paper/Metrics.java
 @@ -593,7 +593,7 @@ public class Metrics {
              boolean logFailedRequests = config.getBoolean("logFailedRequests", false);
              // Only start Metrics, if it's enabled in the config
              if (config.getBoolean("enabled", true)) {
--                Metrics metrics = new Metrics("Paper", serverUUID, logFailedRequests, Bukkit.getLogger());
-+                Metrics metrics = new Metrics("Pufferfish", serverUUID, logFailedRequests, Bukkit.getLogger()); // Pufferfish
- 
+-                Metrics metrics = new Metrics("Purpur", serverUUID, logFailedRequests, Bukkit.getLogger()); // Purpur
++                Metrics metrics = new Metrics("Pufferfish", serverUUID, logFailedRequests, Bukkit.getLogger()); // Purpur // Pufferfish
                  metrics.addCustomChart(new Metrics.SimplePie("minecraft_version", () -> {
                      String minecraftVersion = Bukkit.getVersion();
-@@ -603,7 +603,7 @@ public class Metrics {
+                     minecraftVersion = minecraftVersion.substring(minecraftVersion.indexOf("MC: ") + 4, minecraftVersion.length() - 1);
+@@ -602,7 +602,7 @@ public class Metrics {
  
                  metrics.addCustomChart(new Metrics.SingleLineChart("players", () -> Bukkit.getOnlinePlayers().size()));
-                 metrics.addCustomChart(new Metrics.SimplePie("online_mode", () -> Bukkit.getOnlineMode() ? "online" : "offline"));
--                metrics.addCustomChart(new Metrics.SimplePie("paper_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown"));
-+                metrics.addCustomChart(new Metrics.SimplePie("pufferfish_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown"));
+                 metrics.addCustomChart(new Metrics.SimplePie("online_mode", () -> Bukkit.getOnlineMode() ? "online" : (PaperConfig.isProxyOnlineMode() ? "bungee" : "offline"))); // Purpur
+-                metrics.addCustomChart(new Metrics.SimplePie("purpur_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown")); // Purpur
++                metrics.addCustomChart(new Metrics.SimplePie("pufferfish_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown")); // Purpur // Pufferfish
  
                  metrics.addCustomChart(new Metrics.DrilldownPie("java_version", () -> {
                      Map<String, Map<String, Integer>> map = new HashMap<>();
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishVersionFetcher.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishVersionFetcher.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..adafc4fd661cf080b004b86c3eaed231a0133101
+index 0000000000000000000000000000000000000000..d6316e1791480adce6aedced2e69f08deb949b13
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishVersionFetcher.java
 @@ -0,0 +1,136 @@
@@ -93,8 +87,8 @@ index 0000000000000000000000000000000000000000..adafc4fd661cf080b004b86c3eaed231
 +	private static final Logger LOGGER = Logger.getLogger("PufferfishVersionFetcher");
 +	private static final HttpClient client = HttpClient.newHttpClient();
 +	
-+	private static final URI JENKINS_URI = URI.create("https://ci.pufferfish.host/job/Pufferfish-1.18/lastSuccessfulBuild/buildNumber");
-+	private static final String GITHUB_FORMAT = "https://api.github.com/repos/pufferfish-gg/Pufferfish/compare/ver/1.18...%s";
++	private static final URI JENKINS_URI = URI.create("https://ci.pufferfish.host/job/Pufferfish-Purpur-1.18/lastSuccessfulBuild/buildNumber");
++	private static final String GITHUB_FORMAT = "https://api.github.com/repos/pufferfish-gg/Pufferfish/compare/ver/purpur-1.18...%s";
 +	
 +	private static final HttpResponse.BodyHandler<JsonObject> JSON_OBJECT_BODY_HANDLER = responseInfo -> HttpResponse.BodySubscribers
 +			.mapping(
@@ -199,33 +193,36 @@ index 0000000000000000000000000000000000000000..adafc4fd661cf080b004b86c3eaed231
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 481a5dbad82f3f8dd5b1bf8ab207d82ec73d5bbd..902fb4e395f55af101855df3a8c7e488795aec53 100644
+index 5d1bd07046af00aea3bde2f1000a4b8a1d8528cb..c6d09d92946d3f15072c76eefcd1a4e796f92557 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1709,7 +1709,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1734,7 +1734,10 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
--        return "Paper"; // Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
-+        return "Pufferfish"; // Pufferfish - Pufferfish > // Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
+-        return org.purpurmc.purpur.PurpurConfig.serverModName; // Purpur - Purpur > // Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
++        // Pufferfish Start
++        String purpurName = org.purpurmc.purpur.PurpurConfig.serverModName;
++        return purpurName.equals("Purpur") ? "Pufferfish" : purpurName; // Pufferfish - Pufferfish // Purpur - Purpur > // Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
++        // Pufferfish end
      }
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d91abf93f2a06f73d3124f4fcff2491fe8d36655..db7e806474bb17b6fff3eff1bcffbe5efd642ae3 100644
+index 00a41213ee1c03fe1835dc8bc3b12ffe5c6bbafe..6f02d335fbcfe5d655d9bd03f8a480fb56e45529 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -253,7 +253,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
--    private final String serverName = "Paper"; // Paper
-+    private final String serverName = "Pufferfish"; // Paper // Pufferfish
+-    private final String serverName = "Purpur"; // Paper // Purpur
++    private final String serverName = "Pufferfish"; // Paper // Purpur // Pufferfish
      private final String serverVersion;
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index d51c63496b55d64ac7ee6175bc364012df897891..ba0377642f09a0d57cc806a1bf8904faaa6cf7bd 100644
+index 90e68a8cfd00e4ad7ffaddfc8e8d5df26c49cf7a..cfa4b75b042e2a82e10e5dc95d4c71d39f5a8d60 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 @@ -394,7 +394,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
@@ -238,15 +235,15 @@ index d51c63496b55d64ac7ee6175bc364012df897891..ba0377642f09a0d57cc806a1bf8904fa
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index 774556a62eb240da42e84db4502e2ed43495be17..80553face9c70c2a3d897681e7761df85b22d464 100644
+index fb87620c742ff7912f5e8ccd2a7930dd605576d9..0040e9d7e315bd7257960ba557c56db81688729e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {
      public static String getBukkitVersion() {
          String result = "Unknown-Version";
  
--        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/io.papermc.paper/paper-api/pom.properties");
-+        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/gg.pufferfish.pufferfish/pufferfish-api/pom.properties"); // Pufferfish
+-        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/org.purpurmc.purpur/purpur-api/pom.properties"); // Purpur
++        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/gg.pufferfish.pufferfish/pufferfish-api/pom.properties"); // Purpur // Pufferfish
          Properties properties = new Properties();
  
          if (stream != null) {

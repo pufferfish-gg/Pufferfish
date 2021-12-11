@@ -50,8 +50,14 @@ paperweight {
     remapRepo.set("https://maven.fabricmc.net/")
     decompileRepo.set("https://files.minecraftforge.net/maven/")
 
-    usePaperUpstream(providers.gradleProperty("paperRef")) {
-        withPaperPatcher {
+    useStandardUpstream("purpur") {
+        url.set(github("PurpurMC", "Purpur"))
+        ref.set(providers.gradleProperty("purpurRef"))
+
+        withStandardPatcher {
+            apiSourceDirPath.set("Purpur-API")
+            serverSourceDirPath.set("Purpur-Server")
+
             apiPatchDir.set(layout.projectDirectory.dir("patches/api"))
             serverPatchDir.set(layout.projectDirectory.dir("patches/server"))
 

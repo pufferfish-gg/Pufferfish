@@ -5,7 +5,7 @@ Subject: [PATCH] Disable Paper timings by default
 
 
 diff --git a/src/main/java/com/destroystokyo/paper/PaperConfig.java b/src/main/java/com/destroystokyo/paper/PaperConfig.java
-index cd918cec00d8202252af0d20b1a8891371c538e3..9b12693b07b1fd3a634f865ac4ec612bb890f7ff 100644
+index 6c1b67fbd4524aac075e93ed454f7139002c997a..4435595cc5b5d2c8235ea2bd5c25a540cd6adddd 100644
 --- a/src/main/java/com/destroystokyo/paper/PaperConfig.java
 +++ b/src/main/java/com/destroystokyo/paper/PaperConfig.java
 @@ -232,6 +232,15 @@ public class PaperConfig {
@@ -23,4 +23,4 @@ index cd918cec00d8202252af0d20b1a8891371c538e3..9b12693b07b1fd3a634f865ac4ec612b
 +        // Pufferfish end
          boolean verboseTimings = getBoolean("timings.verbose", true);
          TimingsManager.url = getString("timings.url", "https://timings.aikar.co/");
-         if (!TimingsManager.url.endsWith("/")) {
+         // Purpur start

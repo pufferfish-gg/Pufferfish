@@ -5,12 +5,12 @@ Subject: [PATCH] Pufferfish Config and Command
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 844579839a4d2ec68acde94ca48ce2e0f86844d7..0cd62ea5d375169f2046e4902d24114c90328aa3 100644
+index 8770b9fba33e59975d69e557bebd643153a0aad0..6ad44a2a9cb6980816796624e14d503818e15aa0 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -55,6 +55,13 @@ dependencies {
-     }
-     // Paper end
+@@ -57,6 +57,13 @@ dependencies {
+     implementation("cat.inspiracio:rhino-js-engine:1.7.7.1") // Purpur
+     implementation("dev.omega24:upnp4j:1.0") // Purpur
  
 +    // Pufferfish start
 +    implementation("org.yaml:snakeyaml:1.28")
@@ -23,19 +23,19 @@ index 844579839a4d2ec68acde94ca48ce2e0f86844d7..0cd62ea5d375169f2046e4902d24114c
      testImplementation("junit:junit:4.13.1")
      testImplementation("org.hamcrest:hamcrest-library:1.3")
 diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
-index 5e3b7fb2e0b7608610555cd23e7ad25a05883181..26bde1c22363ddbdbe4127d14bae54e17b0d7393 100644
+index 52197656e46fd159240a936fe13bfb27f2b4e9a7..59e19424203f61166674d0385c837f73cab25df1 100644
 --- a/src/main/java/co/aikar/timings/TimingsExport.java
 +++ b/src/main/java/co/aikar/timings/TimingsExport.java
-@@ -227,7 +227,8 @@ public class TimingsExport extends Thread {
-         parent.put("config", createObject(
+@@ -231,7 +231,8 @@ public class TimingsExport extends Thread {
+             pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)),
              pair("spigot", mapAsJSON(Bukkit.spigot().getSpigotConfig(), null)),
-             pair("bukkit", mapAsJSON(Bukkit.spigot().getBukkitConfig(), null)),
--            pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null))
-+            pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)), // Pufferfish
+             pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)),
+-            pair("purpur", mapAsJSON(Bukkit.spigot().getPurpurConfig(), null))
++            pair("purpur", mapAsJSON(Bukkit.spigot().getPurpurConfig(), null)), // Pufferfish
 +            pair("pufferfish", mapAsJSON(gg.pufferfish.pufferfish.PufferfishConfig.getConfigCopy(), null)) // Pufferfish
+             // Purpur end
          ));
  
-         new TimingsExport(listeners, parent, history).start();
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishCommand.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishCommand.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..020368da69b9a492155f6de6297f74732f4ab6ea
@@ -252,10 +252,10 @@ index 0000000000000000000000000000000000000000..f81a4985a24520ab5c7dce0b49a864e0
 +	
 +}
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 38a0fb9a7c4ade9cacfd30dffabfea7e6b773981..d13f0504841fec85ed8574474d78124197099b93 100644
+index 9412a238aa3538bf958cf3b5ce2be5a9beead90f..f1321ac1ddfa293afffd7c00d9063d9154e6bba6 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -232,6 +232,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -241,6 +241,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
          io.papermc.paper.util.ObfHelper.INSTANCE.getClass(); // load mappings for stacktrace deobf and etc.
          io.papermc.paper.brigadier.PaperBrigadierProviderImpl.INSTANCE.getClass(); // init PaperBrigadierProvider
          // Paper end

@@ -5,7 +5,7 @@ Subject: [PATCH] Remove streams and iterators from range check
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 0e474819c506e6d5e1731d49610c7cf472aa49c4..cf7036d1b2ce6d98c494eab6013b37784366c2c3 100644
+index 7f082df75ed430dafd45e2d42b9def901b002bc7..b9b2710ab6a46bd1983bf57c839bcb518b78a4bc 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -2343,8 +2343,28 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider

@@ -40,12 +40,12 @@ index 6dfe919c2fddb3d55728ac90d92778d8db73cc6c..6ebcbad1e37a2058f722f404c86dae8e
  }
 +
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-index 15744949537430d8d8ae71ea72481126c9aff7bd..4759a6b3d3cd7973744562adf97d110d359ebce3 100644
+index 2771e600d46195e8170b2bde57c523c2bcbadf5a..c7f6138ec00706a128f5b8f8bb8f81dfaa737288 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-@@ -42,6 +42,36 @@ public abstract class Projectile extends Entity {
-         super(type, world);
-     }
+@@ -56,6 +56,36 @@ public abstract class Projectile extends Entity {
+     protected abstract int getPurpurDespawnRate();
+     // Purpur end
  
 +    // Pufferfish start
 +    private static int loadedThisTick = 0;

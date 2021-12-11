@@ -20,13 +20,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/world/entity/ambient/Bat.java b/src/main/java/net/minecraft/world/entity/ambient/Bat.java
-index 29dfbcecfbb2560e6ecde997abd5224a16c08c94..a76b754305036bf9c6387e27b86ec1559b290774 100644
+index 0d90c90bf20d127f410de2aad2ca3c2d989e9576..1666212465a4c3b4be4f88243d8e1d05f1819965 100644
 --- a/src/main/java/net/minecraft/world/entity/ambient/Bat.java
 +++ b/src/main/java/net/minecraft/world/entity/ambient/Bat.java
-@@ -254,13 +254,22 @@ public class Bat extends AmbientCreature {
-         }
+@@ -320,13 +320,23 @@ public class Bat extends AmbientCreature {
      }
  
+     public static boolean isHalloweenSeason(Level level) { return level.purpurConfig.forceHalloweenSeason || isHalloween(); } // Purpur
++
 +    // Pufferfish start - only check for spooky season once an hour
 +    private static boolean isSpookySeason = false;
 +    private static final int ONE_HOUR = 20 * 60 * 60;

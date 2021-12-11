@@ -70,10 +70,10 @@ index 95b05af7935cbe9d280a1e2cf7d8e384653613d0..6dfe919c2fddb3d55728ac90d92778d8
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 902fb4e395f55af101855df3a8c7e488795aec53..83ba9e7372bcb903c8113781995a1da6b2aaf1fe 100644
+index 2f90eae9f2d7b95cc259308e6580052b3290237a..5569b0942ca57a59dc4b895d0e059703952efdcc 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -310,6 +310,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -313,6 +313,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      public volatile Thread shutdownThread; // Paper
      public volatile boolean abnormalExit = false; // Paper
@@ -83,12 +83,12 @@ index 902fb4e395f55af101855df3a8c7e488795aec53..83ba9e7372bcb903c8113781995a1da6
      public static <S extends MinecraftServer> S spin(Function<Thread, S> serverFactory) {
          AtomicReference<S> atomicreference = new AtomicReference();
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index d13f0504841fec85ed8574474d78124197099b93..aae2dadabedb075fd1bc712f0226882b85f4551d 100644
+index f1321ac1ddfa293afffd7c00d9063d9154e6bba6..5ac11497df876956599c45edb105cbdd22c26182 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -347,6 +347,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
-                 DedicatedServer.LOGGER.info("JMX monitoring enabled");
-             }
+@@ -383,6 +383,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+ 
+             org.purpurmc.purpur.task.BossBarTask.startAll(); // Purpur
  
 +            if (gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncMobSpawning) mobSpawnExecutor.start(); // Pufferfish
              return true;

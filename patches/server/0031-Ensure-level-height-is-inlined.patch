@@ -5,10 +5,10 @@ Subject: [PATCH] Ensure level height is inlined
 
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index d10dc312322783591e3884c2dfb786eb75e5fd0d..2c441c9a8c8b8d84990872a5cde0e304c9e52de9 100644
+index 18340c2872dd235dae41dd5a4406dde05bce342f..227ab24d118d3406d37086d4d8a2866e9a20c6af 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -308,6 +308,15 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -353,6 +353,15 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
      }
      // Paper end - optimise checkDespawn
  
@@ -24,7 +24,7 @@ index d10dc312322783591e3884c2dfb786eb75e5fd0d..2c441c9a8c8b8d84990872a5cde0e304
      protected Level(WritableLevelData worlddatamutable, ResourceKey<Level> resourcekey, final DimensionType dimensionmanager, Supplier<ProfilerFiller> supplier, boolean flag, boolean flag1, long i, org.bukkit.generator.ChunkGenerator gen, org.bukkit.generator.BiomeProvider biomeProvider, org.bukkit.World.Environment env, java.util.concurrent.Executor executor) { // Paper - Async-Anti-Xray - Pass executor
          this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((net.minecraft.world.level.storage.PrimaryLevelData) worlddatamutable).getLevelName()); // Spigot
          this.paperConfig = new com.destroystokyo.paper.PaperWorldConfig(((net.minecraft.world.level.storage.PrimaryLevelData) worlddatamutable).getLevelName(), this.spigotConfig); // Paper
-@@ -323,6 +332,13 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -370,6 +379,13 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
          this.profiler = supplier;
          this.levelData = worlddatamutable;
          this.dimensionType = dimensionmanager;
