@@ -6,7 +6,7 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 4c26f466af0e1cf07245e2d0b57a54574d5472d4..c59e4260e474f4c1e35bd24a4d4f90f4ee980ff8 100644
+index 889aa2d4fbdd85db00c6d711181cb1832fd9daa5..2f9bef70be115c09a22594f704841b70d8e8aab0 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -22,7 +22,7 @@ repositories {
@@ -18,7 +18,7 @@ index 4c26f466af0e1cf07245e2d0b57a54574d5472d4..c59e4260e474f4c1e35bd24a4d4f90f4
      implementation("io.papermc.paper:paper-mojangapi:1.17.1-R0.1-SNAPSHOT") // Airplane
      // Paper start
      implementation("org.jline:jline-terminal-jansi:3.21.0")
-@@ -84,7 +84,7 @@ tasks.jar {
+@@ -85,7 +85,7 @@ tasks.jar {
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
              "Implementation-Version" to "git-Paper-$implementationVersion",
