@@ -41,21 +41,18 @@ index 72063ba7fb0d04594043cb07034590d597c3d77e..e4f84112f125673916824fdd7c68e0c1
  
              if (map.referenceCount == 0) {
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 95b05af7935cbe9d280a1e2cf7d8e384653613d0..6dfe919c2fddb3d55728ac90d92778d8db73cc6c 100644
+index 95b05af7935cbe9d280a1e2cf7d8e384653613d0..9880f00791ef37a3b408baf065b6553e2770a0ff 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -149,4 +149,24 @@ public class PufferfishConfig {
+@@ -149,4 +149,21 @@ public class PufferfishConfig {
  				"This can be overridden per-player with the permission pufferfish.usebooks");
  	}
  	
 +	public static boolean enableAsyncMobSpawning;
 +	public static boolean asyncMobSpawningInitialized;
 +	private static void asyncMobSpawning() {
-+		boolean temp = getBoolean("enable-async-mob-spawning", false,
++		boolean temp = getBoolean("enable-async-mob-spawning", true,
 +				"Whether or not asynchronous mob spawning should be enabled.",
-+				"This feature is experimental and should be tested prior to being run in production.",
-+				"There are currently no known issues, however certain plugins may have issues when",
-+				"running this patch. If you experience issues, please report them in our discord server.",
 +				"On servers with many entities, this can improve performance by up to 15%. You must have",
 +				"paper's per-player-mob-spawns setting set to true for this to work.",
 +				"One quick note - this does not actually spawn mobs async (that would be very unsafe).",
@@ -70,7 +67,7 @@ index 95b05af7935cbe9d280a1e2cf7d8e384653613d0..6dfe919c2fddb3d55728ac90d92778d8
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 2f90eae9f2d7b95cc259308e6580052b3290237a..5569b0942ca57a59dc4b895d0e059703952efdcc 100644
+index c6d09d92946d3f15072c76eefcd1a4e796f92557..4de297a4f57fe51e5cbcd509c694b07e9e88df6f 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -313,6 +313,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa

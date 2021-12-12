@@ -20,10 +20,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 6dfe919c2fddb3d55728ac90d92778d8db73cc6c..6ebcbad1e37a2058f722f404c86dae8e1dfa0dc8 100644
+index 9880f00791ef37a3b408baf065b6553e2770a0ff..2822afc7a96972284c878485c49ac5ec7fb69400 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -169,4 +169,15 @@ public class PufferfishConfig {
+@@ -166,4 +166,15 @@ public class PufferfishConfig {
  		}
  	}
  	

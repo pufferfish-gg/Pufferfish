@@ -5,10 +5,10 @@ Subject: [PATCH] Config to disable method profiler
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 97be3cfd85fbbf4af53bdc94ffdb228825751f5c..42783a321b489aeed7d23a2e5cae2ee44394bbd9 100644
+index 4b592b3178ccb7ff69e2845e951974b08527e0af..0876a384dc7849e2906334bfcd87a777a07e7551 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -250,4 +250,10 @@ public class PufferfishConfig {
+@@ -247,4 +247,10 @@ public class PufferfishConfig {
      }
  
  
@@ -22,7 +22,7 @@ index 97be3cfd85fbbf4af53bdc94ffdb228825751f5c..42783a321b489aeed7d23a2e5cae2ee4
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 5569b0942ca57a59dc4b895d0e059703952efdcc..4b7e4c2da11e848ffd3069eacd7bb5c34ab07052 100644
+index 4de297a4f57fe51e5cbcd509c694b07e9e88df6f..1e36322d1c2449939dba93eb99bba0a83e3c4a1d 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -2273,6 +2273,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa

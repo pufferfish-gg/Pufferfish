@@ -1,0 +1,37 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kevin Raneri <kevin.raneri@gmail.com>
+Date: Sat, 11 Dec 2021 22:20:45 -0500
+Subject: [PATCH] Disable goal selector during inactive ticking
+
+
+diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+index 0876a384dc7849e2906334bfcd87a777a07e7551..e78a41b9e19e78faa0fc25911e89c5fb32a0795f 100644
+--- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
++++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+@@ -221,6 +221,13 @@ public class PufferfishConfig {
+ 
+         setComment("dab", "Optimizes entity brains when", "they're far away from the player");
+     }
++    
++    public static boolean disableInactiveGoalSelectorTick;
++	private static void inactiveGoalSelectorDisable() {
++		getBoolean("inactive-goal-selector-disable", true,
++				"Disables the AI goal selector in entity inactive ticks.",
++				"This can improve performance by a few percent, but has minor gameplay implications.");
++	}
+ 
+     public static URI profileWebUrl;
+     private static void profilerOptions() {
+diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java b/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
+index 02f44b5682b99417f3cd6d6b25dc46cdc2a09093..6e3e75743ee9f9ef50c3f748d2d4c608a7269c22 100644
+--- a/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
++++ b/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
+@@ -55,7 +55,7 @@ public class GoalSelector {
+         if (inactive && !gg.pufferfish.pufferfish.PufferfishConfig.dearEnabled) tickRate = 4; // reset to Paper's
+         tickRate = Math.min(tickRate, this.newGoalRate);
+         this.curRate++;
+-        return this.curRate % tickRate == 0;
++        return (inactive && gg.pufferfish.pufferfish.PufferfishConfig.disableInactiveGoalSelectorTick) ? false : this.curRate % tickRate == 0; // Pufferfish - disable inactive goal selector ticking
+         // Pufferfish end
+     }
+     public boolean hasTasks() {
