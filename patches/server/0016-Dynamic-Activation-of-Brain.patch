@@ -27,7 +27,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 6ebcbad1e37a2058f722f404c86dae8e1dfa0dc8..966f60feb6390f2efafe4aa28d2f9e3125c8cade 100644
+index 2822afc7a96972284c878485c49ac5ec7fb69400..bbd77ff7b2b4b0744cf1e6dcd7080a5dd092f3f7 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -2,6 +2,12 @@ package gg.pufferfish.pufferfish;
@@ -43,7 +43,7 @@ index 6ebcbad1e37a2058f722f404c86dae8e1dfa0dc8..966f60feb6390f2efafe4aa28d2f9e31
  import java.lang.reflect.Method;
  import java.lang.reflect.Modifier;
  import java.util.List;
-@@ -179,5 +185,37 @@ public class PufferfishConfig {
+@@ -176,5 +182,37 @@ public class PufferfishConfig {
      }
  
  
@@ -84,7 +84,7 @@ index 6ebcbad1e37a2058f722f404c86dae8e1dfa0dc8..966f60feb6390f2efafe4aa28d2f9e31
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index fa925c1081391b9b1037d3c67053b3d8139b607d..937c63e11d4d873bbb42b8534d0f688dea3100e7 100644
+index 3ea5fdb99f8f297042ad85802718a2193866003e..b0f1343ca37ddbad0c4122b79faf6adc42558a0c 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -342,6 +342,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
@@ -111,7 +111,7 @@ index 419a7e9614af2328ed401fc954196056243a984c..9bc568a2b0df13f55ee8670839b9e6a6
      public final String id;
  
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 0b46066d35d9bb38d98a9d6e5ca8dbdc0ba1dc5a..1743c0dadd7ef97d3d611bc554c392620f192886 100644
+index 8200e33ed4ebcae8a27cccf2a28daba5e10cf75d..479c92f0dd70bb6a51dd981b9899720a91c9708f 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
 @@ -210,10 +210,10 @@ public abstract class Mob extends LivingEntity {

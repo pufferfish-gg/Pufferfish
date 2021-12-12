@@ -5,10 +5,10 @@ Subject: [PATCH] Config to disable method profiler
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 97be3cfd85fbbf4af53bdc94ffdb228825751f5c..42783a321b489aeed7d23a2e5cae2ee44394bbd9 100644
+index 4b592b3178ccb7ff69e2845e951974b08527e0af..0876a384dc7849e2906334bfcd87a777a07e7551 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -250,4 +250,10 @@ public class PufferfishConfig {
+@@ -247,4 +247,10 @@ public class PufferfishConfig {
      }
  
  
@@ -34,7 +34,7 @@ index 83ba9e7372bcb903c8113781995a1da6b2aaf1fe..1e7ae166a1d53fce28297e2eaebd11ec
      }
  
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 1109a669675b34c07b611e9830ef1365191da352..d10dc312322783591e3884c2dfb786eb75e5fd0d 100644
+index a172f7c72cedc8ba8d2e2341d8e2a2cc142de238..9d3369b5a4d7d318351b819079e7fca8f4f7d54d 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -1522,6 +1522,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {

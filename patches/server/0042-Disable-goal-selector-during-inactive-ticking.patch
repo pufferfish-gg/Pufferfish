@@ -5,10 +5,10 @@ Subject: [PATCH] Disable goal selector during inactive ticking
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 42783a321b489aeed7d23a2e5cae2ee44394bbd9..ed0c928c98d37cd8698731c42b1e763b19d1ce1d 100644
+index 0876a384dc7849e2906334bfcd87a777a07e7551..e78a41b9e19e78faa0fc25911e89c5fb32a0795f 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -224,6 +224,13 @@ public class PufferfishConfig {
+@@ -221,6 +221,13 @@ public class PufferfishConfig {
  
          setComment("dab", "Optimizes entity brains when", "they're far away from the player");
      }
