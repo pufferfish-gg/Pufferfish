@@ -22,16 +22,16 @@ index 0876a384dc7849e2906334bfcd87a777a07e7551..e78a41b9e19e78faa0fc25911e89c5fb
  
      public static URI profileWebUrl;
      private static void profilerOptions() {
-diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java b/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
-index 02f44b5682b99417f3cd6d6b25dc46cdc2a09093..6e3e75743ee9f9ef50c3f748d2d4c608a7269c22 100644
---- a/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
-+++ b/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
-@@ -55,7 +55,7 @@ public class GoalSelector {
-         if (inactive && !gg.pufferfish.pufferfish.PufferfishConfig.dearEnabled) tickRate = 4; // reset to Paper's
-         tickRate = Math.min(tickRate, this.newGoalRate);
-         this.curRate++;
--        return this.curRate % tickRate == 0;
-+        return (inactive && gg.pufferfish.pufferfish.PufferfishConfig.disableInactiveGoalSelectorTick) ? false : this.curRate % tickRate == 0; // Pufferfish - disable inactive goal selector ticking
-         // Pufferfish end
-     }
-     public boolean hasTasks() {
+diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
+index 479c92f0dd70bb6a51dd981b9899720a91c9708f..4e8b3f94dc990cd05d69e74db6c706e290dca702 100644
+--- a/src/main/java/net/minecraft/world/entity/Mob.java
++++ b/src/main/java/net/minecraft/world/entity/Mob.java
+@@ -210,7 +210,7 @@ public abstract class Mob extends LivingEntity {
+     @Override
+     public void inactiveTick() {
+         super.inactiveTick();
+-        if (this.goalSelector.inactiveTick(this.activatedPriority, true)) { // Pufferfish - pass activated priroity
++        if (this.goalSelector.inactiveTick(this.activatedPriority, true) && !gg.pufferfish.pufferfish.PufferfishConfig.disableInactiveGoalSelectorTick) { // Pufferfish - pass activated priroity // Pufferfish - disable inactive goal selector ticking
+             this.goalSelector.tick();
+         }
+         if (this.targetSelector.inactiveTick(this.activatedPriority, true)) { // Pufferfish - pass activated priority
