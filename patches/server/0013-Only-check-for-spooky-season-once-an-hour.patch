@@ -20,10 +20,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/world/entity/ambient/Bat.java b/src/main/java/net/minecraft/world/entity/ambient/Bat.java
-index 0d90c90bf20d127f410de2aad2ca3c2d989e9576..1666212465a4c3b4be4f88243d8e1d05f1819965 100644
+index df62c7a24560f305832e925afa7ce7b182bb1b35..1b791fb3d1f532473c2c51cfa7c327d6358f1fc9 100644
 --- a/src/main/java/net/minecraft/world/entity/ambient/Bat.java
 +++ b/src/main/java/net/minecraft/world/entity/ambient/Bat.java
-@@ -320,13 +320,23 @@ public class Bat extends AmbientCreature {
+@@ -323,13 +323,23 @@ public class Bat extends AmbientCreature {
      }
  
      public static boolean isHalloweenSeason(Level level) { return level.purpurConfig.forceHalloweenSeason || isHalloween(); } // Purpur
