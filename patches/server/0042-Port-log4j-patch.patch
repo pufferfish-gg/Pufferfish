@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kevin Raneri <kevin.raneri@gmail.com>
+Date: Tue, 14 Dec 2021 14:23:25 -0500
+Subject: [PATCH] Port log4j patch
+
+
+diff --git a/build.gradle.kts b/build.gradle.kts
+index 4226e15f7c95208443b087bd34ddbe8d0b406e3f..9842e6001a61ee81b6545d35041fe7591c087a1e 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -33,11 +33,11 @@ dependencies {
+           all its classes to check if they are plugins.
+           Scanning takes about 1-2 seconds so adding this speeds up the server start.
+      */
+-    implementation("org.apache.logging.log4j:log4j-core:2.15.0") // Paper - implementation
+-    annotationProcessor("org.apache.logging.log4j:log4j-core:2.15.0") // Paper - Needed to generate meta for our Log4j plugins
++    implementation("org.apache.logging.log4j:log4j-core:2.16.0") // Paper - implementation // Pufferfish
++    annotationProcessor("org.apache.logging.log4j:log4j-core:2.16.0") // Paper - Needed to generate meta for our Log4j plugins // Pufferfish
+     // Paper end
+-    implementation("org.apache.logging.log4j:log4j-iostreams:2.15.0") // Paper
+-    implementation("org.apache.logging.log4j:log4j-slf4j18-impl:2.15.0") // Paper
++    implementation("org.apache.logging.log4j:log4j-iostreams:2.16.0") // Paper // Pufferfish
++    implementation("org.apache.logging.log4j:log4j-slf4j18-impl:2.16.0") // Paper // Pufferfish
+     implementation("org.ow2.asm:asm:9.2")
+     implementation("org.ow2.asm:asm-commons:9.2") // Paper - ASM event executor generation
+     runtimeOnly("org.xerial:sqlite-jdbc:3.36.0.3")
