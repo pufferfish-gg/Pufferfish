@@ -1,7 +1,7 @@
 [home]: https://pufferfish.host
 [knowledgebase]: https://docs.pufferfish.host
 [discord]: https://discord.gg/reZw4vQV9H
-[downloads]: https://ci.pufferfish.host/job/Pufferfish
+[downloads]: https://ci.pufferfish.host/job/Pufferfish-1.18
 
 # Pufferfish
 A highly optimized Paper fork designed for large servers requiring both maximum performance, stability, and "enterprise" features.
