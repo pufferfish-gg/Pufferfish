@@ -46,10 +46,10 @@ index beb5b3675233a7fd3c05ae65517173b986cc701f..406bfe20a7b8786bbc6bee46151be91d
              boolean flag1 = level.ticksPerAnimalSpawns != 0L && worlddata.getGameTime() % level.ticksPerAnimalSpawns == 0L; // CraftBukkit
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 1eed6e330118954796d4d642bd78c896d95eb496..f657a0fe7f642a7de5ff7456b8f4745d264b0d98 100644
+index 8994844b6519082244fe95c1ba72dc81ac9f7f64..48f9d27428e2fde3874fb07c2100662b2b5924a2 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -775,6 +775,8 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -779,6 +779,8 @@ public class ServerLevel extends Level implements WorldGenLevel {
      private final io.papermc.paper.util.math.ThreadUnsafeRandom randomTickRandom = new io.papermc.paper.util.math.ThreadUnsafeRandom();
      // Paper end
  
@@ -58,7 +58,7 @@ index 1eed6e330118954796d4d642bd78c896d95eb496..f657a0fe7f642a7de5ff7456b8f4745d
      public void tickChunk(LevelChunk chunk, int randomTickSpeed) {
          ChunkPos chunkcoordintpair = chunk.getPos();
          boolean flag = this.isRaining();
-@@ -785,7 +787,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -789,7 +791,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          gameprofilerfiller.push("thunder");
          final BlockPos.MutableBlockPos blockposition = this.chunkTickMutablePosition; // Paper - use mutable to reduce allocation rate, final to force compile fail on change
  
@@ -67,7 +67,7 @@ index 1eed6e330118954796d4d642bd78c896d95eb496..f657a0fe7f642a7de5ff7456b8f4745d
              blockposition.set(this.findLightningTargetAround(this.getBlockRandomPos(j, 0, k, 15))); // Paper
              if (this.isRainingAt(blockposition)) {
                  DifficultyInstance difficultydamagescaler = this.getCurrentDifficultyAt(blockposition);
-@@ -815,7 +817,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -819,7 +821,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          }
  
          gameprofilerfiller.popPush("iceandsnow");
