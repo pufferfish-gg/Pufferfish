@@ -41,10 +41,10 @@ index 72063ba7fb0d04594043cb07034590d597c3d77e..e4f84112f125673916824fdd7c68e0c1
  
              if (map.referenceCount == 0) {
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 95b05af7935cbe9d280a1e2cf7d8e384653613d0..9880f00791ef37a3b408baf065b6553e2770a0ff 100644
+index cca95d190a979f49762a24729ce399cffbb4d0b0..fabd8ff79a0f49413ed43b37621402e3c4fd355d 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -149,4 +149,21 @@ public class PufferfishConfig {
+@@ -152,4 +152,21 @@ public class PufferfishConfig {
  				"This can be overridden per-player with the permission pufferfish.usebooks");
  	}
  	
@@ -67,7 +67,7 @@ index 95b05af7935cbe9d280a1e2cf7d8e384653613d0..9880f00791ef37a3b408baf065b6553e
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index c6d09d92946d3f15072c76eefcd1a4e796f92557..4de297a4f57fe51e5cbcd509c694b07e9e88df6f 100644
+index cafa0065619bc97731e131b4645fc408d2003f1a..2fa58f28206d2c0087a0a767854159cd3e4f499f 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -313,6 +313,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
