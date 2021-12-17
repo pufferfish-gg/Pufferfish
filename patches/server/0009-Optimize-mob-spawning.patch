@@ -41,10 +41,10 @@ index 72063ba7fb0d04594043cb07034590d597c3d77e..e4f84112f125673916824fdd7c68e0c1
  
              if (map.referenceCount == 0) {
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 95b05af7935cbe9d280a1e2cf7d8e384653613d0..9880f00791ef37a3b408baf065b6553e2770a0ff 100644
+index cca95d190a979f49762a24729ce399cffbb4d0b0..fabd8ff79a0f49413ed43b37621402e3c4fd355d 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -149,4 +149,21 @@ public class PufferfishConfig {
+@@ -152,4 +152,21 @@ public class PufferfishConfig {
  				"This can be overridden per-player with the permission pufferfish.usebooks");
  	}
  	

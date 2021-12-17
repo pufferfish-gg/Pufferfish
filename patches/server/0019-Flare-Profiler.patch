@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 0cd62ea5d375169f2046e4902d24114c90328aa3..088e1e6f76774350066ce1021f6aed4eb3e27c2d 100644
+index 58d4acbe3f21b56d13146e51e4f494f6d2a60ef9..6ab5780bfd7aab71968ea8ba55187a5cce8c4c2c 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -61,6 +61,7 @@ dependencies {
@@ -32,7 +32,7 @@ index 0cd62ea5d375169f2046e4902d24114c90328aa3..088e1e6f76774350066ce1021f6aed4e
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
      testImplementation("junit:junit:4.13.1")
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index bbd77ff7b2b4b0744cf1e6dcd7080a5dd092f3f7..4b592b3178ccb7ff69e2845e951974b08527e0af 100644
+index a2d35abb0cf6054323896c2dff52b95e64050e71..30f491b8f70d402223c0f0bf1a73a7a19a7e5eaa 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -11,6 +11,7 @@ import net.minecraft.world.entity.EntityType;
@@ -57,7 +57,7 @@ index bbd77ff7b2b4b0744cf1e6dcd7080a5dd092f3f7..4b592b3178ccb7ff69e2845e951974b0
  
  public class PufferfishConfig {
  	
-@@ -214,5 +222,29 @@ public class PufferfishConfig {
+@@ -217,5 +225,29 @@ public class PufferfishConfig {
          setComment("dab", "Optimizes entity brains when", "they're far away from the player");
      }
  

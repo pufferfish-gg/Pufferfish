@@ -27,7 +27,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 2822afc7a96972284c878485c49ac5ec7fb69400..bbd77ff7b2b4b0744cf1e6dcd7080a5dd092f3f7 100644
+index 8a854f830fbec0c674d4266552602cee3e07af9b..a2d35abb0cf6054323896c2dff52b95e64050e71 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -2,6 +2,12 @@ package gg.pufferfish.pufferfish;
@@ -43,7 +43,7 @@ index 2822afc7a96972284c878485c49ac5ec7fb69400..bbd77ff7b2b4b0744cf1e6dcd7080a5d
  import java.lang.reflect.Method;
  import java.lang.reflect.Modifier;
  import java.util.List;
-@@ -176,5 +182,37 @@ public class PufferfishConfig {
+@@ -179,5 +185,37 @@ public class PufferfishConfig {
      }
  
  
@@ -84,7 +84,7 @@ index 2822afc7a96972284c878485c49ac5ec7fb69400..bbd77ff7b2b4b0744cf1e6dcd7080a5d
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 3ea5fdb99f8f297042ad85802718a2193866003e..b0f1343ca37ddbad0c4122b79faf6adc42558a0c 100644
+index 3571509cb27efbc409768b52d0074eb19fa0a256..aadb19469126f465380784cd8ccc1d0f26113a65 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -342,6 +342,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
