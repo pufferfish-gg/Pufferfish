@@ -84,7 +84,7 @@ index 2822afc7a96972284c878485c49ac5ec7fb69400..bbd77ff7b2b4b0744cf1e6dcd7080a5d
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 29f7fc7cc9580141094cb722010a58e989e41334..650411a983f760e54602a477decb73db4b5e3b95 100644
+index 13ae39b88d49f7bd55d87ac80c55518c9db37bfe..69a32e5e32392d142f1d475726af80ad1a63f997 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -342,6 +342,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
@@ -219,7 +219,7 @@ index d8bd81f1c8069f81983ccf0aee8200bd67c913de..5059d35269331cf3c34598926d810df6
          this.level.getProfiler().pop();
          this.level.getProfiler().push("goatActivityUpdate");
 diff --git a/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java b/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
-index 866665186e7dd20a00a635d4675da2e7ac57ae91..fa851bdd1b1dc15e500c8537f91f58904d00c393 100644
+index 866665186e7dd20a00a635d4675da2e7ac57ae91..206a38a1c3750999da946482c0e13911b9f084d4 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 @@ -153,10 +153,12 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
@@ -232,7 +232,7 @@ index 866665186e7dd20a00a635d4675da2e7ac57ae91..fa851bdd1b1dc15e500c8537f91f5890
          this.level.getProfiler().push("hoglinBrain");
 -        if (getRider() == null) // Purpur - only use brain if no rider
 +        // if (getRider() == null) // Purpur - only use brain if no rider // Pufferfish - diff on change
-+        if (this.behaviorTick++ % this.activatedPriority == 0 && getRider() != null) // Pufferfish
++        if (this.behaviorTick++ % this.activatedPriority == 0 && getRider() == null) // Pufferfish
          this.getBrain().tick((ServerLevel)this.level, this);
          this.level.getProfiler().pop();
          HoglinAi.updateActivity(this);
