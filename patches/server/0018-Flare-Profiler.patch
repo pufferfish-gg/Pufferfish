@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 730f0fd37880d694d026e4a76f673e589b633b1d..b81e1dacf3f2ab0a261f561b03839514b7424779 100644
+index 96f6fa6ee46f72edc69ca84a96a23faa9801e41e..0fdf6b569f32e5c97b88b7bd42ef3782ecf8c1ed 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -63,6 +63,7 @@ dependencies {
@@ -30,7 +30,7 @@ index 730f0fd37880d694d026e4a76f673e589b633b1d..b81e1dacf3f2ab0a261f561b03839514
 +    implementation("com.github.technove:Flare:2c4a2114a0") // Pufferfish - flare
  
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
-     testImplementation("junit:junit:4.13.1")
+     testImplementation("junit:junit:4.13.2")
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 index a2d35abb0cf6054323896c2dff52b95e64050e71..30f491b8f70d402223c0f0bf1a73a7a19a7e5eaa 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
