@@ -6,7 +6,7 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 8e941079410a1a0b347fa811190fb6771a185319..0d196341ae17eb5ddce3ffcc143fc1461dbe318a 100644
+index da31e84cb558e6fad9cab015cfae753ce7be7db0..a3acbec7716871712062c74d20b9711830bfe278 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -18,8 +18,12 @@ repositories {
@@ -212,10 +212,10 @@ index 481a5dbad82f3f8dd5b1bf8ab207d82ec73d5bbd..902fb4e395f55af101855df3a8c7e488
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b70a6d126e80d775870cfececf6724cde89d4554..c5978a367647b16f560a1ac1c2c73dc903cc638c 100644
+index ba7023e7ca5d29375ff53c2951892138d155f69f..c5d4bd2cffb6c25c04da9cca135854a027edbc7c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -253,7 +253,7 @@ import javax.annotation.Nullable; // Paper
+@@ -254,7 +254,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {

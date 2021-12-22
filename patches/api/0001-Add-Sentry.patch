@@ -5,12 +5,12 @@ Subject: [PATCH] Add Sentry
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 591f30a41d6f39683c60758c2e9f32bb6b476a62..b48776043d6afacd4c92ea81ac8c16c2741a1db4 100644
+index a23b2bd8e1ca1ff8d0ad5ed5d5e41c89e4795090..f00d21bdb0fced241dbbd37784c05f1c3a4598e4 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -40,6 +40,7 @@ dependencies {
      apiAndDocs("net.kyori:adventure-text-serializer-plain")
-     api("org.apache.logging.log4j:log4j-api:2.14.1")
+     api("org.apache.logging.log4j:log4j-api:2.17.0")
      api("org.slf4j:slf4j-api:1.8.0-beta4")
 +    api("io.sentry:sentry:5.4.0") // Pufferfish
  
