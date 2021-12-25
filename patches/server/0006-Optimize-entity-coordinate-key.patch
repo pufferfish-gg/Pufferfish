@@ -11,10 +11,10 @@ data is already available in the blockPosition struct, so we use that
 instead of re-doing the casting.
 
 diff --git a/src/main/java/net/minecraft/server/MCUtil.java b/src/main/java/net/minecraft/server/MCUtil.java
-index 15f0c85ba9f4f9666e94e67dde43eb2e945ecfbf..74003e8887624736b154807e07835c315e836cf3 100644
+index b61abf227a04b4565c2525e5f469db30c3a545a5..f99d189f461921d37581e2fc1382af60921b0660 100644
 --- a/src/main/java/net/minecraft/server/MCUtil.java
 +++ b/src/main/java/net/minecraft/server/MCUtil.java
-@@ -203,7 +203,7 @@ public final class MCUtil {
+@@ -209,7 +209,7 @@ public final class MCUtil {
      }
  
      public static long getCoordinateKey(final Entity entity) {
