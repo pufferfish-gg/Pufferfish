@@ -8,7 +8,7 @@ diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/j
 index 7f082df75ed430dafd45e2d42b9def901b002bc7..b9b2710ab6a46bd1983bf57c839bcb518b78a4bc 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -2343,8 +2343,28 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -2337,8 +2337,28 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
              return ChunkMap.this.level.getServer().getScaledTrackingDistance(initialDistance);
          }
  
@@ -37,7 +37,7 @@ index 7f082df75ed430dafd45e2d42b9def901b002bc7..b9b2710ab6a46bd1983bf57c839bcb51
              Iterator iterator = this.entity.getIndirectPassengers().iterator();
  
              while (iterator.hasNext()) {
-@@ -2356,6 +2376,9 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -2350,6 +2370,9 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
                      i = j;
                  }
              }
