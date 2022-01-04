@@ -81,7 +81,7 @@ index 16fd37a5048ee4b2fa6760c66af6f14e8fd71f89..d7b0c2f3674161db248df0ddd1e3c8c4
          this.playerEntityTrackerTrackMaps = new com.destroystokyo.paper.util.misc.PlayerAreaMap[TRACKING_RANGE_TYPES.length];
          this.entityTrackerTrackRanges = new int[TRACKING_RANGE_TYPES.length];
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 9a07ccbd12675e501a9aebf89ab85adf6fb658ba..47c1f6b40c77f9458287983cba3a94de2e8fbb50 100644
+index 9a07ccbd12675e501a9aebf89ab85adf6fb658ba..cdf68a2eafb2794250ac94b6203ae6ed0c585e5b 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 @@ -77,6 +77,9 @@ public class ServerChunkCache extends ChunkSource {
@@ -158,7 +158,7 @@ index 9a07ccbd12675e501a9aebf89ab85adf6fb658ba..47c1f6b40c77f9458287983cba3a94de
 +                            level.entityTickList.entities.iterator(io.papermc.paper.util.maplist.IteratorSafeOrderedReferenceSet.ITERATOR_FLAG_SEE_ADDITIONS);
 +                    gg.pufferfish.pufferfish.util.IterableWrapper<Entity> wrappedIterator =
 +                            new gg.pufferfish.pufferfish.util.IterableWrapper<>(objectiterator);
-+                    lastSpawnState = NaturalSpawner.createState(mapped, wrappedIterator, this::getFullChunk, new LocalMobCapCalculator(this.chunkMap), true);
++                    lastSpawnState = NaturalSpawner.createState(mapped, wrappedIterator, this::getFullChunk, null, true);
 +                    objectiterator.finishedIterating();
 +                    _pufferfish_spawnCountsReady.set(true);
 +                });
