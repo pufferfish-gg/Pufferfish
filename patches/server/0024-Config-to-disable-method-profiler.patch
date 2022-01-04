@@ -22,10 +22,10 @@ index 30f491b8f70d402223c0f0bf1a73a7a19a7e5eaa..f5b7c4e2c96171cc3a4eb9daf4e01dae
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 2fa58f28206d2c0087a0a767854159cd3e4f499f..613ae19f0eaa8810385c21d28ca94b4be3788198 100644
+index a6740ea47c72860dac2900997cfdbee902c02d55..fdc0fd26f5404620c5ac1d65ca9617c32a4be76f 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -2273,6 +2273,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -2274,6 +2274,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      }
  
      public ProfilerFiller getProfiler() {
@@ -34,7 +34,7 @@ index 2fa58f28206d2c0087a0a767854159cd3e4f499f..613ae19f0eaa8810385c21d28ca94b4b
      }
  
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 5aab697664c2d73d060d42f7ebdb9b878853352f..18340c2872dd235dae41dd5a4406dde05bce342f 100644
+index ad0abf66ebde6254129c9f6f231eace081b57628..a62d84cc78a44d11d3bb074ad7d027caf5a3e10d 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -1569,6 +1569,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {

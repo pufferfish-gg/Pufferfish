@@ -27,10 +27,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 980ff7fecc27356c3f4fd7d5b09f44007423a1ed..1827d45f4702a6f507027bbd5e61125695998929 100644
+index d822287028b1313d18e15f78366db9d9f756b240..d089c242fe32d9e76bf0bd7dea5723ddb2a02385 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -3645,7 +3645,10 @@ public abstract class LivingEntity extends Entity {
+@@ -3659,7 +3659,10 @@ public abstract class LivingEntity extends Entity {
              Vec3 vec3d1 = new Vec3(entity.getX(), entity.getEyeY(), entity.getZ());
  
              // Paper - diff on change - used in CraftLivingEntity#hasLineOfSight(Location) and CraftWorld#lineOfSightExists
@@ -64,7 +64,7 @@ index d1eefa6ef3e9abfe7af4d8310aa64465fa2d5463..0f4aa330e5b179bb706a31917c671f16
      default BlockHitResult clip(ClipContext raytrace1, BlockPos blockposition) {
              // Paper start - Prevent raytrace from loading chunks
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index d7c6e530e5391bfd8831c1c6364a3aa405d40724..5aab697664c2d73d060d42f7ebdb9b878853352f 100644
+index 182b07219192a901289114a16b12eb32cc3caa4c..ad0abf66ebde6254129c9f6f231eace081b57628 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -485,6 +485,91 @@ public abstract class Level implements LevelAccessor, AutoCloseable {

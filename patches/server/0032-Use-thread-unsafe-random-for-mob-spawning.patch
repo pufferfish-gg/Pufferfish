@@ -18,10 +18,10 @@ index 48f9d27428e2fde3874fb07c2100662b2b5924a2..713e3be837509fcb0e240e87c339496c
  
      private int currentIceAndSnowTick = 0; protected void resetIceAndSnowTick() { this.currentIceAndSnowTick = this.randomTickRandom.nextInt(16); } // Pufferfish
 diff --git a/src/main/java/net/minecraft/world/level/NaturalSpawner.java b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-index ce229538a22209bda48070a399fb77cd42c3af82..387b8b158dfe7a3832dff84b0bde97fd4c3a863b 100644
+index 13bdcfa587fcc8575dc4f99ef0954815cb773b0d..434bdc40ddd92700211076965d97a473706e7351 100644
 --- a/src/main/java/net/minecraft/world/level/NaturalSpawner.java
 +++ b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-@@ -424,12 +424,12 @@ public final class NaturalSpawner {
+@@ -431,12 +431,12 @@ public final class NaturalSpawner {
          return spawnGroup == MobCategory.MONSTER && world.getBlockState(pos.below()).is(Blocks.NETHER_BRICKS) && structureAccessor.getStructureAt(pos, StructureFeature.NETHER_BRIDGE).isValid();
      }
  

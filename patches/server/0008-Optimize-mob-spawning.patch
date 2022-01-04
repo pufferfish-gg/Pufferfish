@@ -16,30 +16,6 @@ this can result in performance gains of up to 15%, which is significant
 and, in my opinion, worth the low risk of minor mob-spawning-related
 inconsistencies.
 
-diff --git a/src/main/java/com/destroystokyo/paper/util/PlayerMobDistanceMap.java b/src/main/java/com/destroystokyo/paper/util/PlayerMobDistanceMap.java
-index 72063ba7fb0d04594043cb07034590d597c3d77e..e4f84112f125673916824fdd7c68e0c1f7d954eb 100644
---- a/src/main/java/com/destroystokyo/paper/util/PlayerMobDistanceMap.java
-+++ b/src/main/java/com/destroystokyo/paper/util/PlayerMobDistanceMap.java
-@@ -18,7 +18,7 @@ public final class PlayerMobDistanceMap {
- 
-     private final Map<ServerPlayer, SectionPos> players = new HashMap<>();
-     // we use linked for better iteration.
--    private final Long2ObjectOpenHashMap<PooledHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer>> playerMap = new Long2ObjectOpenHashMap<>(32, 0.5f);
-+    private final java.util.concurrent.ConcurrentHashMap<Long, PooledHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer>> playerMap = new java.util.concurrent.ConcurrentHashMap<>(32, 0.5f); // Pufferfish
-     private int viewDistance;
- 
-     private final PooledHashSets<ServerPlayer> pooledHashSets = new PooledHashSets<>();
-@@ -75,8 +75,8 @@ public final class PlayerMobDistanceMap {
-         final int centerX = currPosition.getX();
-         final int centerZ = currPosition.getZ();
- 
--        for (final Long2ObjectLinkedOpenHashMap.Entry<PooledHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer>> entry : this.playerMap.long2ObjectEntrySet()) {
--            final long key = entry.getLongKey();
-+        for (final Map.Entry<Long, PooledHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer>> entry : this.playerMap.entrySet()) { // Pufferfish
-+            final long key = entry.getKey(); // Pufferfish
-             final PooledHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> map = entry.getValue();
- 
-             if (map.referenceCount == 0) {
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 index cca95d190a979f49762a24729ce399cffbb4d0b0..fabd8ff79a0f49413ed43b37621402e3c4fd355d 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
@@ -67,7 +43,7 @@ index cca95d190a979f49762a24729ce399cffbb4d0b0..fabd8ff79a0f49413ed43b37621402e3
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index cafa0065619bc97731e131b4645fc408d2003f1a..2fa58f28206d2c0087a0a767854159cd3e4f499f 100644
+index 5f0ccf86091303d254ccbf88e19837a816e2dbf9..a6740ea47c72860dac2900997cfdbee902c02d55 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -313,6 +313,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -80,19 +56,32 @@ index cafa0065619bc97731e131b4645fc408d2003f1a..2fa58f28206d2c0087a0a767854159cd
      public static <S extends MinecraftServer> S spin(Function<Thread, S> serverFactory) {
          AtomicReference<S> atomicreference = new AtomicReference();
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index f1321ac1ddfa293afffd7c00d9063d9154e6bba6..5ac11497df876956599c45edb105cbdd22c26182 100644
+index 29beae29a80452daa3563a121e215c7ec98124d8..2553b1f8a6e815523f6d3c34c0a126df7132ff28 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -383,6 +383,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
- 
+@@ -384,6 +384,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
              org.purpurmc.purpur.task.BossBarTask.startAll(); // Purpur
+             org.purpurmc.purpur.task.BeehiveTask.instance().register(); // Purpur
  
 +            if (gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncMobSpawning) mobSpawnExecutor.start(); // Pufferfish
              return true;
          }
      }
+diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
+index 7aa2cd8362c7dbfd22d1b75418c3dbb35ac4a4e1..00ccb0aa9cbedaf44500057091dd665cfbf301d8 100644
+--- a/src/main/java/net/minecraft/server/level/ChunkMap.java
++++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
+@@ -447,7 +447,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+         this.dataRegionManager = new io.papermc.paper.chunk.SingleThreadChunkRegionManager(this.level, 2, (1.0 / 3.0), 1, 6, "Data", DataRegionData::new, DataRegionSectionData::new);
+         this.regionManagers.add(this.dataRegionManager);
+         // Paper end
+-        this.playerMobDistanceMap = this.level.paperConfig.perPlayerMobSpawns ? new com.destroystokyo.paper.util.misc.PlayerAreaMap(this.pooledLinkedPlayerHashSets) : null; // Paper
++        this.playerMobDistanceMap = this.level.paperConfig.perPlayerMobSpawns ? new gg.pufferfish.pufferfish.util.AsyncPlayerAreaMap(this.pooledLinkedPlayerHashSets) : null; // Paper // Pufferfish
+         // Paper start - use distance map to optimise entity tracker
+         this.playerEntityTrackerTrackMaps = new com.destroystokyo.paper.util.misc.PlayerAreaMap[TRACKING_RANGE_TYPES.length];
+         this.entityTrackerTrackRanges = new int[TRACKING_RANGE_TYPES.length];
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index e7e110b53e79e0606262982555dd9eb096c7c4a8..beb5b3675233a7fd3c05ae65517173b986cc701f 100644
+index 9a07ccbd12675e501a9aebf89ab85adf6fb658ba..47c1f6b40c77f9458287983cba3a94de2e8fbb50 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 @@ -77,6 +77,9 @@ public class ServerChunkCache extends ChunkSource {
@@ -105,10 +94,10 @@ index e7e110b53e79e0606262982555dd9eb096c7c4a8..beb5b3675233a7fd3c05ae65517173b9
  
      private static int getChunkCacheKey(int x, int z) {
          return x & 3 | ((z & 3) << 2);
-@@ -988,18 +991,25 @@ public class ServerChunkCache extends ChunkSource {
-                 this.level.timings.playerMobDistanceMapUpdate.startTiming();
-                 this.chunkMap.playerMobDistanceMap.update(this.level.players, this.chunkMap.viewDistance);
-                 this.level.timings.playerMobDistanceMapUpdate.stopTiming();
+@@ -984,18 +987,25 @@ public class ServerChunkCache extends ChunkSource {
+             // Paper start - per player mob spawning
+             NaturalSpawner.SpawnState spawnercreature_d; // moved down
+             if ((this.spawnFriendlies || this.spawnEnemies) && this.chunkMap.playerMobDistanceMap != null) { // don't count mobs when animals and monsters are disabled
 -                // re-set mob counts
 -                for (ServerPlayer player : this.level.players) {
 -                    Arrays.fill(player.mobCounts, 0);
@@ -118,14 +107,14 @@ index e7e110b53e79e0606262982555dd9eb096c7c4a8..beb5b3675233a7fd3c05ae65517173b9
 +                    for (ServerPlayer player : this.level.players) {
 +                        Arrays.fill(player.mobCounts, 0);
 +                    }
-+                    lastSpawnState = NaturalSpawner.createState(l, this.level.getAllEntities(), this::getFullChunk, new LocalMobCapCalculator(this.chunkMap), true);
++                    lastSpawnState = NaturalSpawner.createState(l, this.level.getAllEntities(), this::getFullChunk, null, true);
                  }
--                spawnercreature_d = NaturalSpawner.createState(l, this.level.getAllEntities(), this::getFullChunk, new LocalMobCapCalculator(this.chunkMap), true);
-+                 // Pufferfish end
+-                spawnercreature_d = NaturalSpawner.createState(l, this.level.getAllEntities(), this::getFullChunk, null, true);
++                // Pufferfish end
              } else {
--                spawnercreature_d = NaturalSpawner.createState(l, this.level.getAllEntities(), this::getFullChunk, new LocalMobCapCalculator(this.chunkMap), false);
+-                spawnercreature_d = NaturalSpawner.createState(l, this.level.getAllEntities(), this::getFullChunk, this.chunkMap.playerMobDistanceMap == null ? new LocalMobCapCalculator(this.chunkMap) : null, false);
 +                // Pufferfish start - this is only implemented for per-player mob spawning so this makes everything work if this setting is disabled.
-+                lastSpawnState = NaturalSpawner.createState(l, this.level.getAllEntities(), this::getFullChunk, new LocalMobCapCalculator(this.chunkMap), false);
++                lastSpawnState = NaturalSpawner.createState(l, this.level.getAllEntities(), this::getFullChunk, this.chunkMap.playerMobDistanceMap == null ? new LocalMobCapCalculator(this.chunkMap) : null, false);
 +                _pufferfish_spawnCountsReady.set(true);
 +                // Pufferfish end
              }
@@ -137,7 +126,7 @@ index e7e110b53e79e0606262982555dd9eb096c7c4a8..beb5b3675233a7fd3c05ae65517173b9
              gameprofilerfiller.popPush("filteringLoadedChunks");
              // Paper - moved down
              this.level.timings.chunkTicks.startTiming(); // Paper
-@@ -1041,8 +1051,8 @@ public class ServerChunkCache extends ChunkSource {
+@@ -1037,8 +1047,8 @@ public class ServerChunkCache extends ChunkSource {
  
                  if ((true || this.level.isPositionEntityTicking(chunkcoordintpair)) && this.chunkMap.anyPlayerCloseEnoughForSpawning(holder, chunkcoordintpair, false)) { // Paper - optimise anyPlayerCloseEnoughForSpawning & optimise chunk tick iteration
                      chunk1.incrementInhabitedTime(j);
@@ -148,7 +137,7 @@ index e7e110b53e79e0606262982555dd9eb096c7c4a8..beb5b3675233a7fd3c05ae65517173b9
                      }
  
                      if (this.level.shouldTickBlocksAt(chunkcoordintpair.toLong())) {
-@@ -1089,6 +1099,30 @@ public class ServerChunkCache extends ChunkSource {
+@@ -1085,6 +1095,30 @@ public class ServerChunkCache extends ChunkSource {
              }
              // Paper end - controlled flush for entity tracker packets
          }
@@ -180,7 +169,7 @@ index e7e110b53e79e0606262982555dd9eb096c7c4a8..beb5b3675233a7fd3c05ae65517173b9
  
      private void getFullChunk(long pos, Consumer<LevelChunk> chunkConsumer) {
 diff --git a/src/main/java/net/minecraft/world/level/NaturalSpawner.java b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-index 3ce14f26abb890e0d3fbf9b02747c4614ec46b47..ce229538a22209bda48070a399fb77cd42c3af82 100644
+index 302803aa25b713cb087bdb2991cb0803dfe6005b..13bdcfa587fcc8575dc4f99ef0954815cb773b0d 100644
 --- a/src/main/java/net/minecraft/world/level/NaturalSpawner.java
 +++ b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
 @@ -170,7 +170,7 @@ public final class NaturalSpawner {
@@ -189,9 +178,9 @@ index 3ce14f26abb890e0d3fbf9b02747c4614ec46b47..ce229538a22209bda48070a399fb77cd
              if (world.paperConfig.perPlayerMobSpawns) {
 -                int minDiff = Integer.MAX_VALUE;
 +                int minDiff = gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncMobSpawning ? difference : Integer.MAX_VALUE; // Pufferfish - optimize mob spawning
-                 for (net.minecraft.server.level.ServerPlayer entityplayer : world.getChunkSource().chunkMap.playerMobDistanceMap.getPlayersInRange(chunk.getPos())) {
-                     minDiff = Math.min(limit - world.getChunkSource().chunkMap.getMobCountNear(entityplayer, enumcreaturetype), minDiff);
-                 }
+                 final com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<net.minecraft.server.level.ServerPlayer> inRange = world.getChunkSource().chunkMap.playerMobDistanceMap.getObjectsInRange(chunk.getPos());
+                 if (inRange != null) {
+                     final Object[] backingSet = inRange.getBackingSet();
 diff --git a/src/main/java/net/minecraft/world/level/entity/EntityTickList.java b/src/main/java/net/minecraft/world/level/entity/EntityTickList.java
 index 4814e719e0b898464692075170889fdb2729a26a..ffcd18fa852af3f24bdf5398f481b839d2dcfe6c 100644
 --- a/src/main/java/net/minecraft/world/level/entity/EntityTickList.java
