@@ -84,7 +84,7 @@ index 8a854f830fbec0c674d4266552602cee3e07af9b..a2d35abb0cf6054323896c2dff52b95e
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 3571509cb27efbc409768b52d0074eb19fa0a256..aadb19469126f465380784cd8ccc1d0f26113a65 100644
+index a162768ed87ccf7e4aa0178bc74b578784f9fa5e..67776ce978ff7435ce6db8f6dcf33f0a51d794a4 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -342,6 +342,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
@@ -111,7 +111,7 @@ index 419a7e9614af2328ed401fc954196056243a984c..9bc568a2b0df13f55ee8670839b9e6a6
      public final String id;
  
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 8200e33ed4ebcae8a27cccf2a28daba5e10cf75d..479c92f0dd70bb6a51dd981b9899720a91c9708f 100644
+index 031660f7d0ea270f87e5174a4fe65ccad1f7a561..d0c89fdc3ee57bfbd959c0446be6f3ab5447de27 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
 @@ -210,10 +210,10 @@ public abstract class Mob extends LivingEntity {
@@ -249,7 +249,7 @@ index 8a2c2b4bd603aae37055abd058feb7ee759078ce..d850f1f57fc7560738f7bd82b37ec888
          this.level.getProfiler().pop();
          PiglinAi.updateActivity(this);
 diff --git a/src/main/java/net/minecraft/world/entity/npc/Villager.java b/src/main/java/net/minecraft/world/entity/npc/Villager.java
-index 0ac3d6b25857bc5af0a4909a70053eeb86ea48ea..7364a50d440b990fd3ec0939b3cde6dae9bdb88b 100644
+index ea612b3c3ed7305b504d65eb6d38ed99547fd488..7d6bc3c253a77adfc7c35383caadb37154dc5c0f 100644
 --- a/src/main/java/net/minecraft/world/entity/npc/Villager.java
 +++ b/src/main/java/net/minecraft/world/entity/npc/Villager.java
 @@ -138,6 +138,8 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
@@ -281,10 +281,10 @@ index 0ac3d6b25857bc5af0a4909a70053eeb86ea48ea..7364a50d440b990fd3ec0939b3cde6da
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index feec2b3b832fd2c490276e4360fcf6e2b40f01cf..e7623d92ff3d19b11bc50ed4011580ae704be4f3 100644
+index 1732e753ea7748a66abecafb2136f93383f5ec4e..8e0afc58081dee8dec7d74737d88355969f180d6 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
-@@ -37,6 +37,10 @@ import co.aikar.timings.MinecraftTimings;
+@@ -38,6 +38,10 @@ import co.aikar.timings.MinecraftTimings;
  import net.minecraft.world.entity.schedule.Activity;
  import net.minecraft.world.level.Level;
  import net.minecraft.world.phys.AABB;
@@ -295,7 +295,7 @@ index feec2b3b832fd2c490276e4360fcf6e2b40f01cf..e7623d92ff3d19b11bc50ed4011580ae
  
  public class ActivationRange
  {
-@@ -210,6 +214,21 @@ public class ActivationRange
+@@ -211,6 +215,21 @@ public class ActivationRange
              for (int i = 0; i < entities.size(); i++) {
                  Entity entity = entities.get(i);
                  ActivationRange.activateEntity(entity);
@@ -317,7 +317,7 @@ index feec2b3b832fd2c490276e4360fcf6e2b40f01cf..e7623d92ff3d19b11bc50ed4011580ae
              }
              // Paper end
          }
-@@ -226,12 +245,12 @@ public class ActivationRange
+@@ -227,12 +246,12 @@ public class ActivationRange
          if ( MinecraftServer.currentTick > entity.activatedTick )
          {
              if ( entity.defaultActivationState )
