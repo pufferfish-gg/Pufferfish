@@ -1,11 +1,11 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Kevin Raneri <kevin.raneri@gmail.com>
 Date: Sat, 11 Dec 2021 22:20:45 -0500
-Subject: [PATCH] Disable goal selector during inactive ticking
+Subject: [PATCH] Throttle goal selector during inactive ticking
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index f5b7c4e2c96171cc3a4eb9daf4e01daeaee3075c..c32f284b5ce200c0f4dc7e22b986c10edee5a66f 100644
+index f5b7c4e2c96171cc3a4eb9daf4e01daeaee3075c..284f9eb542b686833ec54d4de6493d7dac5aa6b8 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -224,6 +224,13 @@ public class PufferfishConfig {
@@ -13,25 +13,31 @@ index f5b7c4e2c96171cc3a4eb9daf4e01daeaee3075c..c32f284b5ce200c0f4dc7e22b986c10e
          setComment("dab", "Optimizes entity brains when", "they're far away from the player");
      }
 +    
-+    public static boolean disableInactiveGoalSelectorTick;
-+	private static void inactiveGoalSelectorDisable() {
-+		getBoolean("inactive-goal-selector-disable", true,
-+				"Disables the AI goal selector in entity inactive ticks.",
++    public static boolean throttleInactiveGoalSelectorTick;
++	private static void inactiveGoalSelectorThrottle() {
++		getBoolean("inactive-goal-selector-throttle", "inactive-goal-selector-disable", true,
++				"Throttles the AI goal selector in entity inactive ticks.",
 +				"This can improve performance by a few percent, but has minor gameplay implications.");
 +	}
  
      public static URI profileWebUrl;
      private static void profilerOptions() {
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 479c92f0dd70bb6a51dd981b9899720a91c9708f..4e8b3f94dc990cd05d69e74db6c706e290dca702 100644
+index d0c89fdc3ee57bfbd959c0446be6f3ab5447de27..06e87f3564bfba17393f36d2188abfd2ee9ac650 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
-@@ -210,7 +210,7 @@ public abstract class Mob extends LivingEntity {
+@@ -206,11 +206,13 @@ public abstract class Mob extends LivingEntity {
+         return this.lookControl;
+     }
+ 
++    int tickCount = 0; // Pufferfish - throttle inactive goal selector ticking
+     // Paper start
      @Override
      public void inactiveTick() {
          super.inactiveTick();
 -        if (this.goalSelector.inactiveTick(this.activatedPriority, true)) { // Pufferfish - pass activated priroity
-+        if (this.goalSelector.inactiveTick(this.activatedPriority, true) && !gg.pufferfish.pufferfish.PufferfishConfig.disableInactiveGoalSelectorTick) { // Pufferfish - pass activated priroity // Pufferfish - disable inactive goal selector ticking
++        boolean isThrottled = gg.pufferfish.pufferfish.PufferfishConfig.throttleInactiveGoalSelectorTick && tickCount++ % 20 != 0; // Pufferfish - throttle inactive goal selector ticking
++        if (this.goalSelector.inactiveTick(this.activatedPriority, true) && !isThrottled) { // Pufferfish - pass activated priroity // Pufferfish - throttle inactive goal selector ticking
              this.goalSelector.tick();
          }
          if (this.targetSelector.inactiveTick(this.activatedPriority, true)) { // Pufferfish - pass activated priority
