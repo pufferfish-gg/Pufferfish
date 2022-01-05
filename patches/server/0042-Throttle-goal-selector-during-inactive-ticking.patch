@@ -23,20 +23,20 @@ index f5b7c4e2c96171cc3a4eb9daf4e01daeaee3075c..284f9eb542b686833ec54d4de6493d7d
      public static URI profileWebUrl;
      private static void profilerOptions() {
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index d0c89fdc3ee57bfbd959c0446be6f3ab5447de27..06e87f3564bfba17393f36d2188abfd2ee9ac650 100644
+index d0c89fdc3ee57bfbd959c0446be6f3ab5447de27..35ff7abd8251b0af6c23fbb63804db632ec5b85d 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
 @@ -206,11 +206,13 @@ public abstract class Mob extends LivingEntity {
          return this.lookControl;
      }
  
-+    int tickCount = 0; // Pufferfish - throttle inactive goal selector ticking
++    int _pufferfish_inactiveTickDisableCounter = 0; // Pufferfish - throttle inactive goal selector ticking
      // Paper start
      @Override
      public void inactiveTick() {
          super.inactiveTick();
 -        if (this.goalSelector.inactiveTick(this.activatedPriority, true)) { // Pufferfish - pass activated priroity
-+        boolean isThrottled = gg.pufferfish.pufferfish.PufferfishConfig.throttleInactiveGoalSelectorTick && tickCount++ % 20 != 0; // Pufferfish - throttle inactive goal selector ticking
++        boolean isThrottled = gg.pufferfish.pufferfish.PufferfishConfig.throttleInactiveGoalSelectorTick && _pufferfish_inactiveTickDisableCounter++ % 20 != 0; // Pufferfish - throttle inactive goal selector ticking
 +        if (this.goalSelector.inactiveTick(this.activatedPriority, true) && !isThrottled) { // Pufferfish - pass activated priroity // Pufferfish - throttle inactive goal selector ticking
              this.goalSelector.tick();
          }
