@@ -168,19 +168,6 @@ index 9a07ccbd12675e501a9aebf89ab85adf6fb658ba..cdf68a2eafb2794250ac94b6203ae6ed
      }
  
      private void getFullChunk(long pos, Consumer<LevelChunk> chunkConsumer) {
-diff --git a/src/main/java/net/minecraft/world/level/NaturalSpawner.java b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-index 302803aa25b713cb087bdb2991cb0803dfe6005b..13bdcfa587fcc8575dc4f99ef0954815cb773b0d 100644
---- a/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-+++ b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-@@ -170,7 +170,7 @@ public final class NaturalSpawner {
-             int difference = k1 - currEntityCount;
- 
-             if (world.paperConfig.perPlayerMobSpawns) {
--                int minDiff = Integer.MAX_VALUE;
-+                int minDiff = gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncMobSpawning ? difference : Integer.MAX_VALUE; // Pufferfish - optimize mob spawning
-                 final com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<net.minecraft.server.level.ServerPlayer> inRange = world.getChunkSource().chunkMap.playerMobDistanceMap.getObjectsInRange(chunk.getPos());
-                 if (inRange != null) {
-                     final Object[] backingSet = inRange.getBackingSet();
 diff --git a/src/main/java/net/minecraft/world/level/entity/EntityTickList.java b/src/main/java/net/minecraft/world/level/entity/EntityTickList.java
 index 4814e719e0b898464692075170889fdb2729a26a..ffcd18fa852af3f24bdf5398f481b839d2dcfe6c 100644
 --- a/src/main/java/net/minecraft/world/level/entity/EntityTickList.java
