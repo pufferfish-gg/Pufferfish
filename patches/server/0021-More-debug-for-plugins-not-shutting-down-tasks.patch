@@ -5,7 +5,7 @@ Subject: [PATCH] More debug for plugins not shutting down tasks
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index c5d4bd2cffb6c25c04da9cca135854a027edbc7c..041ebfefca8f944f457a269f0e0b450b21949e73 100644
+index ee3c13c48e4c9e822adac36b22392a36e2eb2232..868e148e6a8cd85ef89b79ad539dd5f3bce0a7c7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1063,6 +1063,11 @@ public final class CraftServer implements Server {

@@ -84,7 +84,7 @@ index 8a854f830fbec0c674d4266552602cee3e07af9b..a2d35abb0cf6054323896c2dff52b95e
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index a162768ed87ccf7e4aa0178bc74b578784f9fa5e..67776ce978ff7435ce6db8f6dcf33f0a51d794a4 100644
+index 742fc7c41c70e8bac27f3b472eea777edd943a97..0f4ea7b4cbbc81632435731270b44051d20c55b3 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -342,6 +342,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
@@ -217,11 +217,11 @@ index cc5687f43f8ac99995667fdc53c5c0586f70f367..d5cd18c478bedaeed83de31d442d1a5b
          this.level.getProfiler().pop();
          this.level.getProfiler().push("goatActivityUpdate");
 diff --git a/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java b/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
-index ee0981d2a99c0cebc0a53ac02d2dc5a551b2f7f0..17b4185704abfd47832941d02d60500707e8a530 100644
+index 373ec915412899e4893aa182abd6fb63f3dff0aa..fc43b1d5dcb53456bb24ae46ea08b97b14403c86 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 @@ -126,9 +126,11 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
-         return (Brain<Hoglin>) super.getBrain(); // Airplane - decompile fix
+         return (Brain<Hoglin>) super.getBrain(); // Paper - decompile fix
      }
  
 +    private int behaviorTick; // Pufferfish
@@ -233,7 +233,7 @@ index ee0981d2a99c0cebc0a53ac02d2dc5a551b2f7f0..17b4185704abfd47832941d02d605007
          this.level.getProfiler().pop();
          HoglinAi.updateActivity(this);
 diff --git a/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java b/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
-index 8a2c2b4bd603aae37055abd058feb7ee759078ce..d850f1f57fc7560738f7bd82b37ec888e8e9301c 100644
+index f65d32245556e2acab927a29626749edea980f0a..16116a4f907ff691646a3e98dd8e25e0f26c3c49 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
 @@ -288,9 +288,11 @@ public class Piglin extends AbstractPiglin implements CrossbowAttackMob, Invento
@@ -281,7 +281,7 @@ index ea612b3c3ed7305b504d65eb6d38ed99547fd488..7d6bc3c253a77adfc7c35383caadb371
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index 1732e753ea7748a66abecafb2136f93383f5ec4e..8e0afc58081dee8dec7d74737d88355969f180d6 100644
+index 54a55cc05776af8de63b492bbda58182bb4c3726..eca5809d408f4f4290134284ccb52b0efa4e712f 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -38,6 +38,10 @@ import co.aikar.timings.MinecraftTimings;
@@ -295,7 +295,7 @@ index 1732e753ea7748a66abecafb2136f93383f5ec4e..8e0afc58081dee8dec7d74737d883559
  
  public class ActivationRange
  {
-@@ -211,6 +215,21 @@ public class ActivationRange
+@@ -215,6 +219,21 @@ public class ActivationRange
              for (int i = 0; i < entities.size(); i++) {
                  Entity entity = entities.get(i);
                  ActivationRange.activateEntity(entity);
@@ -317,7 +317,7 @@ index 1732e753ea7748a66abecafb2136f93383f5ec4e..8e0afc58081dee8dec7d74737d883559
              }
              // Paper end
          }
-@@ -227,12 +246,12 @@ public class ActivationRange
+@@ -231,12 +250,12 @@ public class ActivationRange
          if ( MinecraftServer.currentTick > entity.activatedTick )
          {
              if ( entity.defaultActivationState )

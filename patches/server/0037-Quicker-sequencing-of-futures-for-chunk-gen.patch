@@ -5,7 +5,7 @@ Subject: [PATCH] Quicker sequencing of futures for chunk gen
 
 
 diff --git a/src/main/java/net/minecraft/Util.java b/src/main/java/net/minecraft/Util.java
-index f6561599391583ba7d669af42b5716cda0df2d68..b09c12805771a756c0661d4ffcd7888817056db8 100644
+index 9c111d479bbcc101886c12950c97f10941125ae7..90018506da9e900d448a1fc43b3213ac513686e6 100644
 --- a/src/main/java/net/minecraft/Util.java
 +++ b/src/main/java/net/minecraft/Util.java
 @@ -391,6 +391,10 @@ public class Util {

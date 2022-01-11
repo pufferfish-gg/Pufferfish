@@ -5,7 +5,7 @@ Subject: [PATCH] Pufferfish Config and Command
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index a3acbec7716871712062c74d20b9711830bfe278..5bd64c2adbd5dc6725192efb089fa3a8cf276257 100644
+index 6b1a8a2b3ca09c60c038a1725cff92ee0b7bbbb6..5e494f3ca75958efb0aa53ec556e2ad4b03001bd 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -55,6 +55,13 @@ dependencies {

@@ -5,7 +5,7 @@ Subject: [PATCH] Use thread unsafe random for mob spawning
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 29788df5bdeca2f3d989d74d66ceb8ecf2717416..6a83cd82cb32c5b9ad3983c82adb5f042c2881a6 100644
+index 9445f4652b955cb3a84c8695a1e1d1e11d4ed69c..3763466023564efa322c95c2ec87e3034e3dd2c7 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -729,7 +729,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -18,7 +18,7 @@ index 29788df5bdeca2f3d989d74d66ceb8ecf2717416..6a83cd82cb32c5b9ad3983c82adb5f04
  
      private int currentIceAndSnowTick = 0; protected void resetIceAndSnowTick() { this.currentIceAndSnowTick = this.randomTickRandom.nextInt(16); } // Pufferfish
 diff --git a/src/main/java/net/minecraft/world/level/NaturalSpawner.java b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-index 13bdcfa587fcc8575dc4f99ef0954815cb773b0d..434bdc40ddd92700211076965d97a473706e7351 100644
+index c6bddf5e08376f1f254a27fc38647587eefcb00a..4ae9717b9ee77b3c28282e6560fc42081b6188ae 100644
 --- a/src/main/java/net/minecraft/world/level/NaturalSpawner.java
 +++ b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
 @@ -431,12 +431,12 @@ public final class NaturalSpawner {
