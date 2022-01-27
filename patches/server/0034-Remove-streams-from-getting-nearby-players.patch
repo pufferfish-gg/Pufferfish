@@ -7,10 +7,10 @@ This results in a 3% improvement at 20,000 entities, but more
 importantly is the heaviest part of the entity tracker currently.
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 0f4ea7b4cbbc81632435731270b44051d20c55b3..ad059cbfc9874289445e902c44b5db2435b9b3aa 100644
+index 3e796e54a2d732b5dbfbc1769fe8fc2ce6830cb2..63c020bb3bd807ef4bf37a22047f3b8569687d48 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -369,17 +369,36 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
+@@ -376,17 +376,36 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
          this.isLegacyTrackingEntity = isLegacyTrackingEntity;
      }
  
@@ -48,7 +48,7 @@ index 0f4ea7b4cbbc81632435731270b44051d20c55b3..ad059cbfc9874289445e902c44b5db24
          for (Entity passenger : passengers) {
              org.spigotmc.TrackingRange.TrackingRangeType passengerType = passenger.trackingRangeType;
              int passengerRange = chunkMap.getEntityTrackerRange(passengerType.ordinal());
-@@ -388,6 +407,9 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
+@@ -395,6 +414,9 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
                  range = passengerRange;
              }
          }

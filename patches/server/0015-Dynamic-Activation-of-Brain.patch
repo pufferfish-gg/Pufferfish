@@ -84,10 +84,10 @@ index 8a854f830fbec0c674d4266552602cee3e07af9b..a2d35abb0cf6054323896c2dff52b95e
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 742fc7c41c70e8bac27f3b472eea777edd943a97..0f4ea7b4cbbc81632435731270b44051d20c55b3 100644
+index b85aff6e1ff66dfc879611018fd89282ba7b9db7..3e796e54a2d732b5dbfbc1769fe8fc2ce6830cb2 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -342,6 +342,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
+@@ -349,6 +349,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
          return this.originWorld;
      }
      // Paper end
@@ -185,10 +185,10 @@ index 7fdc1cbd04a5bba9648272985f51c849b07b8223..02f44b5682b99417f3cd6d6b25dc46cd
      public boolean hasTasks() {
          for (WrappedGoal task : this.availableGoals) {
 diff --git a/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java b/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java
-index 86acf89ce875e215da8469947b382f70e42314b0..0fe2d6190ebba24713a3da7ef5367ecb86814a66 100644
+index a3ad957a9131168656b8e30c82d762c77e96ae6e..c296862063d2dcaf5e2d03d316c49ae03ab7d625 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java
-@@ -276,9 +276,11 @@ public class Axolotl extends Animal implements LerpingModel, Bucketable {
+@@ -282,9 +282,11 @@ public class Axolotl extends Animal implements LerpingModel, Bucketable {
          return true;
      }
  
@@ -281,7 +281,7 @@ index ea612b3c3ed7305b504d65eb6d38ed99547fd488..7d6bc3c253a77adfc7c35383caadb371
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index 54a55cc05776af8de63b492bbda58182bb4c3726..eca5809d408f4f4290134284ccb52b0efa4e712f 100644
+index 8bd8b85445b2b0b6517590baef33bb4234bb2a38..b36578313f0dbefb2a2890488e019f845b5ae334 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -38,6 +38,10 @@ import co.aikar.timings.MinecraftTimings;
