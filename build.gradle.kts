@@ -1,7 +1,7 @@
 plugins {
     java
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("io.papermc.paperweight.patcher") version "1.3.3"
+    id("io.papermc.paperweight.patcher") version "1.3.4"
 }
 
 repositories {
@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    remapper("net.fabricmc:tiny-remapper:0.7.0:fat")
+    remapper("net.fabricmc:tiny-remapper:0.8.1:fat")
     decompiler("net.minecraftforge:forgeflower:1.5.498.22")
     paperclip("io.papermc:paperclip:3.0.2")
 }
@@ -51,6 +51,7 @@ paperweight {
     decompileRepo.set("https://files.minecraftforge.net/maven/")
 
     usePaperUpstream(providers.gradleProperty("paperRef")) {
+        url.set(github("pufferfish-gg", "Paper"))
         withPaperPatcher {
             apiPatchDir.set(layout.projectDirectory.dir("patches/api"))
             serverPatchDir.set(layout.projectDirectory.dir("patches/server"))

@@ -43,7 +43,7 @@ index cca95d190a979f49762a24729ce399cffbb4d0b0..fabd8ff79a0f49413ed43b37621402e3
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index e1faf1934e194debeba8bf5129576f41571ca47f..658a647e31260a3c16012c6333df40f41609779c 100644
+index 1f4443b3042a47e1a1c38d0b36560c22109c628c..382a57a765d69ed1e7a101faa3504df869de4e46 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -310,6 +310,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -68,10 +68,10 @@ index d13f0504841fec85ed8574474d78124197099b93..aae2dadabedb075fd1bc712f0226882b
          }
      }
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 16fd37a5048ee4b2fa6760c66af6f14e8fd71f89..d7b0c2f3674161db248df0ddd1e3c8c4e7500832 100644
+index afef3ea6d1ae5f145261eaae3da720fdf9e923a8..ac923ad4f07eb923eec85f57b416b891c6592741 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -447,7 +447,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -452,7 +452,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          this.dataRegionManager = new io.papermc.paper.chunk.SingleThreadChunkRegionManager(this.level, 2, (1.0 / 3.0), 1, 6, "Data", DataRegionData::new, DataRegionSectionData::new);
          this.regionManagers.add(this.dataRegionManager);
          // Paper end
@@ -81,10 +81,10 @@ index 16fd37a5048ee4b2fa6760c66af6f14e8fd71f89..d7b0c2f3674161db248df0ddd1e3c8c4
          this.playerEntityTrackerTrackMaps = new com.destroystokyo.paper.util.misc.PlayerAreaMap[TRACKING_RANGE_TYPES.length];
          this.entityTrackerTrackRanges = new int[TRACKING_RANGE_TYPES.length];
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 9a07ccbd12675e501a9aebf89ab85adf6fb658ba..cdf68a2eafb2794250ac94b6203ae6ed0c585e5b 100644
+index b0ced77da807d715a39c04708859a12729883939..acb74faa3f8b96e42072ac5d653e5595355df441 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-@@ -77,6 +77,9 @@ public class ServerChunkCache extends ChunkSource {
+@@ -78,6 +78,9 @@ public class ServerChunkCache extends ChunkSource {
      final Long2ObjectOpenHashMap<LevelChunk> loadedChunkMap = new Long2ObjectOpenHashMap<>(8192, 0.5f);
  
      private final LevelChunk[] lastLoadedChunks = new LevelChunk[4 * 4];
@@ -94,7 +94,7 @@ index 9a07ccbd12675e501a9aebf89ab85adf6fb658ba..cdf68a2eafb2794250ac94b6203ae6ed
  
      private static int getChunkCacheKey(int x, int z) {
          return x & 3 | ((z & 3) << 2);
-@@ -984,18 +987,25 @@ public class ServerChunkCache extends ChunkSource {
+@@ -979,18 +982,25 @@ public class ServerChunkCache extends ChunkSource {
              // Paper start - per player mob spawning
              NaturalSpawner.SpawnState spawnercreature_d; // moved down
              if ((this.spawnFriendlies || this.spawnEnemies) && this.chunkMap.playerMobDistanceMap != null) { // don't count mobs when animals and monsters are disabled
@@ -126,9 +126,9 @@ index 9a07ccbd12675e501a9aebf89ab85adf6fb658ba..cdf68a2eafb2794250ac94b6203ae6ed
              gameprofilerfiller.popPush("filteringLoadedChunks");
              // Paper - moved down
              this.level.timings.chunkTicks.startTiming(); // Paper
-@@ -1037,8 +1047,8 @@ public class ServerChunkCache extends ChunkSource {
+@@ -1028,8 +1038,8 @@ public class ServerChunkCache extends ChunkSource {
  
-                 if ((true || this.level.isPositionEntityTicking(chunkcoordintpair)) && this.chunkMap.anyPlayerCloseEnoughForSpawning(holder, chunkcoordintpair, false)) { // Paper - optimise anyPlayerCloseEnoughForSpawning & optimise chunk tick iteration
+                 if ((true || this.level.isPositionEntityTicking(chunkcoordintpair)) && this.chunkMap.anyPlayerCloseEnoughForSpawning(holder, chunkcoordintpair, false)) { // Paper - optimise anyPlayerCloseEnoughForSpawning // Paper - replace player chunk loader system
                      chunk1.incrementInhabitedTime(j);
 -                    if (flag2 && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isWithinBounds(chunkcoordintpair) && this.chunkMap.anyPlayerCloseEnoughForSpawning(holder, chunkcoordintpair, true)) { // Spigot // Paper - optimise anyPlayerCloseEnoughForSpawning & optimise chunk tick iteration
 -                        NaturalSpawner.spawnForChunk(this.level, chunk1, spawnercreature_d, this.spawnFriendlies, this.spawnEnemies, flag1);
@@ -136,8 +136,8 @@ index 9a07ccbd12675e501a9aebf89ab85adf6fb658ba..cdf68a2eafb2794250ac94b6203ae6ed
 +                        NaturalSpawner.spawnForChunk(this.level, chunk1, lastSpawnState, this.spawnFriendlies, this.spawnEnemies, flag1); // Pufferfish
                      }
  
-                     if (this.level.shouldTickBlocksAt(chunkcoordintpair.toLong())) {
-@@ -1085,6 +1095,30 @@ public class ServerChunkCache extends ChunkSource {
+                     if ((true || this.level.shouldTickBlocksAt(chunkcoordintpair.toLong()))) { // Paper - replace player chunk loader system
+@@ -1091,6 +1101,30 @@ public class ServerChunkCache extends ChunkSource {
              }
              // Paper end - controlled flush for entity tracker packets
          }
