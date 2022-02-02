@@ -16,8 +16,26 @@ damage in the first place. This check doesn't improve performance much
 but is so much cheaper than the suffocation check that it's worth
 keeping it.
 
+diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+index cca95d190a979f49762a24729ce399cffbb4d0b0..38545e484d7008fe7549d473720527d5e508b67a 100644
+--- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
++++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+@@ -152,4 +152,13 @@ public class PufferfishConfig {
+ 				"This can be overridden per-player with the permission pufferfish.usebooks");
+ 	}
+ 	
++	public static boolean enableSuffocationOptimization;
++	private static void suffocationOptimization() {
++		enableSuffocationOptimization = getBoolean("enable-suffocation-optimization", true,
++				"Optimizes the suffocation check by selectively skipping",
++				"the check in a way that still appears vanilla. This should",
++				"be left enabled on most servers, but is provided as a",
++				"configuration option if the vanilla deviation is undesirable.");
++	}
++	
+ }
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 25338fe4cfdc683ca4c01487e166a1649c6f640b..710f0435647d1887155ceebd8cea9894f0dd9bc0 100644
+index 25338fe4cfdc683ca4c01487e166a1649c6f640b..e62856dd80fce42a89256ff2dc7ee1f7f77dca10 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -393,8 +393,7 @@ public abstract class LivingEntity extends Entity {
@@ -26,7 +44,7 @@ index 25338fe4cfdc683ca4c01487e166a1649c6f640b..710f0435647d1887155ceebd8cea9894
              boolean flag = this instanceof net.minecraft.world.entity.player.Player;
 -
 -            if (this.isInWall()) {
-+            if (tickCount % 20 == 0 && couldPossiblyBeHurt(1.0F) && this.isInWall()) { // Pufferfish - optimize suffocation
++            if ((!gg.pufferfish.pufferfish.PufferfishConfig.enableSuffocationOptimization || (tickCount % hurtDuration == 0 && couldPossiblyBeHurt(1.0F))) && this.isInWall()) { // Pufferfish - optimize suffocation
                  this.hurt(DamageSource.IN_WALL, 1.0F);
              } else if (flag && !this.level.getWorldBorder().isWithinBounds(this.getBoundingBox())) {
                  double d0 = this.level.getWorldBorder().getDistanceToBorder(this) + this.level.getWorldBorder().getDamageSafeZone();
