@@ -35,7 +35,7 @@ index cca95d190a979f49762a24729ce399cffbb4d0b0..38545e484d7008fe7549d473720527d5
 +	
  }
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 25338fe4cfdc683ca4c01487e166a1649c6f640b..e62856dd80fce42a89256ff2dc7ee1f7f77dca10 100644
+index 25338fe4cfdc683ca4c01487e166a1649c6f640b..9be89d3318875a490d1601222d60ba087f5e6523 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -393,8 +393,7 @@ public abstract class LivingEntity extends Entity {
@@ -44,7 +44,7 @@ index 25338fe4cfdc683ca4c01487e166a1649c6f640b..e62856dd80fce42a89256ff2dc7ee1f7
              boolean flag = this instanceof net.minecraft.world.entity.player.Player;
 -
 -            if (this.isInWall()) {
-+            if ((!gg.pufferfish.pufferfish.PufferfishConfig.enableSuffocationOptimization || (tickCount % hurtDuration == 0 && couldPossiblyBeHurt(1.0F))) && this.isInWall()) { // Pufferfish - optimize suffocation
++            if ((!gg.pufferfish.pufferfish.PufferfishConfig.enableSuffocationOptimization || (tickCount % 10 == 0 && couldPossiblyBeHurt(1.0F))) && this.isInWall()) { // Pufferfish - optimize suffocation
                  this.hurt(DamageSource.IN_WALL, 1.0F);
              } else if (flag && !this.level.getWorldBorder().isWithinBounds(this.getBoundingBox())) {
                  double d0 = this.level.getWorldBorder().getDistanceToBorder(this) + this.level.getWorldBorder().getDamageSafeZone();
