@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 5e494f3ca75958efb0aa53ec556e2ad4b03001bd..0f194168f5fca8eb768bca3ce953f28097fed578 100644
+index 5676fcb8533b2d0d46108d5730abe955d988b1e5..86548210e50879504f646ef3aa46927998f2d775 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -61,6 +61,7 @@ dependencies {
@@ -32,10 +32,10 @@ index 5e494f3ca75958efb0aa53ec556e2ad4b03001bd..0f194168f5fca8eb768bca3ce953f280
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
      testImplementation("junit:junit:4.13.2")
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 6b51b23569fbed87c02fbce50c2a9e10758e31e3..636eb6c5cec1e29481b1de9ad7f5c6047a229b4e 100644
+index 5dc8bd6c3ab93152351fb7b3654b46a80b206ec5..df1c9f0efaf1fdcf628421c98f73d2a1ff3a4a99 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -11,6 +11,7 @@ import net.minecraft.world.entity.EntityType;
+@@ -12,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
  import java.lang.reflect.Method;
  import java.lang.reflect.Modifier;
  import java.util.List;
@@ -43,7 +43,7 @@ index 6b51b23569fbed87c02fbce50c2a9e10758e31e3..636eb6c5cec1e29481b1de9ad7f5c604
  import net.minecraft.server.MinecraftServer;
  import org.apache.logging.log4j.Level;
  import org.bukkit.configuration.ConfigurationSection;
-@@ -19,6 +20,13 @@ import org.jetbrains.annotations.Nullable;
+@@ -20,6 +21,13 @@ import org.jetbrains.annotations.Nullable;
  import org.simpleyaml.configuration.comments.CommentType;
  import org.simpleyaml.configuration.file.YamlFile;
  import org.simpleyaml.exceptions.InvalidConfigurationException;
@@ -57,7 +57,7 @@ index 6b51b23569fbed87c02fbce50c2a9e10758e31e3..636eb6c5cec1e29481b1de9ad7f5c604
  
  public class PufferfishConfig {
  	
-@@ -226,5 +234,29 @@ public class PufferfishConfig {
+@@ -242,5 +250,29 @@ public class PufferfishConfig {
          setComment("dab", "Optimizes entity brains when", "they're far away from the player");
      }
  

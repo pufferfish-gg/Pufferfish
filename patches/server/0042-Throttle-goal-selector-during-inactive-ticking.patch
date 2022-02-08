@@ -5,10 +5,10 @@ Subject: [PATCH] Throttle goal selector during inactive ticking
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index fcc7344042e41838440ee624f4ea3c6f19292f6d..889561a6b0cb46405398d94fa071d33d3f02c3df 100644
+index 8dc018e31cf61cbaf2cd5fa577e9c736995d7c60..31c3e9460625f47c166f81e9b44a3b7bdaecbeb6 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -233,6 +233,13 @@ public class PufferfishConfig {
+@@ -249,6 +249,13 @@ public class PufferfishConfig {
  
          setComment("dab", "Optimizes entity brains when", "they're far away from the player");
      }

@@ -5,10 +5,10 @@ Subject: [PATCH] Config to disable method profiler
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 636eb6c5cec1e29481b1de9ad7f5c6047a229b4e..fcc7344042e41838440ee624f4ea3c6f19292f6d 100644
+index df1c9f0efaf1fdcf628421c98f73d2a1ff3a4a99..8dc018e31cf61cbaf2cd5fa577e9c736995d7c60 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -259,4 +259,10 @@ public class PufferfishConfig {
+@@ -275,4 +275,10 @@ public class PufferfishConfig {
      }
  
  

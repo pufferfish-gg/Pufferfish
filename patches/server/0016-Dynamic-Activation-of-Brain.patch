@@ -27,11 +27,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index c4cfe0ed4134c2582a1726695fe81cbdd6c6c025..6b51b23569fbed87c02fbce50c2a9e10758e31e3 100644
+index 2ebedee24cc2df161a3df8897e2dfa04237d13c8..5dc8bd6c3ab93152351fb7b3654b46a80b206ec5 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -2,6 +2,12 @@ package gg.pufferfish.pufferfish;
- 
+@@ -3,6 +3,12 @@ package gg.pufferfish.pufferfish;
+ import gg.pufferfish.pufferfish.simd.SIMDDetection;
  import java.io.File;
  import java.io.IOException;
 +import java.util.Collections;
@@ -43,7 +43,7 @@ index c4cfe0ed4134c2582a1726695fe81cbdd6c6c025..6b51b23569fbed87c02fbce50c2a9e10
  import java.lang.reflect.Method;
  import java.lang.reflect.Modifier;
  import java.util.List;
-@@ -188,5 +194,37 @@ public class PufferfishConfig {
+@@ -204,5 +210,37 @@ public class PufferfishConfig {
      }
  
  

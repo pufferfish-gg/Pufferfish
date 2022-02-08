@@ -1,0 +1,100 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kevin Raneri <kevin.raneri@gmail.com>
+Date: Tue, 8 Feb 2022 12:52:25 -0500
+Subject: [PATCH] Add SIMD utilities
+
+The utilities added in this patch are not intended to be used by plugins
+and API spec stability is NOT guaranteed. If you use this in plugins,
+they WILL break eventually.
+
+diff --git a/build.gradle.kts b/build.gradle.kts
+index 554f5e35954f35aecaf454853a0a2999f15d19bc..93390eaead78d229902df0f7c8f9b30cb6174de7 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -82,6 +82,13 @@ val generateApiVersioningFile by tasks.registering {
+     }
+ }
+ 
++// Pufferfish Start
++tasks.withType<JavaCompile> {
++    val compilerArgs = options.compilerArgs
++    compilerArgs.add("--add-modules=jdk.incubator.vector")
++}
++// Pufferfish End
++
+ tasks.jar {
+     from(generateApiVersioningFile.map { it.outputs.files.singleFile }) {
+         into("META-INF/maven/${project.group}/${project.name}")
+diff --git a/src/main/java/gg/pufferfish/pufferfish/simd/SIMDChecker.java b/src/main/java/gg/pufferfish/pufferfish/simd/SIMDChecker.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..77cf83bd096bbf6bfa7e510d97716b514384d9ff
+--- /dev/null
++++ b/src/main/java/gg/pufferfish/pufferfish/simd/SIMDChecker.java
+@@ -0,0 +1,29 @@
++package gg.pufferfish.pufferfish.simd;
++
++import jdk.incubator.vector.IntVector;
++
++/**
++ * Basically, java is annoying and we have to push this out to its own class.
++ */
++@Deprecated
++public class SIMDChecker {
++	
++	@Deprecated
++	public static boolean canEnable() {
++		try {
++			if (SIMDDetection.getJavaVersion() != 17) {
++				return false;
++			} else {
++				IntVector oneVector = IntVector.broadcast(IntVector.SPECIES_256, 1);
++				IntVector twoVector = IntVector.broadcast(IntVector.SPECIES_256, 2);
++				IntVector result = oneVector.add(twoVector);
++				if (result.toArray()[0] == 3) {
++					// Vectorization works! Let's enable it!
++					return true;
++				}
++			}
++		} catch (NoClassDefFoundError | Exception ignored) {} // Basically, we don't do anything. This lets us detect if it's not functional and disable it.
++		return false;
++	}
++	
++}
+diff --git a/src/main/java/gg/pufferfish/pufferfish/simd/SIMDDetection.java b/src/main/java/gg/pufferfish/pufferfish/simd/SIMDDetection.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..1bbec0b032a4765f5e55a1475a1b7401f72164e7
+--- /dev/null
++++ b/src/main/java/gg/pufferfish/pufferfish/simd/SIMDDetection.java
+@@ -0,0 +1,32 @@
++package gg.pufferfish.pufferfish.simd;
++
++import jdk.incubator.vector.IntVector;
++
++@Deprecated
++public class SIMDDetection {
++	
++	public static boolean isEnabled = false;
++	public static boolean versionLimited = false;
++	
++	@Deprecated
++	public static boolean canEnable() {
++		try {
++			return SIMDChecker.canEnable();
++		} catch (NoClassDefFoundError | Exception ignored) {
++			return false;
++		}
++	}
++	
++	@Deprecated
++	public static int getJavaVersion() {
++		// https://stackoverflow.com/a/2591122
++		String version = System.getProperty("java.version");
++		if(version.startsWith("1.")) {
++			version = version.substring(2, 3);
++		} else {
++			int dot = version.indexOf(".");
++			if(dot != -1) { version = version.substring(0, dot); }
++		} return Integer.parseInt(version);
++	}
++	
++}
