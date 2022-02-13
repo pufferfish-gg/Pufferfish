@@ -184,7 +184,7 @@ index 0000000000000000000000000000000000000000..10310fdd53de28efb8a8250f6d3b0c8e
 +	}
 +}
 diff --git a/src/main/java/org/bukkit/plugin/SimplePluginManager.java b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-index 1366496271c4c7f72d1e5f990e51775b1c371f99..05bb388407b5bd8a942478237580a38ffaa388c8 100644
+index 1366496271c4c7f72d1e5f990e51775b1c371f99..23bc96e9b2d2d53a81c5140a94430d17add69228 100644
 --- a/src/main/java/org/bukkit/plugin/SimplePluginManager.java
 +++ b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
 @@ -581,7 +581,9 @@ public final class SimplePluginManager implements PluginManager {
@@ -197,7 +197,7 @@ index 1366496271c4c7f72d1e5f990e51775b1c371f99..05bb388407b5bd8a942478237580a38f
          callEvent(new ServerExceptionEvent(new ServerPluginEnableDisableException(msg, ex, plugin)));
      }
      // Paper end
-@@ -640,14 +642,16 @@ public final class SimplePluginManager implements PluginManager {
+@@ -640,9 +642,11 @@ public final class SimplePluginManager implements PluginManager {
                              ));
                  }
              } catch (Throwable ex) {
@@ -209,12 +209,6 @@ index 1366496271c4c7f72d1e5f990e51775b1c371f99..05bb388407b5bd8a942478237580a38f
                  if (!(event instanceof ServerExceptionEvent)) { // We don't want to cause an endless event loop
                      callEvent(new ServerExceptionEvent(new ServerEventException(msg, ex, registration.getPlugin(), registration.getListener(), event)));
                  }
-                 // Paper end
--            }
-+            } finally { gg.pufferfish.pufferfish.sentry.SentryContext.removeEventContext(); } // Pufferfish
-         }
-     }
- 
 diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 index c8b11793c6a3baabc1c9566e0463ab1d6e293827..2b9218ddd262e89180588c3014dad328317dd8db 100644
 --- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
