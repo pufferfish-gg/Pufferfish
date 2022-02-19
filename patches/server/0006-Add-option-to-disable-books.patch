@@ -11,7 +11,7 @@ you to easily disable books, should you want to preemptively remove this
 functionality before additional exploits are found.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 6da0eb89d44b07de748675bb70dcfc6aa3c6c9ed..0451c4aef1c26bbc7566f0638576b27ac4c4d9c5 100644
+index 06066213616f2f5e4fe0a35bbdba11f3b32d0c80..f9ace5d380fe1b1914a390d01694e25a46194caf 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -159,4 +159,13 @@ public class PufferfishConfig {
@@ -29,10 +29,10 @@ index 6da0eb89d44b07de748675bb70dcfc6aa3c6c9ed..0451c4aef1c26bbc7566f0638576b27a
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 23eddc502816e84ab25366c7d5710ce2e660c7a0..cb35f2f1f2f4d568bc59ce5c08ab3b908533264c 100644
+index d945a22e2bb992f3cbba3c9ed0f660b6a385a1b0..b9f2f6713bd9e3431ddbf2a41f16cbda5739ef57 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -1116,6 +1116,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
+@@ -1113,6 +1113,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Ser
  
      @Override
      public void handleEditBook(ServerboundEditBookPacket packet) {

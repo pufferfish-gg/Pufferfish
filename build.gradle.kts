@@ -51,7 +51,6 @@ paperweight {
     decompileRepo.set("https://files.minecraftforge.net/maven/")
 
     usePaperUpstream(providers.gradleProperty("paperRef")) {
-        url.set(github("pufferfish-gg", "Paper"))
         withPaperPatcher {
             apiPatchDir.set(layout.projectDirectory.dir("patches/api"))
             serverPatchDir.set(layout.projectDirectory.dir("patches/server"))

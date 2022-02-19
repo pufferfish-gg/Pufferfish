@@ -34,7 +34,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index acb74faa3f8b96e42072ac5d653e5595355df441..addf249717b5271b664f4a9d28dd6cc177db5688 100644
+index 939a6056a61e4cfbb6a2410a8ba97066fbbecca5..7780c6cd92a716e62625df95841680b0e99a86e6 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 @@ -973,6 +973,7 @@ public class ServerChunkCache extends ChunkSource {
@@ -43,10 +43,10 @@ index acb74faa3f8b96e42072ac5d653e5595355df441..addf249717b5271b664f4a9d28dd6cc1
              gameprofilerfiller.push("pollingChunks");
 +            this.level.resetIceAndSnowTick(); // Pufferfish - reset ice & snow tick random
              int k = this.level.getGameRules().getInt(GameRules.RULE_RANDOMTICKING);
-             boolean flag1 = level.ticksPerAnimalSpawns != 0L && worlddata.getGameTime() % level.ticksPerAnimalSpawns == 0L; // CraftBukkit
+             boolean flag1 = level.ticksPerSpawnCategory.getLong(org.bukkit.entity.SpawnCategory.ANIMAL) != 0L && worlddata.getGameTime() % level.ticksPerSpawnCategory.getLong(org.bukkit.entity.SpawnCategory.ANIMAL) == 0L; // CraftBukkit
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 403a6fadbeff41e67618393ac7034d32c02af7b8..b29e0af1232c1cc71c14f96634069553b62454b6 100644
+index 4ebdeca14b4b4378bb433d68d5f60da99ca95b82..5f4de65df6e1454683dc7abebd5d0e572e32de54 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -735,6 +735,8 @@ public class ServerLevel extends Level implements WorldGenLevel {
