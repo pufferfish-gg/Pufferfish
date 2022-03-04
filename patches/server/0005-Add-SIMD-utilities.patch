@@ -1,0 +1,57 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kevin Raneri <kevin.raneri@gmail.com>
+Date: Tue, 8 Feb 2022 12:56:23 -0500
+Subject: [PATCH] Add SIMD utilities
+
+
+diff --git a/build.gradle.kts b/build.gradle.kts
+index b51c0be516609ece427b2337420b6905b1880455..b540166519efe72ccedce279dcc7b1f09d8011d9 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -67,6 +67,13 @@ dependencies {
+     testImplementation("org.hamcrest:hamcrest-library:1.3")
+ }
+ 
++// Pufferfish Start
++tasks.withType<JavaCompile> {
++    val compilerArgs = options.compilerArgs
++    compilerArgs.add("--add-modules=jdk.incubator.vector")
++}
++// Pufferfish End
++
+ tasks.jar {
+     archiveClassifier.set("dev")
+ 
+diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+index deb52c185705c4b4186c7bae02f2a827620c20ca..6afe48f33c4383733854761d8d34082274561701 100644
+--- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
++++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+@@ -1,5 +1,6 @@
+ package gg.pufferfish.pufferfish;
+ 
++import gg.pufferfish.pufferfish.simd.SIMDDetection;
+ import java.io.File;
+ import java.io.IOException;
+ import java.lang.reflect.Method;
+@@ -72,6 +73,21 @@ public class PufferfishConfig {
+ 		updates++;
+ 		
+ 		config.save(configFile);
++		
++		// Attempt to detect vectorization
++		try {
++			SIMDDetection.isEnabled = SIMDDetection.canEnable();
++			SIMDDetection.versionLimited = SIMDDetection.getJavaVersion() != 17;
++		} catch (NoClassDefFoundError | Exception ignored) {}
++		
++		if (SIMDDetection.isEnabled) {
++			PufferfishLogger.LOGGER.info("SIMD operations detected as functional. Will replace some operations with faster versions.");
++		} else if (SIMDDetection.versionLimited) {
++			PufferfishLogger.LOGGER.warning("Will not enable SIMD! These optimizations are only safely supported on Java 17.");
++		} else {
++			PufferfishLogger.LOGGER.warning("SIMD operations are available for your server, but are not configured!");
++			PufferfishLogger.LOGGER.warning("To enable additional optimizations, add \"--add-modules=jdk.incubator.vector\" to your startup flags, BEFORE the \"-jar\".");
++		}
+ 	}
+ 	
+ 	private static void setComment(String key, String... comment) {

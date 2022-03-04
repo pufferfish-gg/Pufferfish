@@ -1,0 +1,252 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kevin Raneri <kevin.raneri@gmail.com>
+Date: Wed, 3 Feb 2021 23:02:38 -0600
+Subject: [PATCH] Pufferfish branding
+
+Update branding
+
+diff --git a/build.gradle.kts b/build.gradle.kts
+index 4beb35d1e5b013395f5df101e843f41c2ce174ad..b7b04087650a8ad846064b60df1fcaba356e1869 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -18,8 +18,12 @@ repositories {
+ }
+ 
+ dependencies {
+-    implementation(project(":paper-api"))
+-    implementation(project(":paper-mojangapi"))
++    implementation(project(":pufferfish-api")) // Pufferfish // Paper
++    // Pufferfish start
++    implementation("io.papermc.paper:paper-mojangapi:1.18.1-R0.1-SNAPSHOT") {
++        exclude("io.papermc.paper", "paper-api")
++    }
++    // Pufferfish end
+     // Paper start
+     implementation("org.jline:jline-terminal-jansi:3.21.0")
+     implementation("net.minecrell:terminalconsoleappender:1.3.0")
+@@ -68,7 +72,7 @@ tasks.jar {
+         attributes(
+             "Main-Class" to "org.bukkit.craftbukkit.Main",
+             "Implementation-Title" to "CraftBukkit",
+-            "Implementation-Version" to "git-Paper-$implementationVersion",
++            "Implementation-Version" to "git-Pufferfish-$implementationVersion", // Pufferfish
+             "Implementation-Vendor" to date, // Paper
+             "Specification-Title" to "Bukkit",
+             "Specification-Version" to project.version,
+diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
+index 218f5bafeed8551b55b91c7fccaf6935c8b631ca..f2fe6ea3719ff8b2913b7a3a939d7a5b75cb8b28 100644
+--- a/src/main/java/com/destroystokyo/paper/Metrics.java
++++ b/src/main/java/com/destroystokyo/paper/Metrics.java
+@@ -593,7 +593,7 @@ public class Metrics {
+             boolean logFailedRequests = config.getBoolean("logFailedRequests", false);
+             // Only start Metrics, if it's enabled in the config
+             if (config.getBoolean("enabled", true)) {
+-                Metrics metrics = new Metrics("Paper", serverUUID, logFailedRequests, Bukkit.getLogger());
++                Metrics metrics = new Metrics("Pufferfish", serverUUID, logFailedRequests, Bukkit.getLogger()); // Pufferfish
+ 
+                 metrics.addCustomChart(new Metrics.SimplePie("minecraft_version", () -> {
+                     String minecraftVersion = Bukkit.getVersion();
+@@ -603,7 +603,7 @@ public class Metrics {
+ 
+                 metrics.addCustomChart(new Metrics.SingleLineChart("players", () -> Bukkit.getOnlinePlayers().size()));
+                 metrics.addCustomChart(new Metrics.SimplePie("online_mode", () -> Bukkit.getOnlineMode() ? "online" : "offline"));
+-                metrics.addCustomChart(new Metrics.SimplePie("paper_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown"));
++                metrics.addCustomChart(new Metrics.SimplePie("pufferfish_version", () -> (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown"));
+ 
+                 metrics.addCustomChart(new Metrics.DrilldownPie("java_version", () -> {
+                     Map<String, Map<String, Integer>> map = new HashMap<>();
+diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishVersionFetcher.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishVersionFetcher.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..adafc4fd661cf080b004b86c3eaed231a0133101
+--- /dev/null
++++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishVersionFetcher.java
+@@ -0,0 +1,136 @@
++package gg.pufferfish.pufferfish;
++
++import static net.kyori.adventure.text.Component.text;
++import static net.kyori.adventure.text.format.NamedTextColor.GREEN;
++import static net.kyori.adventure.text.format.NamedTextColor.RED;
++
++import com.destroystokyo.paper.VersionHistoryManager;
++import com.destroystokyo.paper.util.VersionFetcher;
++import com.google.gson.Gson;
++import com.google.gson.JsonObject;
++import java.io.IOException;
++import java.net.URI;
++import java.net.http.HttpClient;
++import java.net.http.HttpRequest;
++import java.net.http.HttpResponse;
++import java.nio.charset.StandardCharsets;
++import java.util.concurrent.TimeUnit;
++import java.util.logging.Level;
++import java.util.logging.Logger;
++import net.kyori.adventure.text.Component;
++import net.kyori.adventure.text.JoinConfiguration;
++import net.kyori.adventure.text.format.NamedTextColor;
++import net.kyori.adventure.text.format.TextDecoration;
++import org.bukkit.craftbukkit.CraftServer;
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
++
++public class PufferfishVersionFetcher implements VersionFetcher {
++	
++	private static final Logger LOGGER = Logger.getLogger("PufferfishVersionFetcher");
++	private static final HttpClient client = HttpClient.newHttpClient();
++	
++	private static final URI JENKINS_URI = URI.create("https://ci.pufferfish.host/job/Pufferfish-1.18/lastSuccessfulBuild/buildNumber");
++	private static final String GITHUB_FORMAT = "https://api.github.com/repos/pufferfish-gg/Pufferfish/compare/ver/1.18...%s";
++	
++	private static final HttpResponse.BodyHandler<JsonObject> JSON_OBJECT_BODY_HANDLER = responseInfo -> HttpResponse.BodySubscribers
++			.mapping(
++					HttpResponse.BodySubscribers.ofString(StandardCharsets.UTF_8),
++					string -> new Gson().fromJson(string, JsonObject.class)
++			);
++	
++	@Override
++	public long getCacheTime() {
++		return TimeUnit.MINUTES.toMillis(30);
++	}
++	
++	@Override
++	public @NotNull Component getVersionMessage(final @NotNull String serverVersion) {
++		final String[] parts = CraftServer.class.getPackage().getImplementationVersion().split("-");
++		@NotNull Component component;
++		
++		if (parts.length != 3) {
++			component = text("Unknown server version.", RED);
++		} else {
++			final String versionString = parts[2];
++			
++			try {
++				component = this.fetchJenkinsVersion(Integer.parseInt(versionString));
++			} catch (NumberFormatException e) {
++				component = this.fetchGithubVersion(versionString.substring(1, versionString.length() - 1));
++			}
++		}
++		
++		final @Nullable Component history = this.getHistory();
++		return history != null ? Component
++				.join(JoinConfiguration.noSeparators(), component, Component.newline(), this.getHistory()) : component;
++	}
++	
++	private @NotNull Component fetchJenkinsVersion(final int versionNumber) {
++		final HttpRequest request = HttpRequest.newBuilder(JENKINS_URI).build();
++		try {
++			final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
++			if (response.statusCode() != 200) {
++				return text("Received invalid status code (" + response.statusCode() + ") from server.", RED);
++			}
++			
++			int latestVersionNumber;
++			try {
++				latestVersionNumber = Integer.parseInt(response.body());
++			} catch (NumberFormatException e) {
++				LOGGER.log(Level.WARNING, "Received invalid response from Jenkins \"" + response.body() + "\".");
++				return text("Received invalid response from server.", RED);
++			}
++			
++			final int versionDiff = latestVersionNumber - versionNumber;
++			return this.getResponseMessage(versionDiff);
++		} catch (IOException | InterruptedException e) {
++			LOGGER.log(Level.WARNING, "Failed to look up version from Jenkins", e);
++			return text("Failed to retrieve version from server.", RED);
++		}
++	}
++	
++	// Based off code contributed by Techcable <Techcable@outlook.com> in Paper/GH-65
++	private @NotNull Component fetchGithubVersion(final @NotNull String hash) {
++		final URI uri = URI.create(String.format(GITHUB_FORMAT, hash));
++		final HttpRequest request = HttpRequest.newBuilder(uri).build();
++		try {
++			final HttpResponse<JsonObject> response = client.send(request, JSON_OBJECT_BODY_HANDLER);
++			if (response.statusCode() != 200) {
++				return text("Received invalid status code (" + response.statusCode() + ") from server.", RED);
++			}
++			
++			final JsonObject obj = response.body();
++			final int versionDiff = obj.get("behind_by").getAsInt();
++			
++			return this.getResponseMessage(versionDiff);
++		} catch (IOException | InterruptedException e) {
++			LOGGER.log(Level.WARNING, "Failed to look up version from GitHub", e);
++			return text("Failed to retrieve version from server.", RED);
++		}
++	}
++	
++	private @NotNull Component getResponseMessage(final int versionDiff) {
++		return switch (Math.max(-1, Math.min(1, versionDiff))) {
++			case -1 -> text("You are running an unsupported version of Pufferfish.", RED);
++			case 0 -> text("You are on the latest version!", GREEN);
++			default -> text("You are running " + versionDiff + " version" + (versionDiff == 1 ? "" : "s") + " beyond. " +
++							"Please update your server when possible to maintain stability, security, and receive the latest optimizations.",
++					RED);
++		};
++	}
++	
++	private @Nullable Component getHistory() {
++		final VersionHistoryManager.VersionData data = VersionHistoryManager.INSTANCE.getVersionData();
++		if (data == null) {
++			return null;
++		}
++		
++		final String oldVersion = data.getOldVersion();
++		if (oldVersion == null) {
++			return null;
++		}
++		
++		return Component.text("Previous version: " + oldVersion, NamedTextColor.GRAY, TextDecoration.ITALIC);
++	}
++}
+\ No newline at end of file
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 07c382f30ed3736ed15b5b71f48dc4a1de958242..4e20462069e2431e59e6753ef8075e6b5a50f86b 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -1683,7 +1683,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+ 
+     @DontObfuscate
+     public String getServerModName() {
+-        return "Paper"; // Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
++        return "Pufferfish"; // Pufferfish - Pufferfish > // Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
+     }
+ 
+     public SystemReport fillSystemReport(SystemReport details) {
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index 7343bd96a4a15f4abc081e565175db8df930a470..e6f3ff070314af9114825021f8649e7bd12694f0 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -248,7 +248,7 @@ import javax.annotation.Nullable; // Paper
+ import javax.annotation.Nonnull; // Paper
+ 
+ public final class CraftServer implements Server {
+-    private final String serverName = "Paper"; // Paper
++    private final String serverName = "Pufferfish"; // Paper // Pufferfish
+     private final String serverVersion;
+     private final String bukkitVersion = Versioning.getBukkitVersion();
+     private final Logger logger = Logger.getLogger("Minecraft");
+diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
+index 41e7ca100073052b99c82fa6a82f8168e0135499..7e06f263cf618b82f77101ef86d819d5dc37a24e 100644
+--- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
++++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
+@@ -430,7 +430,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+ 
+     @Override
+     public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
+-        return new com.destroystokyo.paper.PaperVersionFetcher();
++        return new gg.pufferfish.pufferfish.PufferfishVersionFetcher(); // Pufferfish
+     }
+ 
+     @Override
+diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
+index 774556a62eb240da42e84db4502e2ed43495be17..80553face9c70c2a3d897681e7761df85b22d464 100644
+--- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
++++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
+@@ -11,7 +11,7 @@ public final class Versioning {
+     public static String getBukkitVersion() {
+         String result = "Unknown-Version";
+ 
+-        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/io.papermc.paper/paper-api/pom.properties");
++        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/gg.pufferfish.pufferfish/pufferfish-api/pom.properties"); // Pufferfish
+         Properties properties = new Properties();
+ 
+         if (stream != null) {
