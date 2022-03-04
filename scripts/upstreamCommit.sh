@@ -2,14 +2,15 @@
 
 # requires curl & jq
 
-# upstreamCommit <baseHash>
-# param: bashHash - the commit hash to use for comparing commits (baseHash...HEAD)
+# upstreamCommit <baseHash> <newHash>
+# param: bashHash - the commit hash to use for comparing commits (baseHash...newHash)
+# param: newHash - the commit hash to use for comparing commits
 
 (
 set -e
 PS1="$"
 
-paper=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/PaperMC/Paper/compare/$1...HEAD | jq -r '.commits[] | "PaperMC/Paper@\(.sha[:7]) \(.commit.message | split("\r\n")[0] | split("\n")[0])"')
+paper=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/PaperMC/Paper/compare/$1...$2 | jq -r '.commits[] | "PaperMC/Paper@\(.sha[:7]) \(.commit.message | split("\r\n")[0] | split("\n")[0])"')
 
 updated=""
 logsuffix=""
