@@ -6,7 +6,7 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 4beb35d1e5b013395f5df101e843f41c2ce174ad..b7b04087650a8ad846064b60df1fcaba356e1869 100644
+index 4beb35d1e5b013395f5df101e843f41c2ce174ad..4f085ca234d889db17af77f8ba69104741b4efb6 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -18,8 +18,12 @@ repositories {
@@ -17,7 +17,7 @@ index 4beb35d1e5b013395f5df101e843f41c2ce174ad..b7b04087650a8ad846064b60df1fcaba
 -    implementation(project(":paper-mojangapi"))
 +    implementation(project(":pufferfish-api")) // Pufferfish // Paper
 +    // Pufferfish start
-+    implementation("io.papermc.paper:paper-mojangapi:1.18.1-R0.1-SNAPSHOT") {
++    implementation("io.papermc.paper:paper-mojangapi:1.18.2-R0.1-SNAPSHOT") {
 +        exclude("io.papermc.paper", "paper-api")
 +    }
 +    // Pufferfish end
