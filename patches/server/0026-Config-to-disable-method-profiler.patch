@@ -22,10 +22,10 @@ index bc648e3f64661c4b270045d2254a78ed4f126ca5..7923767bf635523bac2fdffcf340e8fb
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 51624335ed9386147d4fe2125fa4e533d6340230..d3319f194b23e0c27181828d3d5a2b8830124818 100644
+index 008974f6d016d43450d9f31eb19d1364610d6d8c..56f437b0e1ad5b167cdcbaaaf83b49d27e37b904 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -2244,6 +2244,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -2258,6 +2258,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      }
  
      public ProfilerFiller getProfiler() {
