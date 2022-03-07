@@ -20,14 +20,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index b540166519efe72ccedce279dcc7b1f09d8011d9..27c18ced1ce6d38c9cd05eb4269f25a9d6520030 100644
+index 370f453c666fb0d7b19956322234ac382321036d..5b10c880ac9daa66badf199bddd2653a0f7c0c08 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -61,6 +61,7 @@ dependencies {
          exclude(group="org.yaml", module="snakeyaml")
      }
      // Pufferfish end
-+    implementation("com.github.technove:Flare:2c4a2114a0") // Pufferfish - flare
++    implementation("com.github.technove:Flare:34637f3f87") // Pufferfish - flare
  
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
      testImplementation("junit:junit:4.13.2")
