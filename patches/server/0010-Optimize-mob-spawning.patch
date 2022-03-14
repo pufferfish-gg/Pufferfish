@@ -43,10 +43,10 @@ index a35c5c5a618df229e12b7f8a5afb5c1e4edec405..a37968c346c6a38f465aa3baa9c7881e
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 4e20462069e2431e59e6753ef8075e6b5a50f86b..51624335ed9386147d4fe2125fa4e533d6340230 100644
+index 86bf3f7eabd398f2dc9e09f111f6dd496086beb3..d91f9e5ed4e452477afaa6d19538e2a931d8e2e6 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -310,6 +310,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -308,6 +308,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      public volatile Thread shutdownThread; // Paper
      public volatile boolean abnormalExit = false; // Paper
@@ -68,7 +68,7 @@ index 340204ef44bf5e4f1b91808d90abc29217cfafde..27e90ca03275a42271bbe97ee1a63a35
          }
      }
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index edc6235288f0843608dae4552e05915e4067cbf2..b97f5e7f6c571e444d487e16f9729323c51d84ee 100644
+index 6ce27675103d4b691216c6b701b6ceb821af528f..dc2eed0d00a6bd41fb26e7d9aeba7a6315040f17 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -457,7 +457,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
