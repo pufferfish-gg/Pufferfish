@@ -2,17 +2,19 @@
 [knowledgebase]: https://docs.pufferfish.host
 [discord]: https://discord.gg/reZw4vQV9H
 [downloads]: https://ci.pufferfish.host/job/Pufferfish-1.18
+[optguide]: https://docs.pufferfish.host/optimization/pufferfish-server-optimization-guide/
 
 # Pufferfish
 A highly optimized Paper fork designed for large servers requiring both maximum performance, stability, and "enterprise" features.
 
-[Homepage][home] - [Downloads][downloads] - [Discord][discord] - [Knowledgebase][knowledgebase]
+[Homepage][home] - [Downloads][downloads] - [Discord][discord] - [Knowledgebase][knowledgebase] - [Optimization Guide][optguide]
 
 ## Features
 
 - **Sentry Integration** Easily track all errors coming from your server in excruciating detail
 - **Better Entity Performance** Reduces the performance impact of entities by skipping useless work and making barely-noticeable changes to behavior
 - **Partial Asynchronous Processing** Partially offloads some heavy work to other threads where possible without sacrificing stability
+- **8x Faster Map Rendering** Reduces or eliminates lag spikes caused by plugins like ImageOnMap or ImageMaps
 - **30% faster hoppers** over Paper (Airplane)
 - **Reduced GC times & frequency** from removing useless allocations, which also improves CPU performance (Airplane)
 - **Fast raytracing** which improves performance of any entity which utilizes line of sight, mainly Villagers (Airplane)
@@ -42,5 +44,5 @@ Or building a Paperclip JAR for distribution:
 ```
 
 ## License
-Patches are licensed under GPL-3.0.  
+Patches are licensed under GPL-3.0.
 All other files are licensed under MIT.
