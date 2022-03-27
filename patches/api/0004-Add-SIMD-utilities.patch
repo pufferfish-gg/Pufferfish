@@ -44,7 +44,7 @@ index 0000000000000000000000000000000000000000..77cf83bd096bbf6bfa7e510d97716b51
 +	@Deprecated
 +	public static boolean canEnable() {
 +		try {
-+			if (SIMDDetection.getJavaVersion() != 17) {
++			if (SIMDDetection.getJavaVersion() != 17 && SIMDDetection.getJavaVersion() != 18) {
 +				return false;
 +			} else {
 +				IntVector oneVector = IntVector.broadcast(IntVector.SPECIES_256, 1);
