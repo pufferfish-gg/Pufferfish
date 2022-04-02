@@ -84,10 +84,10 @@ index 608f4fb87495b888d9625b382450eff20a66deec..f53a6c350da48457dc98a409805cc6e1
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 78e6f112cff32617212d178ceec2e8697960cc7e..7d55a2c1f975f89f071393e3bc583cbb5f818e93 100644
+index 7673774f9af410f30099a8d442966eabe6b9d304..f17e54a2742f992f672aeffaf669d5efa2ef754c 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -352,6 +352,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
+@@ -352,6 +352,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return this.originWorld;
      }
      // Paper end
@@ -233,7 +233,7 @@ index 373ec915412899e4893aa182abd6fb63f3dff0aa..fc43b1d5dcb53456bb24ae46ea08b97b
          this.level.getProfiler().pop();
          HoglinAi.updateActivity(this);
 diff --git a/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java b/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
-index f65d32245556e2acab927a29626749edea980f0a..16116a4f907ff691646a3e98dd8e25e0f26c3c49 100644
+index 84c129fd931596a4cd3aa5b9caa7da1c309b71a7..3ff720ff67938be3efc0412a7a17c4d5b8eab763 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
 @@ -288,9 +288,11 @@ public class Piglin extends AbstractPiglin implements CrossbowAttackMob, Invento
