@@ -46,7 +46,7 @@ index f29ee33705d5708931171c5bcca2b4935437a9e8..b42e32bd1a6a669f498b577ec04661c4
              boolean flag1 = level.ticksPerSpawnCategory.getLong(org.bukkit.entity.SpawnCategory.ANIMAL) != 0L && worlddata.getGameTime() % level.ticksPerSpawnCategory.getLong(org.bukkit.entity.SpawnCategory.ANIMAL) == 0L; // CraftBukkit
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 3b1a34b34979ab436ccd33f0a85bfae537cbecb4..4b56e6f392f8737d5ab69aad31a4cc81cf1ee81d 100644
+index 50fd3419deb668dda64b1056f03fb66da55e6960..1e3b04996c4fdbe32ffd2c1c7460c1aa0cfe7ac4 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -738,6 +738,8 @@ public class ServerLevel extends Level implements WorldGenLevel {

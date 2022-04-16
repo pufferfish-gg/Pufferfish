@@ -5,10 +5,10 @@ Subject: [PATCH] Add SIMD utilities
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index b51c0be516609ece427b2337420b6905b1880455..b540166519efe72ccedce279dcc7b1f09d8011d9 100644
+index 60733ba2b06a5c0e5ea855b704f72d76d286bab6..8216df4516b1b1eb1d8e3ff9792c1a4750f5da2e 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -67,6 +67,13 @@ dependencies {
+@@ -58,6 +58,13 @@ dependencies {
      testImplementation("org.hamcrest:hamcrest-library:1.3")
  }
  

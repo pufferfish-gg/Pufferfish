@@ -20,10 +20,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 370f453c666fb0d7b19956322234ac382321036d..5b10c880ac9daa66badf199bddd2653a0f7c0c08 100644
+index 8216df4516b1b1eb1d8e3ff9792c1a4750f5da2e..9521971e9e597834e785b36d1657064dc1621b9b 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -61,6 +61,7 @@ dependencies {
+@@ -52,6 +52,7 @@ dependencies {
          exclude(group="org.yaml", module="snakeyaml")
      }
      // Pufferfish end

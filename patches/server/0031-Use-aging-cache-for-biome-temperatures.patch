@@ -130,10 +130,10 @@ index 0000000000000000000000000000000000000000..a7f297ebb569f7c1f205e967ca485be7
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/level/biome/Biome.java b/src/main/java/net/minecraft/world/level/biome/Biome.java
-index caa2f011c0ee0c1ffccfb298f845cc9e8998d4f3..e3a917480d0fe81d9b6cb24a4cf207c5e66388b8 100644
+index 32fc9f9162aafe312ed757be2d03577b5f95841d..da7e940f7a0cf96a81372e920412c7d09bab8a3c 100644
 --- a/src/main/java/net/minecraft/world/level/biome/Biome.java
 +++ b/src/main/java/net/minecraft/world/level/biome/Biome.java
-@@ -82,14 +82,20 @@ public final class Biome {
+@@ -74,14 +74,20 @@ public final class Biome {
      private final MobSpawnSettings mobSettings;
      private final Biome.BiomeCategory biomeCategory;
      private final BiomeSpecialEffects specialEffects;
@@ -155,7 +155,7 @@ index caa2f011c0ee0c1ffccfb298f845cc9e8998d4f3..e3a917480d0fe81d9b6cb24a4cf207c5
          });
      });
  
-@@ -131,17 +137,15 @@ public final class Biome {
+@@ -123,17 +129,15 @@ public final class Biome {
      @Deprecated
      public float getTemperature(BlockPos blockPos) {
          long l = blockPos.asLong();

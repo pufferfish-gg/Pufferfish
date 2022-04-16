@@ -5,7 +5,7 @@ Subject: [PATCH] Remove lambda from ticking guard
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 650c6b7a53079abc957c6e507cbf595599e01f24..5e9ad7c828a196e6fe85bb3e32aa23b95c83b39d 100644
+index a1b4f316342d49b47ff9c230e9f2357a7978d635..c63ee396e990d11e2f613f3b5a478b486076ed56 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -670,7 +670,20 @@ public class ServerLevel extends Level implements WorldGenLevel {

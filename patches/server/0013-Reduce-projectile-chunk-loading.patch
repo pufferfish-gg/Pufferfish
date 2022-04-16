@@ -40,7 +40,7 @@ index a37968c346c6a38f465aa3baa9c7881ed1860089..608f4fb87495b888d9625b382450eff2
  }
 +
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-index 15744949537430d8d8ae71ea72481126c9aff7bd..4759a6b3d3cd7973744562adf97d110d359ebce3 100644
+index ccaa97956e40c6a79371d813719f65687991ec5b..0c7d31c7ffd603e54fb19010331ad220c7b15627 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
 @@ -42,6 +42,36 @@ public abstract class Projectile extends Entity {
