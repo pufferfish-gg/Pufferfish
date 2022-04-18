@@ -23,7 +23,7 @@ index 60733ba2b06a5c0e5ea855b704f72d76d286bab6..8216df4516b1b1eb1d8e3ff9792c1a47
      archiveClassifier.set("dev")
  
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index deb52c185705c4b4186c7bae02f2a827620c20ca..f0f500f8c395b5ffd24d45194ef29ad0035c9117 100644
+index deb52c185705c4b4186c7bae02f2a827620c20ca..ccf6064bf63b44c1bbf5354e0daeaa989cc73a9b 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -1,5 +1,6 @@
@@ -47,7 +47,7 @@ index deb52c185705c4b4186c7bae02f2a827620c20ca..f0f500f8c395b5ffd24d45194ef29ad0
 +		if (SIMDDetection.isEnabled) {
 +			PufferfishLogger.LOGGER.info("SIMD operations detected as functional. Will replace some operations with faster versions.");
 +		} else if (SIMDDetection.versionLimited) {
-+			PufferfishLogger.LOGGER.warning("Will not enable SIMD! These optimizations are only safely supported on Java 17.");
++			PufferfishLogger.LOGGER.warning("Will not enable SIMD! These optimizations are only safely supported on Java 17 and Java 18.");
 +		} else {
 +			PufferfishLogger.LOGGER.warning("SIMD operations are available for your server, but are not configured!");
 +			PufferfishLogger.LOGGER.warning("To enable additional optimizations, add \"--add-modules=jdk.incubator.vector\" to your startup flags, BEFORE the \"-jar\".");
