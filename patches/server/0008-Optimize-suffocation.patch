@@ -17,10 +17,10 @@ but is so much cheaper than the suffocation check that it's worth
 keeping it.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 015fc10d996db11659c3d6ad5d1d66948a593466..a35c5c5a618df229e12b7f8a5afb5c1e4edec405 100644
+index f3b37609ee3209c1f9ffba18817b9a4cf10be985..7d1bbcccb9510be5185d626f7124caa3dddcc2fe 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -168,4 +168,13 @@ public class PufferfishConfig {
+@@ -170,4 +170,13 @@ public class PufferfishConfig {
  				"This can be overridden per-player with the permission pufferfish.usebooks");
  	}
  	

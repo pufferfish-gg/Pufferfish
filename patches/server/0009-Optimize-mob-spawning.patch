@@ -17,10 +17,10 @@ and, in my opinion, worth the low risk of minor mob-spawning-related
 inconsistencies.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index a35c5c5a618df229e12b7f8a5afb5c1e4edec405..a37968c346c6a38f465aa3baa9c7881ed1860089 100644
+index 7d1bbcccb9510be5185d626f7124caa3dddcc2fe..94743568aff18e58cca69c8256950fe77d1d109c 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -177,4 +177,21 @@ public class PufferfishConfig {
+@@ -179,4 +179,21 @@ public class PufferfishConfig {
  				"configuration option if the vanilla deviation is undesirable.");
  	}
  	

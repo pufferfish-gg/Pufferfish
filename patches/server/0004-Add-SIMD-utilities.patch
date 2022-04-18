@@ -23,7 +23,7 @@ index 60733ba2b06a5c0e5ea855b704f72d76d286bab6..8216df4516b1b1eb1d8e3ff9792c1a47
      archiveClassifier.set("dev")
  
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index deb52c185705c4b4186c7bae02f2a827620c20ca..6afe48f33c4383733854761d8d34082274561701 100644
+index deb52c185705c4b4186c7bae02f2a827620c20ca..f0f500f8c395b5ffd24d45194ef29ad0035c9117 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -1,5 +1,6 @@
@@ -33,7 +33,7 @@ index deb52c185705c4b4186c7bae02f2a827620c20ca..6afe48f33c4383733854761d8d340822
  import java.io.File;
  import java.io.IOException;
  import java.lang.reflect.Method;
-@@ -72,6 +73,21 @@ public class PufferfishConfig {
+@@ -72,6 +73,23 @@ public class PufferfishConfig {
  		updates++;
  		
  		config.save(configFile);
@@ -41,7 +41,7 @@ index deb52c185705c4b4186c7bae02f2a827620c20ca..6afe48f33c4383733854761d8d340822
 +		// Attempt to detect vectorization
 +		try {
 +			SIMDDetection.isEnabled = SIMDDetection.canEnable();
-+			SIMDDetection.versionLimited = SIMDDetection.getJavaVersion() != 17;
++			SIMDDetection.versionLimited = SIMDDetection.getJavaVersion() != 17 && SIMDDetection.getJavaVersion() != 18;
 +		} catch (NoClassDefFoundError | Exception ignored) {}
 +		
 +		if (SIMDDetection.isEnabled) {
@@ -51,6 +51,8 @@ index deb52c185705c4b4186c7bae02f2a827620c20ca..6afe48f33c4383733854761d8d340822
 +		} else {
 +			PufferfishLogger.LOGGER.warning("SIMD operations are available for your server, but are not configured!");
 +			PufferfishLogger.LOGGER.warning("To enable additional optimizations, add \"--add-modules=jdk.incubator.vector\" to your startup flags, BEFORE the \"-jar\".");
++			PufferfishLogger.LOGGER.warning("If you have already added this flag, then SIMD operations are not supported on your JVM or CPU.");
++			PufferfishLogger.LOGGER.warning("Debug: Java: " + System.getProperty("java.version") + ", test run: " + SIMDDetection.testRun);
 +		}
  	}
  	

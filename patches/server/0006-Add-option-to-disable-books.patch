@@ -11,10 +11,10 @@ you to easily disable books, should you want to preemptively remove this
 functionality before additional exploits are found.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index f9e290fabd8c2aa09b48f860386a271b1b44d45d..015fc10d996db11659c3d6ad5d1d66948a593466 100644
+index 208ce4c2fe6ec1af8d8faed65137413fa8ff597c..f3b37609ee3209c1f9ffba18817b9a4cf10be985 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -159,4 +159,13 @@ public class PufferfishConfig {
+@@ -161,4 +161,13 @@ public class PufferfishConfig {
  		}
  	}
  	
