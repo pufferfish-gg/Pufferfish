@@ -5,7 +5,7 @@ Subject: [PATCH] Config to disable method profiler
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index e0240e6314183b62152ad464bd75590e61b80da8..8dc4de943f09bc67d2e107a7b9cc88328a1f245c 100644
+index 54cf424e2e82d7a886cacd98d25c64d1e88ab2d0..79a73f3c5bbc905fcfbbea7490d96e117b3aedb2 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -277,4 +277,10 @@ public class PufferfishConfig {
@@ -16,8 +16,8 @@ index e0240e6314183b62152ad464bd75590e61b80da8..8dc4de943f09bc67d2e107a7b9cc8832
 \ No newline at end of file
 +    public static boolean disableMethodProfiler;
 +    private static void miscSettings() {
-+        disableMethodProfiler = config.getBoolean("misc.disable-method-profiler", true);
-+        config.setComment("misc", "Settings for things that don't belong elsewhere");
++        disableMethodProfiler = getBoolean("misc.disable-method-profiler", true);
++        setComment("misc", "Settings for things that don't belong elsewhere");
 +    }
 +
 +}
