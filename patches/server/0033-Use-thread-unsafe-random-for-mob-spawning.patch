@@ -18,10 +18,10 @@ index 7bebf24bc1a33ce684e8e0395229fdfc8552dda7..4f0353f951a5e3f93a848b879e7d8da2
  
      private int currentIceAndSnowTick = 0; protected void resetIceAndSnowTick() { this.currentIceAndSnowTick = this.randomTickRandom.nextInt(16); } // Pufferfish
 diff --git a/src/main/java/net/minecraft/world/level/NaturalSpawner.java b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-index 13eded53a64d0f36f8c9bce2077de4f1c1ed2d56..303ad9eab2e0a9b73597ca4ee9d70bea1979c5dd 100644
+index d87900e2a9559a34ee66e3cffab851a578c0278e..6e24b86ce315510133b6294f5d348e5c4e7f547f 100644
 --- a/src/main/java/net/minecraft/world/level/NaturalSpawner.java
 +++ b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-@@ -414,12 +414,12 @@ public final class NaturalSpawner {
+@@ -413,12 +413,12 @@ public final class NaturalSpawner {
          }
      }
  

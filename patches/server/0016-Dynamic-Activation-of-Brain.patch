@@ -27,7 +27,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 8e4c8227c4a3fde3b29daa6420a67374786ea2e4..ae4847d7db1392adc5784466e17252340b17dda9 100644
+index 614174995b87f1ffb75e69fd1d0588a73ef9ac91..af57ed64d9aca54036053b08afb9ffc67db52907 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -3,6 +3,12 @@ package gg.pufferfish.pufferfish;
@@ -84,7 +84,7 @@ index 8e4c8227c4a3fde3b29daa6420a67374786ea2e4..ae4847d7db1392adc5784466e1725234
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 7673774f9af410f30099a8d442966eabe6b9d304..f17e54a2742f992f672aeffaf669d5efa2ef754c 100644
+index 1d352ffd64930c7d134db4aa525bdd114f059b70..b9b1f3126732af84e081932097033523752419ef 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -352,6 +352,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
@@ -111,10 +111,10 @@ index 79abd84696ef099f6b12ddeaa6e398f18c53316a..29169f9819ebbe0b90d87ed1e5833a3a
      public final String id;
  
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index b1ae9b0d8b229e2a6797a173cb11ecc0f43e2592..2dcc12e183fb1948b318c987e3cd61aaf7bd1be6 100644
+index e3227a806d9e19923783122ea94ae19e7dbe71da..790ce0dca60ab26b7b907449fbb50f5dc7d5bade 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
-@@ -210,10 +210,10 @@ public abstract class Mob extends LivingEntity {
+@@ -209,10 +209,10 @@ public abstract class Mob extends LivingEntity {
      @Override
      public void inactiveTick() {
          super.inactiveTick();
@@ -127,7 +127,7 @@ index b1ae9b0d8b229e2a6797a173cb11ecc0f43e2592..2dcc12e183fb1948b318c987e3cd61aa
              this.targetSelector.tick();
          }
      }
-@@ -844,16 +844,20 @@ public abstract class Mob extends LivingEntity {
+@@ -843,16 +843,20 @@ public abstract class Mob extends LivingEntity {
  
          if (i % 2 != 0 && this.tickCount > 1) {
              this.level.getProfiler().push("targetSelector");
@@ -185,10 +185,10 @@ index c77fad612ba99663af2ec4418e3c2d68752dc2c8..8229001df0a901d9016fb16e4ddc81b5
      public boolean hasTasks() {
          for (WrappedGoal task : this.availableGoals) {
 diff --git a/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java b/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java
-index d54fc22639bb67a977c27585aac46e9d3dcafa6d..fb800bf3fc198c1aee9a8bdc8d33e5e76f6a8746 100644
+index e5617c013f1bd6f89dfbb2ccd404489180cd0573..bdc65bf098fd3107e36d3738583455e87af82cf4 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java
-@@ -284,9 +284,11 @@ public class Axolotl extends Animal implements LerpingModel, Bucketable {
+@@ -283,9 +283,11 @@ public class Axolotl extends Animal implements LerpingModel, Bucketable {
          return true;
      }
  
@@ -217,7 +217,7 @@ index 78f1082b0a3bad923c1e142d15bc7dad2ae5ff15..042e852cd440e62003b5e72d92728e2d
          this.level.getProfiler().pop();
          this.level.getProfiler().push("goatActivityUpdate");
 diff --git a/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java b/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
-index 373ec915412899e4893aa182abd6fb63f3dff0aa..fc43b1d5dcb53456bb24ae46ea08b97b14403c86 100644
+index 49ca4f6a9e33fdb5295dae2b059d071551353c24..127c839c4f9b0ade39065588e275984ea639380b 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 @@ -126,9 +126,11 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
@@ -233,7 +233,7 @@ index 373ec915412899e4893aa182abd6fb63f3dff0aa..fc43b1d5dcb53456bb24ae46ea08b97b
          this.level.getProfiler().pop();
          HoglinAi.updateActivity(this);
 diff --git a/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java b/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
-index 84c129fd931596a4cd3aa5b9caa7da1c309b71a7..3ff720ff67938be3efc0412a7a17c4d5b8eab763 100644
+index 63cfda124b5bad20af3050a0b62d73883b6abf7d..05e05793b1fd10cceb4b19ac60c8a10b0c5b7d45 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
 @@ -288,9 +288,11 @@ public class Piglin extends AbstractPiglin implements CrossbowAttackMob, Invento
@@ -281,7 +281,7 @@ index 268524e256a034520438d5c825e5e419d72d29ce..63903bd02c6f31d3190a20d106997d4f
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index 8bd8b85445b2b0b6517590baef33bb4234bb2a38..b36578313f0dbefb2a2890488e019f845b5ae334 100644
+index 1a1a1f4d0ac025daccc2d3f84faf6592819f4d5c..a3ba67d84e53ca83b6078d5f674709fd19943ae3 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -38,6 +38,10 @@ import co.aikar.timings.MinecraftTimings;
