@@ -17,7 +17,7 @@ and, in my opinion, worth the low risk of minor mob-spawning-related
 inconsistencies.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 7d1bbcccb9510be5185d626f7124caa3dddcc2fe..94743568aff18e58cca69c8256950fe77d1d109c 100644
+index 290646972a6b0b3b1aa03b43ceb2c398bbcfb5b9..235656c0c8be77e522eb281df9c3abc4e1a5564d 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -179,4 +179,21 @@ public class PufferfishConfig {
@@ -56,7 +56,7 @@ index 86bf3f7eabd398f2dc9e09f111f6dd496086beb3..d91f9e5ed4e452477afaa6d19538e2a9
      public static <S extends MinecraftServer> S spin(Function<Thread, S> serverFactory) {
          AtomicReference<S> atomicreference = new AtomicReference();
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 340204ef44bf5e4f1b91808d90abc29217cfafde..27e90ca03275a42271bbe97ee1a63a355b098ede 100644
+index f723445ac4745742ffe528d189b0145120777d9e..6afd7c8b3a0db90dbab14b4405ae4c750e5b0ef1 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -350,6 +350,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
@@ -169,10 +169,10 @@ index fb0757d4bb32123641535a88a22bc074b8d2623f..f29ee33705d5708931171c5bcca2b493
  
      private void getFullChunk(long pos, Consumer<LevelChunk> chunkConsumer) {
 diff --git a/src/main/java/net/minecraft/world/level/entity/EntityTickList.java b/src/main/java/net/minecraft/world/level/entity/EntityTickList.java
-index 4814e719e0b898464692075170889fdb2729a26a..ffcd18fa852af3f24bdf5398f481b839d2dcfe6c 100644
+index 4cdfc433df67afcd455422e9baf56f167dd712ae..57fcf3910f45ce371ac2e237b277b1034caaac4e 100644
 --- a/src/main/java/net/minecraft/world/level/entity/EntityTickList.java
 +++ b/src/main/java/net/minecraft/world/level/entity/EntityTickList.java
-@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
+@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
  import net.minecraft.world.entity.Entity;
  
  public class EntityTickList {
