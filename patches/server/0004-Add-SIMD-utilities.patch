@@ -23,7 +23,7 @@ index 60733ba2b06a5c0e5ea855b704f72d76d286bab6..8216df4516b1b1eb1d8e3ff9792c1a47
      archiveClassifier.set("dev")
  
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index deb52c185705c4b4186c7bae02f2a827620c20ca..ccf6064bf63b44c1bbf5354e0daeaa989cc73a9b 100644
+index deb52c185705c4b4186c7bae02f2a827620c20ca..1779b2c9463a8da5d317922a9909b4d2caa39536 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -1,5 +1,6 @@
@@ -40,7 +40,7 @@ index deb52c185705c4b4186c7bae02f2a827620c20ca..ccf6064bf63b44c1bbf5354e0daeaa98
 +		
 +		// Attempt to detect vectorization
 +		try {
-+			SIMDDetection.isEnabled = SIMDDetection.canEnable();
++			SIMDDetection.isEnabled = SIMDDetection.canEnable(PufferfishLogger.LOGGER);
 +			SIMDDetection.versionLimited = SIMDDetection.getJavaVersion() != 17 && SIMDDetection.getJavaVersion() != 18;
 +		} catch (NoClassDefFoundError | Exception ignored) {}
 +		

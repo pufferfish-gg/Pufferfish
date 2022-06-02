@@ -8,24 +8,28 @@ classes and methods added by this patch should NOT be used in plugins.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/simd/VectorMapPalette.java b/src/main/java/gg/pufferfish/pufferfish/simd/VectorMapPalette.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..2341b564b6383d5eca5fafe80273e046bfea070e
+index 0000000000000000000000000000000000000000..ae2464920c9412ac90b819a540ee58be0741465f
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/simd/VectorMapPalette.java
-@@ -0,0 +1,79 @@
+@@ -0,0 +1,83 @@
 +package gg.pufferfish.pufferfish.simd;
 +
 +import java.awt.Color;
 +import jdk.incubator.vector.FloatVector;
 +import jdk.incubator.vector.IntVector;
 +import jdk.incubator.vector.VectorMask;
++import jdk.incubator.vector.VectorSpecies;
 +import org.bukkit.map.MapPalette;
 +
 +@Deprecated
 +public class VectorMapPalette {
 +	
++	private static final VectorSpecies<Integer> I_SPEC = IntVector.SPECIES_PREFERRED;
++	private static final VectorSpecies<Float> F_SPEC = FloatVector.SPECIES_PREFERRED;
++	
 +	@Deprecated
 +	public static void matchColorVectorized(int[] in, byte[] out) {
-+		int speciesLength = IntVector.SPECIES_256.length();
++		int speciesLength = I_SPEC.length();
 +		int i;
 +		for (i = 0; i < in.length - speciesLength; i += speciesLength) {
 +			float[] redsArr = new float[speciesLength];
@@ -40,22 +44,22 @@ index 0000000000000000000000000000000000000000..2341b564b6383d5eca5fafe80273e046
 +				bluesArr[j] = (in[i + j] >> 0) & 0xFF;
 +			}
 +			
-+			IntVector alphas = IntVector.fromArray(IntVector.SPECIES_256, alphasArr, 0);
-+			FloatVector reds = FloatVector.fromArray(FloatVector.SPECIES_256, redsArr, 0);
-+			FloatVector greens = FloatVector.fromArray(FloatVector.SPECIES_256, greensArr, 0);
-+			FloatVector blues = FloatVector.fromArray(FloatVector.SPECIES_256, bluesArr, 0);
-+			IntVector resultIndex = IntVector.zero(IntVector.SPECIES_256);
-+			VectorMask<Integer> modificationMask = VectorMask.fromLong(IntVector.SPECIES_256, 0b11111111);
++			IntVector alphas = IntVector.fromArray(I_SPEC, alphasArr, 0);
++			FloatVector reds = FloatVector.fromArray(F_SPEC, redsArr, 0);
++			FloatVector greens = FloatVector.fromArray(F_SPEC, greensArr, 0);
++			FloatVector blues = FloatVector.fromArray(F_SPEC, bluesArr, 0);
++			IntVector resultIndex = IntVector.zero(I_SPEC);
++			VectorMask<Integer> modificationMask = VectorMask.fromLong(I_SPEC, 0xffffffff);
 +			
 +			modificationMask = modificationMask.and(alphas.lt(128).not());
-+			FloatVector bestDistances = FloatVector.broadcast(FloatVector.SPECIES_256, Float.MAX_VALUE);
++			FloatVector bestDistances = FloatVector.broadcast(F_SPEC, Float.MAX_VALUE);
 +			
 +			for (int c = 4; c < MapPalette.colors.length; c++) {
 +				// We're using 32-bit floats here because it's 2x faster and nobody will know the difference.
 +				// For correctness, the original algorithm uses 64-bit floats instead. Completely unnecessary.
-+				FloatVector compReds = FloatVector.broadcast(FloatVector.SPECIES_256, MapPalette.colors[c].getRed());
-+				FloatVector compGreens = FloatVector.broadcast(FloatVector.SPECIES_256, MapPalette.colors[c].getGreen());
-+				FloatVector compBlues = FloatVector.broadcast(FloatVector.SPECIES_256, MapPalette.colors[c].getBlue());
++				FloatVector compReds = FloatVector.broadcast(F_SPEC, MapPalette.colors[c].getRed());
++				FloatVector compGreens = FloatVector.broadcast(F_SPEC, MapPalette.colors[c].getGreen());
++				FloatVector compBlues = FloatVector.broadcast(F_SPEC, MapPalette.colors[c].getBlue());
 +				
 +				FloatVector rMean = reds.add(compReds).div(2.0f);
 +				FloatVector rDiff = reds.sub(compReds);
@@ -63,8 +67,8 @@ index 0000000000000000000000000000000000000000..2341b564b6383d5eca5fafe80273e046
 +				FloatVector bDiff = blues.sub(compBlues);
 +				
 +				FloatVector weightR = rMean.div(256.0f).add(2);
-+				FloatVector weightG = FloatVector.broadcast(FloatVector.SPECIES_256, 4.0f);
-+				FloatVector weightB = FloatVector.broadcast(FloatVector.SPECIES_256, 255.0f).sub(rMean).div(256.0f).add(2.0f);
++				FloatVector weightG = FloatVector.broadcast(F_SPEC, 4.0f);
++				FloatVector weightB = FloatVector.broadcast(F_SPEC, 255.0f).sub(rMean).div(256.0f).add(2.0f);
 +				
 +				FloatVector distance = weightR.mul(rDiff).mul(rDiff).add(weightG.mul(gDiff).mul(gDiff)).add(weightB.mul(bDiff).mul(bDiff));
 +				
@@ -75,7 +79,7 @@ index 0000000000000000000000000000000000000000..2341b564b6383d5eca5fafe80273e046
 +				
 +				// Update the result array
 +				// We also AND with the modification mask because we don't want to interfere if the alpha value isn't large enough.
-+				resultIndex = resultIndex.blend(c, bestDistanceMask.cast(IntVector.SPECIES_256).and(modificationMask)); // Update the results
++				resultIndex = resultIndex.blend(c, bestDistanceMask.cast(I_SPEC).and(modificationMask)); // Update the results
 +			}
 +			
 +			for (int j = 0; j < speciesLength; j++) {
