@@ -20,10 +20,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/world/entity/ai/behavior/AcquirePoi.java b/src/main/java/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
-index 63c997ba5e7194218e844480419c6b59a4d26e9a..6492ed0cca1158d06d8a50ca9d1fca5288d8310b 100644
+index 43243537b765a2d270be6de3f053fea77ff67d18..bf3b8ccb3e031e0ad24cd51e28ea8cbd4f8a8030 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
-@@ -67,6 +67,7 @@ public class AcquirePoi extends Behavior<PathfinderMob> {
+@@ -72,6 +72,7 @@ public class AcquirePoi extends Behavior<PathfinderMob> {
      @Override
      protected void start(ServerLevel world, PathfinderMob entity, long time) {
          this.nextScheduledStart = time + 20L + (long)world.getRandom().nextInt(20);

@@ -160,19 +160,19 @@ index 241fec02e6869c638d3a160819b32173a081467b..6a8f9e8f5bf108674c47018def28906e
      public int getContainerSize() {
          return this.container1.getContainerSize() + this.container2.getContainerSize();
 diff --git a/src/main/java/net/minecraft/world/Container.java b/src/main/java/net/minecraft/world/Container.java
-index 7437f01ca8f416e2c9150250e324af4725a4efb6..7ac51dbfce18a2bc52faa7a915abeccc6068909d 100644
+index 540bc9500c35c0db719b00aa26f6fb3a1b08ed9f..806cb760822a99316b08ad95ff8922df717050e2 100644
 --- a/src/main/java/net/minecraft/world/Container.java
 +++ b/src/main/java/net/minecraft/world/Container.java
-@@ -1,6 +1,8 @@
- package net.minecraft.world;
+@@ -2,6 +2,8 @@ package net.minecraft.world;
  
  import java.util.Set;
+ import java.util.function.Predicate;
 +
 +import net.minecraft.core.Direction; // Pufferfish
  import net.minecraft.world.entity.player.Player;
  import net.minecraft.world.item.Item;
  import net.minecraft.world.item.ItemStack;
-@@ -9,6 +11,63 @@ import org.bukkit.craftbukkit.entity.CraftHumanEntity;
+@@ -10,6 +12,63 @@ import org.bukkit.craftbukkit.entity.CraftHumanEntity;
  // CraftBukkit end
  
  public interface Container extends Clearable {
@@ -237,12 +237,12 @@ index 7437f01ca8f416e2c9150250e324af4725a4efb6..7ac51dbfce18a2bc52faa7a915abeccc
      int LARGE_MAX_STACK_SIZE = 64;
  
 diff --git a/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecartContainer.java b/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecartContainer.java
-index 8a07d5d25086d7544757bb86181fbe2b5e743d29..9be1ce7f5b956f0c82151ea02e555e7dd4a57241 100644
+index b8fb7b5a347298ada16bc8b818edf1863e3f6040..637118601237e0f994b12571b74db99065bdd60c 100644
 --- a/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecartContainer.java
 +++ b/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecartContainer.java
-@@ -40,7 +40,10 @@ import org.bukkit.inventory.InventoryHolder;
+@@ -27,7 +27,10 @@ import org.bukkit.inventory.InventoryHolder;
  
- public abstract class AbstractMinecartContainer extends AbstractMinecart implements Container, MenuProvider {
+ public abstract class AbstractMinecartContainer extends AbstractMinecart implements ContainerEntity {
  
 +    // Pufferfish start
      private NonNullList<ItemStack> itemStacks;
@@ -272,23 +272,22 @@ index 8a07d5d25086d7544757bb86181fbe2b5e743d29..9be1ce7f5b956f0c82151ea02e555e7d
      }
  
      @Override
-@@ -217,7 +226,10 @@ public abstract class AbstractMinecartContainer extends AbstractMinecart impleme
-     protected void readAdditionalSaveData(CompoundTag nbt) {
+@@ -157,6 +166,10 @@ public abstract class AbstractMinecartContainer extends AbstractMinecart impleme
          super.readAdditionalSaveData(nbt);
          this.lootableData.loadNbt(nbt); // Paper
--        this.itemStacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+         this.readChestVehicleSaveData(nbt);
 +        // Pufferfish start
 +        this.itemStacksOptimized = new gg.airplane.structs.ItemListWithBitset(this.getContainerSize());
 +        this.itemStacks = this.itemStacksOptimized.nonNullList;
 +        // Pufferfish end
-         if (nbt.contains("LootTable", 8)) {
-             this.lootTable = new ResourceLocation(nbt.getString("LootTable"));
-             this.lootTableSeed = nbt.getLong("LootTableSeed");
+     }
+ 
+     @Override
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/ChestBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/ChestBlockEntity.java
-index e56f7d76b501dab7d549efd2fafd514a9625c24e..066f43deb5df6f79428eb0f325c2abfb31ea9254 100644
+index a71414397bd45ee7bcacfeef0041d80dfa25f114..d66806565770cb03a21794f99e5c4b0f3040b26a 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/ChestBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/ChestBlockEntity.java
-@@ -32,7 +32,10 @@ import org.bukkit.entity.HumanEntity;
+@@ -31,7 +31,10 @@ import org.bukkit.entity.HumanEntity;
  public class ChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity {
  
      private static final int EVENT_SET_OPEN_COUNT = 1;
@@ -299,7 +298,7 @@ index e56f7d76b501dab7d549efd2fafd514a9625c24e..066f43deb5df6f79428eb0f325c2abfb
      public final ContainerOpenersCounter openersCounter;
      private final ChestLidController chestLidController;
  
-@@ -66,9 +69,13 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
+@@ -65,9 +68,13 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
      }
      // CraftBukkit end
  
@@ -314,7 +313,7 @@ index e56f7d76b501dab7d549efd2fafd514a9625c24e..066f43deb5df6f79428eb0f325c2abfb
          this.openersCounter = new ContainerOpenersCounter() {
              @Override
              protected void onOpen(Level world, BlockPos pos, BlockState state) {
-@@ -99,6 +106,23 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
+@@ -98,6 +105,23 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
          this.chestLidController = new ChestLidController();
      }
  
@@ -338,7 +337,7 @@ index e56f7d76b501dab7d549efd2fafd514a9625c24e..066f43deb5df6f79428eb0f325c2abfb
      public ChestBlockEntity(BlockPos pos, BlockState state) {
          this(BlockEntityType.CHEST, pos, state);
      }
-@@ -116,7 +140,10 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
+@@ -115,7 +139,10 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
      @Override
      public void load(CompoundTag nbt) {
          super.load(nbt);
@@ -350,7 +349,7 @@ index e56f7d76b501dab7d549efd2fafd514a9625c24e..066f43deb5df6f79428eb0f325c2abfb
          if (!this.tryLoadLootTable(nbt)) {
              ContainerHelper.loadAllItems(nbt, this.items);
          }
-@@ -188,7 +215,10 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
+@@ -187,7 +214,10 @@ public class ChestBlockEntity extends RandomizableContainerBlockEntity implement
  
      @Override
      protected void setItems(NonNullList<ItemStack> list) {
@@ -363,10 +362,10 @@ index e56f7d76b501dab7d549efd2fafd514a9625c24e..066f43deb5df6f79428eb0f325c2abfb
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index d241b25acc223982109495542fd17e0fbdf53437..9cc130087dfda6639def3b5bfd347c59602da3f3 100644
+index 8ab1d401ed55d4cce55704317cbffe53ebc9f119..cfc7901125c127b155c5e7d5875f0fd0c8bb9c01 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-@@ -44,7 +44,10 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -43,7 +43,10 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
  
      public static final int MOVE_ITEM_SPEED = 8;
      public static final int HOPPER_CONTAINER_SIZE = 5;
@@ -377,7 +376,7 @@ index d241b25acc223982109495542fd17e0fbdf53437..9cc130087dfda6639def3b5bfd347c59
      private int cooldownTime;
      private long tickedGameTime;
  
-@@ -80,14 +83,37 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -79,14 +82,37 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
  
      public HopperBlockEntity(BlockPos pos, BlockState state) {
          super(BlockEntityType.HOPPER, pos, state);
@@ -417,7 +416,7 @@ index d241b25acc223982109495542fd17e0fbdf53437..9cc130087dfda6639def3b5bfd347c59
          if (!this.tryLoadLootTable(nbt)) {
              ContainerHelper.loadAllItems(nbt, this.items);
          }
-@@ -159,7 +185,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -158,7 +184,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
                      flag = HopperBlockEntity.ejectItems(world, pos, state, (Container) blockEntity, blockEntity); // CraftBukkit
                  }
  
@@ -426,7 +425,7 @@ index d241b25acc223982109495542fd17e0fbdf53437..9cc130087dfda6639def3b5bfd347c59
                      flag |= booleansupplier.getAsBoolean();
                  }
  
-@@ -198,7 +224,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -197,7 +223,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
          skipPushModeEventFire = skipHopperEvents;
          boolean foundItem = false;
          for (int i = 0; i < hopper.getContainerSize(); ++i) {
@@ -435,7 +434,7 @@ index d241b25acc223982109495542fd17e0fbdf53437..9cc130087dfda6639def3b5bfd347c59
              if (!item.isEmpty()) {
                  foundItem = true;
                  ItemStack origItemStack = item;
-@@ -401,12 +427,18 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -400,12 +426,18 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
      }
  
      private static boolean isFullContainer(Container inventory, Direction direction) {
@@ -456,7 +455,7 @@ index d241b25acc223982109495542fd17e0fbdf53437..9cc130087dfda6639def3b5bfd347c59
      }
      private static boolean allMatch(Container iinventory, Direction enumdirection, java.util.function.BiPredicate<ItemStack, Integer> test) {
          if (iinventory instanceof WorldlyContainer) {
-@@ -583,7 +615,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -582,7 +614,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
  
          if (HopperBlockEntity.canPlaceItemInContainer(to, stack, slot, side)) {
              boolean flag = false;
@@ -465,7 +464,7 @@ index d241b25acc223982109495542fd17e0fbdf53437..9cc130087dfda6639def3b5bfd347c59
  
              if (itemstack1.isEmpty()) {
                  // Spigot start - SPIGOT-6693, InventorySubcontainer#setItem
-@@ -731,7 +763,10 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -730,7 +762,10 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
  
      @Override
      protected void setItems(NonNullList<ItemStack> list) {
@@ -478,7 +477,7 @@ index d241b25acc223982109495542fd17e0fbdf53437..9cc130087dfda6639def3b5bfd347c59
  
      public static void entityInside(Level world, BlockPos pos, BlockState state, Entity entity, HopperBlockEntity blockEntity) {
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java
-index ed3518fe7c841d9e1a9c97626acaa3d765a6d76f..da00f75ccc9f8c2e2174d4450479202a50844245 100644
+index d559f93a9a09bac414dd5d58afccad42c127f09b..13e749a3c40f0b2cc002f13675a9a56eedbefdac 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java
 @@ -96,13 +96,8 @@ public abstract class RandomizableContainerBlockEntity extends BaseContainerBloc

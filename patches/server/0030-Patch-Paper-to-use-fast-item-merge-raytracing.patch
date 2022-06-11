@@ -5,13 +5,13 @@ Subject: [PATCH] Patch Paper to use fast item merge raytracing
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index 9ca37cbf829ff4240ae79fc283bcf9e7f2c728d2..820ddcbc1547e2b9da3475a13d039e0cd8bc2c2a 100644
+index ae4b251e10babb07055d031ff48ac7dd5d4be4a0..fa612a4f4abc5185c9142af31f5d7f6e92549350 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-@@ -243,10 +243,16 @@ public class ItemEntity extends Entity {
+@@ -249,10 +249,16 @@ public class ItemEntity extends Entity {
                  if (entityitem.isMergable()) {
                      // Paper Start - Fix items merging through walls
-                         if (this.level.paperConfig.fixItemsMergingThroughWalls) {
+                         if (this.level.paperConfig().fixes.fixItemsMergingThroughWalls) {
 +                            // Pufferfish start - skip the allocations
 +                            /*
                              net.minecraft.world.level.ClipContext rayTrace = new net.minecraft.world.level.ClipContext(this.position(), entityitem.position(),

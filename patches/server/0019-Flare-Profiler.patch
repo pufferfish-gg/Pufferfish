@@ -20,10 +20,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 8216df4516b1b1eb1d8e3ff9792c1a4750f5da2e..9521971e9e597834e785b36d1657064dc1621b9b 100644
+index dc4300678a5fd7b22ad431f1844acdd79bd67289..158e896b1af5fd9b30118cf3f94fb42d276d2a5f 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -52,6 +52,7 @@ dependencies {
+@@ -54,6 +54,7 @@ dependencies {
          exclude(group="org.yaml", module="snakeyaml")
      }
      // Pufferfish end
@@ -32,7 +32,7 @@ index 8216df4516b1b1eb1d8e3ff9792c1a4750f5da2e..9521971e9e597834e785b36d1657064d
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
      testImplementation("junit:junit:4.13.2")
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index ae4847d7db1392adc5784466e17252340b17dda9..e0240e6314183b62152ad464bd75590e61b80da8 100644
+index 8dd277dd34ae9b285a7ce19aa39ad05466f0cd5b..de91ed04957aa03eabc7c66d01c2347c85e07533 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -12,6 +12,7 @@ import net.minecraft.world.entity.EntityType;

@@ -4,23 +4,46 @@ Date: Tue, 9 Feb 2021 17:17:39 -0600
 Subject: [PATCH] Disable Paper timings by default
 
 
-diff --git a/src/main/java/com/destroystokyo/paper/PaperConfig.java b/src/main/java/com/destroystokyo/paper/PaperConfig.java
-index c9c08e20f729b40b1d90f3ac144f5245f4f35230..9f0e4bfed860b7e1dbf73ff188013e235baa46e0 100644
---- a/src/main/java/com/destroystokyo/paper/PaperConfig.java
-+++ b/src/main/java/com/destroystokyo/paper/PaperConfig.java
-@@ -241,6 +241,15 @@ public class PaperConfig {
-     public static String timingsServerName;
-     private static void timings() {
-         boolean timings = getBoolean("timings.enabled", true);
-+        // Pufferfish start
-+        boolean reallyEnableTimings = getBoolean("timings.really-enabled", false);
-+        if (timings && !reallyEnableTimings) {
-+            Bukkit.getLogger().log(Level.WARNING, "[Pufferfish] To improve performance, timings have been disabled by default");
-+            Bukkit.getLogger().log(Level.WARNING, "[Pufferfish] You can still use timings by using /timings on, but they will not start on server startup unless you set timings.really-enabled to true in paper.yml");
-+            Bukkit.getLogger().log(Level.WARNING, "[Pufferfish] If you would like to disable this message, either set timings.really-enabled to true or timings.enabled to false.");
-+        }
-+        timings = reallyEnableTimings;
-+        // Pufferfish end
-         boolean verboseTimings = getBoolean("timings.verbose", true);
-         TimingsManager.url = getString("timings.url", "https://timings.aikar.co/");
-         if (!TimingsManager.url.endsWith("/")) {
+diff --git a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
+index 5a808a09291da691cbee75a55f6aa1b70ac9f018..13e49592a70285e92bf0d14ab596f3bcdebedf4c 100644
+--- a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
++++ b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
+@@ -8,6 +8,7 @@ import net.kyori.adventure.text.Component;
+ import net.kyori.adventure.text.format.NamedTextColor;
+ import net.minecraft.network.protocol.Packet;
+ import net.minecraft.network.protocol.game.ServerboundPlaceRecipePacket;
++import org.bukkit.Bukkit; // Pufferfish
+ import org.checkerframework.checker.nullness.qual.Nullable;
+ import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+ import org.spongepowered.configurate.objectmapping.meta.Comment;
+@@ -17,6 +18,7 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Objects;
++import java.util.logging.Level; // Pufferfish
+ 
+ @SuppressWarnings({"CanBeFinal", "FieldCanBeLocal", "FieldMayBeFinal", "NotNullFieldNotInitialized", "InnerClassMayBeStatic"})
+ public class GlobalConfiguration extends ConfigurationPart {
+@@ -52,6 +54,7 @@ public class GlobalConfiguration extends ConfigurationPart {
+ 
+     public class Timings extends ConfigurationPart.Post {
+         public boolean enabled = true;
++        public boolean reallyEnabled = false;
+         public boolean verbose = true;
+         public String url = "https://timings.aikar.co/";
+         public boolean serverNamePrivacy = false;
+@@ -65,6 +68,14 @@ public class GlobalConfiguration extends ConfigurationPart {
+ 
+         @Override
+         public void postProcess() {
++            // Pufferfish start
++            if (enabled && !reallyEnabled) {
++                Bukkit.getLogger().log(Level.WARNING, "[Pufferfish] To improve performance, timings have been disabled by default");
++                Bukkit.getLogger().log(Level.WARNING, "[Pufferfish] You can still use timings by using /timings on, but they will not start on server startup unless you set timings.really-enabled to true in paper.yml");
++                Bukkit.getLogger().log(Level.WARNING, "[Pufferfish] If you would like to disable this message, either set timings.really-enabled to true or timings.enabled to false.");
++            }
++            enabled = reallyEnabled;
++            // Pufferfish end
+             MinecraftTimings.processConfig(this);
+         }
+     }

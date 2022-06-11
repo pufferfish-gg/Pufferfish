@@ -5,10 +5,10 @@ Subject: [PATCH] Use array for gamerule storage
 
 
 diff --git a/src/main/java/net/minecraft/world/level/GameRules.java b/src/main/java/net/minecraft/world/level/GameRules.java
-index 798afc145c54306fcf0838d8daef2bdf17763da9..e67d5012bc7af629d05bceb1b1e22162272e17aa 100644
+index 468c635d31cfa8051666bbefce8df4b448e9ed93..17e869074b8cf29a8c3280499a27e95179896750 100644
 --- a/src/main/java/net/minecraft/world/level/GameRules.java
 +++ b/src/main/java/net/minecraft/world/level/GameRules.java
-@@ -90,6 +90,7 @@ public class GameRules {
+@@ -91,6 +91,7 @@ public class GameRules {
      public static final GameRules.Key<GameRules.BooleanValue> RULE_UNIVERSAL_ANGER = GameRules.register("universalAnger", GameRules.Category.MOBS, GameRules.BooleanValue.create(false));
      public static final GameRules.Key<GameRules.IntegerValue> RULE_PLAYERS_SLEEPING_PERCENTAGE = GameRules.register("playersSleepingPercentage", GameRules.Category.PLAYER, GameRules.IntegerValue.create(100));
      private final Map<GameRules.Key<?>, GameRules.Value<?>> rules;
@@ -16,7 +16,7 @@ index 798afc145c54306fcf0838d8daef2bdf17763da9..e67d5012bc7af629d05bceb1b1e22162
  
      private static <T extends GameRules.Value<T>> GameRules.Key<T> register(String name, GameRules.Category category, GameRules.Type<T> type) {
          GameRules.Key<T> gamerules_gamerulekey = new GameRules.Key<>(name, category);
-@@ -108,17 +109,33 @@ public class GameRules {
+@@ -109,17 +110,33 @@ public class GameRules {
      }
  
      public GameRules() {
@@ -53,7 +53,7 @@ index 798afc145c54306fcf0838d8daef2bdf17763da9..e67d5012bc7af629d05bceb1b1e22162
      }
  
      public CompoundTag createTag() {
-@@ -177,6 +194,10 @@ public class GameRules {
+@@ -178,6 +195,10 @@ public class GameRules {
      }
  
      public static final class Key<T extends GameRules.Value<T>> {

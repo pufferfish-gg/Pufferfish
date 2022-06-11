@@ -5,10 +5,10 @@ Subject: [PATCH] Add Sentry
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 01798255d45f2a642df00156f11dd2bcd8108079..274f22a34087a67fd30d7009188f3d72d84d2740 100644
+index 921b301de020ce73126ca518556b3435e776783d..0c9047479ce685e4809c3179e202f1a9bbad2765 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -41,6 +41,7 @@ dependencies {
+@@ -40,6 +40,7 @@ dependencies {
      apiAndDocs("net.kyori:adventure-text-serializer-plain")
      api("org.apache.logging.log4j:log4j-api:2.17.1")
      api("org.slf4j:slf4j-api:1.8.0-beta4")
@@ -184,20 +184,20 @@ index 0000000000000000000000000000000000000000..10310fdd53de28efb8a8250f6d3b0c8e
 +	}
 +}
 diff --git a/src/main/java/org/bukkit/plugin/SimplePluginManager.java b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-index bab8bb3a52cdeef5f7052d4e3f404c42f37d117d..dba9041784e7d3051b5248cbc24e4879e60103c1 100644
+index ed07f5820281b139739f673fa4e25171de81b894..aed2209b66f11a0d03473cf19437f3da0e9e573a 100644
 --- a/src/main/java/org/bukkit/plugin/SimplePluginManager.java
 +++ b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-@@ -622,7 +622,9 @@ public final class SimplePluginManager implements PluginManager {
+@@ -617,7 +617,9 @@ public final class SimplePluginManager implements PluginManager {
  
      // Paper start
      private void handlePluginException(String msg, Throwable ex, Plugin plugin) {
 +        gg.pufferfish.pufferfish.sentry.SentryContext.setPluginContext(plugin); // Pufferfish
          server.getLogger().log(Level.SEVERE, msg, ex);
 +        gg.pufferfish.pufferfish.sentry.SentryContext.removePluginContext(); // Pufferfish
-         callEvent(new ServerExceptionEvent(new ServerPluginEnableDisableException(msg, ex, plugin)));
+         callEvent(new com.destroystokyo.paper.event.server.ServerExceptionEvent(new com.destroystokyo.paper.exception.ServerPluginEnableDisableException(msg, ex, plugin)));
      }
      // Paper end
-@@ -681,9 +683,11 @@ public final class SimplePluginManager implements PluginManager {
+@@ -676,9 +678,11 @@ public final class SimplePluginManager implements PluginManager {
                              ));
                  }
              } catch (Throwable ex) {
@@ -206,11 +206,11 @@ index bab8bb3a52cdeef5f7052d4e3f404c42f37d117d..dba9041784e7d3051b5248cbc24e4879
                  String msg = "Could not pass event " + event.getEventName() + " to " + registration.getPlugin().getDescription().getFullName();
                  server.getLogger().log(Level.SEVERE, msg, ex);
 +                gg.pufferfish.pufferfish.sentry.SentryContext.removeEventContext(); // Pufferfish
-                 if (!(event instanceof ServerExceptionEvent)) { // We don't want to cause an endless event loop
-                     callEvent(new ServerExceptionEvent(new ServerEventException(msg, ex, registration.getPlugin(), registration.getListener(), event)));
+                 if (!(event instanceof com.destroystokyo.paper.event.server.ServerExceptionEvent)) { // We don't want to cause an endless event loop
+                     callEvent(new com.destroystokyo.paper.event.server.ServerExceptionEvent(new com.destroystokyo.paper.exception.ServerEventException(msg, ex, registration.getPlugin(), registration.getListener(), event)));
                  }
 diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
-index c8b11793c6a3baabc1c9566e0463ab1d6e293827..2b9218ddd262e89180588c3014dad328317dd8db 100644
+index 8ff78fad47f6086aa289e32590f4fbec24b3d500..a16c841751bc44e46d27fc4efbfc2ab23cc7b0d7 100644
 --- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 @@ -369,7 +369,9 @@ public final class JavaPluginLoader implements PluginLoader {

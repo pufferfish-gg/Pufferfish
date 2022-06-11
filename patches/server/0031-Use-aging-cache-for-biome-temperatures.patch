@@ -130,12 +130,12 @@ index 0000000000000000000000000000000000000000..a7f297ebb569f7c1f205e967ca485be7
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/level/biome/Biome.java b/src/main/java/net/minecraft/world/level/biome/Biome.java
-index 32fc9f9162aafe312ed757be2d03577b5f95841d..da7e940f7a0cf96a81372e920412c7d09bab8a3c 100644
+index ca259e278ad10347567c021376abca0287610432..021f7c44285b13a0904c09ea7210f2a5d10c7c61 100644
 --- a/src/main/java/net/minecraft/world/level/biome/Biome.java
 +++ b/src/main/java/net/minecraft/world/level/biome/Biome.java
-@@ -74,14 +74,20 @@ public final class Biome {
+@@ -66,14 +66,20 @@ public final class Biome {
+     private final BiomeGenerationSettings generationSettings;
      private final MobSpawnSettings mobSettings;
-     private final Biome.BiomeCategory biomeCategory;
      private final BiomeSpecialEffects specialEffects;
 -    private final ThreadLocal<Long2FloatLinkedOpenHashMap> temperatureCache = ThreadLocal.withInitial(() -> {
 +    // Pufferfish start - use our cache
@@ -155,7 +155,7 @@ index 32fc9f9162aafe312ed757be2d03577b5f95841d..da7e940f7a0cf96a81372e920412c7d0
          });
      });
  
-@@ -123,17 +129,15 @@ public final class Biome {
+@@ -114,17 +120,15 @@ public final class Biome {
      @Deprecated
      public float getTemperature(BlockPos blockPos) {
          long l = blockPos.asLong();

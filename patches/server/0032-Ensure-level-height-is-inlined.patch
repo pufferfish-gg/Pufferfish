@@ -5,10 +5,10 @@ Subject: [PATCH] Ensure level height is inlined
 
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 2f3be587de0699f7442c621ca1e7e9e78da3172c..fda00cc66d0a4816f1fc8f96087f171f52945560 100644
+index 575cc3b302692356e9e08bbcd3d0d6daefaa7846..c4aa22273cf7794851fe8323878fdce8948aff33 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -261,6 +261,15 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -272,6 +272,15 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
  
      public abstract ResourceKey<LevelStem> getTypeKey();
  
@@ -21,13 +21,13 @@ index 2f3be587de0699f7442c621ca1e7e9e78da3172c..fda00cc66d0a4816f1fc8f96087f171f
 +    @Override public final int getHeight() { return this.height; }
 +    // Pufferfish end
 +
-     protected Level(WritableLevelData worlddatamutable, ResourceKey<Level> resourcekey, Holder<DimensionType> holder, Supplier<ProfilerFiller> supplier, boolean flag, boolean flag1, long i, org.bukkit.generator.ChunkGenerator gen, org.bukkit.generator.BiomeProvider biomeProvider, org.bukkit.World.Environment env, java.util.concurrent.Executor executor) { // Paper - Async-Anti-Xray - Pass executor
+     protected Level(WritableLevelData worlddatamutable, ResourceKey<Level> resourcekey, Holder<DimensionType> holder, Supplier<ProfilerFiller> supplier, boolean flag, boolean flag1, long i, int j, org.bukkit.generator.ChunkGenerator gen, org.bukkit.generator.BiomeProvider biomeProvider, org.bukkit.World.Environment env, java.util.function.Function<org.spigotmc.SpigotWorldConfig, io.papermc.paper.configuration.WorldConfiguration> paperWorldConfigCreator, java.util.concurrent.Executor executor) { // Paper - Async-Anti-Xray - Pass executor
          this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((net.minecraft.world.level.storage.PrimaryLevelData) worlddatamutable).getLevelName()); // Spigot
-         this.paperConfig = new com.destroystokyo.paper.PaperWorldConfig(((net.minecraft.world.level.storage.PrimaryLevelData) worlddatamutable).getLevelName(), this.spigotConfig); // Paper
-@@ -279,6 +288,13 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
-         this.levelData = worlddatamutable;
-         this.dimensionTypeRegistration = holder;
-         this.dimensionType = (DimensionType) holder.value();
+         this.paperConfig = paperWorldConfigCreator.apply(this.spigotConfig); // Paper
+@@ -294,6 +303,13 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+         });
+         final DimensionType dimensionmanager = (DimensionType) holder.value();
+ 
 +        // Pufferfish start
 +        this.minBuildHeight = dimensionType.minY();
 +        this.minSection = SectionPos.blockToSectionCoord(this.minBuildHeight);
@@ -37,4 +37,4 @@ index 2f3be587de0699f7442c621ca1e7e9e78da3172c..fda00cc66d0a4816f1fc8f96087f171f
 +        // Pufferfish end
          this.dimension = resourcekey;
          this.isClientSide = flag;
-         if (this.dimensionType.coordinateScale() != 1.0D) {
+         if (dimensionmanager.coordinateScale() != 1.0D) {

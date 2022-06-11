@@ -5,7 +5,7 @@ Subject: [PATCH] Throttle goal selector during inactive ticking
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 79a73f3c5bbc905fcfbbea7490d96e117b3aedb2..a820bfe38cb5765ee74c4fd7084d949477f83692 100644
+index 7bed8f797036f0bb164d71ccd5e7fedbbb7b65f5..56a5a31b41d00ba73259a7eda5c57d08570d3e6e 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -251,6 +251,13 @@ public class PufferfishConfig {
@@ -23,10 +23,10 @@ index 79a73f3c5bbc905fcfbbea7490d96e117b3aedb2..a820bfe38cb5765ee74c4fd7084d9494
      public static URI profileWebUrl;
      private static void profilerOptions() {
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 790ce0dca60ab26b7b907449fbb50f5dc7d5bade..8ee0a80e3427ecef9fa15b7388a8287e26a25fd6 100644
+index 83e4dccc3ed047a27769aa871dc819fef64b7c4d..e8e60ea8b9e97ed87be78752f398ab25ba8e9a1b 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
-@@ -205,11 +205,13 @@ public abstract class Mob extends LivingEntity {
+@@ -210,11 +210,13 @@ public abstract class Mob extends LivingEntity {
          return this.lookControl;
      }
  
