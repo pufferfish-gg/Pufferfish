@@ -77,7 +77,7 @@ index aaa7ad2a14389dc0dbc0d0fa3fb5ea16ec4172f6..fe5bf783c226fc84844e715bd7edacee
              this.getRandomBlockPosition(j, 0, k, 15, blockposition);
              int normalY = chunk.getHeight(Heightmap.Types.MOTION_BLOCKING, blockposition.getX() & 15, blockposition.getZ() & 15) + 1;
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-index c46cbbf9ac4c5661933b03bc0b2559f7ade8c798..a561c98b4e9bc061c242f9b4658618b96a03aa3a 100644
+index c46cbbf9ac4c5661933b03bc0b2559f7ade8c798..b3997b6abc8721c366e8ef5219ed449127d06899 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -94,6 +94,18 @@ public class LevelChunk extends ChunkAccess {
@@ -87,7 +87,7 @@ index c46cbbf9ac4c5661933b03bc0b2559f7ade8c798..a561c98b4e9bc061c242f9b4658618b9
 +    // Pufferfish start - instead of using a random every time the chunk is ticked, define when lightning strikes preemptively
 +    private int lightningTick;
 +    // shouldDoLightning compiles down to 29 bytes, which with the default of 35 byte inlining should guarantee an inline
-+    public final boolean shouldDoLightning(java.util.Random random) {
++    public final boolean shouldDoLightning(net.minecraft.util.RandomSource random) {
 +        if (this.lightningTick-- <= 0) {
 +            this.lightningTick = random.nextInt(this.level.spigotConfig.thunderChance) << 1;
 +            return true;

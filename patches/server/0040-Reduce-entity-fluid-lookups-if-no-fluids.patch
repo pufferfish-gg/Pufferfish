@@ -116,16 +116,13 @@ index 7650b6547dd0c186257f67089e238457ef3f275c..5541076903d9a0fe074ac6a18eb5c429
              if (vec3d.length() > 0.0D) {
                  if (k1 > 0) {
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
-index 5afb598d288d32877834cfb7d9796b334767286d..3d3edd4723510a42d81bf30b02f764eb66589570 100644
+index 5afb598d288d32877834cfb7d9796b334767286d..9465b2ab698362824f837abfd824e8f48fe3235c 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
-@@ -25,8 +25,9 @@ public class LevelChunkSection {
-     private short tickingBlockCount;
-     private short tickingFluidCount;
+@@ -27,6 +27,7 @@ public class LevelChunkSection {
      public final PalettedContainer<BlockState> states;
--    // CraftBukkit start - read/write
+     // CraftBukkit start - read/write
      private PalettedContainer<Holder<Biome>> biomes;
-+    private final PalettedContainer<Holder<Biome>> biomes;
 +    public short fluidStateCount; // Pufferfish
      public final com.destroystokyo.paper.util.maplist.IBlockDataList tickingList = new com.destroystokyo.paper.util.maplist.IBlockDataList(); // Paper
  

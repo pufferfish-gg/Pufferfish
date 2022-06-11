@@ -5,7 +5,7 @@ Subject: [PATCH] Ensure level height is inlined
 
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 575cc3b302692356e9e08bbcd3d0d6daefaa7846..c4aa22273cf7794851fe8323878fdce8948aff33 100644
+index 575cc3b302692356e9e08bbcd3d0d6daefaa7846..3b1622bcd62b82a7019fe57914414544e927746e 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -272,6 +272,15 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
@@ -29,9 +29,9 @@ index 575cc3b302692356e9e08bbcd3d0d6daefaa7846..c4aa22273cf7794851fe8323878fdce8
          final DimensionType dimensionmanager = (DimensionType) holder.value();
  
 +        // Pufferfish start
-+        this.minBuildHeight = dimensionType.minY();
++        this.minBuildHeight = dimensionmanager.minY();
 +        this.minSection = SectionPos.blockToSectionCoord(this.minBuildHeight);
-+        this.height = dimensionType.height();
++        this.height = dimensionmanager.height();
 +        this.maxBuildHeight = this.minBuildHeight + this.height;
 +        this.maxSection = SectionPos.blockToSectionCoord(this.maxBuildHeight - 1) + 1;
 +        // Pufferfish end
