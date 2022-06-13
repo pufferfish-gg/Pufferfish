@@ -46,11 +46,11 @@ index 4f2cb57232f6d18302c8bd478b56ec7e4d33f759..378cc1f9e19eb9b18037ab8af92f6589
              boolean flag1 = level.ticksPerSpawnCategory.getLong(org.bukkit.entity.SpawnCategory.ANIMAL) != 0L && worlddata.getGameTime() % level.ticksPerSpawnCategory.getLong(org.bukkit.entity.SpawnCategory.ANIMAL) == 0L; // CraftBukkit
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index aaa7ad2a14389dc0dbc0d0fa3fb5ea16ec4172f6..fe5bf783c226fc84844e715bd7edacee1e21188c 100644
+index 9f3ab67b23493b9f3688071906b2b7bc4d60ee05..139151dacd08e744b4ca22d21e4f625fd05d3f69 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -759,6 +759,8 @@ public class ServerLevel extends Level implements WorldGenLevel {
-     private final io.papermc.paper.util.math.ThreadUnsafeRandom randomTickRandom = new io.papermc.paper.util.math.ThreadUnsafeRandom();
+     // private final io.papermc.paper.util.math.ThreadUnsafeRandom randomTickRandom = new io.papermc.paper.util.math.ThreadUnsafeRandom(); // Pufferfish - moved to super
      // Paper end
  
 +    private int currentIceAndSnowTick = 0; protected void resetIceAndSnowTick() { this.currentIceAndSnowTick = this.randomTickRandom.nextInt(16); } // Pufferfish
