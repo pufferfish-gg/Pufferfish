@@ -17,7 +17,7 @@ and, in my opinion, worth the low risk of minor mob-spawning-related
 inconsistencies.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 290646972a6b0b3b1aa03b43ceb2c398bbcfb5b9..235656c0c8be77e522eb281df9c3abc4e1a5564d 100644
+index 62d231ca05039c99c17252847cb850983864e09a..fca3cc322ab396d0865e8082bc673836d5fbb3c5 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -179,4 +179,21 @@ public class PufferfishConfig {
@@ -43,13 +43,13 @@ index 290646972a6b0b3b1aa03b43ceb2c398bbcfb5b9..235656c0c8be77e522eb281df9c3abc4
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 86bf3f7eabd398f2dc9e09f111f6dd496086beb3..d91f9e5ed4e452477afaa6d19538e2a931d8e2e6 100644
+index dbb851fee1fb6bb9f83b185ffce458d4bd254840..27e1e41cece408bdbde07b6d859560378ea4d8b8 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -308,6 +308,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
- 
+@@ -309,6 +309,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      public volatile Thread shutdownThread; // Paper
      public volatile boolean abnormalExit = false; // Paper
+     public boolean isIteratingOverLevels = false; // Paper
 +    
 +    public gg.pufferfish.pufferfish.util.AsyncExecutor mobSpawnExecutor = new gg.pufferfish.pufferfish.util.AsyncExecutor("MobSpawning", () -> true); // Pufferfish - optimize mob spawning
  

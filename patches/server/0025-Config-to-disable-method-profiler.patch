@@ -5,7 +5,7 @@ Subject: [PATCH] Config to disable method profiler
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 54cf424e2e82d7a886cacd98d25c64d1e88ab2d0..79a73f3c5bbc905fcfbbea7490d96e117b3aedb2 100644
+index de91ed04957aa03eabc7c66d01c2347c85e07533..7bed8f797036f0bb164d71ccd5e7fedbbb7b65f5 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -277,4 +277,10 @@ public class PufferfishConfig {
@@ -22,10 +22,10 @@ index 54cf424e2e82d7a886cacd98d25c64d1e88ab2d0..79a73f3c5bbc905fcfbbea7490d96e11
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index d91f9e5ed4e452477afaa6d19538e2a931d8e2e6..371b0f95b23d67c9913875a3dd7888e722551f18 100644
+index 27e1e41cece408bdbde07b6d859560378ea4d8b8..bcaa260af741c00b1fd762c9dca3d3c06d4a1b86 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -2254,6 +2254,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -2257,6 +2257,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      }
  
      public ProfilerFiller getProfiler() {
@@ -34,7 +34,7 @@ index d91f9e5ed4e452477afaa6d19538e2a931d8e2e6..371b0f95b23d67c9913875a3dd7888e7
      }
  
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 94f8b3dfd49bd12a5f1a2ad28b5760fb042f945f..2f3be587de0699f7442c621ca1e7e9e78da3172c 100644
+index b91d66cc51d2410d1459c248353212fbaca19975..8e65ab202bc9ca2bdde8f297216ca1f3b8bf6ea7 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -1490,6 +1490,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
