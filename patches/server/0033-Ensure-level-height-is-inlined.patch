@@ -5,12 +5,12 @@ Subject: [PATCH] Ensure level height is inlined
 
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index dcc47927c11a89956b7042c8b67591759e618a02..02871197e6a887e612d72981b51e6318e053597c 100644
+index 457f9e05c8118b6dde59dd3513c5f70e08df79df..8d440e4069c4ecc4c0155e52c065c0a4613d91f2 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -274,6 +274,15 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
  
-     protected final io.papermc.paper.util.math.ThreadUnsafeRandom randomTickRandom = new io.papermc.paper.util.math.ThreadUnsafeRandom(); // Pufferfish - move thread unsafe random initialization
+     protected final io.papermc.paper.util.math.ThreadUnsafeRandom randomTickRandom = new io.papermc.paper.util.math.ThreadUnsafeRandom(java.util.concurrent.ThreadLocalRandom.current().nextLong()); // Pufferfish - move thread unsafe random initialization
  
 +    // Pufferfish start - ensure these get inlined
 +    private final int minBuildHeight, minSection, height, maxBuildHeight, maxSection;

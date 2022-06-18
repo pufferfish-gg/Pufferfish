@@ -84,10 +84,10 @@ index e588ed2cb12393e25ab1c36652f7b71767fdba27..8dd277dd34ae9b285a7ce19aa39ad054
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index ae4afa10199163caca20b2b19059f4abf562bcb4..2dc99ee810b128e58b445f5bad5887cf45a7813a 100644
+index 95fc110f8b5bc54e2ef9f59bf07a070f753069d5..1a2ade593c7aff79efb3eb568ce0d22bd7c531c3 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -408,6 +408,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -413,6 +413,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return this.originWorld;
      }
      // Paper end
