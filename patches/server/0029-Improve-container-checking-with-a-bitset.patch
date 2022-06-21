@@ -237,7 +237,7 @@ index 540bc9500c35c0db719b00aa26f6fb3a1b08ed9f..806cb760822a99316b08ad95ff8922df
      int LARGE_MAX_STACK_SIZE = 64;
  
 diff --git a/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecartContainer.java b/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecartContainer.java
-index b8fb7b5a347298ada16bc8b818edf1863e3f6040..637118601237e0f994b12571b74db99065bdd60c 100644
+index b8fb7b5a347298ada16bc8b818edf1863e3f6040..43b4c4f9630bfa451d135139236ac6fce034ec15 100644
 --- a/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecartContainer.java
 +++ b/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecartContainer.java
 @@ -27,7 +27,10 @@ import org.bukkit.inventory.InventoryHolder;
@@ -272,17 +272,17 @@ index b8fb7b5a347298ada16bc8b818edf1863e3f6040..637118601237e0f994b12571b74db990
      }
  
      @Override
-@@ -157,6 +166,10 @@ public abstract class AbstractMinecartContainer extends AbstractMinecart impleme
+@@ -156,6 +165,10 @@ public abstract class AbstractMinecartContainer extends AbstractMinecart impleme
+     protected void readAdditionalSaveData(CompoundTag nbt) {
          super.readAdditionalSaveData(nbt);
          this.lootableData.loadNbt(nbt); // Paper
-         this.readChestVehicleSaveData(nbt);
 +        // Pufferfish start
 +        this.itemStacksOptimized = new gg.airplane.structs.ItemListWithBitset(this.getContainerSize());
 +        this.itemStacks = this.itemStacksOptimized.nonNullList;
 +        // Pufferfish end
+         this.readChestVehicleSaveData(nbt);
      }
  
-     @Override
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/ChestBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/ChestBlockEntity.java
 index a71414397bd45ee7bcacfeef0041d80dfa25f114..d66806565770cb03a21794f99e5c4b0f3040b26a 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/ChestBlockEntity.java
@@ -362,7 +362,7 @@ index a71414397bd45ee7bcacfeef0041d80dfa25f114..d66806565770cb03a21794f99e5c4b0f
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 8ab1d401ed55d4cce55704317cbffe53ebc9f119..cfc7901125c127b155c5e7d5875f0fd0c8bb9c01 100644
+index ccad692aba2ed77259f6814d88f01b91ed9d229b..698a0ac71cf9fb409d609a81cc2958121260a46d 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -43,7 +43,10 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
