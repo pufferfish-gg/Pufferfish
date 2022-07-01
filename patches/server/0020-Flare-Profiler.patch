@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 0b9cfbb6b1e10667ca7871b1f49d1449992fe79d..4f01bbc22b2e94d5415c36c8cd828e0551e929aa 100644
+index 046e93170c86bd822d0f03df91c56871b8d948b8..74c91f79576e85618fefb79be8d313ba871701c7 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -54,6 +54,7 @@ dependencies {
@@ -90,7 +90,7 @@ index 8dd277dd34ae9b285a7ce19aa39ad05466f0cd5b..de91ed04957aa03eabc7c66d01c2347c
 \ No newline at end of file
 diff --git a/src/main/java/gg/pufferfish/pufferfish/compat/ServerConfigurations.java b/src/main/java/gg/pufferfish/pufferfish/compat/ServerConfigurations.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..f0ec1f3944c00d38537f6f3b3f13236b22562458
+index 0000000000000000000000000000000000000000..4ad189d52b27560424ddb311d0817a334637dc95
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/compat/ServerConfigurations.java
 @@ -0,0 +1,78 @@
@@ -119,7 +119,7 @@ index 0000000000000000000000000000000000000000..f0ec1f3944c00d38537f6f3b3f13236b
 +      "server.properties",
 +      "bukkit.yml",
 +      "spigot.yml",
-+      "paper.yml",
++      // "paper.yml", // TODO: Figure out what to do with this.
 +      "pufferfish.yml"
 +    };
 +
@@ -845,7 +845,7 @@ index 909b2c98e7a9117d2f737245e4661792ffafb744..0d9e2b3728f9ab500bd5e44702718535
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java b/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java
-index d752720f2f234b9dbd2117333fee1bfad663ec02..f1be8a98c49a63d09c838a85eb58041733f71776 100644
+index e948ec5a573b22645664eb53bc3e9932246544e4..e3845dc3357bbb74885ae3a1a08525adde581235 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java
 @@ -11,6 +11,7 @@ public class ServerShutdownThread extends Thread {
