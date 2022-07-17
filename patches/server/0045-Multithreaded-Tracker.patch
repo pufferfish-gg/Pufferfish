@@ -12,13 +12,13 @@ concurrent accesses everywhere, as well as being much simpler to maintain
 some things are too unsafe to run off the main thread so we don't attempt to do
 that. this multithreaded tracker remains accurate, non-breaking and fast
 
-diff --git a/src/main/java/host/bloom/tracker/MultithreadedTracker.java b/src/main/java/host/bloom/tracker/MultithreadedTracker.java
+diff --git a/src/main/java/gg/pufferfish/pufferfish/tracker/MultithreadedTracker.java b/src/main/java/gg/pufferfish/pufferfish/tracker/MultithreadedTracker.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..31a9a1dbb68cdbc5dc8a83542ddc7e0467ee8fd3
+index 0000000000000000000000000000000000000000..95031d2abed589cc13d8fe187a2c1de893409b4a
 --- /dev/null
-+++ b/src/main/java/host/bloom/tracker/MultithreadedTracker.java
++++ b/src/main/java/gg/pufferfish/pufferfish/tracker/MultithreadedTracker.java
 @@ -0,0 +1,128 @@
-+package host.bloom.tracker;
++package gg.pufferfish.pufferfish.tracker;
 +
 +import com.google.common.util.concurrent.ThreadFactoryBuilder;
 +import io.papermc.paper.util.maplist.IteratorSafeOrderedReferenceSet;
@@ -37,7 +37,7 @@ index 0000000000000000000000000000000000000000..31a9a1dbb68cdbc5dc8a83542ddc7e04
 +
 +    private static final int parallelism = Math.max(4, Runtime.getRuntime().availableProcessors());
 +    private static final Executor trackerExecutor = Executors.newFixedThreadPool(parallelism, new ThreadFactoryBuilder()
-+            .setNameFormat("petal-tracker-%d")
++            .setNameFormat("puff-tracker-%d")
 +            .setPriority(Thread.NORM_PRIORITY - 2)
 +            .build());
 +
@@ -147,7 +147,7 @@ index 0000000000000000000000000000000000000000..31a9a1dbb68cdbc5dc8a83542ddc7e04
 +
 +}
 diff --git a/src/main/java/io/papermc/paper/util/maplist/IteratorSafeOrderedReferenceSet.java b/src/main/java/io/papermc/paper/util/maplist/IteratorSafeOrderedReferenceSet.java
-index 0fd814f1d65c111266a2b20f86561839a4cef755..169ac3ad1b1e8e3e1874ada2471e478233c6ada7 100644
+index 0fd814f1d65c111266a2b20f86561839a4cef755..ffc217df0649e85d4a7b3d4b1c2c6a8287de1104 100644
 --- a/src/main/java/io/papermc/paper/util/maplist/IteratorSafeOrderedReferenceSet.java
 +++ b/src/main/java/io/papermc/paper/util/maplist/IteratorSafeOrderedReferenceSet.java
 @@ -15,7 +15,7 @@ public final class IteratorSafeOrderedReferenceSet<E> {
@@ -155,7 +155,7 @@ index 0fd814f1d65c111266a2b20f86561839a4cef755..169ac3ad1b1e8e3e1874ada2471e4782
      /* list impl */
      protected E[] listElements;
 -    protected int listSize;
-+    protected int listSize; public int getListSize() { return this.listSize; } // petal - expose listSize
++    protected int listSize; public int getListSize() { return this.listSize; } // Pufferfish - expose listSize
  
      protected final double maxFragFactor;
  
@@ -173,15 +173,15 @@ index 47b5f75d9f27cf3ab947fd1f69cbd609fb9f2749..85882eeb86d7b74db0219aa65783946d
      public ChunkHolder.FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index e134963fa97ea886c7cf4af8ab0ba53b6010fe41..e9332a9e046551f1a718c124e9841cbbf1b2cec6 100644
+index e134963fa97ea886c7cf4af8ab0ba53b6010fe41..da5fe186290b011d2844b7b2e76e3dac02446f2a 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -2082,8 +2082,26 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          entity.tracker = null; // Paper - We're no longer tracked
      }
  
-+    // petal start - multithreaded tracker
-+    private @Nullable host.bloom.tracker.MultithreadedTracker multithreadedTracker;
++    // Pufferfish start - multithreaded tracker
++    private @Nullable gg.pufferfish.pufferfish.tracker.MultithreadedTracker multithreadedTracker;
 +    private final java.util.concurrent.ConcurrentLinkedQueue<Runnable> trackerMainThreadTasks = new java.util.concurrent.ConcurrentLinkedQueue<>();
 +
 +    public void runOnTrackerMainThread(final Runnable runnable) {
@@ -192,13 +192,13 @@ index e134963fa97ea886c7cf4af8ab0ba53b6010fe41..e9332a9e046551f1a718c124e9841cbb
      private final void processTrackQueue() {
 +        if (true) {
 +            if (this.multithreadedTracker == null) {
-+                this.multithreadedTracker = new host.bloom.tracker.MultithreadedTracker(this.level.chunkSource.entityTickingChunks, this.trackerMainThreadTasks);
++                this.multithreadedTracker = new gg.pufferfish.pufferfish.tracker.MultithreadedTracker(this.level.chunkSource.entityTickingChunks, this.trackerMainThreadTasks);
 +            }
 +
 +            this.multithreadedTracker.tick();
 +            return;
 +        }
-+        // petal end
++        // Pufferfish end
 +
          this.level.timings.tracker1.startTiming();
          try {
@@ -210,11 +210,11 @@ index e134963fa97ea886c7cf4af8ab0ba53b6010fe41..e9332a9e046551f1a718c124e9841cbb
 -        final ServerEntity serverEntity;
 -        final Entity entity;
 +        public final ServerEntity serverEntity; // Pufferfish - package->public
-+        public final Entity entity; // petal -> public
++        public final Entity entity; // Pufferfish -> public
          private final int range;
          SectionPos lastSectionPos;
 -        public final Set<ServerPlayerConnection> seenBy = new ReferenceOpenHashSet<>(); // Paper - optimise map impl
-+        public final Set<ServerPlayerConnection> seenBy = it.unimi.dsi.fastutil.objects.ReferenceSets.synchronize(new ReferenceOpenHashSet<>()); // Paper - optimise map impl // petal - sync
++        public final Set<ServerPlayerConnection> seenBy = it.unimi.dsi.fastutil.objects.ReferenceSets.synchronize(new ReferenceOpenHashSet<>()); // Paper - optimise map impl // Pufferfish - sync
  
          public TrackedEntity(Entity entity, int i, int j, boolean flag) {
              this.serverEntity = new ServerEntity(ChunkMap.this.level, entity, j, flag, this::broadcast, this.seenBy); // CraftBukkit
@@ -223,7 +223,7 @@ index e134963fa97ea886c7cf4af8ab0ba53b6010fe41..e9332a9e046551f1a718c124e9841cbb
          com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> lastTrackerCandidates;
  
 -        final void updatePlayers(com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> newTrackerCandidates) {
-+        public final void updatePlayers(com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> newTrackerCandidates) { // petal -> public
++        public final void updatePlayers(com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> newTrackerCandidates) { // Pufferfish -> public
              com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> oldTrackerCandidates = this.lastTrackerCandidates;
              this.lastTrackerCandidates = newTrackerCandidates;
  
@@ -232,7 +232,7 @@ index e134963fa97ea886c7cf4af8ab0ba53b6010fe41..e9332a9e046551f1a718c124e9841cbb
  
          public void removePlayer(ServerPlayer player) {
 -            org.spigotmc.AsyncCatcher.catchOp("player tracker clear"); // Spigot
-+            //org.spigotmc.AsyncCatcher.catchOp("player tracker clear"); // Spigot // petal - we can remove async too
++            //org.spigotmc.AsyncCatcher.catchOp("player tracker clear"); // Spigot // Pufferfish - we can remove async too
              if (this.seenBy.remove(player.connection)) {
                  this.serverEntity.removePairing(player);
              }
@@ -241,12 +241,12 @@ index e134963fa97ea886c7cf4af8ab0ba53b6010fe41..e9332a9e046551f1a718c124e9841cbb
  
          public void updatePlayer(ServerPlayer player) {
 -            org.spigotmc.AsyncCatcher.catchOp("player tracker update"); // Spigot
-+            //org.spigotmc.AsyncCatcher.catchOp("player tracker update"); // Spigot // petal - we can update async
++            //org.spigotmc.AsyncCatcher.catchOp("player tracker update"); // Spigot // Pufferfish - we can update async
              if (player != this.entity) {
                  // Paper start - remove allocation of Vec3D here
                  // Vec3 vec3d = player.position().subtract(this.entity.position());
 diff --git a/src/main/java/net/minecraft/server/level/ServerBossEvent.java b/src/main/java/net/minecraft/server/level/ServerBossEvent.java
-index ca42c2642a729b90d22b968af7258f3aee72e14b..40261b80d947a6be43465013fae5532197cfe721 100644
+index ca42c2642a729b90d22b968af7258f3aee72e14b..7613510e5f4c22ee15651f162fe1bca1cfc81be0 100644
 --- a/src/main/java/net/minecraft/server/level/ServerBossEvent.java
 +++ b/src/main/java/net/minecraft/server/level/ServerBossEvent.java
 @@ -13,7 +13,7 @@ import net.minecraft.util.Mth;
@@ -254,12 +254,12 @@ index ca42c2642a729b90d22b968af7258f3aee72e14b..40261b80d947a6be43465013fae55321
  
  public class ServerBossEvent extends BossEvent {
 -    private final Set<ServerPlayer> players = Sets.newHashSet();
-+    private final Set<ServerPlayer> players = Sets.newConcurrentHashSet(); // petal - players can be removed in async tracking
++    private final Set<ServerPlayer> players = Sets.newConcurrentHashSet(); // Pufferfish - players can be removed in async tracking
      private final Set<ServerPlayer> unmodifiablePlayers = Collections.unmodifiableSet(this.players);
      public boolean visible = true;
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 1eb912ad97f9663bf6bd336ad739f2552b0a5c9b..11c55c2aa832cf301a14947c40e9431f8d4dfefd 100644
+index 1eb912ad97f9663bf6bd336ad739f2552b0a5c9b..871bce7f5acc1b9a058496f41d962ec2e724f620 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -249,14 +249,18 @@ public class ServerEntity {
@@ -267,11 +267,11 @@ index 1eb912ad97f9663bf6bd336ad739f2552b0a5c9b..11c55c2aa832cf301a14947c40e9431f
      public void removePairing(ServerPlayer player) {
          this.entity.stopSeenByPlayer(player);
 -        player.connection.send(new ClientboundRemoveEntitiesPacket(new int[]{this.entity.getId()}));
-+        // petal start - ensure main thread
++        // Pufferfish start - ensure main thread
 +        ((ServerLevel) this.entity.level).chunkSource.chunkMap.runOnTrackerMainThread(() ->
 +            player.connection.send(new ClientboundRemoveEntitiesPacket(new int[]{this.entity.getId()}))
 +        );
-+        // petal end
++        // Pufferfish end
      }
  
      public void addPairing(ServerPlayer player) {
@@ -279,7 +279,7 @@ index 1eb912ad97f9663bf6bd336ad739f2552b0a5c9b..11c55c2aa832cf301a14947c40e9431f
  
          Objects.requireNonNull(player.connection);
 -        this.sendPairingData(playerconnection::send, player); // CraftBukkit - add player
-+        ((ServerLevel) this.entity.level).chunkSource.chunkMap.runOnTrackerMainThread(() -> this.sendPairingData(playerconnection::send, player)); // CraftBukkit - add player // petal - main thread
++        ((ServerLevel) this.entity.level).chunkSource.chunkMap.runOnTrackerMainThread(() -> this.sendPairingData(playerconnection::send, player)); // CraftBukkit - add player // Pufferfish - main thread
          this.entity.startSeenByPlayer(player);
      }
  

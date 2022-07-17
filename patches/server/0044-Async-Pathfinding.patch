@@ -7,13 +7,13 @@ Co-authored-by: peaches94 <peachescu94@gmail.com>
 
 Makes most pathfinding-related work happen asynchronously
 
-diff --git a/src/main/java/host/bloom/pathfinding/AsyncPath.java b/src/main/java/host/bloom/pathfinding/AsyncPath.java
+diff --git a/src/main/java/gg/pufferfish/pufferfish/path/AsyncPath.java b/src/main/java/gg/pufferfish/pufferfish/path/AsyncPath.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..c6d9d79707d7953f30e7373ca6e3eeced76de761
+index 0000000000000000000000000000000000000000..401645f9f2cccaec4b37c6a91cf930a1fc520301
 --- /dev/null
-+++ b/src/main/java/host/bloom/pathfinding/AsyncPath.java
++++ b/src/main/java/gg/pufferfish/pufferfish/path/AsyncPath.java
 @@ -0,0 +1,280 @@
-+package host.bloom.pathfinding;
++package gg.pufferfish.pufferfish.path;
 +
 +import net.minecraft.core.BlockPos;
 +import net.minecraft.world.entity.Entity;
@@ -293,13 +293,13 @@ index 0000000000000000000000000000000000000000..c6d9d79707d7953f30e7373ca6e3eece
 +        return super.hasNext();
 +    }
 +}
-diff --git a/src/main/java/host/bloom/pathfinding/AsyncPathProcessor.java b/src/main/java/host/bloom/pathfinding/AsyncPathProcessor.java
+diff --git a/src/main/java/gg/pufferfish/pufferfish/path/AsyncPathProcessor.java b/src/main/java/gg/pufferfish/pufferfish/path/AsyncPathProcessor.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..e900f8fb637c0d69f94c5a24fb17f794513a482b
+index 0000000000000000000000000000000000000000..08e949d8493284667cd8f1adb710b4e9e9611e28
 --- /dev/null
-+++ b/src/main/java/host/bloom/pathfinding/AsyncPathProcessor.java
++++ b/src/main/java/gg/pufferfish/pufferfish/path/AsyncPathProcessor.java
 @@ -0,0 +1,44 @@
-+package host.bloom.pathfinding;
++package gg.pufferfish.pufferfish.path;
 +
 +import com.google.common.util.concurrent.ThreadFactoryBuilder;
 +import net.minecraft.server.MinecraftServer;
@@ -319,7 +319,7 @@ index 0000000000000000000000000000000000000000..e900f8fb637c0d69f94c5a24fb17f794
 +
 +    private static final Executor mainThreadExecutor = MinecraftServer.getServer();
 +    private static final Executor pathProcessingExecutor = Executors.newCachedThreadPool(new ThreadFactoryBuilder()
-+            .setNameFormat("petal-path-processor-%d")
++            .setNameFormat("puff-path-processor-%d")
 +            .setPriority(Thread.NORM_PRIORITY - 2)
 +            .build());
 +
@@ -343,13 +343,13 @@ index 0000000000000000000000000000000000000000..e900f8fb637c0d69f94c5a24fb17f794
 +        }
 +    }
 +}
-diff --git a/src/main/java/host/bloom/pathfinding/NodeEvaluatorCache.java b/src/main/java/host/bloom/pathfinding/NodeEvaluatorCache.java
+diff --git a/src/main/java/gg/pufferfish/pufferfish/path/NodeEvaluatorCache.java b/src/main/java/gg/pufferfish/pufferfish/path/NodeEvaluatorCache.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..d70c82e4b117ee3bf9df6ba322e4ae9fc99d1124
+index 0000000000000000000000000000000000000000..9f81dc6e8d198f1be957c1a05c72eb5ba38832ce
 --- /dev/null
-+++ b/src/main/java/host/bloom/pathfinding/NodeEvaluatorCache.java
++++ b/src/main/java/gg/pufferfish/pufferfish/path/NodeEvaluatorCache.java
 @@ -0,0 +1,39 @@
-+package host.bloom.pathfinding;
++package gg.pufferfish.pufferfish.path;
 +
 +import net.minecraft.world.level.pathfinder.NodeEvaluator;
 +import org.apache.commons.lang.Validate;
@@ -388,13 +388,13 @@ index 0000000000000000000000000000000000000000..d70c82e4b117ee3bf9df6ba322e4ae9f
 +    }
 +
 +}
-diff --git a/src/main/java/host/bloom/pathfinding/NodeEvaluatorGenerator.java b/src/main/java/host/bloom/pathfinding/NodeEvaluatorGenerator.java
+diff --git a/src/main/java/gg/pufferfish/pufferfish/path/NodeEvaluatorGenerator.java b/src/main/java/gg/pufferfish/pufferfish/path/NodeEvaluatorGenerator.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..d5327cb257d63291adc8b5c60cffb4e47e1e5b0e
+index 0000000000000000000000000000000000000000..7557f75d2eff3291d5881746ac920d16a241e244
 --- /dev/null
-+++ b/src/main/java/host/bloom/pathfinding/NodeEvaluatorGenerator.java
++++ b/src/main/java/gg/pufferfish/pufferfish/path/NodeEvaluatorGenerator.java
 @@ -0,0 +1,10 @@
-+package host.bloom.pathfinding;
++package gg.pufferfish.pufferfish.path;
 +
 +import net.minecraft.world.level.pathfinder.NodeEvaluator;
 +import org.jetbrains.annotations.NotNull;
@@ -405,7 +405,7 @@ index 0000000000000000000000000000000000000000..d5327cb257d63291adc8b5c60cffb4e4
 +
 +}
 diff --git a/src/main/java/net/minecraft/world/entity/ai/behavior/AcquirePoi.java b/src/main/java/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
-index bf3b8ccb3e031e0ad24cd51e28ea8cbd4f8a8030..e0453df8c0fcdb40ef0ed5ae8865d45df3325e46 100644
+index bf3b8ccb3e031e0ad24cd51e28ea8cbd4f8a8030..f21177f902ec1f90913a6490e4134f3263f7e9ef 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
 @@ -93,8 +93,21 @@ public class AcquirePoi extends Behavior<PathfinderMob> {
@@ -414,12 +414,12 @@ index bf3b8ccb3e031e0ad24cd51e28ea8cbd4f8a8030..e0453df8c0fcdb40ef0ed5ae8865d45d
          // Paper end - optimise POI access
 -        Path path = findPathToPois(entity, set);
 -        if (path != null && path.canReach()) {
-+        // petal start - await on path async
++        // Pufferfish start - await on path async
 +        Path possiblePath = findPathToPois(entity, set);
 +
-+        // petal - wait on the path to be processed
-+        host.bloom.pathfinding.AsyncPathProcessor.awaitProcessing(possiblePath, path -> {
-+            // petal - readd canReach check
++        // Pufferfish - wait on the path to be processed
++        gg.pufferfish.pufferfish.path.AsyncPathProcessor.awaitProcessing(possiblePath, path -> {
++            // Pufferfish - readd canReach check
 +            if (path == null || !path.canReach()) {
 +                for(Pair<Holder<PoiType>, BlockPos> pair : set) {
 +                    this.batchCache.computeIfAbsent(pair.getSecond().asLong(), (m) -> {
@@ -444,19 +444,19 @@ index bf3b8ccb3e031e0ad24cd51e28ea8cbd4f8a8030..e0453df8c0fcdb40ef0ed5ae8865d45d
 -            }
 -        }
 +        });
-+        // petal end
++        // Pufferfish end
  
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/ai/behavior/MoveToTargetSink.java b/src/main/java/net/minecraft/world/entity/ai/behavior/MoveToTargetSink.java
-index 18364ce4c60172529b10bc9e3a813dcedc4b766f..e6cd04bc4e19a54b1bd621ce1c880e932207bce3 100644
+index 18364ce4c60172529b10bc9e3a813dcedc4b766f..e86aa59690a00b720a39165be85400e46c47f76f 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/behavior/MoveToTargetSink.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/behavior/MoveToTargetSink.java
 @@ -58,6 +58,7 @@ public class MoveToTargetSink extends Behavior<Mob> {
  
      @Override
      protected boolean canStillUse(ServerLevel serverLevel, Mob mob, long l) {
-+        if (this.path != null && !this.path.isProcessed()) return true; // petal - wait for path to process
++        if (this.path != null && !this.path.isProcessed()) return true; // Pufferfish - wait for path to process
          if (this.path != null && this.lastTargetPos != null) {
              Optional<WalkTarget> optional = mob.getBrain().getMemory(MemoryModuleType.WALK_TARGET);
              PathNavigation pathNavigation = mob.getNavigation();
@@ -464,7 +464,7 @@ index 18364ce4c60172529b10bc9e3a813dcedc4b766f..e6cd04bc4e19a54b1bd621ce1c880e93
  
      @Override
      protected void tick(ServerLevel world, Mob entity, long time) {
-+        if (this.path != null && !this.path.isProcessed()) return; // petal - wait for processing
++        if (this.path != null && !this.path.isProcessed()) return; // Pufferfish - wait for processing
 +
          Path path = entity.getNavigation().getPath();
          Brain<?> brain = entity.getBrain();
@@ -473,11 +473,11 @@ index 18364ce4c60172529b10bc9e3a813dcedc4b766f..e6cd04bc4e19a54b1bd621ce1c880e93
              brain.setMemory(MemoryModuleType.PATH, path);
          }
  
-+        // petal start - periodically recall moveTo to ensure we're moving towards the correct path
++        // Pufferfish start - periodically recall moveTo to ensure we're moving towards the correct path
 +        if (time % 8 == 0) {
 +            entity.getNavigation().moveTo(this.path, (double)this.speedModifier);
 +        }
-+        // petal end
++        // Pufferfish end
 +
          if (path != null && this.lastTargetPos != null) {
              WalkTarget walkTarget = brain.getMemory(MemoryModuleType.WALK_TARGET).get();
@@ -486,8 +486,8 @@ index 18364ce4c60172529b10bc9e3a813dcedc4b766f..e6cd04bc4e19a54b1bd621ce1c880e93
          if (this.reachedTarget(entity, walkTarget)) {
              brain.eraseMemory(MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE);
          } else {
-+            // petal start - move this out to postProcessPath
-+            host.bloom.pathfinding.AsyncPathProcessor.awaitProcessing(this.path, (unusedPath) -> {
++            // Pufferfish start - move this out to postProcessPath
++            gg.pufferfish.pufferfish.path.AsyncPathProcessor.awaitProcessing(this.path, (unusedPath) -> {
 +                this.postProcessPath(entity, walkTarget, time);
 +            });
 +            return true;
@@ -517,12 +517,12 @@ index 18364ce4c60172529b10bc9e3a813dcedc4b766f..e6cd04bc4e19a54b1bd621ce1c880e93
  
          return false;
      }
-+    // petal end
++    // Pufferfish end
  
      private boolean reachedTarget(Mob entity, WalkTarget walkTarget) {
          return walkTarget.getTarget().currentBlockPosition().distManhattan(entity.blockPosition()) <= walkTarget.getCloseEnoughDist();
 diff --git a/src/main/java/net/minecraft/world/entity/ai/behavior/SetClosestHomeAsWalkTarget.java b/src/main/java/net/minecraft/world/entity/ai/behavior/SetClosestHomeAsWalkTarget.java
-index 9bd6d4f7b86daaaa9cfbad454dde06b797e3f667..dc9dca72a22df9acadb8cdae8383522c996cbe10 100644
+index 9bd6d4f7b86daaaa9cfbad454dde06b797e3f667..b4b2a14654e0172e8c7c09f8657c9ea0aed4e66c 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/behavior/SetClosestHomeAsWalkTarget.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/behavior/SetClosestHomeAsWalkTarget.java
 @@ -71,19 +71,25 @@ public class SetClosestHomeAsWalkTarget extends Behavior<LivingEntity> {
@@ -531,12 +531,12 @@ index 9bd6d4f7b86daaaa9cfbad454dde06b797e3f667..dc9dca72a22df9acadb8cdae8383522c
          }, predicate, entity.blockPosition(), 48, PoiManager.Occupancy.ANY).collect(Collectors.toSet());
 -        Path path = AcquirePoi.findPathToPois(pathfinderMob, set);
 -        if (path != null && path.canReach()) {
-+        // petal start - await on path async
++        // Pufferfish start - await on path async
 +        Path possiblePath = AcquirePoi.findPathToPois(pathfinderMob, set);
 +
-+        // petal - wait on the path to be processed
-+        host.bloom.pathfinding.AsyncPathProcessor.awaitProcessing(possiblePath, path -> {
-+            if (path == null || !path.canReach() || this.triedCount < 5) { // petal - readd canReach check
++        // Pufferfish - wait on the path to be processed
++        gg.pufferfish.pufferfish.path.AsyncPathProcessor.awaitProcessing(possiblePath, path -> {
++            if (path == null || !path.canReach() || this.triedCount < 5) { // Pufferfish - readd canReach check
 +                this.batchCache.long2LongEntrySet().removeIf((entry) -> {
 +                    return entry.getLongValue() < this.lastUpdate;
 +                });
@@ -556,24 +556,24 @@ index 9bd6d4f7b86daaaa9cfbad454dde06b797e3f667..dc9dca72a22df9acadb8cdae8383522c
 -        }
 -
 +        });
-+        // petal end
++        // Pufferfish end
      }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/ai/navigation/AmphibiousPathNavigation.java b/src/main/java/net/minecraft/world/entity/ai/navigation/AmphibiousPathNavigation.java
-index 29a872393f2f995b13b4ed26b42c6464ab27ca73..664d94c39948888bbd452ffd4b68c3790cfb0291 100644
+index 29a872393f2f995b13b4ed26b42c6464ab27ca73..fa23c4c30c4f9695e1ed25993426c185e3a87108 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/navigation/AmphibiousPathNavigation.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/navigation/AmphibiousPathNavigation.java
 @@ -8,6 +8,14 @@ import net.minecraft.world.level.pathfinder.PathFinder;
  import net.minecraft.world.phys.Vec3;
  
  public class AmphibiousPathNavigation extends PathNavigation {
-+    // petal start
-+    private static final host.bloom.pathfinding.NodeEvaluatorGenerator nodeEvaluatorGenerator = () -> {
++    // Pufferfish start
++    private static final gg.pufferfish.pufferfish.path.NodeEvaluatorGenerator nodeEvaluatorGenerator = () -> {
 +        var nodeEvaluator = new AmphibiousNodeEvaluator(false);
 +        nodeEvaluator.setCanPassDoors(true);
 +        return nodeEvaluator;
 +    };
-+    // petal end
++    // Pufferfish end
 +
      public AmphibiousPathNavigation(Mob mob, Level world) {
          super(mob, world);
@@ -583,12 +583,12 @@ index 29a872393f2f995b13b4ed26b42c6464ab27ca73..664d94c39948888bbd452ffd4b68c379
          this.nodeEvaluator = new AmphibiousNodeEvaluator(false);
          this.nodeEvaluator.setCanPassDoors(true);
 -        return new PathFinder(this.nodeEvaluator, range);
-+        return new PathFinder(this.nodeEvaluator, range, nodeEvaluatorGenerator); // petal
++        return new PathFinder(this.nodeEvaluator, range, nodeEvaluatorGenerator); // Pufferfish
      }
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/entity/ai/navigation/FlyingPathNavigation.java b/src/main/java/net/minecraft/world/entity/ai/navigation/FlyingPathNavigation.java
-index 27cd393e81f6ef9b5690c051624d8d2af50acd34..da870c729a8a4673d734e8704355ad1c92855f3c 100644
+index 27cd393e81f6ef9b5690c051624d8d2af50acd34..42a22a019f25e57250732623d2efceda31629702 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/navigation/FlyingPathNavigation.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/navigation/FlyingPathNavigation.java
 @@ -12,6 +12,15 @@ import net.minecraft.world.level.pathfinder.PathFinder;
@@ -596,13 +596,13 @@ index 27cd393e81f6ef9b5690c051624d8d2af50acd34..da870c729a8a4673d734e8704355ad1c
  
  public class FlyingPathNavigation extends PathNavigation {
 +
-+    // petal start
-+    private static final host.bloom.pathfinding.NodeEvaluatorGenerator nodeEvaluatorGenerator = () -> {
++    // Pufferfish start
++    private static final gg.pufferfish.pufferfish.path.NodeEvaluatorGenerator nodeEvaluatorGenerator = () -> {
 +        var nodeEvaluator = new FlyNodeEvaluator();
 +        nodeEvaluator.setCanPassDoors(true);
 +        return nodeEvaluator;
 +    };
-+    // petal end
++    // Pufferfish end
 +
      public FlyingPathNavigation(Mob entity, Level world) {
          super(entity, world);
@@ -612,7 +612,7 @@ index 27cd393e81f6ef9b5690c051624d8d2af50acd34..da870c729a8a4673d734e8704355ad1c
          this.nodeEvaluator = new FlyNodeEvaluator();
          this.nodeEvaluator.setCanPassDoors(true);
 -        return new PathFinder(this.nodeEvaluator, range);
-+        return new PathFinder(this.nodeEvaluator, range, nodeEvaluatorGenerator); // petal
++        return new PathFinder(this.nodeEvaluator, range, nodeEvaluatorGenerator); // Pufferfish
      }
  
      @Override
@@ -620,13 +620,13 @@ index 27cd393e81f6ef9b5690c051624d8d2af50acd34..da870c729a8a4673d734e8704355ad1c
              this.recomputePath();
          }
  
-+        if (this.path != null && !this.path.isProcessed()) return; // petal
++        if (this.path != null && !this.path.isProcessed()) return; // Pufferfish
 +
          if (!this.isDone()) {
              if (this.canUpdatePath()) {
                  this.followThePath();
 diff --git a/src/main/java/net/minecraft/world/entity/ai/navigation/GroundPathNavigation.java b/src/main/java/net/minecraft/world/entity/ai/navigation/GroundPathNavigation.java
-index f610c06d7bb51ec2c63863dd46711712986a106a..ff5f0788e1df9ea7a96a8fea475cc010d12e9772 100644
+index f610c06d7bb51ec2c63863dd46711712986a106a..0e61d3f79260e3dd231df77c6cee29974ef42e84 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/navigation/GroundPathNavigation.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/navigation/GroundPathNavigation.java
 @@ -15,6 +15,15 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
@@ -634,13 +634,13 @@ index f610c06d7bb51ec2c63863dd46711712986a106a..ff5f0788e1df9ea7a96a8fea475cc010
  
  public class GroundPathNavigation extends PathNavigation {
 +
-+    // petal start
-+    private static final host.bloom.pathfinding.NodeEvaluatorGenerator nodeEvaluatorGenerator = () -> {
++    // Pufferfish start
++    private static final gg.pufferfish.pufferfish.path.NodeEvaluatorGenerator nodeEvaluatorGenerator = () -> {
 +        var nodeEvaluator = new WalkNodeEvaluator();
 +        nodeEvaluator.setCanPassDoors(true);
 +        return nodeEvaluator;
 +    };
-+    // petal end
++    // Pufferfish end
 +
      private boolean avoidSun;
  
@@ -650,21 +650,21 @@ index f610c06d7bb51ec2c63863dd46711712986a106a..ff5f0788e1df9ea7a96a8fea475cc010
          this.nodeEvaluator = new WalkNodeEvaluator();
          this.nodeEvaluator.setCanPassDoors(true);
 -        return new PathFinder(this.nodeEvaluator, range);
-+        return new PathFinder(this.nodeEvaluator, range, nodeEvaluatorGenerator); // petal
++        return new PathFinder(this.nodeEvaluator, range, nodeEvaluatorGenerator); // Pufferfish
      }
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/entity/ai/navigation/PathNavigation.java b/src/main/java/net/minecraft/world/entity/ai/navigation/PathNavigation.java
-index 3f672d7c2377fca16a6d8d31cf7aaae4f009fdce..bcc368d3d3adf73ff9ff2395d2f2b321c6134efd 100644
+index 3f672d7c2377fca16a6d8d31cf7aaae4f009fdce..07f216ce0136166fa3afb35df9c501fb9554acfc 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/navigation/PathNavigation.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/navigation/PathNavigation.java
 @@ -151,6 +151,9 @@ public abstract class PathNavigation {
              return null;
          } else if (!this.canUpdatePath()) {
              return null;
-+        } else if (this.path instanceof host.bloom.pathfinding.AsyncPath asyncPath && !asyncPath.isProcessed() && asyncPath.hasSameProcessingPositions(positions)) { // petal start - catch early if it's still processing these positions let it keep processing
++        } else if (this.path instanceof gg.pufferfish.pufferfish.path.AsyncPath asyncPath && !asyncPath.isProcessed() && asyncPath.hasSameProcessingPositions(positions)) { // Pufferfish start - catch early if it's still processing these positions let it keep processing
 +            return this.path;
-+            // petal end
++            // Pufferfish end
          } else if (this.path != null && !this.path.isDone() && positions.contains(this.targetPos)) {
              return this.path;
          } else {
@@ -678,11 +678,11 @@ index 3f672d7c2377fca16a6d8d31cf7aaae4f009fdce..bcc368d3d3adf73ff9ff2395d2f2b321
 -                this.resetStuckTimeout();
 -            }
 +
-+            if (!positions.isEmpty()) this.targetPos = positions.iterator().next(); // petal - assign early a target position. most calls will only have 1 position
++            if (!positions.isEmpty()) this.targetPos = positions.iterator().next(); // Pufferfish - assign early a target position. most calls will only have 1 position
 +
-+            // petal start - async
-+            host.bloom.pathfinding.AsyncPathProcessor.awaitProcessing(path, processedPath -> {
-+                if (processedPath != this.path) return; // petal - check that processing didn't take so long that we calculated a new path
++            // Pufferfish start - async
++            gg.pufferfish.pufferfish.path.AsyncPathProcessor.awaitProcessing(path, processedPath -> {
++                if (processedPath != this.path) return; // Pufferfish - check that processing didn't take so long that we calculated a new path
 +
 +                if (processedPath != null && processedPath.getTarget() != null) {
 +                    this.targetPos = processedPath.getTarget();
@@ -690,7 +690,7 @@ index 3f672d7c2377fca16a6d8d31cf7aaae4f009fdce..bcc368d3d3adf73ff9ff2395d2f2b321
 +                    this.resetStuckTimeout();
 +                }
 +            });
-+            // petal end
++            // Pufferfish end
  
              return path;
          }
@@ -700,8 +700,8 @@ index 3f672d7c2377fca16a6d8d31cf7aaae4f009fdce..bcc368d3d3adf73ff9ff2395d2f2b321
              } else {
 -                this.trimPath();
 -                if (this.path.getNodeCount() <= 0) {
-+                if (path.isProcessed()) this.trimPath(); // petal - only trim if processed
-+                if (path.isProcessed() && this.path.getNodeCount() <= 0) { // petal - only check node count if processed
++                if (path.isProcessed()) this.trimPath(); // Pufferfish - only trim if processed
++                if (path.isProcessed() && this.path.getNodeCount() <= 0) { // Pufferfish - only check node count if processed
                      return false;
                  } else {
                      this.speedModifier = speed;
@@ -709,7 +709,7 @@ index 3f672d7c2377fca16a6d8d31cf7aaae4f009fdce..bcc368d3d3adf73ff9ff2395d2f2b321
              this.recomputePath();
          }
  
-+        if (this.path != null && !this.path.isProcessed()) return; // petal - skip pathfinding if we're still processing
++        if (this.path != null && !this.path.isProcessed()) return; // Pufferfish - skip pathfinding if we're still processing
 +
          if (!this.isDone()) {
              if (this.canUpdatePath()) {
@@ -718,7 +718,7 @@ index 3f672d7c2377fca16a6d8d31cf7aaae4f009fdce..bcc368d3d3adf73ff9ff2395d2f2b321
      }
  
      protected void followThePath() {
-+        if (!this.path.isProcessed()) return; // petal
++        if (!this.path.isProcessed()) return; // Pufferfish
          Vec3 vec3 = this.getTempMobPos();
          this.maxDistanceToWaypoint = this.mob.getBbWidth() > 0.75F ? this.mob.getBbWidth() / 2.0F : 0.75F - this.mob.getBbWidth() / 2.0F;
          Vec3i vec3i = this.path.getNextNodePos();
@@ -732,7 +732,7 @@ index 3f672d7c2377fca16a6d8d31cf7aaae4f009fdce..bcc368d3d3adf73ff9ff2395d2f2b321
      // Paper end
  }
 diff --git a/src/main/java/net/minecraft/world/entity/ai/sensing/NearestBedSensor.java b/src/main/java/net/minecraft/world/entity/ai/sensing/NearestBedSensor.java
-index 8db20db72cd51046213625fac46c35854c59ec5d..11b386697279333ffd5f3abc9e1dbc9c19711764 100644
+index 8db20db72cd51046213625fac46c35854c59ec5d..2c24aa2a320fbde43c7246f64146f48f93e16558 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/sensing/NearestBedSensor.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/sensing/NearestBedSensor.java
 @@ -57,20 +57,28 @@ public class NearestBedSensor extends Sensor<Mob> {
@@ -741,13 +741,13 @@ index 8db20db72cd51046213625fac46c35854c59ec5d..11b386697279333ffd5f3abc9e1dbc9c
              io.papermc.paper.util.PoiAccess.findAnyPoiPositions(poiManager, type -> type.is(PoiTypes.HOME), predicate, entity.blockPosition(), 48, PoiManager.Occupancy.ANY, false, Integer.MAX_VALUE, poiposes);
 -            Path path = AcquirePoi.findPathToPois(entity, new java.util.HashSet<>(poiposes));
 +
-+            // petal start - await on path async
++            // Pufferfish start - await on path async
 +            Path possiblePath = AcquirePoi.findPathToPois(entity, new java.util.HashSet<>(poiposes));
              // Paper end - optimise POI access
 -            if (path != null && path.canReach()) {
-+            // petal - wait on the path to be processed
-+            host.bloom.pathfinding.AsyncPathProcessor.awaitProcessing(possiblePath, path -> {
-+                // petal - readd canReach check
++            // Pufferfish - wait on the path to be processed
++            gg.pufferfish.pufferfish.path.AsyncPathProcessor.awaitProcessing(possiblePath, path -> {
++                // Pufferfish - readd canReach check
 +                if (path == null || !path.canReach()) {
 +                    this.batchCache.long2LongEntrySet().removeIf((entry) -> {
 +                        return entry.getLongValue() < this.lastUpdate;
@@ -767,12 +767,12 @@ index 8db20db72cd51046213625fac46c35854c59ec5d..11b386697279333ffd5f3abc9e1dbc9c
 -            }
  
 +            });
-+            // petal end
++            // Pufferfish end
          }
      }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/animal/Bee.java b/src/main/java/net/minecraft/world/entity/animal/Bee.java
-index e5de2c1d11e5de88420caba35bf75c8bbd799db5..63563757497df3deb57a658fcfd95de1d111f8ef 100644
+index e5de2c1d11e5de88420caba35bf75c8bbd799db5..369f5230d1b1e6d45f490fd8c8b7d9ce101563fe 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/Bee.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/Bee.java
 @@ -1071,7 +1071,7 @@ public class Bee extends Animal implements NeutralMob, FlyingAnimal {
@@ -780,7 +780,7 @@ index e5de2c1d11e5de88420caba35bf75c8bbd799db5..63563757497df3deb57a658fcfd95de1
                              Bee.this.pathfindRandomlyTowards(Bee.this.hivePos);
                          }
 -                    } else {
-+                    } else if (navigation.getPath() != null && navigation.getPath().isProcessed()) { // petal - check processing
++                    } else if (navigation.getPath() != null && navigation.getPath().isProcessed()) { // Pufferfish - check processing
                          boolean flag = this.pathfindDirectlyTowards(Bee.this.hivePos);
  
                          if (!flag) {
@@ -789,25 +789,25 @@ index e5de2c1d11e5de88420caba35bf75c8bbd799db5..63563757497df3deb57a658fcfd95de1
                  Path pathentity = Bee.this.navigation.getPath();
  
 -                return pathentity != null && pathentity.getTarget().equals(pos) && pathentity.canReach() && pathentity.isDone();
-+                return pathentity != null && pathentity.isProcessed() && pathentity.getTarget().equals(pos) && pathentity.canReach() && pathentity.isDone(); // petal - ensure path is processed
++                return pathentity != null && pathentity.isProcessed() && pathentity.getTarget().equals(pos) && pathentity.canReach() && pathentity.isDone(); // Pufferfish - ensure path is processed
              }
          }
      }
 diff --git a/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java b/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
-index bb6063ae7f4438916306ce876057f7488537b444..f3ade761f223a1ae3c3181ecb5bb964ff88394b1 100644
+index bb6063ae7f4438916306ce876057f7488537b444..004c289dee9fbb1788988df0e3149b945ccb5e63 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
 @@ -411,6 +411,14 @@ public class Frog extends Animal {
      }
  
      static class FrogPathNavigation extends AmphibiousPathNavigation {
-+        // petal start
-+        private static final host.bloom.pathfinding.NodeEvaluatorGenerator nodeEvaluatorGenerator = () -> {
++        // Pufferfish start
++        private static final gg.pufferfish.pufferfish.path.NodeEvaluatorGenerator nodeEvaluatorGenerator = () -> {
 +            var nodeEvaluator = new Frog.FrogNodeEvaluator(true);
 +            nodeEvaluator.setCanPassDoors(true);
 +            return nodeEvaluator;
 +        };
-+        // petal end
++        // Pufferfish end
 +
          FrogPathNavigation(Frog frog, Level world) {
              super(frog, world);
@@ -817,12 +817,12 @@ index bb6063ae7f4438916306ce876057f7488537b444..f3ade761f223a1ae3c3181ecb5bb964f
              this.nodeEvaluator = new Frog.FrogNodeEvaluator(true);
              this.nodeEvaluator.setCanPassDoors(true);
 -            return new PathFinder(this.nodeEvaluator, range);
-+            return new PathFinder(this.nodeEvaluator, range, nodeEvaluatorGenerator); // petal
++            return new PathFinder(this.nodeEvaluator, range, nodeEvaluatorGenerator); // Pufferfish
          }
      }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/monster/Drowned.java b/src/main/java/net/minecraft/world/entity/monster/Drowned.java
-index 1b1305f5eaf5710b72c57ab4c3953e703a23f1e0..a5707d8f5b55b99989f345e0f6e34681c296e4ab 100644
+index 1b1305f5eaf5710b72c57ab4c3953e703a23f1e0..ae22972179af7159137609923bbd170b9674231e 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/Drowned.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/Drowned.java
 @@ -222,7 +222,7 @@ public class Drowned extends Zombie implements RangedAttackMob {
@@ -830,19 +830,19 @@ index 1b1305f5eaf5710b72c57ab4c3953e703a23f1e0..a5707d8f5b55b99989f345e0f6e34681
          Path pathentity = this.getNavigation().getPath();
  
 -        if (pathentity != null) {
-+        if (pathentity != null && pathentity.isProcessed()) { // petal - ensure path is processed
++        if (pathentity != null && pathentity.isProcessed()) { // Pufferfish - ensure path is processed
              BlockPos blockposition = pathentity.getTarget();
  
              if (blockposition != null) {
 diff --git a/src/main/java/net/minecraft/world/level/pathfinder/Path.java b/src/main/java/net/minecraft/world/level/pathfinder/Path.java
-index 2a335f277bd0e4b8ad0f60d8226eb8aaa80a871f..527f5fb55b596b44c7418a6f70e7243432c160dd 100644
+index 2a335f277bd0e4b8ad0f60d8226eb8aaa80a871f..228b11a21735885055d2fb5e0568e21aed32a6cb 100644
 --- a/src/main/java/net/minecraft/world/level/pathfinder/Path.java
 +++ b/src/main/java/net/minecraft/world/level/pathfinder/Path.java
 @@ -30,6 +30,17 @@ public class Path {
          this.reached = reachesTarget;
      }
  
-+    // petal start
++    // Pufferfish start
 +    /**
 +     * checks if the path is completely processed in the case of it being computed async
 +     *
@@ -851,7 +851,7 @@ index 2a335f277bd0e4b8ad0f60d8226eb8aaa80a871f..527f5fb55b596b44c7418a6f70e72434
 +    public boolean isProcessed() {
 +        return true;
 +    }
-+    // petal end
++    // Pufferfish end
 +
      public void advance() {
          ++this.nextNodeIndex;
@@ -860,13 +860,13 @@ index 2a335f277bd0e4b8ad0f60d8226eb8aaa80a871f..527f5fb55b596b44c7418a6f70e72434
      }
  
      public boolean sameAs(@Nullable Path o) {
-+        if (o == this) return true; // petal - short circuit
++        if (o == this) return true; // Pufferfish - short circuit
 +
          if (o == null) {
              return false;
          } else if (o.nodes.size() != this.nodes.size()) {
 diff --git a/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java b/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java
-index d23481453717f715124156b5d83f6448f720d049..57bac2a4a8b2e4249daf3905dfa035592b3ef189 100644
+index d23481453717f715124156b5d83f6448f720d049..28bdff2687afc2d6baf1d266b43cbdae57230f49 100644
 --- a/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java
 +++ b/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java
 @@ -25,36 +25,73 @@ public class PathFinder {
@@ -874,10 +874,10 @@ index d23481453717f715124156b5d83f6448f720d049..57bac2a4a8b2e4249daf3905dfa03559
      private final BinaryHeap openSet = new BinaryHeap();
  
 -    public PathFinder(NodeEvaluator pathNodeMaker, int range) {
-+    private final @Nullable host.bloom.pathfinding.NodeEvaluatorGenerator nodeEvaluatorGenerator; // petal - we use this later to generate an evaluator
++    private final @Nullable gg.pufferfish.pufferfish.path.NodeEvaluatorGenerator nodeEvaluatorGenerator; // Pufferfish - we use this later to generate an evaluator
 +
-+    // petal start - add nodeEvaluatorGenerator as optional param
-+    public PathFinder(NodeEvaluator pathNodeMaker, int range, @Nullable host.bloom.pathfinding.NodeEvaluatorGenerator nodeEvaluatorGenerator) {
++    // Pufferfish start - add nodeEvaluatorGenerator as optional param
++    public PathFinder(NodeEvaluator pathNodeMaker, int range, @Nullable gg.pufferfish.pufferfish.path.NodeEvaluatorGenerator nodeEvaluatorGenerator) {
          this.nodeEvaluator = pathNodeMaker;
          this.maxVisitedNodes = range;
 +        this.nodeEvaluatorGenerator = nodeEvaluatorGenerator;
@@ -886,16 +886,16 @@ index d23481453717f715124156b5d83f6448f720d049..57bac2a4a8b2e4249daf3905dfa03559
 +    public PathFinder(NodeEvaluator pathNodeMaker, int range) {
 +        this(pathNodeMaker, range, null);
      }
-+    // petal end
++    // Pufferfish end
  
      @Nullable
      public Path findPath(PathNavigationRegion world, Mob mob, Set<BlockPos> positions, float followRange, int distance, float rangeMultiplier) {
 -        this.openSet.clear();
 -        this.nodeEvaluator.prepare(world, mob);
 -        Node node = this.nodeEvaluator.getStart();
-+        //this.openSet.clear(); // petal - it's always cleared in processPath
-+        // petal start - use a generated evaluator if we have one otherwise run sync
-+        var nodeEvaluator = this.nodeEvaluatorGenerator == null ? this.nodeEvaluator : host.bloom.pathfinding.NodeEvaluatorCache.takeNodeEvaluator(this.nodeEvaluatorGenerator);
++        //this.openSet.clear(); // Pufferfish - it's always cleared in processPath
++        // Pufferfish start - use a generated evaluator if we have one otherwise run sync
++        var nodeEvaluator = this.nodeEvaluatorGenerator == null ? this.nodeEvaluator : gg.pufferfish.pufferfish.path.NodeEvaluatorCache.takeNodeEvaluator(this.nodeEvaluatorGenerator);
 +        nodeEvaluator.prepare(world, mob);
 +        Node node = nodeEvaluator.getStart();
          if (node == null) {
@@ -912,26 +912,26 @@ index d23481453717f715124156b5d83f6448f720d049..57bac2a4a8b2e4249daf3905dfa03559
 -            this.nodeEvaluator.done();
 -            return path;
 +
-+            // petal start
++            // Pufferfish start
 +            if (this.nodeEvaluatorGenerator == null) {
 +                // run sync :(
 +                return this.findPath(world.getProfiler(), node, map, followRange, distance, rangeMultiplier);
 +            }
 +
-+            return new host.bloom.pathfinding.AsyncPath(Lists.newArrayList(), positions, () -> {
++            return new gg.pufferfish.pufferfish.path.AsyncPath(Lists.newArrayList(), positions, () -> {
 +                try {
 +                    return this.processPath(nodeEvaluator, node, map, followRange, distance, rangeMultiplier);
 +                } finally {
 +                    nodeEvaluator.done();
-+                    host.bloom.pathfinding.NodeEvaluatorCache.returnNodeEvaluator(nodeEvaluator);
++                    gg.pufferfish.pufferfish.path.NodeEvaluatorCache.returnNodeEvaluator(nodeEvaluator);
 +                }
 +            });
-+            // petal end
++            // Pufferfish end
          }
      }
  
 -    @Nullable
-+    // petal start - split pathfinding into the original sync method for compat and processing for delaying
++    // Pufferfish start - split pathfinding into the original sync method for compat and processing for delaying
      // Paper start - optimize collection
      private Path findPath(ProfilerFiller profiler, Node startNode, List<Map.Entry<Target, BlockPos>> positions, float followRange, int distance, float rangeMultiplier) {
 +        // readd the profiler code for sync
@@ -944,9 +944,9 @@ index d23481453717f715124156b5d83f6448f720d049..57bac2a4a8b2e4249daf3905dfa03559
 +            this.nodeEvaluator.done();
 +        }
 +    }
-+    // petal end
++    // Pufferfish end
 +
-+    private synchronized @org.jetbrains.annotations.NotNull Path processPath(NodeEvaluator nodeEvaluator, Node startNode, List<Map.Entry<Target, BlockPos>> positions, float followRange, int distance, float rangeMultiplier) { // petal - sync to only use the caching functions in this class on a single thread
++    private synchronized @org.jetbrains.annotations.NotNull Path processPath(NodeEvaluator nodeEvaluator, Node startNode, List<Map.Entry<Target, BlockPos>> positions, float followRange, int distance, float rangeMultiplier) { // Pufferfish - sync to only use the caching functions in this class on a single thread
 +        org.apache.commons.lang3.Validate.isTrue(!positions.isEmpty()); // ensure that we have at least one position, which means we'll always return a path
 +
          // Set<Target> set = positions.keySet();
@@ -966,13 +966,13 @@ index d23481453717f715124156b5d83f6448f720d049..57bac2a4a8b2e4249daf3905dfa03559
                  best = path;
          }
 +
-+        // petal - ignore this warning, we know that the above loop always runs at least once since positions is not empty
++        // Pufferfish start - ignore this warning, we know that the above loop always runs at least once since positions is not empty
 +        //noinspection ConstantConditions
          return best;
          // Paper end
-+        // petal end
++        // Pufferfish end
      }
-+    // petal end
++    // Pufferfish end
  
      protected float distance(Node a, Node b) {
          return a.distanceTo(b);
