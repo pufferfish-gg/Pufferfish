@@ -5,10 +5,10 @@ Subject: [PATCH] Reduce entity fluid lookups if no fluids
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 69d8d3c1584fe7aa911f795f56ab86dadb510cb1..5af152f6ea3b3ac839f6fb6f0c0efd7aacea0bde 100644
+index 40df31cd5bad109fd6601f0d081a56936d5a6e9e..9a763e2322546c98972d1982c5733b5e60c0b6be 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -4005,16 +4005,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4013,16 +4013,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public boolean updateFluidHeightAndDoFluidPushing(TagKey<Fluid> tag, double speed) {
@@ -34,7 +34,7 @@ index 69d8d3c1584fe7aa911f795f56ab86dadb510cb1..5af152f6ea3b3ac839f6fb6f0c0efd7a
              double d1 = 0.0D;
              boolean flag = this.isPushedByFluid();
              boolean flag1 = false;
-@@ -4022,14 +4024,61 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4030,14 +4032,61 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
              int k1 = 0;
              BlockPos.MutableBlockPos blockposition_mutableblockposition = new BlockPos.MutableBlockPos();
  
@@ -102,7 +102,7 @@ index 69d8d3c1584fe7aa911f795f56ab86dadb510cb1..5af152f6ea3b3ac839f6fb6f0c0efd7a
  
                              if (d2 >= axisalignedbb.minY) {
                                  flag1 = true;
-@@ -4051,9 +4100,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4059,9 +4108,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
                                  // CraftBukkit end
                              }
                          }

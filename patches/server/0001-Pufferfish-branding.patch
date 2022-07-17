@@ -6,7 +6,7 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 68b8f275f9c9e77a949ca29749a05b469bcdb910..22c9e492c0f056198ef4a8819e2afbdbc5e8cfed 100644
+index 2374cc9bab5039d0a0dc11d4b2ec573ab75778a7..92ba54a03ef91ad824234aca59deb7bea3e5cf1d 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -9,8 +9,12 @@ plugins {
@@ -199,7 +199,7 @@ index 0000000000000000000000000000000000000000..e877921370f6009a4bd204d9b17d2d58
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 77cd45f616e2ff38ad6a648b8b865a99e544f3ec..d28325a9fbd8015124e1e026e78cb36fdb69300c 100644
+index a934226dc9a273fac03c21227f7ef3d50ea080c4..75889c7aba216e5d613901e1e9f6f97e75d78d2a 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1654,7 +1654,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -212,10 +212,10 @@ index 77cd45f616e2ff38ad6a648b8b865a99e544f3ec..d28325a9fbd8015124e1e026e78cb36f
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 61c2f864bb23e75f6c377f7ccbf2ec44a670348c..b28fafaa1d7cf0dbad639a6aeec04176c13cf6f1 100644
+index a8cf1ab9d7504dfdb2310f1dca82324a225bea7d..16f079c7a518727f0cd24e99a1e54d6e1ad071f0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -245,7 +245,7 @@ import javax.annotation.Nullable; // Paper
+@@ -246,7 +246,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {

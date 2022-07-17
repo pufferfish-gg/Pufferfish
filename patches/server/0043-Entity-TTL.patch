@@ -44,10 +44,10 @@ index 56a5a31b41d00ba73259a7eda5c57d08570d3e6e..a125abc75ed2bbd905c8fdec442416a4
      public static boolean throttleInactiveGoalSelectorTick;
  	private static void inactiveGoalSelectorThrottle() {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 5af152f6ea3b3ac839f6fb6f0c0efd7aacea0bde..e6d25ab2e7e19d9fb993fdad6f650212f560cc1d 100644
+index 9a763e2322546c98972d1982c5733b5e60c0b6be..beab9f74ba3c3ef294485ee74daf165475d29566 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -813,6 +813,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -814,6 +814,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      // CraftBukkit end
  
      public void baseTick() {
