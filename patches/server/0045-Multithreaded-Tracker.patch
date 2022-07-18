@@ -14,10 +14,10 @@ that. this multithreaded tracker remains accurate, non-breaking and fast
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/tracker/MultithreadedTracker.java b/src/main/java/gg/pufferfish/pufferfish/tracker/MultithreadedTracker.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..95031d2abed589cc13d8fe187a2c1de893409b4a
+index 0000000000000000000000000000000000000000..2dfe34a3fd0e460865393d9d8a1bdab71aa47b6b
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/tracker/MultithreadedTracker.java
-@@ -0,0 +1,128 @@
+@@ -0,0 +1,141 @@
 +package gg.pufferfish.pufferfish.tracker;
 +
 +import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -45,6 +45,7 @@ index 0000000000000000000000000000000000000000..95031d2abed589cc13d8fe187a2c1de8
 +    private final AtomicInteger taskIndex = new AtomicInteger();
 +
 +    private final ConcurrentLinkedQueue<Runnable> mainThreadTasks;
++    private final ConcurrentLinkedQueue<Runnable> postTrackingTasks = new ConcurrentLinkedQueue<>();
 +    private final AtomicInteger finishedTasks = new AtomicInteger();
 +
 +    public MultithreadedTracker(IteratorSafeOrderedReferenceSet<LevelChunk> entityTickingChunks, ConcurrentLinkedQueue<Runnable> mainThreadTasks) {
@@ -77,6 +78,7 @@ index 0000000000000000000000000000000000000000..95031d2abed589cc13d8fe187a2c1de8
 +            }
 +
 +            this.runMainThreadTasks(); // finish any remaining tasks
++            this.runPostTrackingTasks(); // run all post-tracking tasks
 +        } finally {
 +            this.entityTickingChunks.finishRawIterator();
 +        }
@@ -90,6 +92,17 @@ index 0000000000000000000000000000000000000000..95031d2abed589cc13d8fe187a2c1de8
 +            }
 +        } catch (Throwable throwable) {
 +            MinecraftServer.LOGGER.warn("Tasks failed while ticking track queue", throwable);
++        }
++    }
++
++    private void runPostTrackingTasks() {
++        try {
++            Runnable task;
++            while ((task = this.postTrackingTasks.poll()) != null) {
++                task.run();
++            }
++        } catch (Throwable throwable) {
++            MinecraftServer.LOGGER.warn("Post-tracking tasks failed while ticking track queue", throwable);
 +        }
 +    }
 +
@@ -138,8 +151,8 @@ index 0000000000000000000000000000000000000000..95031d2abed589cc13d8fe187a2c1de8
 +                if (entityTracker != null) {
 +                    entityTracker.updatePlayers(entityTracker.entity.getPlayersInTrackRange());
 +
-+                    // run this on the main thread but queue it up here so we can run it while processing tracking at the same time
-+                    this.mainThreadTasks.offer(entityTracker.serverEntity::sendChanges);
++                    // run this on the main thread. This needs to be run after all updatePlayers methods are called.
++                    this.postTrackingTasks.offer(entityTracker.serverEntity::sendChanges);
 +                }
 +            }
 +        }
