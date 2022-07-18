@@ -5,10 +5,10 @@ Subject: [PATCH] Use thread unsafe random for mob spawning
 
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 8d440e4069c4ecc4c0155e52c065c0a4613d91f2..da3f151c4c86c064e4554cfdba6b113854beda22 100644
+index 73db308b36808cfa4df8744332502e73fc45a02f..52ca8ee56f8d5bd6d841214783963269269ccb5a 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -272,7 +272,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -271,7 +271,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
  
      public abstract ResourceKey<LevelStem> getTypeKey();
  
