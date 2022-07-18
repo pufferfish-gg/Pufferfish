@@ -588,7 +588,7 @@ index 29a872393f2f995b13b4ed26b42c6464ab27ca73..fa23c4c30c4f9695e1ed25993426c185
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/entity/ai/navigation/FlyingPathNavigation.java b/src/main/java/net/minecraft/world/entity/ai/navigation/FlyingPathNavigation.java
-index 27cd393e81f6ef9b5690c051624d8d2af50acd34..a238434e2ade8537824b2acb0250b9dc4a832cee 100644
+index 27cd393e81f6ef9b5690c051624d8d2af50acd34..6c134cc3156bde0b770655686d24e5ad2a95587c 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/navigation/FlyingPathNavigation.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/navigation/FlyingPathNavigation.java
 @@ -12,6 +12,15 @@ import net.minecraft.world.level.pathfinder.PathFinder;
@@ -625,7 +625,7 @@ index 27cd393e81f6ef9b5690c051624d8d2af50acd34..a238434e2ade8537824b2acb0250b9dc
          if (!this.isDone()) {
              if (this.canUpdatePath()) {
 -                this.followThePath();
-+                this.followThePathSuper();
++                this.followThePathSuper(); // Pufferfish
              } else if (this.path != null && !this.path.isDone()) {
                  Vec3 vec3 = this.path.getNextEntityPos(this.mob);
                  if (this.mob.getBlockX() == Mth.floor(vec3.x) && this.mob.getBlockY() == Mth.floor(vec3.y) && this.mob.getBlockZ() == Mth.floor(vec3.z)) {
@@ -659,7 +659,7 @@ index f610c06d7bb51ec2c63863dd46711712986a106a..0e61d3f79260e3dd231df77c6cee2997
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/entity/ai/navigation/PathNavigation.java b/src/main/java/net/minecraft/world/entity/ai/navigation/PathNavigation.java
-index 3f672d7c2377fca16a6d8d31cf7aaae4f009fdce..0a4c24ddf6ed7a64fb193968ddb37bec1b473042 100644
+index 3f672d7c2377fca16a6d8d31cf7aaae4f009fdce..b396b90e146ce1873974400782f802422eba28a6 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/navigation/PathNavigation.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/navigation/PathNavigation.java
 @@ -151,6 +151,9 @@ public abstract class PathNavigation {
@@ -718,7 +718,7 @@ index 3f672d7c2377fca16a6d8d31cf7aaae4f009fdce..0a4c24ddf6ed7a64fb193968ddb37bec
          if (!this.isDone()) {
              if (this.canUpdatePath()) {
 -                this.followThePath();
-+                this.followThePathSuper();
++                this.followThePathSuper(); // Pufferfish
              } else if (this.path != null && !this.path.isDone()) {
                  Vec3 vec3 = this.getTempMobPos();
                  Vec3 vec32 = this.path.getNextEntityPos(this.mob);
