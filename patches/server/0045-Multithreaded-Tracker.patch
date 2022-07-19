@@ -12,6 +12,28 @@ concurrent accesses everywhere, as well as being much simpler to maintain
 some things are too unsafe to run off the main thread so we don't attempt to do
 that. this multithreaded tracker remains accurate, non-breaking and fast
 
+diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+index 7e89c6cf36ec83237ac3e5f75c26c73d628e45d7..09827eaa9f6adf49385a33aa60b3a6bf4005a982 100644
+--- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
++++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+@@ -213,6 +213,17 @@ public class PufferfishConfig {
+ 		}
+ 	}
+ 	
++	public static boolean enableAsyncEntityTracker;
++	public static boolean enableAsyncEntityTrackerInitialized;
++	private static void asyncEntityTracker() {
++		boolean temp = getBoolean("enable-async-entity-tracker", false,
++				"Whether or not async entity tracking should be enabled.");
++		if (!enableAsyncEntityTrackerInitialized) {
++			enableAsyncEntityTrackerInitialized = true;
++			enableAsyncEntityTracker = temp;
++		}
++	}
++	
+ 	public static boolean enableAsyncPathfinding;
+ 	public static boolean enableAsyncPathfindingInitialized;
+ 	private static void asyncPathfinding() {
 diff --git a/src/main/java/gg/pufferfish/pufferfish/tracker/MultithreadedTracker.java b/src/main/java/gg/pufferfish/pufferfish/tracker/MultithreadedTracker.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..2dfe34a3fd0e460865393d9d8a1bdab71aa47b6b
@@ -186,7 +208,7 @@ index 47b5f75d9f27cf3ab947fd1f69cbd609fb9f2749..85882eeb86d7b74db0219aa65783946d
      public ChunkHolder.FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 95d5c27a2324ef56df08238352172b62fc978ead..c72d58183d57f37c45d982160980079e6ca3f28e 100644
+index 95d5c27a2324ef56df08238352172b62fc978ead..b7f56d1909272bb02591b6e08aed78943ab96ba1 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -2082,8 +2082,36 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
@@ -196,10 +218,10 @@ index 95d5c27a2324ef56df08238352172b62fc978ead..c72d58183d57f37c45d982160980079e
 +    // Pufferfish start - multithreaded tracker
 +    private @Nullable gg.pufferfish.pufferfish.tracker.MultithreadedTracker multithreadedTracker;
 +    private final java.util.concurrent.ConcurrentLinkedQueue<Runnable> trackerMainThreadTasks = new java.util.concurrent.ConcurrentLinkedQueue<>();
-+    private boolean trackingInProgress;
++    private boolean multithreadedTrackingInProgress;
 +
 +    public void runOnTrackerMainThread(final Runnable runnable) {
-+        if (trackingInProgress) {
++        if (multithreadedTrackingInProgress) {
 +            this.trackerMainThreadTasks.add(runnable);
 +        } else {
 +            runnable.run();
@@ -208,16 +230,16 @@ index 95d5c27a2324ef56df08238352172b62fc978ead..c72d58183d57f37c45d982160980079e
 +
      // Paper start - optimised tracker
      private final void processTrackQueue() {
-+        if (true) {
++        if (gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncEntityTracker) {
 +            if (this.multithreadedTracker == null) {
 +                this.multithreadedTracker = new gg.pufferfish.pufferfish.tracker.MultithreadedTracker(this.level.chunkSource.entityTickingChunks, this.trackerMainThreadTasks);
 +            }
 +
 +            try {
-+                trackingInProgress = true;
++                multithreadedTrackingInProgress = true;
 +                this.multithreadedTracker.tick();
 +            } finally {
-+                trackingInProgress = false;
++                multithreadedTrackingInProgress = false;
 +            }
 +            return;
 +        }
