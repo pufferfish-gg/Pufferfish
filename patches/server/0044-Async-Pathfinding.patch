@@ -509,7 +509,7 @@ index bf3b8ccb3e031e0ad24cd51e28ea8cbd4f8a8030..b56bb0ac37a6d51d645b6189af0ae7da
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/ai/behavior/MoveToTargetSink.java b/src/main/java/net/minecraft/world/entity/ai/behavior/MoveToTargetSink.java
-index 18364ce4c60172529b10bc9e3a813dcedc4b766f..cf46973289d5379bf41c38426a251ceb13f81c68 100644
+index 18364ce4c60172529b10bc9e3a813dcedc4b766f..72dfb58a7f4586387c2d32cf54fff137b2d26666 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/behavior/MoveToTargetSink.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/behavior/MoveToTargetSink.java
 @@ -21,6 +21,7 @@ public class MoveToTargetSink extends Behavior<Mob> {
@@ -525,7 +525,7 @@ index 18364ce4c60172529b10bc9e3a813dcedc4b766f..cf46973289d5379bf41c38426a251ceb
              WalkTarget walkTarget = brain.getMemory(MemoryModuleType.WALK_TARGET).get();
              boolean bl = this.reachedTarget(entity, walkTarget);
 -            if (!bl && this.tryComputePath(entity, walkTarget, world.getGameTime())) {
-+            if (!bl && (!gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncPathfinding && this.tryComputePath(entity, walkTarget, world.getGameTime()))) {
++            if (!bl && (!gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncPathfinding && this.tryComputePath(entity, walkTarget, world.getGameTime()))) { // Pufferfish
                  this.lastTargetPos = walkTarget.getTarget().currentBlockPosition();
                  return true;
 +            } else if (!bl) { return true; // Pufferfish
@@ -536,7 +536,7 @@ index 18364ce4c60172529b10bc9e3a813dcedc4b766f..cf46973289d5379bf41c38426a251ceb
  
      @Override
      protected boolean canStillUse(ServerLevel serverLevel, Mob mob, long l) {
-+        if (gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncPathfinding && finishedProcessing) return true; // Pufferfish - wait for path to process
++        if (gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncPathfinding && !finishedProcessing) return true; // Pufferfish - wait for path to process
          if (this.path != null && this.lastTargetPos != null) {
              Optional<WalkTarget> optional = mob.getBrain().getMemory(MemoryModuleType.WALK_TARGET);
              PathNavigation pathNavigation = mob.getNavigation();
