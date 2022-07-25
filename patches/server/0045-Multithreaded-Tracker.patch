@@ -36,10 +36,10 @@ index 7e89c6cf36ec83237ac3e5f75c26c73d628e45d7..09827eaa9f6adf49385a33aa60b3a6bf
  	private static void asyncPathfinding() {
 diff --git a/src/main/java/gg/pufferfish/pufferfish/tracker/MultithreadedTracker.java b/src/main/java/gg/pufferfish/pufferfish/tracker/MultithreadedTracker.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..2dfe34a3fd0e460865393d9d8a1bdab71aa47b6b
+index 0000000000000000000000000000000000000000..ac541ddf1594ae865de02fd40940e39285043b1f
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/tracker/MultithreadedTracker.java
-@@ -0,0 +1,141 @@
+@@ -0,0 +1,127 @@
 +package gg.pufferfish.pufferfish.tracker;
 +
 +import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -67,7 +67,6 @@ index 0000000000000000000000000000000000000000..2dfe34a3fd0e460865393d9d8a1bdab7
 +    private final AtomicInteger taskIndex = new AtomicInteger();
 +
 +    private final ConcurrentLinkedQueue<Runnable> mainThreadTasks;
-+    private final ConcurrentLinkedQueue<Runnable> postTrackingTasks = new ConcurrentLinkedQueue<>();
 +    private final AtomicInteger finishedTasks = new AtomicInteger();
 +
 +    public MultithreadedTracker(IteratorSafeOrderedReferenceSet<LevelChunk> entityTickingChunks, ConcurrentLinkedQueue<Runnable> mainThreadTasks) {
@@ -100,7 +99,6 @@ index 0000000000000000000000000000000000000000..2dfe34a3fd0e460865393d9d8a1bdab7
 +            }
 +
 +            this.runMainThreadTasks(); // finish any remaining tasks
-+            this.runPostTrackingTasks(); // run all post-tracking tasks
 +        } finally {
 +            this.entityTickingChunks.finishRawIterator();
 +        }
@@ -114,17 +112,6 @@ index 0000000000000000000000000000000000000000..2dfe34a3fd0e460865393d9d8a1bdab7
 +            }
 +        } catch (Throwable throwable) {
 +            MinecraftServer.LOGGER.warn("Tasks failed while ticking track queue", throwable);
-+        }
-+    }
-+
-+    private void runPostTrackingTasks() {
-+        try {
-+            Runnable task;
-+            while ((task = this.postTrackingTasks.poll()) != null) {
-+                task.run();
-+            }
-+        } catch (Throwable throwable) {
-+            MinecraftServer.LOGGER.warn("Post-tracking tasks failed while ticking track queue", throwable);
 +        }
 +    }
 +
@@ -173,8 +160,7 @@ index 0000000000000000000000000000000000000000..2dfe34a3fd0e460865393d9d8a1bdab7
 +                if (entityTracker != null) {
 +                    entityTracker.updatePlayers(entityTracker.entity.getPlayersInTrackRange());
 +
-+                    // run this on the main thread. This needs to be run after all updatePlayers methods are called.
-+                    this.postTrackingTasks.offer(entityTracker.serverEntity::sendChanges);
++                    this.mainThreadTasks.offer(entityTracker.serverEntity::sendChanges);
 +                }
 +            }
 +        }
@@ -304,7 +290,7 @@ index ca42c2642a729b90d22b968af7258f3aee72e14b..7613510e5f4c22ee15651f162fe1bca1
      public boolean visible = true;
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 1eb912ad97f9663bf6bd336ad739f2552b0a5c9b..871bce7f5acc1b9a058496f41d962ec2e724f620 100644
+index 1eb912ad97f9663bf6bd336ad739f2552b0a5c9b..88152988425b7b02ec5ce229ba4c24b40e030329 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -249,14 +249,18 @@ public class ServerEntity {
@@ -328,3 +314,33 @@ index 1eb912ad97f9663bf6bd336ad739f2552b0a5c9b..871bce7f5acc1b9a058496f41d962ec2
          this.entity.startSeenByPlayer(player);
      }
  
+@@ -362,19 +366,26 @@ public class ServerEntity {
+         SynchedEntityData datawatcher = this.entity.getEntityData();
+ 
+         if (datawatcher.isDirty()) {
+-            this.broadcastAndSend(new ClientboundSetEntityDataPacket(this.entity.getId(), datawatcher, false));
++            ((ServerLevel) this.entity.level).chunkSource.chunkMap.runOnTrackerMainThread(() -> // Pufferfish
++            this.broadcastAndSend(new ClientboundSetEntityDataPacket(this.entity.getId(), datawatcher, false))
++            ); // Pufferfish
+         }
+ 
+         if (this.entity instanceof LivingEntity) {
+             Set<AttributeInstance> set = ((LivingEntity) this.entity).getAttributes().getDirtyAttributes();
+ 
+             if (!set.isEmpty()) {
++                // Pufferfish start
++                List<AttributeInstance> attributesCopy = Lists.newArrayList(set);
++                ((ServerLevel) this.entity.level).chunkSource.chunkMap.runOnTrackerMainThread(() -> {
+                 // CraftBukkit start - Send scaled max health
+                 if (this.entity instanceof ServerPlayer) {
+-                    ((ServerPlayer) this.entity).getBukkitEntity().injectScaledMaxHealth(set, false);
++                    ((ServerPlayer) this.entity).getBukkitEntity().injectScaledMaxHealth(attributesCopy, false); // Pufferfish
+                 }
+                 // CraftBukkit end
+-                this.broadcastAndSend(new ClientboundUpdateAttributesPacket(this.entity.getId(), set));
++                this.broadcastAndSend(new ClientboundUpdateAttributesPacket(this.entity.getId(), attributesCopy)); // Pufferfish
++                });
++                // Pufferfish end
+             }
+ 
+             set.clear();
