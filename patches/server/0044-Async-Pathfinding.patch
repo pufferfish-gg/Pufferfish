@@ -3,7 +3,7 @@ From: peaches94 <peachescu94@gmail.com>
 Date: Sun, 26 Jun 2022 16:51:37 -0500
 Subject: [PATCH] Async Pathfinding
 
-Co-authored-by: peaches94 <peachescu94@gmail.com>
+This patch was ported downstream from the Petal fork.
 
 Makes most pathfinding-related work happen asynchronously
 

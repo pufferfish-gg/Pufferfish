@@ -5,10 +5,10 @@ Subject: [PATCH] Patch Paper to use fast item merge raytracing
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index c58c296bbb0fbd1930dba38bcab7ec3103917ba5..68c88e91ceb1fb19d2b3c168e56d7a4314232d64 100644
+index fcc5444a1268931a0fd2df1e6bbbc17cfd5a61e0..16a55f94bda9f959548772c8916b4dc3eb045d47 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-@@ -254,10 +254,16 @@ public class ItemEntity extends Entity {
+@@ -252,10 +252,16 @@ public class ItemEntity extends Entity {
                  if (entityitem.isMergable()) {
                      // Paper Start - Fix items merging through walls
                          if (this.level.paperConfig().fixes.fixItemsMergingThroughWalls) {

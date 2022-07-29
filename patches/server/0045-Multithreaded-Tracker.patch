@@ -3,14 +3,14 @@ From: peaches94 <peachescu94@gmail.com>
 Date: Sat, 2 Jul 2022 00:35:56 -0500
 Subject: [PATCH] Multithreaded Tracker
 
-Co-authored-by: peaches94 <peachescu94@gmail.com>
-Co-authored-by: Paul Sauve <paul@technove.co>
+This patch was ported downstream from the Petal fork, and is derived from
+the Airplane fork by Paul Sauve
 
-based off the airplane multithreaded tracker this patch properly handles
+Based off the Airplane multithreaded tracker, this patch properly handles
 concurrent accesses everywhere, as well as being much simpler to maintain
 
-some things are too unsafe to run off the main thread so we don't attempt to do
-that. this multithreaded tracker remains accurate, non-breaking and fast
+Some things are too unsafe to run off the main thread so we don't attempt to do
+that. This multithreaded tracker remains accurate, non-breaking and fast.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 index 7e89c6cf36ec83237ac3e5f75c26c73d628e45d7..09827eaa9f6adf49385a33aa60b3a6bf4005a982 100644
@@ -194,10 +194,10 @@ index 47b5f75d9f27cf3ab947fd1f69cbd609fb9f2749..85882eeb86d7b74db0219aa65783946d
      public ChunkHolder.FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 95d5c27a2324ef56df08238352172b62fc978ead..b7f56d1909272bb02591b6e08aed78943ab96ba1 100644
+index 3b70f2a94c170c7b12ee7b8b2e5f9859437a204b..87518f6ff223ca211727c3002d107bc9bcaa36f9 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -2082,8 +2082,36 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -2079,8 +2079,36 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          entity.tracker = null; // Paper - We're no longer tracked
      }
  
@@ -234,7 +234,7 @@ index 95d5c27a2324ef56df08238352172b62fc978ead..b7f56d1909272bb02591b6e08aed7894
          this.level.timings.tracker1.startTiming();
          try {
              for (TrackedEntity tracker : this.entityMap.values()) {
-@@ -2275,11 +2303,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -2272,11 +2300,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
  
      public class TrackedEntity {
  
@@ -249,7 +249,7 @@ index 95d5c27a2324ef56df08238352172b62fc978ead..b7f56d1909272bb02591b6e08aed7894
  
          public TrackedEntity(Entity entity, int i, int j, boolean flag) {
              this.serverEntity = new ServerEntity(ChunkMap.this.level, entity, j, flag, this::broadcast, this.seenBy); // CraftBukkit
-@@ -2291,7 +2319,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -2288,7 +2316,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          // Paper start - use distance map to optimise tracker
          com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> lastTrackerCandidates;
  
@@ -258,7 +258,7 @@ index 95d5c27a2324ef56df08238352172b62fc978ead..b7f56d1909272bb02591b6e08aed7894
              com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> oldTrackerCandidates = this.lastTrackerCandidates;
              this.lastTrackerCandidates = newTrackerCandidates;
  
-@@ -2363,7 +2391,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -2360,7 +2388,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void removePlayer(ServerPlayer player) {
@@ -267,7 +267,7 @@ index 95d5c27a2324ef56df08238352172b62fc978ead..b7f56d1909272bb02591b6e08aed7894
              if (this.seenBy.remove(player.connection)) {
                  this.serverEntity.removePairing(player);
              }
-@@ -2371,7 +2399,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -2368,7 +2396,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void updatePlayer(ServerPlayer player) {
