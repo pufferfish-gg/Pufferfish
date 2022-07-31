@@ -369,10 +369,10 @@ index 0000000000000000000000000000000000000000..6c8035ef7effd0ccdc887b3792ba09ef
 +}
 diff --git a/src/main/java/gg/pufferfish/pufferfish/path/NodeEvaluatorCache.java b/src/main/java/gg/pufferfish/pufferfish/path/NodeEvaluatorCache.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..9f81dc6e8d198f1be957c1a05c72eb5ba38832ce
+index 0000000000000000000000000000000000000000..a18b967d7a7325885c94a1093cc5800012998f1a
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/path/NodeEvaluatorCache.java
-@@ -0,0 +1,39 @@
+@@ -0,0 +1,43 @@
 +package gg.pufferfish.pufferfish.path;
 +
 +import net.minecraft.world.level.pathfinder.NodeEvaluator;
@@ -409,6 +409,10 @@ index 0000000000000000000000000000000000000000..9f81dc6e8d198f1be957c1a05c72eb5b
 +        Validate.notNull(generator, "NodeEvaluator already returned");
 +
 +        getDequeForGenerator(generator).offer(nodeEvaluator);
++    }
++
++    public static void removeNodeEvaluator(@NotNull NodeEvaluator nodeEvaluator) {
++        nodeEvaluatorToGenerator.remove(nodeEvaluator);
 +    }
 +
 +}
@@ -1065,10 +1069,10 @@ index 2a335f277bd0e4b8ad0f60d8226eb8aaa80a871f..228b11a21735885055d2fb5e0568e21a
              return false;
          } else if (o.nodes.size() != this.nodes.size()) {
 diff --git a/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java b/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java
-index d23481453717f715124156b5d83f6448f720d049..e6593d081b9349d68d45b645455d28f6f00d7c00 100644
+index d23481453717f715124156b5d83f6448f720d049..0455c8a7da880da4f0b7ae9d57e83e281a55f0ae 100644
 --- a/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java
 +++ b/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java
-@@ -25,36 +25,73 @@ public class PathFinder {
+@@ -25,36 +25,75 @@ public class PathFinder {
      private static final boolean DEBUG = false;
      private final BinaryHeap openSet = new BinaryHeap();
  
@@ -1098,6 +1102,7 @@ index d23481453717f715124156b5d83f6448f720d049..e6593d081b9349d68d45b645455d28f6
 +        nodeEvaluator.prepare(world, mob);
 +        Node node = nodeEvaluator.getStart();
          if (node == null) {
++            gg.pufferfish.pufferfish.path.NodeEvaluatorCache.removeNodeEvaluator(nodeEvaluator);
              return null;
          } else {
              // Paper start - remove streams - and optimize collection
@@ -1114,6 +1119,7 @@ index d23481453717f715124156b5d83f6448f720d049..e6593d081b9349d68d45b645455d28f6
 +            // Pufferfish start
 +            if (this.nodeEvaluatorGenerator == null) {
 +                // run sync :(
++                gg.pufferfish.pufferfish.path.NodeEvaluatorCache.removeNodeEvaluator(nodeEvaluator);
 +                return this.findPath(world.getProfiler(), node, map, followRange, distance, rangeMultiplier);
 +            }
 +
@@ -1151,7 +1157,7 @@ index d23481453717f715124156b5d83f6448f720d049..e6593d081b9349d68d45b645455d28f6
          // Set<Target> set = positions.keySet();
          startNode.g = 0.0F;
          startNode.h = this.getBestH(startNode, positions); // Paper - optimize collection
-@@ -91,7 +128,7 @@ public class PathFinder {
+@@ -91,7 +130,7 @@ public class PathFinder {
              }
  
              if (!(node.distanceTo(startNode) >= followRange)) {
@@ -1160,7 +1166,7 @@ index d23481453717f715124156b5d83f6448f720d049..e6593d081b9349d68d45b645455d28f6
  
                  for(int l = 0; l < k; ++l) {
                      Node node2 = this.neighbors[l];
-@@ -123,9 +160,14 @@ public class PathFinder {
+@@ -123,9 +162,14 @@ public class PathFinder {
              if (best == null || comparator.compare(path, best) < 0)
                  best = path;
          }
