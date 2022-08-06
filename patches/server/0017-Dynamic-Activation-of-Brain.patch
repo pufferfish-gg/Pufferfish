@@ -84,7 +84,7 @@ index e588ed2cb12393e25ab1c36652f7b71767fdba27..8dd277dd34ae9b285a7ce19aa39ad054
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 90ebccf544f67ec1d454b28a50cf5d194cb32cb8..8263784b60381c2472778862d80c7eda762eccb4 100644
+index aa8ce79cac0a6bbe05dc3b3a0c3d9c1115d5ce3b..157887541c74182db8129dd61ce4c657262d194e 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -414,6 +414,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
@@ -281,7 +281,7 @@ index 10b45ec24a5a0867106d1694312385ad1e267f43..93077e8c6b5a35adc6febb749d1d08be
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index 1a1a1f4d0ac025daccc2d3f84faf6592819f4d5c..a3ba67d84e53ca83b6078d5f674709fd19943ae3 100644
+index 40b382c2e0e33fe5c24a51b211cd2f9557a60c5e..065642c51107ad1d9a2ca4cb0f38aef1fa9e41aa 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -38,6 +38,10 @@ import co.aikar.timings.MinecraftTimings;
@@ -295,7 +295,7 @@ index 1a1a1f4d0ac025daccc2d3f84faf6592819f4d5c..a3ba67d84e53ca83b6078d5f674709fd
  
  public class ActivationRange
  {
-@@ -215,6 +219,21 @@ public class ActivationRange
+@@ -216,6 +220,21 @@ public class ActivationRange
              for (int i = 0; i < entities.size(); i++) {
                  Entity entity = entities.get(i);
                  ActivationRange.activateEntity(entity);
@@ -317,7 +317,7 @@ index 1a1a1f4d0ac025daccc2d3f84faf6592819f4d5c..a3ba67d84e53ca83b6078d5f674709fd
              }
              // Paper end
          }
-@@ -231,12 +250,12 @@ public class ActivationRange
+@@ -232,12 +251,12 @@ public class ActivationRange
          if ( MinecraftServer.currentTick > entity.activatedTick )
          {
              if ( entity.defaultActivationState )

@@ -29,10 +29,10 @@ index 954453ab927fff269d4f76e97aeefb810b8ba6e6..f5b88d529ce00fa1692f0ff9507b90b7
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index adb9cde74295830e74241e522ae5766d436aadb1..86c91ba9ddf1042f832c7a7379533040624fff44 100644
+index dbefefc123e3cb38a95bd321d74c384bc087cfba..513600b86a04e4818e3eaaf06b5f63ff1e8fecdd 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -1215,6 +1215,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -1219,6 +1219,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
  
      @Override
      public void handleEditBook(ServerboundEditBookPacket packet) {

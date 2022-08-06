@@ -21,10 +21,10 @@ index 09827eaa9f6adf49385a33aa60b3a6bf4005a982..38cb29c646ff496ffaa6553f98a565b7
      }
  
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 86c91ba9ddf1042f832c7a7379533040624fff44..5b543a3f115fc80778db662d8557d12d3bd36942 100644
+index 513600b86a04e4818e3eaaf06b5f63ff1e8fecdd..d18b82f1f66cd10250a12222dfb983ef57629738 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2330,6 +2330,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2366,6 +2366,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
      }
  
      private boolean updateChatOrder(Instant timestamp) {
