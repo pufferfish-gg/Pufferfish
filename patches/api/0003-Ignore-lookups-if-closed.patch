@@ -5,7 +5,7 @@ Subject: [PATCH] Ignore lookups if closed
 
 
 diff --git a/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java b/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
-index 3f00149a9635447fdd247c1d780f59e1952d165e..c67e91316f35750b18e082746206a01e783f1740 100644
+index 16d57c9a1ea29761eebc10e907fb3d19a1be3a9f..8f778e7d1b8508414ed47c6c6071cae9ebf2d986 100644
 --- a/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
 @@ -46,6 +46,8 @@ public final class PluginClassLoader extends URLClassLoader { // Spigot
@@ -26,7 +26,15 @@ index 3f00149a9635447fdd247c1d780f59e1952d165e..c67e91316f35750b18e082746206a01e
              String path = name.replace('.', '/').concat(".class");
              JarEntry entry = jar.getJarEntry(path);
  
-@@ -214,6 +216,7 @@ public final class PluginClassLoader extends URLClassLoader { // Spigot
+@@ -206,6 +208,7 @@ public final class PluginClassLoader extends URLClassLoader { // Spigot
+             classes.put(name, result);
+         }
+ 
++        if (result == null) throw new ClassNotFoundException(name); // Pufferfish
+         return result;
+     }
+ 
+@@ -214,6 +217,7 @@ public final class PluginClassLoader extends URLClassLoader { // Spigot
          try {
              super.close();
          } finally {
