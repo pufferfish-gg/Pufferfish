@@ -991,10 +991,10 @@ index a9cdf9034ad269f7a71358443acc053288cfbe6d..dbeb70913d3933164e997ce5d662b489
          }
      }
 diff --git a/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java b/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
-index bb6063ae7f4438916306ce876057f7488537b444..9a2d1285c207290946ae664915a77b8f9dc00ad7 100644
+index 74cb2741a5cd66bdac3a22de938ae82968705a56..4c3fd27bff777139e29905e8684f6e92a44decfe 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
-@@ -411,6 +411,14 @@ public class Frog extends Animal {
+@@ -413,6 +413,14 @@ public class Frog extends Animal {
      }
  
      static class FrogPathNavigation extends AmphibiousPathNavigation {
@@ -1009,7 +1009,7 @@ index bb6063ae7f4438916306ce876057f7488537b444..9a2d1285c207290946ae664915a77b8f
          FrogPathNavigation(Frog frog, Level world) {
              super(frog, world);
          }
-@@ -419,7 +427,13 @@ public class Frog extends Animal {
+@@ -421,7 +429,13 @@ public class Frog extends Animal {
          protected PathFinder createPathFinder(int range) {
              this.nodeEvaluator = new Frog.FrogNodeEvaluator(true);
              this.nodeEvaluator.setCanPassDoors(true);
