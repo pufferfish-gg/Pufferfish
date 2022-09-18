@@ -84,7 +84,7 @@ index e588ed2cb12393e25ab1c36652f7b71767fdba27..8dd277dd34ae9b285a7ce19aa39ad054
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index aa8ce79cac0a6bbe05dc3b3a0c3d9c1115d5ce3b..157887541c74182db8129dd61ce4c657262d194e 100644
+index 177865b316199f31df5ae81d012aa8d1ed7f5db3..91cbaf53c9b407061f7aff40b7712b2a1f2a0746 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -414,6 +414,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
@@ -111,7 +111,7 @@ index ac0f0a4da4282c13f6e1f37710cb615d66b8ef2c..972de29e5520892ed98b5b0e9c41a0fb
      public final String id;
  
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 3646b969fa51b9683ab4137e530c3a6f6fc6c465..83e4dccc3ed047a27769aa871dc819fef64b7c4d 100644
+index 557e90e54439ce0430075403392b5052d5181feb..37df8f7fcb61efecf3efc08f9b900668b56535ae 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
 @@ -214,10 +214,10 @@ public abstract class Mob extends LivingEntity {
@@ -127,7 +127,7 @@ index 3646b969fa51b9683ab4137e530c3a6f6fc6c465..83e4dccc3ed047a27769aa871dc819fe
              this.targetSelector.tick();
          }
      }
-@@ -854,16 +854,20 @@ public abstract class Mob extends LivingEntity {
+@@ -860,16 +860,20 @@ public abstract class Mob extends LivingEntity {
  
          if (i % 2 != 0 && this.tickCount > 1) {
              this.level.getProfiler().push("targetSelector");
@@ -201,7 +201,7 @@ index 2d87b740e84435ef9bd3eee3d3e2af9f707a0826..d38d1e3692e093d6707b6bd80cd56ec4
          this.level.getProfiler().pop();
          this.level.getProfiler().push("allayActivityUpdate");
 diff --git a/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java b/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java
-index da5e6141f548539cac720aba558e1b6f3a87e474..fdd2c63ff0017bafa544a3cff2ee6d2d62c92cb3 100644
+index e7467fec2cab37c1a9933d1096724e3732913590..1c93872f9fcc6f6a19dee8565726501d0e580d44 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java
 @@ -283,9 +283,11 @@ public class Axolotl extends Animal implements LerpingModel, Bucketable {
