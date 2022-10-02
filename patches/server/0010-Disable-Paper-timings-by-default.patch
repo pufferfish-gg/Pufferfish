@@ -5,10 +5,10 @@ Subject: [PATCH] Disable Paper timings by default
 
 
 diff --git a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
-index 5a808a09291da691cbee75a55f6aa1b70ac9f018..13e49592a70285e92bf0d14ab596f3bcdebedf4c 100644
+index 4a8286c78a9a5e305b19cc5d316bc73a78e49b4d..54bca103347e89f116fb7fbf37449a32ac094286 100644
 --- a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
-@@ -8,6 +8,7 @@ import net.kyori.adventure.text.Component;
+@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component;
  import net.kyori.adventure.text.format.NamedTextColor;
  import net.minecraft.network.protocol.Packet;
  import net.minecraft.network.protocol.game.ServerboundPlaceRecipePacket;
@@ -16,7 +16,7 @@ index 5a808a09291da691cbee75a55f6aa1b70ac9f018..13e49592a70285e92bf0d14ab596f3bc
  import org.checkerframework.checker.nullness.qual.Nullable;
  import org.spongepowered.configurate.objectmapping.ConfigSerializable;
  import org.spongepowered.configurate.objectmapping.meta.Comment;
-@@ -17,6 +18,7 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
+@@ -16,6 +17,7 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
  import java.util.List;
  import java.util.Map;
  import java.util.Objects;
@@ -24,7 +24,7 @@ index 5a808a09291da691cbee75a55f6aa1b70ac9f018..13e49592a70285e92bf0d14ab596f3bc
  
  @SuppressWarnings({"CanBeFinal", "FieldCanBeLocal", "FieldMayBeFinal", "NotNullFieldNotInitialized", "InnerClassMayBeStatic"})
  public class GlobalConfiguration extends ConfigurationPart {
-@@ -52,6 +54,7 @@ public class GlobalConfiguration extends ConfigurationPart {
+@@ -51,6 +53,7 @@ public class GlobalConfiguration extends ConfigurationPart {
  
      public class Timings extends ConfigurationPart.Post {
          public boolean enabled = true;
@@ -32,7 +32,7 @@ index 5a808a09291da691cbee75a55f6aa1b70ac9f018..13e49592a70285e92bf0d14ab596f3bc
          public boolean verbose = true;
          public String url = "https://timings.aikar.co/";
          public boolean serverNamePrivacy = false;
-@@ -65,6 +68,14 @@ public class GlobalConfiguration extends ConfigurationPart {
+@@ -64,6 +67,14 @@ public class GlobalConfiguration extends ConfigurationPart {
  
          @Override
          public void postProcess() {

@@ -6,7 +6,7 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 2374cc9bab5039d0a0dc11d4b2ec573ab75778a7..0e53e1d37d9990e63b0b37504914e9c983d9b64e 100644
+index 44e0f265432487fe5c3c00c5245041298ade16a0..767ab9b7c6cb934db02ebd8b20130bde9aebb848 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -9,8 +9,12 @@ plugins {
@@ -199,10 +199,10 @@ index 0000000000000000000000000000000000000000..e877921370f6009a4bd204d9b17d2d58
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index d2161a3c3b9a2b2d463ac778656c95167c10a49d..a05198fbc5df3af3d470f1e6569416096abc64ed 100644
+index ce81ba5345c8d2fde8a2534b9673275c7e86af8b..497e0dc337154ff4d0a7d057768ff5b5b6fda943 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1673,7 +1673,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1654,7 +1654,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
@@ -212,7 +212,7 @@ index d2161a3c3b9a2b2d463ac778656c95167c10a49d..a05198fbc5df3af3d470f1e656941609
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b777c1294370bdc68bc6265b039e2a405d89f2f5..d9224e9927678cb5240309f38ff8b14344aecb38 100644
+index 111f8276f26350a5c62a7b8577b4598978b5355d..d0e1eda747c463a4b99754a4617acd39806fdec0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -248,7 +248,7 @@ import javax.annotation.Nullable; // Paper

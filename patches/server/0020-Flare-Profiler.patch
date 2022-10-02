@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 046e93170c86bd822d0f03df91c56871b8d948b8..74c91f79576e85618fefb79be8d313ba871701c7 100644
+index 9746ce97d05cace4104e6992126fb983beadc4cf..7b74ec475b1e953080d5aa8b0a10d1680e7c46f1 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -54,6 +54,7 @@ dependencies {
@@ -732,10 +732,10 @@ index 0000000000000000000000000000000000000000..40447d00aefb5ffedb8a2ee87155a040
 +}
 diff --git a/src/main/java/gg/pufferfish/pufferfish/flare/collectors/WorldCountCollector.java b/src/main/java/gg/pufferfish/pufferfish/flare/collectors/WorldCountCollector.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..db15d3fbe2b65fc8035573f5fdbea382055db9b2
+index 0000000000000000000000000000000000000000..32ce919610a3346a3f46abbaf9f5eb65278b10fc
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/flare/collectors/WorldCountCollector.java
-@@ -0,0 +1,45 @@
+@@ -0,0 +1,44 @@
 +package gg.pufferfish.pufferfish.flare.collectors;
 +
 +import co.technove.flare.live.CollectorData;
@@ -744,7 +744,6 @@ index 0000000000000000000000000000000000000000..db15d3fbe2b65fc8035573f5fdbea382
 +import gg.pufferfish.pufferfish.flare.CustomCategories;
 +import org.bukkit.Bukkit;
 +import org.bukkit.World;
-+import org.bukkit.craftbukkit.CraftWorld;
 +
 +import java.time.Duration;
 +
@@ -769,7 +768,7 @@ index 0000000000000000000000000000000000000000..db15d3fbe2b65fc8035573f5fdbea382
 +
 +        if (!Bukkit.isStopping()) {
 +            for (World world : Bukkit.getWorlds()) {
-+                entities += ((CraftWorld) world).getHandle().entityManager.getEntityGetter().getCount();
++                world.getEntityCount();
 +                chunkCount += world.getChunkCount();
 +                tileEntityCount += world.getTileEntityCount();
 +            }
@@ -781,32 +780,6 @@ index 0000000000000000000000000000000000000000..db15d3fbe2b65fc8035573f5fdbea382
 +        this.report(TILE_ENTITY_COUNT, tileEntityCount);
 +    }
 +}
-diff --git a/src/main/java/net/minecraft/world/level/entity/LevelEntityGetter.java b/src/main/java/net/minecraft/world/level/entity/LevelEntityGetter.java
-index da1ad0b2679e392ed81b50c15f012c63cb5c939e..9c6ab057dccd6331e9c577e0c6192c0d84718906 100644
---- a/src/main/java/net/minecraft/world/level/entity/LevelEntityGetter.java
-+++ b/src/main/java/net/minecraft/world/level/entity/LevelEntityGetter.java
-@@ -6,6 +6,8 @@ import javax.annotation.Nullable;
- import net.minecraft.world.phys.AABB;
- 
- public interface LevelEntityGetter<T extends EntityAccess> {
-+    int getCount(); // Pufferfish
-+
-     @Nullable
-     T get(int id);
- 
-diff --git a/src/main/java/net/minecraft/world/level/entity/LevelEntityGetterAdapter.java b/src/main/java/net/minecraft/world/level/entity/LevelEntityGetterAdapter.java
-index 3b13f6ea36a3bfecabe09221eb5c48dddab119db..563b6c47df0c5ae9efcb91fd53a065b1da1cdb94 100644
---- a/src/main/java/net/minecraft/world/level/entity/LevelEntityGetterAdapter.java
-+++ b/src/main/java/net/minecraft/world/level/entity/LevelEntityGetterAdapter.java
-@@ -14,6 +14,8 @@ public class LevelEntityGetterAdapter<T extends EntityAccess> implements LevelEn
-         this.sectionStorage = cache;
-     }
- 
-+    @Override public int getCount() { return this.visibleEntities.count(); } // Pufferfish
-+
-     @Nullable
-     @Override
-     public T get(int id) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java b/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java
 index 909b2c98e7a9117d2f737245e4661792ffafb744..0d9e2b3728f9ab500bd5e44702718535d338e9a5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java
