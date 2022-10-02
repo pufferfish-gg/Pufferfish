@@ -5,7 +5,7 @@ Subject: [PATCH] Pufferfish Config and Command
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index dcbc5d25a050624fa2df1d7b2bc911e8c7fb3258..21d8081f9571428d2bf786f9b771950a3975f77d 100644
+index 767ab9b7c6cb934db02ebd8b20130bde9aebb848..f6ce5a851246673f17b522da33d65f04f50a0786 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -48,6 +48,13 @@ dependencies {
@@ -13,8 +13,8 @@ index dcbc5d25a050624fa2df1d7b2bc911e8c7fb3258..21d8081f9571428d2bf786f9b771950a
      runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.7.3")
  
 +    // Pufferfish start
-+    implementation("org.yaml:snakeyaml:1.30")
-+    implementation ("me.carleslc.Simple-YAML:Simple-Yaml:1.8") {
++    implementation("org.yaml:snakeyaml:1.32")
++    implementation ("me.carleslc.Simple-YAML:Simple-Yaml:1.8.2") {
 +        exclude(group="org.yaml", module="snakeyaml")
 +    }
 +    // Pufferfish end
@@ -252,7 +252,7 @@ index 0000000000000000000000000000000000000000..deb52c185705c4b4186c7bae02f2a827
 +	
 +}
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index aea18838a17fc52e1bf8cd84cd185565e6e2246d..0ea9364fdda05a9611b230ad039673ac90925db2 100644
+index 2932d2bb797a49e904cebec4285d24d69b429cd9..6ad8200d6ddfdd9f9e3e0b7e7647bf9661f4bfae 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -226,6 +226,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
