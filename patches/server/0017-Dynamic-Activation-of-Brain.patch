@@ -84,10 +84,10 @@ index e588ed2cb12393e25ab1c36652f7b71767fdba27..8dd277dd34ae9b285a7ce19aa39ad054
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 177865b316199f31df5ae81d012aa8d1ed7f5db3..91cbaf53c9b407061f7aff40b7712b2a1f2a0746 100644
+index 42f1e0c1618f2e659009e38daeb1017d5ab27bd6..e2b2ce18ce7695e5e04330b45fb76586feadceb8 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -414,6 +414,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -413,6 +413,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return this.originWorld;
      }
      // Paper end
@@ -99,7 +99,7 @@ index 177865b316199f31df5ae81d012aa8d1ed7f5db3..91cbaf53c9b407061f7aff40b7712b2a
          return this.yRot;
      }
 diff --git a/src/main/java/net/minecraft/world/entity/EntityType.java b/src/main/java/net/minecraft/world/entity/EntityType.java
-index ac0f0a4da4282c13f6e1f37710cb615d66b8ef2c..972de29e5520892ed98b5b0e9c41a0fbe753ef19 100644
+index 12cf4d3dfbd2c4f4a1815f5e26e59ae8667f7b47..c220898a5836bdd60aedb993ea063842b146946c 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityType.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityType.java
 @@ -305,6 +305,7 @@ public class EntityType<T extends Entity> implements EntityTypeTest<Entity, T> {
@@ -111,7 +111,7 @@ index ac0f0a4da4282c13f6e1f37710cb615d66b8ef2c..972de29e5520892ed98b5b0e9c41a0fb
      public final String id;
  
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 557e90e54439ce0430075403392b5052d5181feb..37df8f7fcb61efecf3efc08f9b900668b56535ae 100644
+index fffa6ba329b38433a1df51df339df652d3fda828..cac6459a2f218fa01d61b399afe548ce18a6d789 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
 @@ -214,10 +214,10 @@ public abstract class Mob extends LivingEntity {
@@ -249,7 +249,7 @@ index 3dd4e6d622a6daafa00ae971edd88a147e34beef..32cca29fd622d18030931e1f33079149
          this.level.getProfiler().pop();
          this.level.getProfiler().push("tadpoleActivityUpdate");
 diff --git a/src/main/java/net/minecraft/world/entity/animal/goat/Goat.java b/src/main/java/net/minecraft/world/entity/animal/goat/Goat.java
-index 31be36e6b7b6bd0c0d7fda4e1b03ecd38947f3a5..362f952888f63a453a4352a9f1dc7df799244a3c 100644
+index a4690391df0aa26abea1ad92e6143eb19c5d1143..3c3453638e117609190787efbf5d87fc20dcf8fd 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/goat/Goat.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/goat/Goat.java
 @@ -163,9 +163,11 @@ public class Goat extends Animal {
@@ -281,7 +281,7 @@ index 45741410a13cffe3419e34b5607b048bbcf1c3ff..5d487f1613b1fc5807283c20e5cc23a4
          this.level.getProfiler().pop();
          HoglinAi.updateActivity(this);
 diff --git a/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java b/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
-index 793576928dad6752dddd86e62d4c0800d8515fc4..9bde52b723237b1f0f945bc564009e3507993508 100644
+index abeb7285dc0d1e6687feaae8be2dbde1d61b7f11..23547da37a4178a32775285a1d697c369a7ffcd2 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
 @@ -289,9 +289,11 @@ public class Piglin extends AbstractPiglin implements CrossbowAttackMob, Invento
