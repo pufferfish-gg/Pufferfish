@@ -10,11 +10,11 @@ FPU and ALU incurs a significant performance hit. The casted/rounded
 data is already available in the blockPosition struct, so we use that
 instead of re-doing the casting.
 
-diff --git a/src/main/java/net/minecraft/server/MCUtil.java b/src/main/java/net/minecraft/server/MCUtil.java
-index 99f56658c70f99592fb40c9df0ce3e47053d1bd5..07b0b0993c01763b39d1c9a387447ec76b5de190 100644
---- a/src/main/java/net/minecraft/server/MCUtil.java
-+++ b/src/main/java/net/minecraft/server/MCUtil.java
-@@ -208,7 +208,7 @@ public final class MCUtil {
+diff --git a/src/main/java/io/papermc/paper/util/MCUtil.java b/src/main/java/io/papermc/paper/util/MCUtil.java
+index e63dc33250831428c2cef34e02238600231fb815..c8f7aa9e0794713724e1053581c220aa95f1bc90 100644
+--- a/src/main/java/io/papermc/paper/util/MCUtil.java
++++ b/src/main/java/io/papermc/paper/util/MCUtil.java
+@@ -209,7 +209,7 @@ public final class MCUtil {
      }
  
      public static long getCoordinateKey(final Entity entity) {
@@ -24,7 +24,7 @@ index 99f56658c70f99592fb40c9df0ce3e47053d1bd5..07b0b0993c01763b39d1c9a387447ec7
  
      public static long getCoordinateKey(final ChunkPos pair) {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index a1421689445b9df3f25889845c21cf37a439afe2..42f1e0c1618f2e659009e38daeb1017d5ab27bd6 100644
+index f2908cf61ff28bef44fcf46b15cf585e942fd7ce..f2514efbce51218160fb631fdd30bfbe9c216cd5 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -291,7 +291,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
