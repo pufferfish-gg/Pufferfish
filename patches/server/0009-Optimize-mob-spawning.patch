@@ -43,7 +43,7 @@ index 62d231ca05039c99c17252847cb850983864e09a..fca3cc322ab396d0865e8082bc673836
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 497e0dc337154ff4d0a7d057768ff5b5b6fda943..b9544ad11fcb9277fa7a3e0842a33da61828e12f 100644
+index 6ba71433f50e7fdfed5e9da273d7163f992b69cf..70cf57e532be110cc5801ec72031d6e5ced53574 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -298,6 +298,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -51,12 +51,12 @@ index 497e0dc337154ff4d0a7d057768ff5b5b6fda943..b9544ad11fcb9277fa7a3e0842a33da6
      public volatile boolean abnormalExit = false; // Paper
      public boolean isIteratingOverLevels = false; // Paper
 +    
-+    public gg.pufferfish.pufferfish.util.AsyncExecutor mobSpawnExecutor = new gg.pufferfish.pufferfish.util.AsyncExecutor("MobSpawning", () -> true); // Pufferfish - optimize mob spawning
++    public gg.pufferfish.pufferfish.util.AsyncExecutor mobSpawnExecutor = new gg.pufferfish.pufferfish.util.AsyncExecutor("MobSpawning"); // Pufferfish - optimize mob spawning
  
      public static <S extends MinecraftServer> S spin(Function<Thread, S> serverFactory) {
          AtomicReference<S> atomicreference = new AtomicReference();
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 6ad8200d6ddfdd9f9e3e0b7e7647bf9661f4bfae..d4efadbc87ee0b6cb8564c57fc9dcbb48367a767 100644
+index 99bbb5b2e5462114cd0802961461abd961301958..5c54a5da7fb50cd97799c5fa280a24d5c6117244 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -340,6 +340,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
@@ -68,7 +68,7 @@ index 6ad8200d6ddfdd9f9e3e0b7e7647bf9661f4bfae..d4efadbc87ee0b6cb8564c57fc9dcbb4
          }
      }
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 5461bac37b6dc0575cccd6656b48b2ef18cfaa04..4078f0bad6e0575e6534798652cecaf96335d979 100644
+index 9ad7c417616e68b1d14a702aca38b2582feb896c..1ee6b8cc232e7aba512b7a4cbdb575e35acd8eb7 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -334,7 +334,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
@@ -81,7 +81,7 @@ index 5461bac37b6dc0575cccd6656b48b2ef18cfaa04..4078f0bad6e0575e6534798652cecaf9
          this.playerEntityTrackerTrackMaps = new com.destroystokyo.paper.util.misc.PlayerAreaMap[TRACKING_RANGE_TYPES.length];
          this.entityTrackerTrackRanges = new int[TRACKING_RANGE_TYPES.length];
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 6d1f929eb717f62f0d7ebb9e9b52c3788061e240..9d4329132bb2a1b66fad1a2e8dd17cc87884cb3c 100644
+index be97d38f45046a7f6d2337d879651f04cf9ff825..c2e63457fd85f78e3656d0e88b45c04cee1f610f 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 @@ -75,6 +75,9 @@ public class ServerChunkCache extends ChunkSource {
