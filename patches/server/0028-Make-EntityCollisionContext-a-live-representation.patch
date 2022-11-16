@@ -11,7 +11,7 @@ saved for later, so this should be safe assuming plugins don't use it
 for some strange reason.
 
 diff --git a/src/main/java/net/minecraft/world/phys/shapes/EntityCollisionContext.java b/src/main/java/net/minecraft/world/phys/shapes/EntityCollisionContext.java
-index b1992ed5136cc7dcf04219868b94b3c37ae36b4b..5b5339cba819368f4d6b7eaf404fa59bca4c0518 100644
+index ebe65474a4a05ff1637d7f37ebcfe690af59def5..42142c512b12e5b269c19f1e821c50e7496a5f25 100644
 --- a/src/main/java/net/minecraft/world/phys/shapes/EntityCollisionContext.java
 +++ b/src/main/java/net/minecraft/world/phys/shapes/EntityCollisionContext.java
 @@ -19,47 +19,66 @@ public class EntityCollisionContext implements CollisionContext {
@@ -72,12 +72,12 @@ index b1992ed5136cc7dcf04219868b94b3c37ae36b4b..5b5339cba819368f4d6b7eaf404fa59b
      }
  
      @Override
-     public boolean canStandOnFluid(FluidState state, FluidState fluidState) {
--        return this.canStandOnFluid.test(fluidState) && !state.getType().isSame(fluidState.getType());
+     public boolean canStandOnFluid(FluidState stateAbove, FluidState state) {
+-        return this.canStandOnFluid.test(state) && !stateAbove.getType().isSame(state.getType());
 +        // Pufferfish start
 +        Entity entity = this.entity;
 +        if (entity instanceof LivingEntity livingEntity) {
-+            return livingEntity.canStandOnFluid(fluidState) && !state.getType().isSame(fluidState.getType());
++            return livingEntity.canStandOnFluid(state) && !stateAbove.getType().isSame(state.getType());
 +        }
 +        return false;
 +        // Pufferfish end

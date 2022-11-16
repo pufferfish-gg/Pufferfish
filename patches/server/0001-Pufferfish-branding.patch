@@ -6,10 +6,10 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 44e0f265432487fe5c3c00c5245041298ade16a0..767ab9b7c6cb934db02ebd8b20130bde9aebb848 100644
+index b0e4f11e8af4b909a56bb5576d05ef0537fb25f7..5344140dd36ee7b2ca82461b082c8e3223f8b836 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -9,8 +9,12 @@ plugins {
+@@ -7,8 +7,12 @@ plugins {
  }
  
  dependencies {
@@ -24,7 +24,7 @@ index 44e0f265432487fe5c3c00c5245041298ade16a0..767ab9b7c6cb934db02ebd8b20130bde
      // Paper start
      implementation("org.jline:jline-terminal-jansi:3.21.0")
      implementation("net.minecrell:terminalconsoleappender:1.3.0")
-@@ -64,7 +68,7 @@ tasks.jar {
+@@ -62,7 +66,7 @@ tasks.jar {
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
@@ -199,7 +199,7 @@ index 0000000000000000000000000000000000000000..e877921370f6009a4bd204d9b17d2d58
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index ce81ba5345c8d2fde8a2534b9673275c7e86af8b..497e0dc337154ff4d0a7d057768ff5b5b6fda943 100644
+index 6dc6c3bccb4ba34268a87b0754c87eb1e0df4135..6ba71433f50e7fdfed5e9da273d7163f992b69cf 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1654,7 +1654,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -212,7 +212,7 @@ index ce81ba5345c8d2fde8a2534b9673275c7e86af8b..497e0dc337154ff4d0a7d057768ff5b5
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 111f8276f26350a5c62a7b8577b4598978b5355d..d0e1eda747c463a4b99754a4617acd39806fdec0 100644
+index 4212568bf8de6988c71f43d3e2152fa0fe51d0d7..6ec5572d4bd6d4279d22ecbd64583e9b4dbb2aad 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -248,7 +248,7 @@ import javax.annotation.Nullable; // Paper
