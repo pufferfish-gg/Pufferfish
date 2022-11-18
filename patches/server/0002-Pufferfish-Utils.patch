@@ -5,7 +5,7 @@ Subject: [PATCH] Pufferfish Utils
 
 
 diff --git a/src/main/java/com/destroystokyo/paper/util/misc/AreaMap.java b/src/main/java/com/destroystokyo/paper/util/misc/AreaMap.java
-index c89f6986eda5a132a948732ea1b6923370685317..a69c13e20040c1561d9c2d4d89ec7d4e635134fc 100644
+index 41b9405d6759d865e0d14dd4f95163e9690e967d..091b1ae822e1c0517e59572e7a9bda11e998c0ee 100644
 --- a/src/main/java/com/destroystokyo/paper/util/misc/AreaMap.java
 +++ b/src/main/java/com/destroystokyo/paper/util/misc/AreaMap.java
 @@ -26,7 +26,7 @@ public abstract class AreaMap<E> {
@@ -64,29 +64,30 @@ index 0000000000000000000000000000000000000000..53f2df00c6809618a9ee3d2ea72e85e8
 +}
 diff --git a/src/main/java/gg/pufferfish/pufferfish/util/AsyncExecutor.java b/src/main/java/gg/pufferfish/pufferfish/util/AsyncExecutor.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..9d6dc2c80945bec9bea74714c657c7a2e0bdde9e
+index 0000000000000000000000000000000000000000..8e5323d5d9af25c8a85c4b34a6be76cfc54384cf
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/util/AsyncExecutor.java
-@@ -0,0 +1,51 @@
+@@ -0,0 +1,73 @@
 +package gg.pufferfish.pufferfish.util;
 +
 +import com.google.common.collect.Queues;
 +import gg.pufferfish.pufferfish.PufferfishLogger;
 +import java.util.Queue;
-+import java.util.concurrent.locks.LockSupport;
-+import java.util.function.BooleanSupplier;
++import java.util.concurrent.locks.Condition;
++import java.util.concurrent.locks.Lock;
++import java.util.concurrent.locks.ReentrantLock;
 +import java.util.logging.Level;
 +
 +public class AsyncExecutor implements Runnable {
 +	
-+	private Queue<Runnable> jobs = Queues.newConcurrentLinkedQueue();
++	private final Queue<Runnable> jobs = Queues.newArrayDeque();
++	private final Lock mutex = new ReentrantLock();
++	private final Condition cond = mutex.newCondition();
 +	private final Thread thread;
-+	private final BooleanSupplier shouldRun;
 +	private volatile boolean killswitch = false;
 +	
-+	public AsyncExecutor(String threadName, BooleanSupplier shouldRun) {
++	public AsyncExecutor(String threadName) {
 +		this.thread = new Thread(this, threadName);
-+		this.shouldRun = shouldRun;
 +	}
 +	
 +	public void start() {
@@ -95,26 +96,47 @@ index 0000000000000000000000000000000000000000..9d6dc2c80945bec9bea74714c657c7a2
 +	
 +	public void kill() {
 +		killswitch = true;
++		cond.signalAll();
 +	}
 +	
 +	public void submit(Runnable runnable) {
-+		jobs.offer(runnable);
++		mutex.lock();
++		try {
++			jobs.offer(runnable);
++			cond.signalAll();
++		} finally {
++			mutex.unlock();
++		}
 +	}
 +	
 +	@Override
 +	public void run() {
 +		while (!killswitch) {
-+			if (shouldRun.getAsBoolean()) {
-+				try {
-+					Runnable runnable;
-+					while ((runnable = jobs.poll()) != null) {
-+						runnable.run();
-+					}
-+				} catch (Exception e) {
-+					PufferfishLogger.LOGGER.log(Level.SEVERE, e, () -> "Failed to execute async job for thread " + thread.getName());
++			try {
++				Runnable runnable = takeRunnable();
++				if (runnable != null) {
++					runnable.run();
 +				}
++			} catch (InterruptedException e) {
++				Thread.currentThread().interrupt();
++			} catch (Exception e) {
++				PufferfishLogger.LOGGER.log(Level.SEVERE, e, () -> "Failed to execute async job for thread " + thread.getName());
 +			}
-+			LockSupport.parkNanos("executing tasks", 1000L);
++		}
++	}
++	
++	private Runnable takeRunnable() throws InterruptedException {
++		mutex.lock();
++		try {
++			while (jobs.isEmpty() && !killswitch) {
++				cond.await();
++			}
++			
++			if (jobs.isEmpty()) return null; // We've set killswitch
++			
++			return jobs.remove();
++		} finally {
++			mutex.unlock();
 +		}
 +	}
 +	
