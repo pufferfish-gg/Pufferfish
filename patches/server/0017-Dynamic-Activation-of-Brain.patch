@@ -83,15 +83,28 @@ index e588ed2cb12393e25ab1c36652f7b71767fdba27..8dd277dd34ae9b285a7ce19aa39ad054
  
 +}
 \ No newline at end of file
+diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
+index 50780deeaba42bacca499845d85a2c6f3916249d..7cad0f41df1d0b1ba2a696fc93e43afb8ff0c5db 100644
+--- a/src/main/java/net/minecraft/server/level/ServerLevel.java
++++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
+@@ -708,6 +708,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+             org.spigotmc.ActivationRange.activateEntities(this); // Spigot
+             timings.entityTick.startTiming(); // Spigot
+             this.entityTickList.forEach((entity) -> {
++                entity.activatedPriorityReset = false; // Pufferfish - DAB
+                 if (!entity.isRemoved()) {
+                     if (false && this.shouldDiscardEntity(entity)) { // CraftBukkit - We prevent spawning in general, so this butchering is not needed
+                         entity.discard();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 42f1e0c1618f2e659009e38daeb1017d5ab27bd6..e2b2ce18ce7695e5e04330b45fb76586feadceb8 100644
+index a70c514050ec88e4c68c53d472b301c2e59faaa6..d8795d564cc6cfdd0cd127793fbcd959967c9b5b 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -413,6 +413,10 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -413,6 +413,11 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return this.originWorld;
      }
      // Paper end
 +    // Pufferfish start
++    public boolean activatedPriorityReset = false; // DAB
 +    public int activatedPriority = gg.pufferfish.pufferfish.PufferfishConfig.maximumActivationPrio; // golf score
 +    // Pufferfish end
 +    
@@ -99,7 +112,7 @@ index 42f1e0c1618f2e659009e38daeb1017d5ab27bd6..e2b2ce18ce7695e5e04330b45fb76586
          return this.yRot;
      }
 diff --git a/src/main/java/net/minecraft/world/entity/EntityType.java b/src/main/java/net/minecraft/world/entity/EntityType.java
-index 12cf4d3dfbd2c4f4a1815f5e26e59ae8667f7b47..c220898a5836bdd60aedb993ea063842b146946c 100644
+index 72516335570d7137a62ec8667a6e8f06f024692f..885b0aaf149638da917b0fcc25d6262aed1e00be 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityType.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityType.java
 @@ -305,6 +305,7 @@ public class EntityType<T extends Entity> implements EntityTypeTest<Entity, T> {
@@ -111,7 +124,7 @@ index 12cf4d3dfbd2c4f4a1815f5e26e59ae8667f7b47..c220898a5836bdd60aedb993ea063842
      public final String id;
  
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index fffa6ba329b38433a1df51df339df652d3fda828..cac6459a2f218fa01d61b399afe548ce18a6d789 100644
+index 12fcc84e9de914657409142dc70ced7015cf5533..e0fb6bed2cdd2b324ceada9ffafb6d870722d039 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
 @@ -214,10 +214,10 @@ public abstract class Mob extends LivingEntity {
@@ -185,7 +198,7 @@ index a910189177da0c1134c954b3d81b9e9bc4bc1420..0cc0d719e95e108263683b7a40f4ce3a
      public boolean hasTasks() {
          for (WrappedGoal task : this.availableGoals) {
 diff --git a/src/main/java/net/minecraft/world/entity/animal/allay/Allay.java b/src/main/java/net/minecraft/world/entity/animal/allay/Allay.java
-index 2d87b740e84435ef9bd3eee3d3e2af9f707a0826..d38d1e3692e093d6707b6bd80cd56ec4afcf093b 100644
+index 1dcd0c494681b7665b6b86dbe20375afd8d2fad8..f889b352d5618c1955e21273da79604a33e30c06 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/allay/Allay.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/allay/Allay.java
 @@ -228,9 +228,11 @@ public class Allay extends PathfinderMob implements InventoryCarrier {
@@ -347,7 +360,7 @@ index 10b45ec24a5a0867106d1694312385ad1e267f43..93077e8c6b5a35adc6febb749d1d08be
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index 40b382c2e0e33fe5c24a51b211cd2f9557a60c5e..065642c51107ad1d9a2ca4cb0f38aef1fa9e41aa 100644
+index 40b382c2e0e33fe5c24a51b211cd2f9557a60c5e..52e06b77e3725136580ff8d2d50315d48bcdb4d9 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -38,6 +38,10 @@ import co.aikar.timings.MinecraftTimings;
@@ -361,19 +374,23 @@ index 40b382c2e0e33fe5c24a51b211cd2f9557a60c5e..065642c51107ad1d9a2ca4cb0f38aef1
  
  public class ActivationRange
  {
-@@ -216,6 +220,21 @@ public class ActivationRange
+@@ -216,6 +220,25 @@ public class ActivationRange
              for (int i = 0; i < entities.size(); i++) {
                  Entity entity = entities.get(i);
                  ActivationRange.activateEntity(entity);
 +
 +                // Pufferfish start
 +                if (gg.pufferfish.pufferfish.PufferfishConfig.dearEnabled && entity.getType().dabEnabled) {
++                    if (!entity.activatedPriorityReset) {
++                        entity.activatedPriorityReset = true;
++                        entity.activatedPriority = gg.pufferfish.pufferfish.PufferfishConfig.maximumActivationPrio;
++                    }
 +                    Vec3 playerVec = player.position();
 +                    Vec3 entityVec = entity.position();
 +                    double diffX = playerVec.x - entityVec.x, diffY = playerVec.y - entityVec.y, diffZ = playerVec.z - entityVec.z;
 +                    int squaredDistance = (int) (diffX * diffX + diffY * diffY + diffZ * diffZ);
 +                    entity.activatedPriority = squaredDistance > gg.pufferfish.pufferfish.PufferfishConfig.startDistanceSquared ?
-+                      Math.max(1, Math.min(squaredDistance >> gg.pufferfish.pufferfish.PufferfishConfig.activationDistanceMod, gg.pufferfish.pufferfish.PufferfishConfig.maximumActivationPrio)) :
++                      Math.max(1, Math.min(squaredDistance >> gg.pufferfish.pufferfish.PufferfishConfig.activationDistanceMod, entity.activatedPriority)) :
 +                      1;
 +                } else {
 +                    entity.activatedPriority = 1;
@@ -383,7 +400,7 @@ index 40b382c2e0e33fe5c24a51b211cd2f9557a60c5e..065642c51107ad1d9a2ca4cb0f38aef1
              }
              // Paper end
          }
-@@ -232,12 +251,12 @@ public class ActivationRange
+@@ -232,12 +255,12 @@ public class ActivationRange
          if ( MinecraftServer.currentTick > entity.activatedTick )
          {
              if ( entity.defaultActivationState )

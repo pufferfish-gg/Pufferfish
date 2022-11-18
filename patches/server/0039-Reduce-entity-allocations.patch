@@ -5,19 +5,19 @@ Subject: [PATCH] Reduce entity allocations
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index bd393455c56aff2845d6a283d8dddd2c1c4939cd..91ca4e75cdaaba50865920c8bde794b1a72aea47 100644
+index 4129c4786357dd5b0491669ead42d312b3698fc6..a8bbb822e4e912ba5cf43938718adfed5da4c089 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -415,6 +415,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
-     // Paper end
+@@ -416,6 +416,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      // Pufferfish start
+     public boolean activatedPriorityReset = false; // DAB
      public int activatedPriority = gg.pufferfish.pufferfish.PufferfishConfig.maximumActivationPrio; // golf score
 +    public final BlockPos.MutableBlockPos cachedBlockPos = new BlockPos.MutableBlockPos(); // used where needed
      // Pufferfish end
      
      public float getBukkitYaw() {
 diff --git a/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java b/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
-index c770ee21b7b699522941f6a1584d532001c04082..9bce290eb0c2cfef4896a3f2076c80bf3d76bd56 100644
+index 692524a69d43dcf52ae1b0f7f593fc53f3878137..59ca3a0a70c68263495ae9972215b76554d3fb83 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
 @@ -22,9 +22,11 @@ public class AttributeMap {
