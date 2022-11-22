@@ -24,7 +24,7 @@ index 408430ebbba5a2cec5269817e66bce9c49c39948..9d4fc7b32e4b3f232748b7f6808c33f9
      archiveClassifier.set("dev")
  
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index deb52c185705c4b4186c7bae02f2a827620c20ca..1779b2c9463a8da5d317922a9909b4d2caa39536 100644
+index deb52c185705c4b4186c7bae02f2a827620c20ca..1daba6d0d10f1bb0695b19b4e695b7cd8b7490bc 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -1,5 +1,6 @@
@@ -42,13 +42,13 @@ index deb52c185705c4b4186c7bae02f2a827620c20ca..1779b2c9463a8da5d317922a9909b4d2
 +		// Attempt to detect vectorization
 +		try {
 +			SIMDDetection.isEnabled = SIMDDetection.canEnable(PufferfishLogger.LOGGER);
-+			SIMDDetection.versionLimited = SIMDDetection.getJavaVersion() != 17 && SIMDDetection.getJavaVersion() != 18;
++			SIMDDetection.versionLimited = SIMDDetection.getJavaVersion() < 17;
 +		} catch (NoClassDefFoundError | Exception ignored) {}
 +		
 +		if (SIMDDetection.isEnabled) {
 +			PufferfishLogger.LOGGER.info("SIMD operations detected as functional. Will replace some operations with faster versions.");
 +		} else if (SIMDDetection.versionLimited) {
-+			PufferfishLogger.LOGGER.warning("Will not enable SIMD! These optimizations are only safely supported on Java 17 and Java 18.");
++			PufferfishLogger.LOGGER.warning("Will not enable SIMD! These optimizations are only safely supported on Java 17 and higher versions.");
 +		} else {
 +			PufferfishLogger.LOGGER.warning("SIMD operations are available for your server, but are not configured!");
 +			PufferfishLogger.LOGGER.warning("To enable additional optimizations, add \"--add-modules=jdk.incubator.vector\" to your startup flags, BEFORE the \"-jar\".");
