@@ -84,10 +84,10 @@ index e588ed2cb12393e25ab1c36652f7b71767fdba27..8dd277dd34ae9b285a7ce19aa39ad054
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 50780deeaba42bacca499845d85a2c6f3916249d..7cad0f41df1d0b1ba2a696fc93e43afb8ff0c5db 100644
+index a0755aff8d5d8c5d8ec52be7d96b6546baa677b9..b868b3e7bee62009c55699255bc00e98897c933b 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -708,6 +708,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -709,6 +709,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
              org.spigotmc.ActivationRange.activateEntities(this); // Spigot
              timings.entityTick.startTiming(); // Spigot
              this.entityTickList.forEach((entity) -> {
@@ -96,7 +96,7 @@ index 50780deeaba42bacca499845d85a2c6f3916249d..7cad0f41df1d0b1ba2a696fc93e43afb
                      if (false && this.shouldDiscardEntity(entity)) { // CraftBukkit - We prevent spawning in general, so this butchering is not needed
                          entity.discard();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index a70c514050ec88e4c68c53d472b301c2e59faaa6..d8795d564cc6cfdd0cd127793fbcd959967c9b5b 100644
+index b90c20400186dfa64ff74a8fd7084c347e747a6b..156a073079f43b38342f149366128d8b5d121dc5 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -413,6 +413,11 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
@@ -124,7 +124,7 @@ index 72516335570d7137a62ec8667a6e8f06f024692f..885b0aaf149638da917b0fcc25d6262a
      public final String id;
  
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 12fcc84e9de914657409142dc70ced7015cf5533..e0fb6bed2cdd2b324ceada9ffafb6d870722d039 100644
+index cf40ebd06c52a7a00e6f704a29ae9d2b5186d35a..95fd4c70bc5a3b6bc86b6d0d58c651958ae72919 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
 @@ -214,10 +214,10 @@ public abstract class Mob extends LivingEntity {
@@ -179,7 +179,7 @@ index 42d466f7f162943886078eba3db18f2dfc2d7bee..6c0dda1ce018ec6bb2ebb97147045fff
          }
  
 diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java b/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
-index a910189177da0c1134c954b3d81b9e9bc4bc1420..0cc0d719e95e108263683b7a40f4ce3a8ca9465b 100644
+index 1805aacd982dae8d971cfad0ead23c161badb095..bc3defa2c2ca0971ce3d9642a38380973a82de46 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
 @@ -50,9 +50,12 @@ public class GoalSelector {
@@ -328,7 +328,7 @@ index 27bd70dc30c8472e5a80f3273f9233a0392f831d..b3158b1a7772f1254dd081ff6d3278a9
          this.level.getProfiler().pop();
          super.customServerAiStep();
 diff --git a/src/main/java/net/minecraft/world/entity/npc/Villager.java b/src/main/java/net/minecraft/world/entity/npc/Villager.java
-index 10b45ec24a5a0867106d1694312385ad1e267f43..93077e8c6b5a35adc6febb749d1d08be172402f1 100644
+index 49f82c954155115b2caa87d7624521a9f7982be2..fa7cede4a0b59efde4949dba4a010aed5cd0a960 100644
 --- a/src/main/java/net/minecraft/world/entity/npc/Villager.java
 +++ b/src/main/java/net/minecraft/world/entity/npc/Villager.java
 @@ -140,6 +140,8 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
@@ -360,7 +360,7 @@ index 10b45ec24a5a0867106d1694312385ad1e267f43..93077e8c6b5a35adc6febb749d1d08be
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index 40b382c2e0e33fe5c24a51b211cd2f9557a60c5e..52e06b77e3725136580ff8d2d50315d48bcdb4d9 100644
+index 1b42c98956342832c37f0aa266f85271daa4ba5b..55a4d21a062ceb59e5eeba6361c4d28de19edbdf 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -38,6 +38,10 @@ import co.aikar.timings.MinecraftTimings;
