@@ -5,10 +5,10 @@ Subject: [PATCH] Ensure level height is inlined
 
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 577af65b0a60753b427a8bc587f49ad69a1b8fe3..73db308b36808cfa4df8744332502e73fc45a02f 100644
+index e737f67c7482f5245fe34413ac2583739c5b744c..e78a322ee9d1d57c1db57a1899d39a266abddec5 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -273,6 +273,15 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -272,6 +272,15 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
  
      protected final io.papermc.paper.util.math.ThreadUnsafeRandom randomTickRandom = new io.papermc.paper.util.math.ThreadUnsafeRandom(java.util.concurrent.ThreadLocalRandom.current().nextLong()); // Pufferfish - move thread unsafe random initialization
  
@@ -24,7 +24,7 @@ index 577af65b0a60753b427a8bc587f49ad69a1b8fe3..73db308b36808cfa4df8744332502e73
      protected Level(WritableLevelData worlddatamutable, ResourceKey<Level> resourcekey, Holder<DimensionType> holder, Supplier<ProfilerFiller> supplier, boolean flag, boolean flag1, long i, int j, org.bukkit.generator.ChunkGenerator gen, org.bukkit.generator.BiomeProvider biomeProvider, org.bukkit.World.Environment env, java.util.function.Function<org.spigotmc.SpigotWorldConfig, io.papermc.paper.configuration.WorldConfiguration> paperWorldConfigCreator, java.util.concurrent.Executor executor) { // Paper - Async-Anti-Xray - Pass executor
          this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((net.minecraft.world.level.storage.PrimaryLevelData) worlddatamutable).getLevelName()); // Spigot
          this.paperConfig = paperWorldConfigCreator.apply(this.spigotConfig); // Paper
-@@ -295,6 +304,13 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -294,6 +303,13 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
          });
          final DimensionType dimensionmanager = (DimensionType) holder.value();
  

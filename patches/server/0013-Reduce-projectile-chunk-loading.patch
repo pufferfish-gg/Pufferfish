@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 94743568aff18e58cca69c8256950fe77d1d109c..8e4c8227c4a3fde3b29daa6420a67374786ea2e4 100644
+index fca3cc322ab396d0865e8082bc673836d5fbb3c5..e588ed2cb12393e25ab1c36652f7b71767fdba27 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -196,4 +196,15 @@ public class PufferfishConfig {
@@ -40,10 +40,10 @@ index 94743568aff18e58cca69c8256950fe77d1d109c..8e4c8227c4a3fde3b29daa6420a67374
  }
 +
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-index ccaa97956e40c6a79371d813719f65687991ec5b..0c7d31c7ffd603e54fb19010331ad220c7b15627 100644
+index 66476b33cede1e44db5ec166a0cea81f82ffe47a..5ccd7dc0a093277d3ea09c0fe8be03c0073ee1a8 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-@@ -42,6 +42,36 @@ public abstract class Projectile extends Entity {
+@@ -43,6 +43,36 @@ public abstract class Projectile extends Entity {
          super(type, world);
      }
  

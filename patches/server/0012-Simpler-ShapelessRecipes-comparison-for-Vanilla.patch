@@ -24,24 +24,24 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/world/item/crafting/ShapelessRecipe.java b/src/main/java/net/minecraft/world/item/crafting/ShapelessRecipe.java
-index ffe5476d8ed15ee4384b679c341688787205ce59..9051559e78851257a56a998b4b882ebbcc394639 100644
+index e7c06d98532160499f2610f69de27e30a326b16f..830622bd92431df5bc4a57fe6785689f8585e14b 100644
 --- a/src/main/java/net/minecraft/world/item/crafting/ShapelessRecipe.java
 +++ b/src/main/java/net/minecraft/world/item/crafting/ShapelessRecipe.java
-@@ -25,8 +25,13 @@ public class ShapelessRecipe implements CraftingRecipe {
-     final String group;
+@@ -26,8 +26,13 @@ public class ShapelessRecipe implements CraftingRecipe {
+     final CraftingBookCategory category;
      final ItemStack result;
      final NonNullList<Ingredient> ingredients;
 +    private final boolean isBukkit; // Pufferfish
  
 +    // Pufferfish start
-     public ShapelessRecipe(ResourceLocation id, String group, ItemStack output, NonNullList<Ingredient> input) {
-+        this(id, group, output, input, false);
+     public ShapelessRecipe(ResourceLocation id, String group, CraftingBookCategory category, ItemStack output, NonNullList<Ingredient> input) {
++        this(id, group, category, output, input, false);
 +    }
-+    public ShapelessRecipe(ResourceLocation id, String group, ItemStack output, NonNullList<Ingredient> input, boolean isBukkit) { this.isBukkit = isBukkit; // Pufferfish end
++    public ShapelessRecipe(ResourceLocation id, String group, CraftingBookCategory category, ItemStack output, NonNullList<Ingredient> input, boolean isBukkit) { this.isBukkit = isBukkit; // Pufferfish end
          this.id = id;
          this.group = group;
-         this.result = output;
-@@ -73,6 +78,28 @@ public class ShapelessRecipe implements CraftingRecipe {
+         this.category = category;
+@@ -81,6 +86,28 @@ public class ShapelessRecipe implements CraftingRecipe {
      }
  
      public boolean matches(CraftingContainer inventory, Level world) {
@@ -71,14 +71,14 @@ index ffe5476d8ed15ee4384b679c341688787205ce59..9051559e78851257a56a998b4b882ebb
          int i = 0;
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
-index 0b3b46348ac9195bff1492ffc11fcbff7d3f5c6f..4010052c53f3a2831b4d5aa1c041d85897856acb 100644
+index f7ea77dd82d978ad307f99c743efacfb34478b3d..009ab06182359862b8f543030ec4fe4e2572c93c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
-@@ -43,6 +43,6 @@ public class CraftShapelessRecipe extends ShapelessRecipe implements CraftRecipe
+@@ -44,6 +44,6 @@ public class CraftShapelessRecipe extends ShapelessRecipe implements CraftRecipe
              data.set(i, toNMS(ingred.get(i), true));
          }
  
--        MinecraftServer.getServer().getRecipeManager().addRecipe(new net.minecraft.world.item.crafting.ShapelessRecipe(CraftNamespacedKey.toMinecraft(this.getKey()), this.getGroup(), CraftItemStack.asNMSCopy(this.getResult()), data));
-+        MinecraftServer.getServer().getRecipeManager().addRecipe(new net.minecraft.world.item.crafting.ShapelessRecipe(CraftNamespacedKey.toMinecraft(this.getKey()), this.getGroup(), CraftItemStack.asNMSCopy(this.getResult()), data, true));
+-        MinecraftServer.getServer().getRecipeManager().addRecipe(new net.minecraft.world.item.crafting.ShapelessRecipe(CraftNamespacedKey.toMinecraft(this.getKey()), this.getGroup(), CraftRecipe.getCategory(this.getCategory()), CraftItemStack.asNMSCopy(this.getResult()), data));
++        MinecraftServer.getServer().getRecipeManager().addRecipe(new net.minecraft.world.item.crafting.ShapelessRecipe(CraftNamespacedKey.toMinecraft(this.getKey()), this.getGroup(), CraftRecipe.getCategory(this.getCategory()), CraftItemStack.asNMSCopy(this.getResult()), data, true));
      }
  }

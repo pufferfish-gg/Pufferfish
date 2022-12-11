@@ -5,7 +5,7 @@ Subject: [PATCH] Add option to disable out-of-order chat
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index a125abc75ed2bbd905c8fdec442416a45264f531..34eb43ca2bf446504c372f98dfbe6dbfd0a81369 100644
+index a3840c3a99e50af16d0f120ffb82f57f8d54a38a..9cf9644bcd3ddbcf67e3c6b14a6d9eae426446ce 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -305,8 +305,10 @@ public class PufferfishConfig {
@@ -21,10 +21,10 @@ index a125abc75ed2bbd905c8fdec442416a45264f531..34eb43ca2bf446504c372f98dfbe6dbf
      }
  
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index c6809da13a7c372c90ece0bd369160e904bc639f..59608a53bbf0eccf118b4d65557444f6532fedb4 100644
+index 88e9db9b25ff67d1bf24fb4df1b506e0c22ea85b..b5408858f8049a9188521b92ddb19280178884f8 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2365,6 +2365,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2355,6 +2355,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
      }
  
      private boolean updateChatOrder(Instant timestamp) {

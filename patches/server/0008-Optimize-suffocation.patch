@@ -35,20 +35,19 @@ index f5b88d529ce00fa1692f0ff9507b90b7b6e54cb1..62d231ca05039c99c17252847cb85098
 +	
  }
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 11d7c42d65b91bf57b7bba7812aa17e60e018c67..2e5beea1da849decfd4268c1a7e0fc56f5cfdb73 100644
+index 9e075de3542bda8ae086c9ca68bcd00b16d565d0..7fff06eeac35b666936b1c0903234bc823d380c2 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -399,8 +399,7 @@ public abstract class LivingEntity extends Entity {
- 
-         if (this.isAlive()) {
+@@ -402,7 +402,7 @@ public abstract class LivingEntity extends Entity {
              boolean flag = this instanceof net.minecraft.world.entity.player.Player;
--
--            if (this.isInWall()) {
-+            if ((!gg.pufferfish.pufferfish.PufferfishConfig.enableSuffocationOptimization || (tickCount % 10 == 0 && couldPossiblyBeHurt(1.0F))) && this.isInWall()) { // Pufferfish - optimize suffocation
-                 this.hurt(DamageSource.IN_WALL, 1.0F);
-             } else if (flag && !this.level.getWorldBorder().isWithinBounds(this.getBoundingBox())) {
-                 double d0 = this.level.getWorldBorder().getDistanceToBorder(this) + this.level.getWorldBorder().getDamageSafeZone();
-@@ -1328,6 +1327,15 @@ public abstract class LivingEntity extends Entity {
+ 
+             if (!this.level.isClientSide) {
+-                if (this.isInWall()) {
++                if ((!gg.pufferfish.pufferfish.PufferfishConfig.enableSuffocationOptimization || (tickCount % 10 == 0 && couldPossiblyBeHurt(1.0F))) && this.isInWall()) { // Pufferfish - optimize suffocation
+                     this.hurt(DamageSource.IN_WALL, 1.0F);
+                 } else if (flag && !this.level.getWorldBorder().isWithinBounds(this.getBoundingBox())) {
+                     double d0 = this.level.getWorldBorder().getDistanceToBorder(this) + this.level.getWorldBorder().getDamageSafeZone();
+@@ -1327,6 +1327,15 @@ public abstract class LivingEntity extends Entity {
          return this.getHealth() <= 0.0F;
      }
  
