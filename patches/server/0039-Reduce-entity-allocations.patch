@@ -5,7 +5,7 @@ Subject: [PATCH] Reduce entity allocations
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 4129c4786357dd5b0491669ead42d312b3698fc6..a8bbb822e4e912ba5cf43938718adfed5da4c089 100644
+index 16e827ebb169d7a93ce50de6407c9b42fbde3eaa..e6f22c61027ede5cc1fe43d6dc75547ef298d41e 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -416,6 +416,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
@@ -17,10 +17,10 @@ index 4129c4786357dd5b0491669ead42d312b3698fc6..a8bbb822e4e912ba5cf43938718adfed
      
      public float getBukkitYaw() {
 diff --git a/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java b/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
-index 692524a69d43dcf52ae1b0f7f593fc53f3878137..59ca3a0a70c68263495ae9972215b76554d3fb83 100644
+index dd1102d5291ef6f18e82400a6d8a0a376cc071e9..e283eb57c25f7de222f9d09dca851169f5f6e488 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
-@@ -22,9 +22,11 @@ public class AttributeMap {
+@@ -23,9 +23,11 @@ public class AttributeMap {
      private final Map<Attribute, AttributeInstance> attributes = Maps.newHashMap();
      private final Set<AttributeInstance> dirtyAttributes = Sets.newHashSet();
      private final AttributeSupplier supplier;
@@ -32,7 +32,7 @@ index 692524a69d43dcf52ae1b0f7f593fc53f3878137..59ca3a0a70c68263495ae9972215b765
      }
  
      private void onAttributeModified(AttributeInstance instance) {
-@@ -44,11 +46,10 @@ public class AttributeMap {
+@@ -45,11 +47,10 @@ public class AttributeMap {
          }).collect(Collectors.toList());
      }
  
@@ -45,4 +45,4 @@ index 692524a69d43dcf52ae1b0f7f593fc53f3878137..59ca3a0a70c68263495ae9972215b765
 +        return this.attributes.computeIfAbsent(attribute, this.createInstance); // Pufferfish - cache lambda, as for some reason java allocates it anyways
      }
  
-     public boolean hasAttribute(Attribute attribute) {
+     @Nullable

@@ -8,7 +8,7 @@ require it to be initialized earlier. By moving it to the superclass, we
 initialize it earlier, ensuring that it is available sooner.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 79aa3374fd47cd57d2e0810bb5afebbdb38a1892..7442d76f2d4a07df6deb6550fd55fa2bf821b978 100644
+index f3a19d00f78e19aa98c57461efb90d79f656a992..927be50ec82bc4a6a3c8983e5369502221f51a8f 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -795,7 +795,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -21,10 +21,10 @@ index 79aa3374fd47cd57d2e0810bb5afebbdb38a1892..7442d76f2d4a07df6deb6550fd55fa2b
  
      public void tickChunk(LevelChunk chunk, int randomTickSpeed) {
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 4ab2ade4ad943053eab64240743e5ea6ec34dc9b..caf93a1c7a9137afe3187c7ddb6b572d29d9dc25 100644
+index 6254f5b78dbb9f66833043d81aa83f964308627d..71873149f040e1ce15ea7c278a846fe12797bc82 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -271,6 +271,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -270,6 +270,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
  
      public abstract ResourceKey<LevelStem> getTypeKey();
  

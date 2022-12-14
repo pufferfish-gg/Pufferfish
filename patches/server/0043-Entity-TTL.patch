@@ -5,20 +5,20 @@ Subject: [PATCH] Entity TTL
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 56a5a31b41d00ba73259a7eda5c57d08570d3e6e..a125abc75ed2bbd905c8fdec442416a45264f531 100644
+index d6df6d10b160421591a4a7e5229a5e17cae7f1c9..3b8023572bd3acb895fc0ecc2d92c5525cdf7fd9 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -4,7 +4,10 @@ import gg.pufferfish.pufferfish.simd.SIMDDetection;
- import java.io.File;
+@@ -5,7 +5,10 @@ import java.io.File;
  import java.io.IOException;
  import java.util.Collections;
+ import net.minecraft.core.registries.BuiltInRegistries;
 +import java.util.Locale;
 +import java.util.Map;
  import net.minecraft.server.MinecraftServer;
 +import net.minecraft.tags.TagKey;
  import org.apache.logging.log4j.Level;
  import org.bukkit.configuration.ConfigurationSection;
- import net.minecraft.core.Registry;
+ import net.minecraft.world.entity.EntityType;
 @@ -251,6 +254,23 @@ public class PufferfishConfig {
  
          setComment("dab", "Optimizes entity brains when", "they're far away from the player");
@@ -35,7 +35,7 @@ index 56a5a31b41d00ba73259a7eda5c57d08570d3e6e..a125abc75ed2bbd905c8fdec442416a4
 +				"that number of ticks, then it will be removed. Setting a value to",
 +				"-1 disables this feature.");
 +		
-+		for (EntityType<?> entityType : Registry.ENTITY_TYPE) {
++		for (EntityType<?> entityType : BuiltInRegistries.ENTITY_TYPE) {
 +			String type = EntityType.getKey(entityType).getPath().toUpperCase(Locale.ROOT);
 +			entityType.ttl = config.getInt("entity_timeouts." + type, -1);
 +		}
@@ -44,7 +44,7 @@ index 56a5a31b41d00ba73259a7eda5c57d08570d3e6e..a125abc75ed2bbd905c8fdec442416a4
      public static boolean throttleInactiveGoalSelectorTick;
  	private static void inactiveGoalSelectorThrottle() {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index b5679e41efc401c2e785cc21f2e423ed792c8e00..249305f0fc4f525fe2d109ecc96900ce3680b1b1 100644
+index 4ed95fcb97845549a063a4ac77204119aa0ec244..caa4d38d620717e78df9ad29fe9752213f1cda1b 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -815,6 +815,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
@@ -61,14 +61,14 @@ index b5679e41efc401c2e785cc21f2e423ed792c8e00..249305f0fc4f525fe2d109ecc96900ce
          if (firstTick && this instanceof net.minecraft.world.entity.NeutralMob neutralMob) neutralMob.tickInitialPersistentAnger(level); // Paper - Update last hurt when ticking
          this.feetBlockState = null;
 diff --git a/src/main/java/net/minecraft/world/entity/EntityType.java b/src/main/java/net/minecraft/world/entity/EntityType.java
-index 885b0aaf149638da917b0fcc25d6262aed1e00be..b44322c337bcded94c60e1761a3891013ae1dd1a 100644
+index 8ca7181dcf742cf33d4a44387c168eafeadd8da4..4f3708f5f5dcb6af8225bda1cc9204a6d974665f 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityType.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityType.java
-@@ -306,6 +306,7 @@ public class EntityType<T extends Entity> implements EntityTypeTest<Entity, T> {
-     }
- 
+@@ -294,6 +294,7 @@ public class EntityType<T extends Entity> implements FeatureElement, EntityTypeT
+     private final int clientTrackingRange;
+     private final int updateInterval;
      public boolean dabEnabled = false; // Pufferfish
 +    public int ttl = -1; // Pufferfish
-     // Paper start - add id
-     public final String id;
- 
+     @Nullable
+     private String descriptionId;
+     @Nullable
