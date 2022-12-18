@@ -17,10 +17,10 @@ but is so much cheaper than the suffocation check that it's worth
 keeping it.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index f5b88d529ce00fa1692f0ff9507b90b7b6e54cb1..62d231ca05039c99c17252847cb850983864e09a 100644
+index ac56a5ba83184ee7b24b58cc25aa3d5aa953caee..9a8896f51be5028724563cd5054782477868edef 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -170,4 +170,13 @@ public class PufferfishConfig {
+@@ -172,4 +172,13 @@ public class PufferfishConfig {
  				"This can be overridden per-player with the permission pufferfish.usebooks");
  	}
  	
@@ -35,7 +35,7 @@ index f5b88d529ce00fa1692f0ff9507b90b7b6e54cb1..62d231ca05039c99c17252847cb85098
 +	
  }
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 9e075de3542bda8ae086c9ca68bcd00b16d565d0..7fff06eeac35b666936b1c0903234bc823d380c2 100644
+index 864ab97b7a6c62c376ca38dbbc65bc9406dfd62b..91e6491fc31e57743e4178dded34b3ee8c799426 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -402,7 +402,7 @@ public abstract class LivingEntity extends Entity {

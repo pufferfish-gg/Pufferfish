@@ -5,10 +5,10 @@ Subject: [PATCH] Add Sentry
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index f0f500f8c395b5ffd24d45194ef29ad0035c9117..208ce4c2fe6ec1af8d8faed65137413fa8ff597c 100644
+index d1a8bfb29817d2b73689713b4d5f04d7f2c0eaf4..5b7fe3d6c2169d07b79a0937e889fc847962fdfe 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -150,4 +150,15 @@ public class PufferfishConfig {
+@@ -152,4 +152,15 @@ public class PufferfishConfig {
  		return config.getStringList(key);
  	}
  	

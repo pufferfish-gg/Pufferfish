@@ -27,7 +27,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index e588ed2cb12393e25ab1c36652f7b71767fdba27..188ff0c5f4acbcba0e569a559379ec28d340db41 100644
+index 0b7a43b6f2ec9a69281ff38f9bef6e33878be3f8..bd3ca0af0f50b2bf1f1b95d4578c1b05d0694dd8 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -3,6 +3,12 @@ package gg.pufferfish.pufferfish;
@@ -43,7 +43,7 @@ index e588ed2cb12393e25ab1c36652f7b71767fdba27..188ff0c5f4acbcba0e569a559379ec28
  import java.lang.reflect.Method;
  import java.lang.reflect.Modifier;
  import java.util.List;
-@@ -206,5 +212,37 @@ public class PufferfishConfig {
+@@ -208,5 +214,37 @@ public class PufferfishConfig {
      }
  
  

@@ -5,7 +5,7 @@ Subject: [PATCH] Entity TTL
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index d6df6d10b160421591a4a7e5229a5e17cae7f1c9..3b8023572bd3acb895fc0ecc2d92c5525cdf7fd9 100644
+index 32b1d27550d297c7dfe00e3d91fcda8b752f6279..4a1a0dd4aab35a368185db3e7096353956e8a93b 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -5,7 +5,10 @@ import java.io.File;
@@ -19,7 +19,7 @@ index d6df6d10b160421591a4a7e5229a5e17cae7f1c9..3b8023572bd3acb895fc0ecc2d92c552
  import org.apache.logging.log4j.Level;
  import org.bukkit.configuration.ConfigurationSection;
  import net.minecraft.world.entity.EntityType;
-@@ -251,6 +254,23 @@ public class PufferfishConfig {
+@@ -253,6 +256,23 @@ public class PufferfishConfig {
  
          setComment("dab", "Optimizes entity brains when", "they're far away from the player");
      }

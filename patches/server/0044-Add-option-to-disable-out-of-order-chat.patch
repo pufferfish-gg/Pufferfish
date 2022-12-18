@@ -5,10 +5,10 @@ Subject: [PATCH] Add option to disable out-of-order chat
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index a125abc75ed2bbd905c8fdec442416a45264f531..34eb43ca2bf446504c372f98dfbe6dbfd0a81369 100644
+index 4a1a0dd4aab35a368185db3e7096353956e8a93b..e0076044d0a29e33ee297fe6180a041436075297 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -305,8 +305,10 @@ public class PufferfishConfig {
+@@ -307,8 +307,10 @@ public class PufferfishConfig {
  
  
      public static boolean disableMethodProfiler;

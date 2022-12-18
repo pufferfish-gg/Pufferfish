@@ -32,7 +32,7 @@ index 5752339f2d081c36944d568e0b29ec4fe24f37f9..04a1e3c9619b41f429bd598d55c9e0b5
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
      testImplementation("junit:junit:4.13.2")
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 8dd277dd34ae9b285a7ce19aa39ad05466f0cd5b..de91ed04957aa03eabc7c66d01c2347c85e07533 100644
+index bd3ca0af0f50b2bf1f1b95d4578c1b05d0694dd8..9ff0f60f03a532dabb8740ad5c44e068d5a9c8bf 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -12,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
@@ -57,7 +57,7 @@ index 8dd277dd34ae9b285a7ce19aa39ad05466f0cd5b..de91ed04957aa03eabc7c66d01c2347c
  
  public class PufferfishConfig {
  	
-@@ -244,5 +252,29 @@ public class PufferfishConfig {
+@@ -246,5 +254,29 @@ public class PufferfishConfig {
          setComment("dab", "Optimizes entity brains when", "they're far away from the player");
      }
  
