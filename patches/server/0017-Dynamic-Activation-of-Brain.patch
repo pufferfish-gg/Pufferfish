@@ -84,10 +84,10 @@ index 0b7a43b6f2ec9a69281ff38f9bef6e33878be3f8..bd3ca0af0f50b2bf1f1b95d4578c1b05
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 5e742b8dac3b1ccafd7e5f1a1068346d87c7b399..d35a5d36513a9e1e96905bfe4b94ebf1de6ec8e0 100644
+index 2d78c8ca87f341c4b05db27a2cdd27ac437764b2..942e829114d73a12ef43cf972d77fa5a445ebb80 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -711,6 +711,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -709,6 +709,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
              org.spigotmc.ActivationRange.activateEntities(this); // Spigot
              timings.entityTick.startTiming(); // Spigot
              this.entityTickList.forEach((entity) -> {
@@ -96,7 +96,7 @@ index 5e742b8dac3b1ccafd7e5f1a1068346d87c7b399..d35a5d36513a9e1e96905bfe4b94ebf1
                      if (false && this.shouldDiscardEntity(entity)) { // CraftBukkit - We prevent spawning in general, so this butchering is not needed
                          entity.discard();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 2790e7065486001ca07f5c2a040b544640eebc64..ff8f5aeb6ee488d4f0a689ecc95c4345d2f5cca6 100644
+index e104ca64b79fd781ca97cff9250e040dc87a0c9c..9b843fe2305dc4c5bdb3e6235b5247d99582e5fe 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -413,6 +413,11 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
