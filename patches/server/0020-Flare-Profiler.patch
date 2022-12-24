@@ -732,10 +732,10 @@ index 0000000000000000000000000000000000000000..40447d00aefb5ffedb8a2ee87155a040
 +}
 diff --git a/src/main/java/gg/pufferfish/pufferfish/flare/collectors/WorldCountCollector.java b/src/main/java/gg/pufferfish/pufferfish/flare/collectors/WorldCountCollector.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..32ce919610a3346a3f46abbaf9f5eb65278b10fc
+index 0000000000000000000000000000000000000000..029d840e28d67d26d3c0dd6785e25dbf15f9226c
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/flare/collectors/WorldCountCollector.java
-@@ -0,0 +1,44 @@
+@@ -0,0 +1,45 @@
 +package gg.pufferfish.pufferfish.flare.collectors;
 +
 +import co.technove.flare.live.CollectorData;
@@ -762,6 +762,7 @@ index 0000000000000000000000000000000000000000..32ce919610a3346a3f46abbaf9f5eb65
 +
 +    @Override
 +    public void run() {
++        if (true) return; // This doesn't work, and it's not worth fixing at the moment.
 +        int entities = 0;
 +        int chunkCount = 0;
 +        int tileEntityCount = 0;
