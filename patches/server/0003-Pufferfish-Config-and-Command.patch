@@ -5,10 +5,10 @@ Subject: [PATCH] Pufferfish Config and Command
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 4561e5bd1d84238840cffbc033b066eeca5d2d63..73f496efe4a0eb03b334619ec342744f33df086b 100644
+index 8aa9b3c90de8edf28468a92be3b5ac78fe9ad296..3225405136314625b316e6be78e08efaa3a096aa 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -45,6 +45,13 @@ dependencies {
+@@ -46,6 +46,13 @@ dependencies {
      runtimeOnly("org.apache.maven.resolver:maven-resolver-connector-basic:1.7.3")
      runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.7.3")
  
@@ -252,7 +252,7 @@ index 0000000000000000000000000000000000000000..deb52c185705c4b4186c7bae02f2a827
 +	
 +}
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 51b3db0b6c2cede95b584268e035c0fb36d38094..60120cd101ed2ee1d04161bf5de9d997261beac0 100644
+index a7e133f3495e9132a5fdae2c24f225e7b026295a..1556bb2b9c92f5f0e51cf35f3d53c04f2708dd15 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -221,6 +221,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
