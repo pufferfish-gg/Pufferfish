@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index d9ace6cd8e9cbf088e6664469fb94df0c964998f..d177ad2221c330488c3c9da59b454794f3f2a9c0 100644
+index af8a561e4d59d98ebb6d7a8fbcb072e361b10058..77d057333f2e7755a230eec1cfddac11e98f8c2f 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -52,6 +52,7 @@ dependencies {
@@ -782,7 +782,7 @@ index 0000000000000000000000000000000000000000..029d840e28d67d26d3c0dd6785e25dbf
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java b/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java
-index 909b2c98e7a9117d2f737245e4661792ffafb744..0d9e2b3728f9ab500bd5e44702718535d338e9a5 100644
+index d96399e9bf1a58db5a4a22e58abb99e7660e0694..eb19f679ee498e51d02fe9a961cf02699cf75848 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java
 @@ -22,7 +22,8 @@ public class MinecraftInternalPlugin extends PluginBase {
@@ -795,7 +795,7 @@ index 909b2c98e7a9117d2f737245e4661792ffafb744..0d9e2b3728f9ab500bd5e44702718535
  
      public MinecraftInternalPlugin() {
          this.pluginName = "Minecraft";
-@@ -75,7 +76,12 @@ public class MinecraftInternalPlugin extends PluginBase {
+@@ -81,7 +82,12 @@ public class MinecraftInternalPlugin extends PluginBase {
  
      @Override
      public PluginLogger getLogger() {
@@ -809,7 +809,7 @@ index 909b2c98e7a9117d2f737245e4661792ffafb744..0d9e2b3728f9ab500bd5e44702718535
      }
  
      @Override
-@@ -85,7 +91,7 @@ public class MinecraftInternalPlugin extends PluginBase {
+@@ -91,7 +97,7 @@ public class MinecraftInternalPlugin extends PluginBase {
  
      @Override
      public Server getServer() {
