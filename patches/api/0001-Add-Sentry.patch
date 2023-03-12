@@ -5,7 +5,7 @@ Subject: [PATCH] Add Sentry
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 7ba2b08b8c5eb405a64f9edfa72195dcf48f82bd..84850d8135f7b998b4cf602ab7ec9b6dc65ac329 100644
+index 9421e45653e68922a51cf0071792e6fa7999d0b8..b385787e126ffd2563f02d8876780e6e0fc68ca3 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -41,6 +41,7 @@ dependencies {
@@ -14,8 +14,8 @@ index 7ba2b08b8c5eb405a64f9edfa72195dcf48f82bd..84850d8135f7b998b4cf602ab7ec9b6d
      api("org.slf4j:slf4j-api:1.8.0-beta4")
 +    api("io.sentry:sentry:5.4.0") // Pufferfish
  
-     implementation("org.ow2.asm:asm:9.2")
-     implementation("org.ow2.asm:asm-commons:9.2")
+     implementation("org.ow2.asm:asm:9.4")
+     implementation("org.ow2.asm:asm-commons:9.4")
 diff --git a/src/main/java/gg/pufferfish/pufferfish/sentry/SentryContext.java b/src/main/java/gg/pufferfish/pufferfish/sentry/SentryContext.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..10310fdd53de28efb8a8250f6d3b0c8eb08fb68a
@@ -210,7 +210,7 @@ index 2b8308989fce7f8a16907f8711b362e671fdbfb6..bd4d1a40f53784662174d426533ef4b5
                      callEvent(new com.destroystokyo.paper.event.server.ServerExceptionEvent(new com.destroystokyo.paper.exception.ServerEventException(msg, ex, registration.getPlugin(), registration.getListener(), event)));
                  }
 diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
-index 88d852c1a729ffd5951da803da424b31591c9f9a..f0da30d0bf41243ba16c936cc89c7533d9f0e29d 100644
+index eaefbb00e9993d54906cc8cf35cf753c0d6c7707..301e82369603f3dd6e6c1bd380da4bacacd7ef6c 100644
 --- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 @@ -336,7 +336,13 @@ public final class JavaPluginLoader implements PluginLoader {

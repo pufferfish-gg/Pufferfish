@@ -6,7 +6,7 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 4cc7d15f43b2547a723ea231bcf98bc13bdb85bf..536a7e2c0a9001a707f3276895fd4463b03f79cb 100644
+index 1919a8e9cb7c995b2a9c876ff4980bdc98977133..70316602339c9676fbb9f631214473c6e845d7f4 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -7,8 +7,12 @@ plugins {
@@ -230,10 +230,10 @@ index bbb8335dae0a3e2761e6bbb8dc723bcf28cd82ba..1a114d326463a37ae78b6e2034a3d9b6
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 1244c1ca5e0907298b1ca6de538db82b2209ec4d..6aa2121e286dd6d43201a38722ea0cdd205baaa7 100644
+index 81ffcca62c2ebb15889d286bfe9138b86ccfe71e..0ccde7fe2a852f7da72f0b3f5a53cb48d28d1840 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -468,7 +468,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -464,7 +464,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
