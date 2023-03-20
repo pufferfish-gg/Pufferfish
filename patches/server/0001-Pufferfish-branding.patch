@@ -6,7 +6,7 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 1919a8e9cb7c995b2a9c876ff4980bdc98977133..70316602339c9676fbb9f631214473c6e845d7f4 100644
+index 9cf389defdaeb887e9cad4f0fed3f3b95667b238..397aeeef65c823c507b4287e89bb1d27449432b4 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -7,8 +7,12 @@ plugins {
@@ -204,10 +204,10 @@ index 0000000000000000000000000000000000000000..e877921370f6009a4bd204d9b17d2d58
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 753a917d34a1e1c1521a8916bc8e44a6acd90a46..6b5e0833176e343ce4caf99e64a3cb94d22d215c 100644
+index 4450d825a5474da211f0e83f845d8c7129fa08aa..2c9ff8990e5c7a03db22a1ad345c022ab0733801 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1654,7 +1654,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1681,7 +1681,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
@@ -217,10 +217,10 @@ index 753a917d34a1e1c1521a8916bc8e44a6acd90a46..6b5e0833176e343ce4caf99e64a3cb94
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index bbb8335dae0a3e2761e6bbb8dc723bcf28cd82ba..1a114d326463a37ae78b6e2034a3d9b608f92d6f 100644
+index f9a9d2bb7b6d1bf4a0931438de4d8c7ee0757479..0f76cd4ce0faa577c97c2e4ef9868518b323cfbc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -261,7 +261,7 @@ import javax.annotation.Nullable; // Paper
+@@ -256,7 +256,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
@@ -230,7 +230,7 @@ index bbb8335dae0a3e2761e6bbb8dc723bcf28cd82ba..1a114d326463a37ae78b6e2034a3d9b6
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 81ffcca62c2ebb15889d286bfe9138b86ccfe71e..0ccde7fe2a852f7da72f0b3f5a53cb48d28d1840 100644
+index 64c50c52c11214740de7903e5592b8b6b2c170b3..d4f62940504e3ef7a70e13b1f4a7726f23b4c637 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 @@ -464,7 +464,7 @@ public final class CraftMagicNumbers implements UnsafeValues {

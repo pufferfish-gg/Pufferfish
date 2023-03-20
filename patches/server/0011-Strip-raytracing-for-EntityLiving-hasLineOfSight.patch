@@ -27,10 +27,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 7fff06eeac35b666936b1c0903234bc823d380c2..e2ff40386204eecf68a999690c2caa18d6410b29 100644
+index 645f957359967b168b40550b16ba880718a59465..775c4bc04c8464b66855901b7aae5dce574eb4df 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -3656,7 +3656,10 @@ public abstract class LivingEntity extends Entity {
+@@ -3618,7 +3618,10 @@ public abstract class LivingEntity extends Entity implements Attackable {
              Vec3 vec3d1 = new Vec3(entity.getX(), entity.getEyeY(), entity.getZ());
  
              // Paper - diff on change - used in CraftLivingEntity#hasLineOfSight(Location) and CraftWorld#lineOfSightExists
@@ -43,7 +43,7 @@ index 7fff06eeac35b666936b1c0903234bc823d380c2..e2ff40386204eecf68a999690c2caa18
      }
  
 diff --git a/src/main/java/net/minecraft/world/level/BlockGetter.java b/src/main/java/net/minecraft/world/level/BlockGetter.java
-index d1eefa6ef3e9abfe7af4d8310aa64465fa2d5463..0f4aa330e5b179bb706a31917c671f165e22b9cd 100644
+index 2ee9e8e3c1a28c1823de8e1fe421cc1f3e72f384..cf4a8084158b10bf047d418dda375f8c1fd3216e 100644
 --- a/src/main/java/net/minecraft/world/level/BlockGetter.java
 +++ b/src/main/java/net/minecraft/world/level/BlockGetter.java
 @@ -73,6 +73,16 @@ public interface BlockGetter extends LevelHeightAccessor {
@@ -64,10 +64,10 @@ index d1eefa6ef3e9abfe7af4d8310aa64465fa2d5463..0f4aa330e5b179bb706a31917c671f16
      default BlockHitResult clip(ClipContext raytrace1, BlockPos blockposition) {
              // Paper start - Prevent raytrace from loading chunks
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 3cbf801b2e5420c0e870f73788deb550e49ad54d..6254f5b78dbb9f66833043d81aa83f964308627d 100644
+index 973ecd50f9cb6b86c353586e84d15dcb118ccb60..34f11b6dc53a75da1fa416283e1cd1969eb1d50d 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -407,6 +407,91 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -413,6 +413,91 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
          return null;
      }
  

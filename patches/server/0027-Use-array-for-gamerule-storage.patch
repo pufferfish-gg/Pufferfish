@@ -5,18 +5,18 @@ Subject: [PATCH] Use array for gamerule storage
 
 
 diff --git a/src/main/java/net/minecraft/world/level/GameRules.java b/src/main/java/net/minecraft/world/level/GameRules.java
-index 663c1d8c1611af915a1bae733920dd75ad73feb1..c15e4d95baacd30f9614dc5526dc8fc12ae5bd06 100644
+index edd2c9d0cf5a81c779011cb4215d496a8987b784..29d1f78dbc8410f9292f409b17705acde55979df 100644
 --- a/src/main/java/net/minecraft/world/level/GameRules.java
 +++ b/src/main/java/net/minecraft/world/level/GameRules.java
-@@ -98,6 +98,7 @@ public class GameRules {
-     public static final GameRules.Key<GameRules.BooleanValue> RULE_LAVA_SOURCE_CONVERSION = GameRules.register("lavaSourceConversion", GameRules.Category.UPDATES, GameRules.BooleanValue.create(false));
+@@ -100,6 +100,7 @@ public class GameRules {
      public static final GameRules.Key<GameRules.BooleanValue> RULE_GLOBAL_SOUND_EVENTS = GameRules.register("globalSoundEvents", GameRules.Category.MISC, GameRules.BooleanValue.create(true));
+     public static final GameRules.Key<GameRules.BooleanValue> RULE_DO_VINES_SPREAD = GameRules.register("doVinesSpread", GameRules.Category.UPDATES, GameRules.BooleanValue.create(true));
      private final Map<GameRules.Key<?>, GameRules.Value<?>> rules;
 +    private final GameRules.Value<?>[] gameruleArray;
  
      private static <T extends GameRules.Value<T>> GameRules.Key<T> register(String name, GameRules.Category category, GameRules.Type<T> type) {
          GameRules.Key<T> gamerules_gamerulekey = new GameRules.Key<>(name, category);
-@@ -116,17 +117,33 @@ public class GameRules {
+@@ -118,17 +119,33 @@ public class GameRules {
      }
  
      public GameRules() {
@@ -53,7 +53,7 @@ index 663c1d8c1611af915a1bae733920dd75ad73feb1..c15e4d95baacd30f9614dc5526dc8fc1
      }
  
      public CompoundTag createTag() {
-@@ -185,6 +202,10 @@ public class GameRules {
+@@ -187,6 +204,10 @@ public class GameRules {
      }
  
      public static final class Key<T extends GameRules.Value<T>> {

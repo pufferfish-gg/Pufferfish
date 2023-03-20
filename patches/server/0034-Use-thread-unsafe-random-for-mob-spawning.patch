@@ -5,10 +5,10 @@ Subject: [PATCH] Use thread unsafe random for mob spawning
 
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index e78a322ee9d1d57c1db57a1899d39a266abddec5..6272a0ffc321bc672ce1c3c94b52253fc07751a2 100644
+index 46da2e103b2a661b9047278cce92aecfc3ae2981..6884b646fdbeb0e54be4ab221c11a63854a41a37 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -270,7 +270,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -274,7 +274,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
  
      public abstract ResourceKey<LevelStem> getTypeKey();
  
@@ -18,7 +18,7 @@ index e78a322ee9d1d57c1db57a1899d39a266abddec5..6272a0ffc321bc672ce1c3c94b52253f
      // Pufferfish start - ensure these get inlined
      private final int minBuildHeight, minSection, height, maxBuildHeight, maxSection;
 diff --git a/src/main/java/net/minecraft/world/level/NaturalSpawner.java b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-index 01b21f520ef1c834b9bafc3de85c1fa4fcf539d6..5521418fa307b3eeb4f02a10c39f05b360d1d06e 100644
+index 15d266fc97eb73338f4f6fb2cfe25d6861e79810..6180679d922ea61d05d452971ec2d506a724d3c3 100644
 --- a/src/main/java/net/minecraft/world/level/NaturalSpawner.java
 +++ b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
 @@ -417,12 +417,12 @@ public final class NaturalSpawner {

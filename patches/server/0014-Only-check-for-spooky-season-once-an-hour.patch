@@ -20,10 +20,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/world/entity/ambient/Bat.java b/src/main/java/net/minecraft/world/entity/ambient/Bat.java
-index 320c558bbe80d4bbc641e895ec43cfa2b45e8d70..1572a81ce1718964d795f2a2a411402f88901c73 100644
+index f5efdf59617d43de18a2267351fa784c0be3ae83..59338d739b6130f667d151bc27646c4a346886a2 100644
 --- a/src/main/java/net/minecraft/world/entity/ambient/Bat.java
 +++ b/src/main/java/net/minecraft/world/entity/ambient/Bat.java
-@@ -256,13 +256,22 @@ public class Bat extends AmbientCreature {
+@@ -251,13 +251,22 @@ public class Bat extends AmbientCreature {
          }
      }
  

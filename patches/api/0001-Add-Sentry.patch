@@ -5,10 +5,10 @@ Subject: [PATCH] Add Sentry
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 9421e45653e68922a51cf0071792e6fa7999d0b8..b385787e126ffd2563f02d8876780e6e0fc68ca3 100644
+index cad12a2632b9ebb569280441c42869685db1f31a..48d254cd1ee3dc13846ce283cdae5938865607fd 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -41,6 +41,7 @@ dependencies {
+@@ -42,6 +42,7 @@ dependencies {
      apiAndDocs("net.kyori:adventure-text-logger-slf4j")
      api("org.apache.logging.log4j:log4j-api:2.17.1")
      api("org.slf4j:slf4j-api:1.8.0-beta4")

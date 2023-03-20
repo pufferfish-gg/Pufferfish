@@ -5,10 +5,10 @@ Subject: [PATCH] Remove iterators from inventory contains
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/player/Inventory.java b/src/main/java/net/minecraft/world/entity/player/Inventory.java
-index a1a625a8dacf4d2bbf75ddd90dce1b1be663c919..23e375c9a6955d03e0fc9be91ff0403251c8216c 100644
+index 27c028ab6b1edb6e413af3bbaa27bf30f2d85540..302ca7391109c10e81a7745504b3c530bc3be6ad 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Inventory.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Inventory.java
-@@ -681,6 +681,8 @@ public class Inventory implements Container, Nameable {
+@@ -682,6 +682,8 @@ public class Inventory implements Container, Nameable {
      }
  
      public boolean contains(ItemStack stack) {
@@ -17,7 +17,7 @@ index a1a625a8dacf4d2bbf75ddd90dce1b1be663c919..23e375c9a6955d03e0fc9be91ff04032
          Iterator iterator = this.compartments.iterator();
  
          while (iterator.hasNext()) {
-@@ -695,6 +697,18 @@ public class Inventory implements Container, Nameable {
+@@ -696,6 +698,18 @@ public class Inventory implements Container, Nameable {
                  }
              }
          }

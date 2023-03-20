@@ -43,10 +43,10 @@ index 9a8896f51be5028724563cd5054782477868edef..b3dba80e30268f85befd2495cbf5bc5f
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 5dcc3b80b4a13944b39458802362a6bb1a5fbe41..9134d6b655cbf7f4e71c33abde4dabd231c6b470 100644
+index 2c9ff8990e5c7a03db22a1ad345c022ab0733801..70086d05b02bc0949317b03dddf6e246ae7249b7 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -309,6 +309,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -312,6 +312,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      public volatile Thread shutdownThread; // Paper
      public volatile boolean abnormalExit = false; // Paper
      public boolean isIteratingOverLevels = false; // Paper
@@ -68,10 +68,10 @@ index 1556bb2b9c92f5f0e51cf35f3d53c04f2708dd15..ad4fdbdcf09f30d10e61ccf47f8fb9ce
          }
      }
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 2212f9f48636357265d8e44aba415ea4f09f1fe7..7aa247fd9dabe79d7b7f0b18a6f82ac926440c70 100644
+index fbe209a66c77c47935ad026dd3e45e682af91fd8..02abc76333e8244cfcaa052a7df948b68079559a 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -342,7 +342,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -345,7 +345,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          this.dataRegionManager = new io.papermc.paper.chunk.SingleThreadChunkRegionManager(this.level, 2, (1.0 / 3.0), 1, 6, "Data", DataRegionData::new, DataRegionSectionData::new);
          this.regionManagers.add(this.dataRegionManager);
          // Paper end
