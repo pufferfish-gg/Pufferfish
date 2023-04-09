@@ -9,7 +9,7 @@ of other times) the constant cloning churns out a lot of useless
 objects.
 
 diff --git a/src/main/java/net/minecraft/world/level/storage/loot/LootContext.java b/src/main/java/net/minecraft/world/level/storage/loot/LootContext.java
-index 842fa4c360146d7a9e27cb7b2cef68c683f4ada6..fc7aae06bbcba84cc8072b2e8df4612ec87ec3ea 100644
+index 35f9b11a3a61976c952a2c1c64bb2a932538f54f..9e9ac64764cf0a84e25e75d8d6f516cde6047284 100644
 --- a/src/main/java/net/minecraft/world/level/storage/loot/LootContext.java
 +++ b/src/main/java/net/minecraft/world/level/storage/loot/LootContext.java
 @@ -41,8 +41,10 @@ public class LootContext {
