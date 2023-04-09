@@ -26,10 +26,10 @@ index d1a8bfb29817d2b73689713b4d5f04d7f2c0eaf4..5b7fe3d6c2169d07b79a0937e889fc84
  }
 diff --git a/src/main/java/gg/pufferfish/pufferfish/sentry/PufferfishSentryAppender.java b/src/main/java/gg/pufferfish/pufferfish/sentry/PufferfishSentryAppender.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..731ef11c7a025ae95ed8a757b530d834733d0621
+index 0000000000000000000000000000000000000000..d3bf6da35a5ad1a8eedb839c076a02eb1c6efa08
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/sentry/PufferfishSentryAppender.java
-@@ -0,0 +1,135 @@
+@@ -0,0 +1,140 @@
 +package gg.pufferfish.pufferfish.sentry;
 +
 +import com.google.common.reflect.TypeToken;
@@ -84,6 +84,7 @@ index 0000000000000000000000000000000000000000..731ef11c7a025ae95ed8a757b530d834
 +		event.setThrowable(e.getThrown());
 +		event.setLevel(getLevel(e.getLevel()));
 +		event.setLogger(e.getLoggerName());
++		event.setTag("Logger", e.getLoggerName());
 +		event.setTransaction(e.getLoggerName());
 +		event.setExtra("thread_name", e.getThreadName());
 +		
@@ -100,6 +101,10 @@ index 0000000000000000000000000000000000000000..731ef11c7a025ae95ed8a757b530d834
 +			event.setExtra("plugin.name", e.getContextData().getValue("pufferfishsentry_pluginname"));
 +			event.setExtra("plugin.version", e.getContextData().getValue("pufferfishsentry_pluginversion"));
 +			event.setTransaction(e.getContextData().getValue("pufferfishsentry_pluginname"));
++			event.setTag("Plugin", e.getContextData().getValue("pufferfishsentry_pluginname"));
++			// Command errors handling is very intricate, we remove the context here,
++			// it is removed at the end of the command execution if it was successful
++			SentryContext.removePluginContext();
 +		}
 +		
 +		if (hasContext && e.getContextData().containsKey("pufferfishsentry_eventdata")) {
@@ -211,3 +216,20 @@ index 0000000000000000000000000000000000000000..1b29210ad0bbb4ada150f23357f0c80d
 +	}
 +	
 +}
+diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
+index cdefb2025eedea7e204d70d568adaf1c1ec4c03c..f514a115f85d16b2c08ec5ec078e4b88af554cad 100644
+--- a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
++++ b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
+@@ -490,10 +490,12 @@ public class CraftScheduler implements BukkitScheduler {
+                     if (task.getOwner() == MINECRAFT) {
+                         net.minecraft.server.MinecraftServer.LOGGER.error(msg, throwable);
+                     } else {
++                        gg.pufferfish.pufferfish.sentry.SentryContext.setPluginContext(task.getOwner()); // Pufferfish
+                         task.getOwner().getLogger().log(
+                             Level.WARNING,
+                             msg,
+                             throwable);
++                        gg.pufferfish.pufferfish.sentry.SentryContext.removePluginContext(); // Pufferfish
+                     }
+                     org.bukkit.Bukkit.getServer().getPluginManager().callEvent(
+                         new ServerExceptionEvent(new ServerSchedulerException(msg, throwable, task)));

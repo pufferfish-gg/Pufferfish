@@ -183,6 +183,49 @@ index 0000000000000000000000000000000000000000..10310fdd53de28efb8a8250f6d3b0c8e
 +		}
 +	}
 +}
+diff --git a/src/main/java/org/bukkit/command/PluginCommand.java b/src/main/java/org/bukkit/command/PluginCommand.java
+index 551c5af6a7bfa2268cbc63be8e70d129bccaa912..610c89d50b7f29e5f6ffce75feaa92a6a484f79b 100644
+--- a/src/main/java/org/bukkit/command/PluginCommand.java
++++ b/src/main/java/org/bukkit/command/PluginCommand.java
+@@ -32,12 +32,14 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
+     @Override
+     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
+         boolean success = false;
++        gg.pufferfish.pufferfish.sentry.SentryContext.setPluginContext(owningPlugin); // Pufferfish
+ 
+         if (!owningPlugin.isEnabled()) {
+             throw new CommandException("Cannot execute command '" + commandLabel + "' in plugin " + owningPlugin.getDescription().getFullName() + " - plugin is disabled.");
+         }
+ 
+         if (!testPermission(sender)) {
++            gg.pufferfish.pufferfish.sentry.SentryContext.removePluginContext(); // Pufferfish
+             return true;
+         }
+ 
+@@ -53,6 +55,7 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
+             }
+         }
+ 
++        gg.pufferfish.pufferfish.sentry.SentryContext.removePluginContext(); // Pufferfish
+         return success;
+     }
+ 
+@@ -132,6 +135,7 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
+         Preconditions.checkArgument(args != null, "Arguments cannot be null");
+         Preconditions.checkArgument(alias != null, "Alias cannot be null");
+ 
++        gg.pufferfish.pufferfish.sentry.SentryContext.setPluginContext(owningPlugin); // Pufferfish
+         List<String> completions = null;
+         try {
+             if (completer != null) {
+@@ -150,6 +154,7 @@ public final class PluginCommand extends Command implements PluginIdentifiableCo
+             throw new CommandException(message.toString(), ex);
+         }
+ 
++        gg.pufferfish.pufferfish.sentry.SentryContext.removePluginContext(); // Pufferfish
+         if (completions == null) {
+             return super.tabComplete(sender, alias, args);
+         }
 diff --git a/src/main/java/org/bukkit/plugin/SimplePluginManager.java b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
 index 2b8308989fce7f8a16907f8711b362e671fdbfb6..bd4d1a40f53784662174d426533ef4b5433a15b7 100644
 --- a/src/main/java/org/bukkit/plugin/SimplePluginManager.java
