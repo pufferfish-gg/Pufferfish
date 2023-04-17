@@ -5,11 +5,11 @@ Subject: [PATCH] More debug for plugins not shutting down tasks
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 0f76cd4ce0faa577c97c2e4ef9868518b323cfbc..b2d94582037c091bd6a04451bf62b3f9c4923d19 100644
+index 995f37b86f392e91ca1edf26a60110e22364af5f..482420c38e8fd1abc261daeabce76091f1e0ff3c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1043,6 +1043,11 @@ public final class CraftServer implements Server {
-                 plugin.getDescription().getName(),
+@@ -1039,6 +1039,11 @@ public final class CraftServer implements Server {
+                 plugin.getPluginMeta().getDisplayName(),
                  "This plugin is not properly shutting down its async tasks when it is being shut down. This task may throw errors during the final shutdown logs and might not complete before process dies."
              ));
 +            getLogger().log(Level.SEVERE, String.format("%s Stacktrace", worker.getThread().getName()));
