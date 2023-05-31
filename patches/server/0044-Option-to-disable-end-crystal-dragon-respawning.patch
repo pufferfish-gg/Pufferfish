@@ -1,0 +1,43 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kevin Raneri <kevin.raneri@gmail.com>
+Date: Tue, 30 May 2023 22:22:31 -0400
+Subject: [PATCH] Option to disable end crystal dragon respawning
+
+On servers that expect end crystal fights in the end dimension,
+disabling this will prevent the server from performing an expensive
+search to attempt respawning the ender dragon whenever a player places
+an end crystal.
+
+diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+index e0076044d0a29e33ee297fe6180a041436075297..db6f16fc3a146ba490c6c426e60fc4759f0ba1fc 100644
+--- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
++++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+@@ -281,6 +281,15 @@ public class PufferfishConfig {
+ 				"This can improve performance by a few percent, but has minor gameplay implications.");
+ 	}
+ 
++	public static boolean allowEndCrystalRespawn;
++	private static void allowEndCrystalRespawn() {
++		getBoolean("allow-end-crystal-respawn", true,
++				"Allows end crystals to respawn the ender dragon.",
++				"On servers that expect end crystal fights in the end dimension, disabling this",
++				"will prevent the server from performing an expensive search to attempt respawning",
++				"the ender dragon whenever a player places an end crystal.");
++	}
++
+     public static URI profileWebUrl;
+     private static void profilerOptions() {
+         profileWebUrl = URI.create(getString("flare.url", "https://flare.airplane.gg", "Sets the server to use for profiles."));
+diff --git a/src/main/java/net/minecraft/world/item/EndCrystalItem.java b/src/main/java/net/minecraft/world/item/EndCrystalItem.java
+index 171ce56ec3b8761f75144b1fca2f100fcbba6800..4202d8df909a6315cce0def93ad5241a519de43e 100644
+--- a/src/main/java/net/minecraft/world/item/EndCrystalItem.java
++++ b/src/main/java/net/minecraft/world/item/EndCrystalItem.java
+@@ -55,7 +55,7 @@ public class EndCrystalItem extends Item {
+                         world.gameEvent((Entity) context.getPlayer(), GameEvent.ENTITY_PLACE, blockposition1);
+                         EndDragonFight enderdragonbattle = ((ServerLevel) world).dragonFight();
+ 
+-                        if (enderdragonbattle != null) {
++                        if (enderdragonbattle != null && gg.pufferfish.pufferfish.PufferfishConfig.allowEndCrystalRespawn) { // Pufferfish
+                             enderdragonbattle.tryRespawn();
+                         }
+                     }
