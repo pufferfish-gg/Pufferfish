@@ -9,7 +9,7 @@ search to attempt respawning the ender dragon whenever a player places
 an end crystal.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index e0076044d0a29e33ee297fe6180a041436075297..db6f16fc3a146ba490c6c426e60fc4759f0ba1fc 100644
+index d6ed2faae59d035cf96a3842d99b9b80e99f5ca2..6755008dc43bf96c1507ce2ae6a066a1b75df760 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -281,6 +281,15 @@ public class PufferfishConfig {
@@ -18,7 +18,7 @@ index e0076044d0a29e33ee297fe6180a041436075297..db6f16fc3a146ba490c6c426e60fc475
  
 +	public static boolean allowEndCrystalRespawn;
 +	private static void allowEndCrystalRespawn() {
-+		getBoolean("allow-end-crystal-respawn", true,
++		allowEndCrystalRespawn = getBoolean("allow-end-crystal-respawn", true,
 +				"Allows end crystals to respawn the ender dragon.",
 +				"On servers that expect end crystal fights in the end dimension, disabling this",
 +				"will prevent the server from performing an expensive search to attempt respawning",
