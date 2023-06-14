@@ -29,12 +29,12 @@ index d6ed2faae59d035cf96a3842d99b9b80e99f5ca2..6755008dc43bf96c1507ce2ae6a066a1
      private static void profilerOptions() {
          profileWebUrl = URI.create(getString("flare.url", "https://flare.airplane.gg", "Sets the server to use for profiles."));
 diff --git a/src/main/java/net/minecraft/world/item/EndCrystalItem.java b/src/main/java/net/minecraft/world/item/EndCrystalItem.java
-index 171ce56ec3b8761f75144b1fca2f100fcbba6800..4202d8df909a6315cce0def93ad5241a519de43e 100644
+index ca1edc083847b47bb450b291723aca778a5912dc..dc695c518beed770e787d61bcda7e1cd28bc43eb 100644
 --- a/src/main/java/net/minecraft/world/item/EndCrystalItem.java
 +++ b/src/main/java/net/minecraft/world/item/EndCrystalItem.java
 @@ -55,7 +55,7 @@ public class EndCrystalItem extends Item {
                          world.gameEvent((Entity) context.getPlayer(), GameEvent.ENTITY_PLACE, blockposition1);
-                         EndDragonFight enderdragonbattle = ((ServerLevel) world).dragonFight();
+                         EndDragonFight enderdragonbattle = ((ServerLevel) world).getDragonFight();
  
 -                        if (enderdragonbattle != null) {
 +                        if (enderdragonbattle != null && gg.pufferfish.pufferfish.PufferfishConfig.allowEndCrystalRespawn) { // Pufferfish

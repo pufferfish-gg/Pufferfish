@@ -5,10 +5,10 @@ Subject: [PATCH] Remove iterators from inventory contains
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/player/Inventory.java b/src/main/java/net/minecraft/world/entity/player/Inventory.java
-index 27c028ab6b1edb6e413af3bbaa27bf30f2d85540..302ca7391109c10e81a7745504b3c530bc3be6ad 100644
+index 395cecc385e4126a7534ac9aeb15cf323efab03e..089166d9e6121df3069b2b71d6b556ae37520a26 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Inventory.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Inventory.java
-@@ -682,6 +682,8 @@ public class Inventory implements Container, Nameable {
+@@ -681,6 +681,8 @@ public class Inventory implements Container, Nameable {
      }
  
      public boolean contains(ItemStack stack) {
@@ -17,7 +17,7 @@ index 27c028ab6b1edb6e413af3bbaa27bf30f2d85540..302ca7391109c10e81a7745504b3c530
          Iterator iterator = this.compartments.iterator();
  
          while (iterator.hasNext()) {
-@@ -696,6 +698,18 @@ public class Inventory implements Container, Nameable {
+@@ -695,6 +697,18 @@ public class Inventory implements Container, Nameable {
                  }
              }
          }
@@ -27,7 +27,7 @@ index 27c028ab6b1edb6e413af3bbaa27bf30f2d85540..302ca7391109c10e81a7745504b3c530
 +            for (int j = 0; j < list.size(); j++) {
 +                ItemStack itemstack1 = list.get(j);
 +
-+                if (!itemstack1.isEmpty() && itemstack1.sameItem(stack)) {
++                if (!itemstack1.isEmpty() && ItemStack.isSameItemSameTags(itemstack1, stack)) {
 +                    return true;
 +                }
 +            }

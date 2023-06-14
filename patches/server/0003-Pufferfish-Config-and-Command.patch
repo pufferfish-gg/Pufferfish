@@ -5,12 +5,12 @@ Subject: [PATCH] Pufferfish Config and Command
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 397aeeef65c823c507b4287e89bb1d27449432b4..29400f248b05732d9a7d6ae220aa40f429ba4ad0 100644
+index fc5886556bbd105b189af458a56de76441eaca74..b7c217cb1800f57149b976d906ddb07496b4c47a 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -46,6 +46,13 @@ dependencies {
-     runtimeOnly("org.apache.maven.resolver:maven-resolver-connector-basic:1.7.3")
-     runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.7.3")
+     runtimeOnly("org.apache.maven.resolver:maven-resolver-connector-basic:1.9.10")
+     runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.9.10")
  
 +    // Pufferfish start
 +    implementation("org.yaml:snakeyaml:1.32")
@@ -23,7 +23,7 @@ index 397aeeef65c823c507b4287e89bb1d27449432b4..29400f248b05732d9a7d6ae220aa40f4
      testImplementation("junit:junit:4.13.2")
      testImplementation("org.hamcrest:hamcrest-library:1.3")
 diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
-index c07eb451a576811a39021f6f97103c77488fd001..5af15c85fab72034b97ac210ff775e0a8fa0be78 100644
+index a2f71a6d1a9e98133dff6cd0f625da9435a8af14..ff940e43ca35094bbcae6c7d471d3c4aeb7c1727 100644
 --- a/src/main/java/co/aikar/timings/TimingsExport.java
 +++ b/src/main/java/co/aikar/timings/TimingsExport.java
 @@ -242,7 +242,8 @@ public class TimingsExport extends Thread {
@@ -252,7 +252,7 @@ index 0000000000000000000000000000000000000000..deb52c185705c4b4186c7bae02f2a827
 +	
 +}
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index a7e133f3495e9132a5fdae2c24f225e7b026295a..1556bb2b9c92f5f0e51cf35f3d53c04f2708dd15 100644
+index 9f422cbeaa52b3e6a0a27af4f8ad4ddb7808483f..12ba8ce0a2400c1d6b81964edd7b171c222833dd 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -221,6 +221,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface

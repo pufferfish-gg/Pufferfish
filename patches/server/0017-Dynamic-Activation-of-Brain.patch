@@ -84,10 +84,10 @@ index 0b7a43b6f2ec9a69281ff38f9bef6e33878be3f8..bd3ca0af0f50b2bf1f1b95d4578c1b05
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index ae47ebcf9955be83c23b3f76ba19cce6abffcd32..c389ee6045129d15f8270287916249d687c6d606 100644
+index 2cba34a6feb83cfb75e50be1b727b168be544fff..2931b2de14f98e974d6622ab8ed8cdd01c719641 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -709,6 +709,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -850,6 +850,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
              org.spigotmc.ActivationRange.activateEntities(this); // Spigot
              timings.entityTick.startTiming(); // Spigot
              this.entityTickList.forEach((entity) -> {
@@ -96,10 +96,10 @@ index ae47ebcf9955be83c23b3f76ba19cce6abffcd32..c389ee6045129d15f8270287916249d6
                      if (false && this.shouldDiscardEntity(entity)) { // CraftBukkit - We prevent spawning in general, so this butchering is not needed
                          entity.discard();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 4cd562051ec78d0c83d24b50803dee50ed9355ae..58cea6b7f0a941ac06c62c88dbbabf4ce9d7898c 100644
+index 57d10870ffa742cce811fccb2ca1aabea99f17c9..3c84ae70c6ff4eb9d493323f7a53c4607a9d388c 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -416,6 +416,11 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -421,6 +421,11 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return this.originWorld;
      }
      // Paper end
@@ -112,7 +112,7 @@ index 4cd562051ec78d0c83d24b50803dee50ed9355ae..58cea6b7f0a941ac06c62c88dbbabf4c
          return this.yRot;
      }
 diff --git a/src/main/java/net/minecraft/world/entity/EntityType.java b/src/main/java/net/minecraft/world/entity/EntityType.java
-index ceacc0d383e2ee674783d3c0a7df0a951595faca..559bce4bbcc03117f52dc2810bad5becddf14a8e 100644
+index 9afc81ccb237c3655d64cdbe8a0db9a4d7791043..1679f0a3d095a7b758b468c77b6d3a4c078b7962 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityType.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityType.java
 @@ -300,6 +300,7 @@ public class EntityType<T extends Entity> implements FeatureElement, EntityTypeT
@@ -124,10 +124,10 @@ index ceacc0d383e2ee674783d3c0a7df0a951595faca..559bce4bbcc03117f52dc2810bad5bec
      private String descriptionId;
      @Nullable
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 02cb6b8c1d59855ff4a8aad3024fe12007eca0ee..28268bcfdd4dc21f12d1493c288e2960d483058a 100644
+index e2a25c29ec74147b3e66aa0b3deb85a8f6ee53a5..f9e8a694c7d20a6f27b71a694d82483dd0698a4c 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
-@@ -219,10 +219,10 @@ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -222,10 +222,10 @@ public abstract class Mob extends LivingEntity implements Targeting {
      @Override
      public void inactiveTick() {
          super.inactiveTick();
@@ -140,26 +140,26 @@ index 02cb6b8c1d59855ff4a8aad3024fe12007eca0ee..28268bcfdd4dc21f12d1493c288e2960
              this.targetSelector.tick();
          }
      }
-@@ -907,16 +907,20 @@ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -910,16 +910,20 @@ public abstract class Mob extends LivingEntity implements Targeting {
  
          if (i % 2 != 0 && this.tickCount > 1) {
-             this.level.getProfiler().push("targetSelector");
+             this.level().getProfiler().push("targetSelector");
 +            if (this.targetSelector.inactiveTick(this.activatedPriority, false)) // Pufferfish - use this to alternate ticking
              this.targetSelector.tickRunningGoals(false);
-             this.level.getProfiler().pop();
-             this.level.getProfiler().push("goalSelector");
+             this.level().getProfiler().pop();
+             this.level().getProfiler().push("goalSelector");
 +            if (this.goalSelector.inactiveTick(this.activatedPriority, false)) // Pufferfish - use this to alternate ticking
              this.goalSelector.tickRunningGoals(false);
-             this.level.getProfiler().pop();
+             this.level().getProfiler().pop();
          } else {
-             this.level.getProfiler().push("targetSelector");
+             this.level().getProfiler().push("targetSelector");
 +            if (this.targetSelector.inactiveTick(this.activatedPriority, false)) // Pufferfish - use this to alternate ticking
              this.targetSelector.tick();
-             this.level.getProfiler().pop();
-             this.level.getProfiler().push("goalSelector");
+             this.level().getProfiler().pop();
+             this.level().getProfiler().push("goalSelector");
 +            if (this.goalSelector.inactiveTick(this.activatedPriority, false)) // Pufferfish - use this to alternate ticking
              this.goalSelector.tick();
-             this.level.getProfiler().pop();
+             this.level().getProfiler().pop();
          }
 diff --git a/src/main/java/net/minecraft/world/entity/ai/behavior/VillagerPanicTrigger.java b/src/main/java/net/minecraft/world/entity/ai/behavior/VillagerPanicTrigger.java
 index 646d9a121d908a2fc3e4e302484dd5cd1bfc6804..e546ecdccde352502e26a8668eaaafe048d6e282 100644
@@ -198,23 +198,23 @@ index b738ee2d3801fadfd09313f05ae24593e56b0ec6..1635818fc4b1788c0d397085239df6dd
      public boolean hasTasks() {
          for (WrappedGoal task : this.availableGoals) {
 diff --git a/src/main/java/net/minecraft/world/entity/animal/allay/Allay.java b/src/main/java/net/minecraft/world/entity/animal/allay/Allay.java
-index 9b57d2b766f2de2d3fb4a3b5ef4df8d6756a1942..a41d8101c960163803179d3717889aee6182d0bb 100644
+index 339c70f101d026a100a801e66cf514b3329a89d2..1a0eee3b766a5ce5623c32ed9c023a0f80db1d1a 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/allay/Allay.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/allay/Allay.java
-@@ -223,9 +223,11 @@ public class Allay extends PathfinderMob implements InventoryCarrier {
+@@ -222,9 +222,11 @@ public class Allay extends PathfinderMob implements InventoryCarrier, VibrationS
          return 0.4F;
      }
  
 +    private int behaviorTick = 0; // Pufferfish
      @Override
      protected void customServerAiStep() {
-         this.level.getProfiler().push("allayBrain");
+         this.level().getProfiler().push("allayBrain");
 +        if (this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish
-         this.getBrain().tick((ServerLevel) this.level, this);
-         this.level.getProfiler().pop();
-         this.level.getProfiler().push("allayActivityUpdate");
+         this.getBrain().tick((ServerLevel) this.level(), this);
+         this.level().getProfiler().pop();
+         this.level().getProfiler().push("allayActivityUpdate");
 diff --git a/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java b/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java
-index a4e98b02175da96472474b8d7ad5975ce4d2fc43..38d21943fb2940f53c2d0ac2c3b94a6f0e46e700 100644
+index 2682a49cd3948e0f80e2d7e58abcd3e6d8f7ac4e..42e22a4b9cb6841de04862cc81454da3232aa65a 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/axolotl/Axolotl.java
 @@ -285,9 +285,11 @@ public class Axolotl extends Animal implements LerpingModel, VariantHolder<Axolo
@@ -224,29 +224,29 @@ index a4e98b02175da96472474b8d7ad5975ce4d2fc43..38d21943fb2940f53c2d0ac2c3b94a6f
 +    private int behaviorTick = 0; // Pufferfish
      @Override
      protected void customServerAiStep() {
-         this.level.getProfiler().push("axolotlBrain");
+         this.level().getProfiler().push("axolotlBrain");
 +        if (this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish
-         this.getBrain().tick((ServerLevel) this.level, this);
-         this.level.getProfiler().pop();
-         this.level.getProfiler().push("axolotlActivityUpdate");
+         this.getBrain().tick((ServerLevel) this.level(), this);
+         this.level().getProfiler().pop();
+         this.level().getProfiler().push("axolotlActivityUpdate");
 diff --git a/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java b/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
-index a65cec3c9837882df5b61de58f03d276d4db6bfc..be44667b8205cd3bb1cefddf8e0e743535414e14 100644
+index 203691417e208b9e023e5f8c3b76993db2747ba8..80ddb3059d6484c2b90c55ef601043798f1a4b50 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
-@@ -167,9 +167,11 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
+@@ -162,9 +162,11 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
          return true;
      }
  
 +    private int behaviorTick = 0; // Pufferfish
      @Override
      protected void customServerAiStep() {
-         this.level.getProfiler().push("frogBrain");
+         this.level().getProfiler().push("frogBrain");
 +        if (this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish
-         this.getBrain().tick((ServerLevel)this.level, this);
-         this.level.getProfiler().pop();
-         this.level.getProfiler().push("frogActivityUpdate");
+         this.getBrain().tick((ServerLevel)this.level(), this);
+         this.level().getProfiler().pop();
+         this.level().getProfiler().push("frogActivityUpdate");
 diff --git a/src/main/java/net/minecraft/world/entity/animal/frog/Tadpole.java b/src/main/java/net/minecraft/world/entity/animal/frog/Tadpole.java
-index 9058f9f2e561cda9f475f33218bf7a78297de4bc..e591b0a09f5a8475b3ec9cd28bd5d5b69809ed73 100644
+index 4aeab90e778629c355189dfe79c39c4b21f5f5ac..6ed4ac06c76b8d0d6e8db778cade15dbd1e3e5f5 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/frog/Tadpole.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/frog/Tadpole.java
 @@ -77,9 +77,11 @@ public class Tadpole extends AbstractFish {
@@ -256,13 +256,13 @@ index 9058f9f2e561cda9f475f33218bf7a78297de4bc..e591b0a09f5a8475b3ec9cd28bd5d5b6
 +    private int behaviorTick = 0; // Pufferfish
      @Override
      protected void customServerAiStep() {
-         this.level.getProfiler().push("tadpoleBrain");
+         this.level().getProfiler().push("tadpoleBrain");
 +        if (this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish
-         this.getBrain().tick((ServerLevel) this.level, this);
-         this.level.getProfiler().pop();
-         this.level.getProfiler().push("tadpoleActivityUpdate");
+         this.getBrain().tick((ServerLevel) this.level(), this);
+         this.level().getProfiler().pop();
+         this.level().getProfiler().push("tadpoleActivityUpdate");
 diff --git a/src/main/java/net/minecraft/world/entity/animal/goat/Goat.java b/src/main/java/net/minecraft/world/entity/animal/goat/Goat.java
-index cfa904d42734d0fb0c1ed8b18f4d8bc131027962..4fdc3bd591b6df4c28901e4571aa23baf034d885 100644
+index 528e7ba29dcd38726b2c1bbc1d8ac208c64ba9df..2c7193e967b4cb5a7c98a760286a2c3791152359 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/goat/Goat.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/goat/Goat.java
 @@ -188,9 +188,11 @@ public class Goat extends Animal {
@@ -272,13 +272,13 @@ index cfa904d42734d0fb0c1ed8b18f4d8bc131027962..4fdc3bd591b6df4c28901e4571aa23ba
 +    private int behaviorTick = 0; // Pufferfish
      @Override
      protected void customServerAiStep() {
-         this.level.getProfiler().push("goatBrain");
+         this.level().getProfiler().push("goatBrain");
 +        if (this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish
-         this.getBrain().tick((ServerLevel) this.level, this);
-         this.level.getProfiler().pop();
-         this.level.getProfiler().push("goatActivityUpdate");
+         this.getBrain().tick((ServerLevel) this.level(), this);
+         this.level().getProfiler().pop();
+         this.level().getProfiler().push("goatActivityUpdate");
 diff --git a/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java b/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
-index 5d3b3cb3a882eb5d716f678095a65b28d0967476..daa2224b021c966751eb39f269ffbfe6e7f3d426 100644
+index e8f6c34ea789136d63c0aa88aec90203ef6282b5..d6d61b91096d28eea1e5af69ea1c07890820ee7f 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 @@ -126,9 +126,11 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
@@ -288,50 +288,50 @@ index 5d3b3cb3a882eb5d716f678095a65b28d0967476..daa2224b021c966751eb39f269ffbfe6
 +    private int behaviorTick; // Pufferfish
      @Override
      protected void customServerAiStep() {
-         this.level.getProfiler().push("hoglinBrain");
+         this.level().getProfiler().push("hoglinBrain");
 +        if (this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish
-         this.getBrain().tick((ServerLevel)this.level, this);
-         this.level.getProfiler().pop();
+         this.getBrain().tick((ServerLevel)this.level(), this);
+         this.level().getProfiler().pop();
          HoglinAi.updateActivity(this);
 diff --git a/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java b/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
-index afa7ecfa8453da510ec5ccecb1ceeb1d9893d259..b401fb4f276ca81b4bb18426ee56abed8a9f7a7b 100644
+index 27d9145693a772cd1b5d171da303c934101f3be8..e235cc9d1b3ce59ab662ef3cf3ce0267ca78536d 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/piglin/Piglin.java
-@@ -308,9 +308,11 @@ public class Piglin extends AbstractPiglin implements CrossbowAttackMob, Invento
+@@ -305,9 +305,11 @@ public class Piglin extends AbstractPiglin implements CrossbowAttackMob, Invento
          return !this.cannotHunt;
      }
  
 +    private int behaviorTick; // Pufferfish
      @Override
      protected void customServerAiStep() {
-         this.level.getProfiler().push("piglinBrain");
+         this.level().getProfiler().push("piglinBrain");
 +        if (this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish
-         this.getBrain().tick((ServerLevel) this.level, this);
-         this.level.getProfiler().pop();
+         this.getBrain().tick((ServerLevel) this.level(), this);
+         this.level().getProfiler().pop();
          PiglinAi.updateActivity(this);
 diff --git a/src/main/java/net/minecraft/world/entity/monster/warden/Warden.java b/src/main/java/net/minecraft/world/entity/monster/warden/Warden.java
-index b2b63d9df3c07696f47281e9be74f1799f50b93e..907d77dd74066c723238155b42028a811365b1f8 100644
+index 97b763431bc5015448ee7a26a340635a932c950b..71db8bd6885377d55cfc571fccc21df6d8a57b54 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/warden/Warden.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/warden/Warden.java
-@@ -270,11 +270,13 @@ public class Warden extends Monster implements VibrationListener.VibrationListen
+@@ -271,11 +271,13 @@ public class Warden extends Monster implements VibrationSystem {
  
      }
  
 +    private int behaviorTick = 0; // Pufferfish
      @Override
      protected void customServerAiStep() {
-         ServerLevel worldserver = (ServerLevel) this.level;
+         ServerLevel worldserver = (ServerLevel) this.level();
  
          worldserver.getProfiler().push("wardenBrain");
 +        if (this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish
          this.getBrain().tick(worldserver, this);
-         this.level.getProfiler().pop();
+         this.level().getProfiler().pop();
          super.customServerAiStep();
 diff --git a/src/main/java/net/minecraft/world/entity/npc/Villager.java b/src/main/java/net/minecraft/world/entity/npc/Villager.java
-index 6023b9eb3001e1a98ab8b970d853c4e7c7603f4d..5402a084ef5fe0b3cfea897a90cffade1eff5b66 100644
+index e30d5ae3e2900f43d7cafde71b8196f26e872841..c4ddf2661bca728d504918171295e10e307b18b4 100644
 --- a/src/main/java/net/minecraft/world/entity/npc/Villager.java
 +++ b/src/main/java/net/minecraft/world/entity/npc/Villager.java
-@@ -140,6 +140,8 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+@@ -141,6 +141,8 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
          return holder.is(PoiTypes.MEETING);
      });
  
@@ -340,27 +340,29 @@ index 6023b9eb3001e1a98ab8b970d853c4e7c7603f4d..5402a084ef5fe0b3cfea897a90cffade
      public Villager(EntityType<? extends Villager> entityType, Level world) {
          this(entityType, world, VillagerType.PLAINS);
      }
-@@ -243,11 +245,17 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+@@ -244,6 +246,7 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
      }
      // Spigot End
  
 +    private int behaviorTick = 0; // Pufferfish
      @Override
-     protected void customServerAiStep() { mobTick(false); }
-     protected void mobTick(boolean inactive) {
-         this.level.getProfiler().push("villagerBrain");
--        if (!inactive) this.getBrain().tick((ServerLevel) this.level, this); // Paper
+     @Deprecated // Paper
+     protected void customServerAiStep() {
+@@ -253,7 +256,11 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+     protected void customServerAiStep(final boolean inactive) {
+         // Paper end
+         this.level().getProfiler().push("villagerBrain");
+-        if (!inactive) this.getBrain().tick((ServerLevel) this.level(), this); // Paper
 +        // Pufferfish start
-+        if (!inactive) {
-+            if (this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish
-+            this.getBrain().tick((ServerLevel) this.level, this); // Paper
-+         }
++        if (!inactive && this.behaviorTick++ % this.activatedPriority == 0) {
++            this.getBrain().tick((ServerLevel) this.level(), this); // Paper
++        }
 +        // Pufferfish end
-         this.level.getProfiler().pop();
+         this.level().getProfiler().pop();
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index 52780192d6417f8085566e4cdf3a895a83638520..4bd69d648ae68a5d2299727a8d289a2af606f08c 100644
+index d4da9ec6e00bb92b70598ee9a0d0ca5816562378..74696b4218ab39524d155cd9b0bf6c46a4aa46ab 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -38,6 +38,10 @@ import co.aikar.timings.MinecraftTimings;

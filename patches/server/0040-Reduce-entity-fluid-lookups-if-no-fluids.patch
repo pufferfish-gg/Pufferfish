@@ -5,10 +5,10 @@ Subject: [PATCH] Reduce entity fluid lookups if no fluids
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index b4207874c7f0664d8e361adf8e4d32dd54047f50..9c12585057813acc698843782d3bc4f022f7a17c 100644
+index cb5808e25d2a2c91bb462feb7851f2775ada955b..d36cda3b1a121fb123b3a21e1e8e48bbf6f992ca 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -4191,16 +4191,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4321,16 +4321,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public boolean updateFluidHeightAndDoFluidPushing(TagKey<Fluid> tag, double speed) {
@@ -34,7 +34,7 @@ index b4207874c7f0664d8e361adf8e4d32dd54047f50..9c12585057813acc698843782d3bc4f0
              double d1 = 0.0D;
              boolean flag = this.isPushedByFluid();
              boolean flag1 = false;
-@@ -4208,14 +4210,61 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4338,14 +4340,61 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
              int k1 = 0;
              BlockPos.MutableBlockPos blockposition_mutableblockposition = new BlockPos.MutableBlockPos();
  
@@ -42,10 +42,10 @@ index b4207874c7f0664d8e361adf8e4d32dd54047f50..9c12585057813acc698843782d3bc4f0
 -                for (int i2 = k; i2 < l; ++i2) {
 -                    for (int j2 = i1; j2 < j1; ++j2) {
 -                        blockposition_mutableblockposition.set(l1, i2, j2);
--                        FluidState fluid = this.level.getFluidState(blockposition_mutableblockposition);
+-                        FluidState fluid = this.level().getFluidState(blockposition_mutableblockposition);
 +            // Pufferfish start - based off CollisionUtil.getCollisionsForBlocksOrWorldBorder
-+            final int minSection = io.papermc.paper.util.WorldUtil.getMinSection(this.level);
-+            final int maxSection = io.papermc.paper.util.WorldUtil.getMaxSection(this.level);
++            final int minSection = io.papermc.paper.util.WorldUtil.getMinSection(this.level());
++            final int maxSection = io.papermc.paper.util.WorldUtil.getMaxSection(this.level());
 +            final int minBlock = minSection << 4;
 +            final int maxBlock = (maxSection << 4) | 15;
 +
@@ -72,7 +72,7 @@ index b4207874c7f0664d8e361adf8e4d32dd54047f50..9c12585057813acc698843782d3bc4f0
 +                    int minX = currChunkX == minChunkX ? minBlockX & 15 : 0; // coordinate in chunk
 +                    int maxX = currChunkX == maxChunkX ? maxBlockX & 15 : 16; // coordinate in chunk
 +
-+                    net.minecraft.world.level.chunk.ChunkAccess chunk = this.level.getChunkIfLoadedImmediately(currChunkX, currChunkZ);
++                    net.minecraft.world.level.chunk.ChunkAccess chunk = this.level().getChunkIfLoadedImmediately(currChunkX, currChunkZ);
 +                    if (chunk == null) {
 +                        return false; // if we're touching an unloaded chunk then it's false
 +                    }
@@ -96,13 +96,13 @@ index b4207874c7f0664d8e361adf8e4d32dd54047f50..9c12585057813acc698843782d3bc4f0
 +                                FluidState fluid = blocks.get(currX & 15, currY & 15, currZ & 15).getFluidState();
  
                          if (fluid.is(tag)) {
--                            double d2 = (double) ((float) i2 + fluid.getHeight(this.level, blockposition_mutableblockposition));
+-                            double d2 = (double) ((float) i2 + fluid.getHeight(this.level(), blockposition_mutableblockposition));
 +                            blockposition_mutableblockposition.set((currChunkX << 4) + currX, currY, (currChunkZ << 4) + currZ);
-+                            double d2 = (double) ((float) currY + fluid.getHeight(this.level, blockposition_mutableblockposition));
++                            double d2 = (double) ((float) currY + fluid.getHeight(this.level(), blockposition_mutableblockposition));
  
                              if (d2 >= axisalignedbb.minY) {
                                  flag1 = true;
-@@ -4237,9 +4286,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4367,9 +4416,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
                                  // CraftBukkit end
                              }
                          }
@@ -116,18 +116,18 @@ index b4207874c7f0664d8e361adf8e4d32dd54047f50..9c12585057813acc698843782d3bc4f0
              if (vec3d.length() > 0.0D) {
                  if (k1 > 0) {
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
-index 854865f28bcae0fb0c17717c914687f78e951e21..c6297917e94f5a8b4b1447b2c29c44b806ccaff6 100644
+index d4477b0dda6a1ef7bd8323c0d11b636bd071d18e..5d3dd6a61366ae2c185b62bc9198440ef6227927 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
-@@ -27,6 +27,7 @@ public class LevelChunkSection {
+@@ -25,6 +25,7 @@ public class LevelChunkSection {
      public final PalettedContainer<BlockState> states;
      // CraftBukkit start - read/write
      private PalettedContainer<Holder<Biome>> biomes;
 +    public short fluidStateCount; // Pufferfish
      public final com.destroystokyo.paper.util.maplist.IBlockDataList tickingList = new com.destroystokyo.paper.util.maplist.IBlockDataList(); // Paper
  
-     public LevelChunkSection(int i, PalettedContainer<BlockState> datapaletteblock, PalettedContainer<Holder<Biome>> palettedcontainerro) {
-@@ -198,6 +199,7 @@ public class LevelChunkSection {
+     public LevelChunkSection(PalettedContainer<BlockState> datapaletteblock, PalettedContainer<Holder<Biome>> palettedcontainerro) {
+@@ -190,6 +191,7 @@ public class LevelChunkSection {
  
          if (!fluid.isEmpty()) {
              --this.tickingFluidCount;
@@ -135,7 +135,7 @@ index 854865f28bcae0fb0c17717c914687f78e951e21..c6297917e94f5a8b4b1447b2c29c44b8
          }
  
          if (!state.isAir()) {
-@@ -212,6 +214,7 @@ public class LevelChunkSection {
+@@ -204,6 +206,7 @@ public class LevelChunkSection {
  
          if (!fluid1.isEmpty()) {
              ++this.tickingFluidCount;
@@ -143,7 +143,7 @@ index 854865f28bcae0fb0c17717c914687f78e951e21..c6297917e94f5a8b4b1447b2c29c44b8
          }
  
          this.updateKnownBlockInfo(x | (z << 4) | (y << 8), iblockdata1, state); // Paper
-@@ -261,6 +264,7 @@ public class LevelChunkSection {
+@@ -249,6 +252,7 @@ public class LevelChunkSection {
                  if (fluid.isRandomlyTicking()) {
                      this.tickingFluidCount = (short) (this.tickingFluidCount + 1);
                  }

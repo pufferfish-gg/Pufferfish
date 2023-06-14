@@ -5,7 +5,7 @@ Subject: [PATCH] Entity TTL
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 32b1d27550d297c7dfe00e3d91fcda8b752f6279..4a1a0dd4aab35a368185db3e7096353956e8a93b 100644
+index ca7e0cd9e03d7d8fece1f81f684cec202389dc32..2925529336c6d080c4fe5283463f7dc3b2a40738 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -5,7 +5,10 @@ import java.io.File;
@@ -44,10 +44,10 @@ index 32b1d27550d297c7dfe00e3d91fcda8b752f6279..4a1a0dd4aab35a368185db3e70963539
      public static boolean throttleInactiveGoalSelectorTick;
  	private static void inactiveGoalSelectorThrottle() {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 9c12585057813acc698843782d3bc4f022f7a17c..1030b54428b15f387580a2ce47a7a1eb0c8d521b 100644
+index d36cda3b1a121fb123b3a21e1e8e48bbf6f992ca..245774d2d79646aac6fe7a8eac41b90aa5686f47 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -818,6 +818,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -825,6 +825,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      // CraftBukkit end
  
      public void baseTick() {
@@ -57,11 +57,11 @@ index 9c12585057813acc698843782d3bc4f022f7a17c..1030b54428b15f387580a2ce47a7a1eb
 +            return;
 +        }
 +        // Pufferfish end - entity TTL
-         this.level.getProfiler().push("entityBaseTick");
+         this.level().getProfiler().push("entityBaseTick");
          if (firstTick && this instanceof net.minecraft.world.entity.NeutralMob neutralMob) neutralMob.tickInitialPersistentAnger(level); // Paper - Update last hurt when ticking
          this.feetBlockState = null;
 diff --git a/src/main/java/net/minecraft/world/entity/EntityType.java b/src/main/java/net/minecraft/world/entity/EntityType.java
-index 559bce4bbcc03117f52dc2810bad5becddf14a8e..8af0918d3a62de58a4b2af55022c812bb0e46092 100644
+index 1679f0a3d095a7b758b468c77b6d3a4c078b7962..aa5cec6d56d7a8e80861aa4c9b4a74ca3e64be8c 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityType.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityType.java
 @@ -301,6 +301,7 @@ public class EntityType<T extends Entity> implements FeatureElement, EntityTypeT

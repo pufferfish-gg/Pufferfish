@@ -5,21 +5,21 @@ Subject: [PATCH] Patch Paper to use fast item merge raytracing
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index d47b3ac633e7936d30abfda6fc46c2c7412d76fe..453f0f7042bdf204db73be139aa36f211c5455e7 100644
+index 3d41dbe0285f8fec8adae1e93010cf464df9b08c..63f8f2dfc2afddcf3c4960d60e65cb8e29507223 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-@@ -264,10 +264,16 @@ public class ItemEntity extends Entity implements TraceableEntity {
+@@ -269,10 +269,16 @@ public class ItemEntity extends Entity implements TraceableEntity {
                  if (entityitem.isMergable()) {
                      // Paper Start - Fix items merging through walls
-                         if (this.level.paperConfig().fixes.fixItemsMergingThroughWalls) {
+                         if (this.level().paperConfig().fixes.fixItemsMergingThroughWalls) {
 +                            // Pufferfish start - skip the allocations
 +                            /*
                              net.minecraft.world.level.ClipContext rayTrace = new net.minecraft.world.level.ClipContext(this.position(), entityitem.position(),
                                  net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, this);
-                             net.minecraft.world.phys.BlockHitResult rayTraceResult = level.clip(rayTrace);
+                             net.minecraft.world.phys.BlockHitResult rayTraceResult = this.level().clip(rayTrace);
                              if (rayTraceResult.getType() == net.minecraft.world.phys.HitResult.Type.BLOCK) continue;
 +                             */
-+                            if (level.rayTraceDirect(this.position(), entityitem.position(), net.minecraft.world.phys.shapes.CollisionContext.of(this)) ==
++                            if (level().rayTraceDirect(this.position(), entityitem.position(), net.minecraft.world.phys.shapes.CollisionContext.of(this)) ==
 +                                net.minecraft.world.phys.HitResult.Type.BLOCK) continue;
 +                            // Pufferfish end
                          }

@@ -5,13 +5,13 @@ Subject: [PATCH] Add SIMD utilities
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 29400f248b05732d9a7d6ae220aa40f429ba4ad0..b41b186397d013c19436c345be98b785d4bd0295 100644
+index b7c217cb1800f57149b976d906ddb07496b4c47a..dfc71e451ee09073eb4d9d8052dfcff879dc63c9 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -61,6 +61,14 @@ dependencies {
  }
  
- val craftbukkitPackageVersion = "1_19_R3" // Paper
+ val craftbukkitPackageVersion = "1_20_R1" // Paper
 +
 +// Pufferfish Start
 +tasks.withType<JavaCompile> {

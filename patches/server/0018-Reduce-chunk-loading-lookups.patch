@@ -20,26 +20,26 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/world/entity/monster/EnderMan.java b/src/main/java/net/minecraft/world/entity/monster/EnderMan.java
-index f4002ac7cba7d5e41b4f11b98212c625f6a92a65..ff0e09a7387e7dc9ca136d3e48e640b9e9cb4bf3 100644
+index 4616addb05fcc20b1ec6ca1dea01cbefed697acd..c3bb30bbd2e3c6cceefed09f9d495cc4fb09fabf 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/EnderMan.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/EnderMan.java
 @@ -322,11 +322,17 @@ public class EnderMan extends Monster implements NeutralMob {
      private boolean teleport(double x, double y, double z) {
          BlockPos.MutableBlockPos blockposition_mutableblockposition = new BlockPos.MutableBlockPos(x, y, z);
  
--        while (blockposition_mutableblockposition.getY() > this.level.getMinBuildHeight() && !this.level.getBlockState(blockposition_mutableblockposition).getMaterial().blocksMotion()) {
+-        while (blockposition_mutableblockposition.getY() > this.level().getMinBuildHeight() && !this.level().getBlockState(blockposition_mutableblockposition).blocksMotion()) {
 +        // Pufferfish start - single chunk lookup
-+        net.minecraft.world.level.chunk.LevelChunk chunk = this.level.getChunkIfLoaded(blockposition_mutableblockposition);
++        net.minecraft.world.level.chunk.LevelChunk chunk = this.level().getChunkIfLoaded(blockposition_mutableblockposition);
 +        if (chunk == null) {
 +            return false;
 +        }
 +        // Pufferfish end
-+        while (blockposition_mutableblockposition.getY() > this.level.getMinBuildHeight() && !chunk.getBlockState(blockposition_mutableblockposition).getMaterial().blocksMotion()) { // Pufferfish
++        while (blockposition_mutableblockposition.getY() > this.level().getMinBuildHeight() && !chunk.getBlockState(blockposition_mutableblockposition).blocksMotion()) { // Pufferfish
              blockposition_mutableblockposition.move(Direction.DOWN);
          }
  
--        BlockState iblockdata = this.level.getBlockState(blockposition_mutableblockposition);
+-        BlockState iblockdata = this.level().getBlockState(blockposition_mutableblockposition);
 +        BlockState iblockdata = chunk.getBlockState(blockposition_mutableblockposition); // Pufferfish
-         boolean flag = iblockdata.getMaterial().blocksMotion();
+         boolean flag = iblockdata.blocksMotion();
          boolean flag1 = iblockdata.getFluidState().is(FluidTags.WATER);
  

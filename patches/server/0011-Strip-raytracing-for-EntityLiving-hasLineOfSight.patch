@@ -27,26 +27,26 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 645f957359967b168b40550b16ba880718a59465..775c4bc04c8464b66855901b7aae5dce574eb4df 100644
+index e41cfbbac28276e1eb4c1bdb571d28b4babbf63c..3c0be5bbc6a71839b83ffaaa294d0517777e6140 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -3618,7 +3618,10 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3667,7 +3667,10 @@ public abstract class LivingEntity extends Entity implements Attackable {
              Vec3 vec3d1 = new Vec3(entity.getX(), entity.getEyeY(), entity.getZ());
  
              // Paper - diff on change - used in CraftLivingEntity#hasLineOfSight(Location) and CraftWorld#lineOfSightExists
--            return vec3d1.distanceToSqr(vec3d) > 128D * 128D ? false : this.level.clip(new ClipContext(vec3d, vec3d1, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getType() == HitResult.Type.MISS; // Paper - use distanceToSqr
+-            return vec3d1.distanceToSqr(vec3d) > 128D * 128D ? false : this.level().clip(new ClipContext(vec3d, vec3d1, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getType() == HitResult.Type.MISS;
 +            // Pufferfish start
-+            //return vec3d1.distanceToSqr(vec3d) > 128D * 128D ? false : this.level.clip(new ClipContext(vec3d, vec3d1, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getType() == HitResult.Type.MISS; // Paper - use distanceToSqr
-+            return vec3d1.distanceToSqr(vec3d) > 128D * 128D ? false : this.level.rayTraceDirect(vec3d, vec3d1, net.minecraft.world.phys.shapes.CollisionContext.of(this)) == net.minecraft.world.phys.BlockHitResult.Type.MISS;
++            //return vec3d1.distanceToSqr(vec3d) > 128D * 128D ? false : this.level().clip(new ClipContext(vec3d, vec3d1, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getType() == HitResult.Type.MISS;
++            return vec3d1.distanceToSqr(vec3d) > 128D * 128D ? false : this.level().rayTraceDirect(vec3d, vec3d1, net.minecraft.world.phys.shapes.CollisionContext.of(this)) == net.minecraft.world.phys.BlockHitResult.Type.MISS;
 +            // Pufferfish end
          }
      }
  
 diff --git a/src/main/java/net/minecraft/world/level/BlockGetter.java b/src/main/java/net/minecraft/world/level/BlockGetter.java
-index 2ee9e8e3c1a28c1823de8e1fe421cc1f3e72f384..cf4a8084158b10bf047d418dda375f8c1fd3216e 100644
+index 0e8746759752b692668886370181aa5db1fd0bb0..58e5ce2afabf480f5dfd9adf43f8fc12666861c6 100644
 --- a/src/main/java/net/minecraft/world/level/BlockGetter.java
 +++ b/src/main/java/net/minecraft/world/level/BlockGetter.java
-@@ -73,6 +73,16 @@ public interface BlockGetter extends LevelHeightAccessor {
+@@ -68,6 +68,16 @@ public interface BlockGetter extends LevelHeightAccessor {
          });
      }
  
@@ -64,10 +64,10 @@ index 2ee9e8e3c1a28c1823de8e1fe421cc1f3e72f384..cf4a8084158b10bf047d418dda375f8c
      default BlockHitResult clip(ClipContext raytrace1, BlockPos blockposition) {
              // Paper start - Prevent raytrace from loading chunks
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 973ecd50f9cb6b86c353586e84d15dcb118ccb60..34f11b6dc53a75da1fa416283e1cd1969eb1d50d 100644
+index 147d802d9207e358fdb2d1c7806fc2f634dcfd98..418cfbc84115031651970dee7d9f1c988b64c3a7 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -413,6 +413,91 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -412,6 +412,91 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
          return null;
      }
  

@@ -8,20 +8,20 @@ new loot context is created every time a player moves (along with a lot
 of other times) the constant cloning churns out a lot of useless
 objects.
 
-diff --git a/src/main/java/net/minecraft/world/level/storage/loot/LootContext.java b/src/main/java/net/minecraft/world/level/storage/loot/LootContext.java
-index 35f9b11a3a61976c952a2c1c64bb2a932538f54f..9e9ac64764cf0a84e25e75d8d6f516cde6047284 100644
---- a/src/main/java/net/minecraft/world/level/storage/loot/LootContext.java
-+++ b/src/main/java/net/minecraft/world/level/storage/loot/LootContext.java
-@@ -41,8 +41,10 @@ public class LootContext {
+diff --git a/src/main/java/net/minecraft/world/level/storage/loot/LootParams.java b/src/main/java/net/minecraft/world/level/storage/loot/LootParams.java
+index e43d07ccdd36f0c9f5b8e9c74cf0d87e17eec66a..8e441f7c2b2d911a0c0111aaa231fc6adae08730 100644
+--- a/src/main/java/net/minecraft/world/level/storage/loot/LootParams.java
++++ b/src/main/java/net/minecraft/world/level/storage/loot/LootParams.java
+@@ -21,8 +21,10 @@ public class LootParams {
+ 
+     public LootParams(ServerLevel world, Map<LootContextParam<?>, Object> parameters, Map<ResourceLocation, LootParams.DynamicDrop> dynamicDrops, float luck) {
          this.level = world;
-         this.lootTables = tableGetter;
-         this.conditions = conditionGetter;
--        this.params = ImmutableMap.copyOf(parameters);
--        this.dynamicDrops = ImmutableMap.copyOf(drops);
+-        this.params = parameters;
+-        this.dynamicDrops = dynamicDrops;
 +        // Pufferfish start - use unmodifiable maps instead of immutable ones to skip the copy
 +        this.params = java.util.Collections.unmodifiableMap(parameters);
-+        this.dynamicDrops = java.util.Collections.unmodifiableMap(drops);
++        this.dynamicDrops = java.util.Collections.unmodifiableMap(dynamicDrops);
 +        // Pufferfish end
+         this.luck = luck;
      }
  
-     public boolean hasParam(LootContextParam<?> parameter) {
