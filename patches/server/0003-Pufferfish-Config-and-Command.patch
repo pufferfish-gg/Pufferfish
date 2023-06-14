@@ -5,7 +5,7 @@ Subject: [PATCH] Pufferfish Config and Command
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 3a78b720c426510bb9f485355f41671ab7a4e8d7..e0e116e7d1dc12286dd25542ab75a36be5b43e4f 100644
+index 3a78b720c426510bb9f485355f41671ab7a4e8d7..5043d2f637011cf5453b91e26e0e6b6b30272843 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -47,6 +47,13 @@ dependencies {
@@ -14,7 +14,7 @@ index 3a78b720c426510bb9f485355f41671ab7a4e8d7..e0e116e7d1dc12286dd25542ab75a36b
  
 +    // Pufferfish start
 +    implementation("org.yaml:snakeyaml:1.32")
-+    implementation ("me.carleslc.Simple-YAML:Simple-Yaml:1.8.2") {
++    implementation ("me.carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
 +        exclude(group="org.yaml", module="snakeyaml")
 +    }
 +    // Pufferfish end
