@@ -96,10 +96,10 @@ index 2cba34a6feb83cfb75e50be1b727b168be544fff..2931b2de14f98e974d6622ab8ed8cdd0
                      if (false && this.shouldDiscardEntity(entity)) { // CraftBukkit - We prevent spawning in general, so this butchering is not needed
                          entity.discard();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 57d10870ffa742cce811fccb2ca1aabea99f17c9..3c84ae70c6ff4eb9d493323f7a53c4607a9d388c 100644
+index a992a9708fed700fe66992f0605b71edbb159088..a5d29500a4d0571a18b5a879f72511c44fc2b61f 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -421,6 +421,11 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -433,6 +433,11 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return this.originWorld;
      }
      // Paper end
@@ -362,7 +362,7 @@ index e30d5ae3e2900f43d7cafde71b8196f26e872841..c4ddf2661bca728d504918171295e10e
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index d4da9ec6e00bb92b70598ee9a0d0ca5816562378..74696b4218ab39524d155cd9b0bf6c46a4aa46ab 100644
+index eda7f0bb42f7269676d5d2193e1155912ede9920..478622952b04293c237cdebd064c21a34bf25721 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -38,6 +38,10 @@ import co.aikar.timings.MinecraftTimings;
