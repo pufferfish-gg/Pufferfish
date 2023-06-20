@@ -44,22 +44,22 @@ index ca7e0cd9e03d7d8fece1f81f684cec202389dc32..2925529336c6d080c4fe5283463f7dc3
      public static boolean throttleInactiveGoalSelectorTick;
  	private static void inactiveGoalSelectorThrottle() {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 3e8afc038a608ee98a26ea07899f33b3ac8cae15..641c4af6bd13c87c26f7932dd5f6f4d2ee20e3c0 100644
+index 3e8afc038a608ee98a26ea07899f33b3ac8cae15..ad6aa8dc80679a0ee60bedbff1c5f0350a284316 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -838,6 +838,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
-     // CraftBukkit end
+@@ -825,6 +825,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+     }
  
-     public void baseTick() {
+     public void tick() {
 +        // Pufferfish start - entity TTL
 +        if (type != EntityType.PLAYER && type.ttl >= 0 && this.tickCount >= type.ttl) {
 +            remove(RemovalReason.DISCARDED);
 +            return;
 +        }
 +        // Pufferfish end - entity TTL
-         this.level().getProfiler().push("entityBaseTick");
-         if (firstTick && this instanceof net.minecraft.world.entity.NeutralMob neutralMob) neutralMob.tickInitialPersistentAnger(level); // Paper - Update last hurt when ticking
-         this.feetBlockState = null;
+         this.baseTick();
+     }
+ 
 diff --git a/src/main/java/net/minecraft/world/entity/EntityType.java b/src/main/java/net/minecraft/world/entity/EntityType.java
 index 1679f0a3d095a7b758b468c77b6d3a4c078b7962..aa5cec6d56d7a8e80861aa4c9b4a74ca3e64be8c 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityType.java
