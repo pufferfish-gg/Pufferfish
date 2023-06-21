@@ -44,7 +44,7 @@ index ca7e0cd9e03d7d8fece1f81f684cec202389dc32..2925529336c6d080c4fe5283463f7dc3
      public static boolean throttleInactiveGoalSelectorTick;
  	private static void inactiveGoalSelectorThrottle() {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 3e8afc038a608ee98a26ea07899f33b3ac8cae15..ad6aa8dc80679a0ee60bedbff1c5f0350a284316 100644
+index 3e8afc038a608ee98a26ea07899f33b3ac8cae15..1aa184cf7a97364d7b9e4d628c0a6c1dc769ba6e 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -825,6 +825,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
@@ -53,7 +53,7 @@ index 3e8afc038a608ee98a26ea07899f33b3ac8cae15..ad6aa8dc80679a0ee60bedbff1c5f035
      public void tick() {
 +        // Pufferfish start - entity TTL
 +        if (type != EntityType.PLAYER && type.ttl >= 0 && this.tickCount >= type.ttl) {
-+            remove(RemovalReason.DISCARDED);
++            discard();
 +            return;
 +        }
 +        // Pufferfish end - entity TTL
