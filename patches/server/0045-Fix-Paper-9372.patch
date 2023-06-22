@@ -5,7 +5,7 @@ Subject: [PATCH] Fix Paper 9372
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 9d46536f80b5b3e6641fd377c02166a431edfd77..0a4b9921d00c76f8893c53a0bfe7bdf6055bf803 100644
+index 9d46536f80b5b3e6641fd377c02166a431edfd77..8a1fde50b82a8b0718ae04124c2611b7cff4bcd6 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -1245,6 +1245,7 @@ public class ServerPlayer extends Player {
@@ -20,7 +20,7 @@ index 9d46536f80b5b3e6641fd377c02166a431edfd77..0a4b9921d00c76f8893c53a0bfe7bdf6
      public void moveTo(double x, double y, double z) {
          super.moveTo(x, y, z);
          this.connection.resetPosition();
-+                this.mainSupportingBlockPos = Optional.empty(); // Pufferfish - Fix paper 9372
++        this.mainSupportingBlockPos = Optional.empty(); // Pufferfish - Fix paper 9372
      }
  
      @Override
@@ -28,7 +28,7 @@ index 9d46536f80b5b3e6641fd377c02166a431edfd77..0a4b9921d00c76f8893c53a0bfe7bdf6
  
              this.connection.send(new ClientboundSetCameraPacket(this.camera));
              this.connection.resetPosition();
-+                this.mainSupportingBlockPos = Optional.empty(); // Pufferfish - Fix paper 9372
++            this.mainSupportingBlockPos = Optional.empty(); // Pufferfish - Fix paper 9372
          }
      }
  
@@ -36,7 +36,7 @@ index 9d46536f80b5b3e6641fd377c02166a431edfd77..0a4b9921d00c76f8893c53a0bfe7bdf6
      public void forceSetPositionRotation(double x, double y, double z, float yaw, float pitch) {
          this.moveTo(x, y, z, yaw, pitch);
          this.connection.resetPosition();
-+                this.mainSupportingBlockPos = Optional.empty(); // Pufferfish - Fix paper 9372
++        this.mainSupportingBlockPos = Optional.empty(); // Pufferfish - Fix paper 9372
      }
  
      @Override
