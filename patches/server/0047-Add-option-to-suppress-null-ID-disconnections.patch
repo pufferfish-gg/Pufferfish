@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kevin Raneri <kevin.raneri@gmail.com>
+Date: Sat, 24 Jun 2023 17:23:23 -0400
+Subject: [PATCH] Add option to suppress null ID disconnections
+
+This can help to hide annoying scanning bots from showing up in console.
+
+diff --git a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
+index 2ff578e4a953ffcf5176815ba8e3f06f73499989..878001928327d92423d5f7f6d5ce8772d6fa477f 100644
+--- a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
++++ b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
+@@ -204,6 +204,7 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener,
+ 
+     @Override
+     public void onDisconnect(Component reason) {
++        if (gg.pufferfish.pufferfish.PufferfishConfig.suppressNullIdDisconnections && this.gameProfile != null && this.gameProfile.getId() == null && "Disconnected".equals(reason.getString())) return; // Pufferfish
+         ServerLoginPacketListenerImpl.LOGGER.info("{} lost connection: {}", this.getUserName(), reason.getString());
+     }
+ 
