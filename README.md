@@ -4,7 +4,7 @@
 [downloads]: https://pufferfish.host/downloads
 [optguide]: https://docs.pufferfish.host/optimization/pufferfish-server-optimization-guide/
 
-# Pufferfish
+# Kiwish
 A highly optimized Paper fork designed for large servers requiring both maximum performance, stability, and "enterprise" features.
 
 [Homepage][home] - [Downloads][downloads] - [Discord][discord] - [Knowledgebase][knowledgebase] - [Optimization Guide][optguide]
