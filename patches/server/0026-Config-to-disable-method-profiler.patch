@@ -34,10 +34,10 @@ index 7fb4a337ab7a638f264b7cd249af048aac89102c..7ca6c81afc99d42d2f39b4b6d7f5e8a1
      }
  
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 822f0ea428f8aeed4e85029fa01178a8e0997ea4..5b9ea5095118b402070fe1af772e0386ad9c29be 100644
+index e3c099bdd613799dfe75c53f01f80233aa8726ec..38b581b2623a2a6d4db6fdb9c578be0fe9dc5da2 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -1466,6 +1466,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1467,6 +1467,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
      }
  
      public ProfilerFiller getProfiler() {
