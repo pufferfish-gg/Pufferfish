@@ -35,21 +35,10 @@ index ac56a5ba83184ee7b24b58cc25aa3d5aa953caee..9a8896f51be5028724563cd505478247
 +	
  }
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index e11d7283662834047b2ff81a2fd25a4263792deb..6fa0ec9e2f3384dac5ed4585368f6bf1fc590673 100644
+index e11d7283662834047b2ff81a2fd25a4263792deb..6f0f9037ca1c4c483507a2bb7f6ec86d019c8782 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -393,6 +393,10 @@ public abstract class LivingEntity extends Entity implements Attackable {
-         return Mth.lerp(tickDelta, this.swimAmountO, this.swimAmount);
-     }
- 
-+    public boolean shouldCheckForSuffocation() {
-+        return (!gg.pufferfish.pufferfish.PufferfishConfig.enableSuffocationOptimization || (tickCount % 10 == 0 && couldPossiblyBeHurt(1.0F)))
-+    }
-+
-     @Override
-     public void baseTick() {
-         this.oAttackAnim = this.attackAnim;
-@@ -414,7 +418,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -414,7 +414,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
              boolean flag = this instanceof net.minecraft.world.entity.player.Player;
  
              if (!this.level().isClientSide) {
@@ -58,7 +47,7 @@ index e11d7283662834047b2ff81a2fd25a4263792deb..6fa0ec9e2f3384dac5ed4585368f6bf1
                      this.hurt(this.damageSources().inWall(), 1.0F);
                  } else if (flag && !this.level().getWorldBorder().isWithinBounds(this.getBoundingBox())) {
                      double d0 = this.level().getWorldBorder().getDistanceToBorder(this) + this.level().getWorldBorder().getDamageSafeZone();
-@@ -1369,6 +1373,15 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -1369,6 +1369,19 @@ public abstract class LivingEntity extends Entity implements Attackable {
          return this.getHealth() <= 0.0F;
      }
  
@@ -69,23 +58,29 @@ index e11d7283662834047b2ff81a2fd25a4263792deb..6fa0ec9e2f3384dac5ed4585368f6bf1
 +        }
 +        return true;
 +    }
++
++    public boolean shouldCheckForSuffocation() {
++        return (!gg.pufferfish.pufferfish.PufferfishConfig.enableSuffocationOptimization || (tickCount % 10 == 0 && couldPossiblyBeHurt(1.0F)))
++    }
 +    // Pufferfish end
 +
      @Override
      public boolean hurt(DamageSource source, float amount) {
          if (this.isInvulnerableTo(source)) {
 diff --git a/src/main/java/net/minecraft/world/entity/boss/wither/WitherBoss.java b/src/main/java/net/minecraft/world/entity/boss/wither/WitherBoss.java
-index 1e07febcf7a3dfb281728cc5e3e4f15dd776d7e0..2ae41d07ff0db1d3f808a7b94831445993128894 100644
+index 1e07febcf7a3dfb281728cc5e3e4f15dd776d7e0..c65ab566c6241dd6a44bd11a449ef0c4b2f6dc65 100644
 --- a/src/main/java/net/minecraft/world/entity/boss/wither/WitherBoss.java
 +++ b/src/main/java/net/minecraft/world/entity/boss/wither/WitherBoss.java
-@@ -150,6 +150,11 @@ public class WitherBoss extends Monster implements PowerableMob, RangedAttackMob
+@@ -150,6 +150,13 @@ public class WitherBoss extends Monster implements PowerableMob, RangedAttackMob
          this.bossEvent.setName(this.getDisplayName());
      }
  
++    // Pufferfish start - optimize suffocation
 +    @Override
 +    public boolean shouldCheckForSuffocation() {
 +        return true;
 +    }
++    // Pufferfish end
 +
      @Override
      protected SoundEvent getAmbientSound() {
