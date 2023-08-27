@@ -24,10 +24,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/world/item/crafting/ShapelessRecipe.java b/src/main/java/net/minecraft/world/item/crafting/ShapelessRecipe.java
-index f4f3f3a19d3cadaef1ae1a47daa68251a983dcf2..8da06f8bea0239c5206d5d4f4ff48bdeb0a89f9d 100644
+index 2e60bdc44c33d434bfd9ca5bf8f75de799c6768c..565318c2afaa1661ed9963453a6354dff499f47a 100644
 --- a/src/main/java/net/minecraft/world/item/crafting/ShapelessRecipe.java
 +++ b/src/main/java/net/minecraft/world/item/crafting/ShapelessRecipe.java
-@@ -27,8 +27,13 @@ public class ShapelessRecipe implements CraftingRecipe {
+@@ -27,8 +27,13 @@ public class ShapelessRecipe extends io.papermc.paper.inventory.recipe.RecipeBoo
      final CraftingBookCategory category;
      final ItemStack result;
      final NonNullList<Ingredient> ingredients;
@@ -41,7 +41,7 @@ index f4f3f3a19d3cadaef1ae1a47daa68251a983dcf2..8da06f8bea0239c5206d5d4f4ff48bde
          this.id = id;
          this.group = group;
          this.category = category;
-@@ -82,6 +87,28 @@ public class ShapelessRecipe implements CraftingRecipe {
+@@ -83,6 +88,28 @@ public class ShapelessRecipe extends io.papermc.paper.inventory.recipe.RecipeBoo
      }
  
      public boolean matches(CraftingContainer inventory, Level world) {
@@ -68,8 +68,8 @@ index f4f3f3a19d3cadaef1ae1a47daa68251a983dcf2..8da06f8bea0239c5206d5d4f4ff48bde
 +        // Pufferfish end
 +
          StackedContents autorecipestackmanager = new StackedContents();
+         autorecipestackmanager.initialize(this); // Paper - better exact choice recipes
          int i = 0;
- 
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
 index f7ea77dd82d978ad307f99c743efacfb34478b3d..009ab06182359862b8f543030ec4fe4e2572c93c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java

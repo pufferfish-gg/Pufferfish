@@ -5,7 +5,7 @@ Subject: [PATCH] Disable Paper timings by default
 
 
 diff --git a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
-index 4a8286c78a9a5e305b19cc5d316bc73a78e49b4d..54bca103347e89f116fb7fbf37449a32ac094286 100644
+index 019d3bbd78fb0b06861979d223915fedb6c99442..2ba11c304ecea73ad3289b471ff304319a837d45 100644
 --- a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 @@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component;
@@ -24,7 +24,7 @@ index 4a8286c78a9a5e305b19cc5d316bc73a78e49b4d..54bca103347e89f116fb7fbf37449a32
  
  @SuppressWarnings({"CanBeFinal", "FieldCanBeLocal", "FieldMayBeFinal", "NotNullFieldNotInitialized", "InnerClassMayBeStatic"})
  public class GlobalConfiguration extends ConfigurationPart {
-@@ -51,6 +53,7 @@ public class GlobalConfiguration extends ConfigurationPart {
+@@ -90,6 +92,7 @@ public class GlobalConfiguration extends ConfigurationPart {
  
      public class Timings extends ConfigurationPart.Post {
          public boolean enabled = true;
@@ -32,7 +32,7 @@ index 4a8286c78a9a5e305b19cc5d316bc73a78e49b4d..54bca103347e89f116fb7fbf37449a32
          public boolean verbose = true;
          public String url = "https://timings.aikar.co/";
          public boolean serverNamePrivacy = false;
-@@ -64,6 +67,14 @@ public class GlobalConfiguration extends ConfigurationPart {
+@@ -103,6 +106,14 @@ public class GlobalConfiguration extends ConfigurationPart {
  
          @Override
          public void postProcess() {
