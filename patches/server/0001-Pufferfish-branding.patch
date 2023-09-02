@@ -204,10 +204,10 @@ index 0000000000000000000000000000000000000000..893d8c0946ef71a0561221dd76bffff0
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 3238cbcba567b1242c77e41f6b6f19a8d157fb4e..2f560a268fd30c2e755f38ff0e2106b349ef87c6 100644
+index 67ee3a4ca8a6cdeb275653d492a1fea8037c51fb..0b9dd63d9d8a37223d78dc56b0b482a03e422914 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1693,7 +1693,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1692,7 +1692,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
@@ -217,7 +217,7 @@ index 3238cbcba567b1242c77e41f6b6f19a8d157fb4e..2f560a268fd30c2e755f38ff0e2106b3
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 54f27d91f941235a99e341ed84531ad7f0840728..692ed5bccffa86dc7e934f4db3e7e7b3bbd779f8 100644
+index ec4b73321205b472f19fa5bd4ad95893020d1340..2d50470761282edfe441021bbb152f9aa1fb2f77 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -265,7 +265,7 @@ import javax.annotation.Nullable; // Paper
@@ -230,7 +230,7 @@ index 54f27d91f941235a99e341ed84531ad7f0840728..692ed5bccffa86dc7e934f4db3e7e7b3
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 83cef5ec27c31f133a23cd27349f722799c786ea..1adf1ab6af94b561dc8cbbd3e5746e0bb2a11d41 100644
+index 719e7103f7dfdc30f1cefd24a3fa572fa0ac8b1e..2b4581f92543c11f31bcc1417e90d7f90b2aea20 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 @@ -470,7 +470,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
