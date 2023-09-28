@@ -6,7 +6,7 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index fb98936bb8a5488db75d676c5bcb4060597fbbf8..c6254bc5b9e2b65cd0f9f5ffa2d0b0787649c885 100644
+index 7e0580bbd0a557c7bb269507a99d25db07bf31f1..9af0eb5b7cef9237c03dc6aefaa02923c25bab8c 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -13,8 +13,12 @@ configurations.named(log4jPlugins.compileClasspathConfigurationName) {
@@ -33,6 +33,15 @@ index fb98936bb8a5488db75d676c5bcb4060597fbbf8..c6254bc5b9e2b65cd0f9f5ffa2d0b078
              "Implementation-Vendor" to date, // Paper
              "Specification-Title" to "Bukkit",
              "Specification-Version" to project.version,
+@@ -205,7 +209,5 @@ val runtimeClasspathForRunDev = sourceSets.main.flatMap { src ->
+ }
+ tasks.registerRunTask("runDev") {
+     description = "Spin up a non-relocated Mojang-mapped test server"
+-    classpath(tasks.filterProjectDir.flatMap { it.outputJar })
+-    classpath(runtimeClasspathForRunDev)
+-    jvmArgs("-DPaper.isRunDev=true")
++    classpath(sourceSets.main.map { it.runtimeClasspath })
+ }
 diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
 index 4b002e8b75d117b726b0de274a76d3596fce015b..692c962193cf9fcc6801fc93f3220bdc673d527b 100644
 --- a/src/main/java/com/destroystokyo/paper/Metrics.java
@@ -217,7 +226,7 @@ index 67ee3a4ca8a6cdeb275653d492a1fea8037c51fb..0b9dd63d9d8a37223d78dc56b0b482a0
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index ec4b73321205b472f19fa5bd4ad95893020d1340..2d50470761282edfe441021bbb152f9aa1fb2f77 100644
+index 74d06790de674cbd230a0b14ac9a6b614c9f84ef..81ac4dbcf205bbd023d3ea8d0cccc5b6de04bc48 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -265,7 +265,7 @@ import javax.annotation.Nullable; // Paper

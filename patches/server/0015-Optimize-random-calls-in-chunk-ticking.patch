@@ -34,7 +34,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 75b0278fa8f7522ee6b8905d61e6fc0eca1a4d5c..6e3b2863f04419ee6914ac3fd4f12a4fe78d16b7 100644
+index 3ee97ad8af60978a73eb78efb3597620ef3ed314..fe1a9c646b09d11e7fa2186afbeb70b680ad2b57 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 @@ -556,6 +556,7 @@ public class ServerChunkCache extends ChunkSource {

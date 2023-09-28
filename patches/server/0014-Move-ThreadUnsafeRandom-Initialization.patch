@@ -21,7 +21,7 @@ index 18aac3da3c88f33b1a71a5920a8daa27e9723913..f5ee5341fa51855048f3a0b7f2acc491
  
      public void tickChunk(LevelChunk chunk, int randomTickSpeed) {
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 418cfbc84115031651970dee7d9f1c988b64c3a7..822f0ea428f8aeed4e85029fa01178a8e0997ea4 100644
+index 7d54c79f46f99f5500e9cb1f486037cafb27ee3a..a095b16d35588b815475bcd03ecfa3db09db9d20 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -273,6 +273,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {

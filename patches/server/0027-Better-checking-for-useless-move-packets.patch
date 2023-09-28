@@ -5,7 +5,7 @@ Subject: [PATCH] Better checking for useless move packets
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 6670e657e08e130f7e0368f418379fd1ece00cdf..e921b6db8905a8676a45e36564d877075afb081f 100644
+index 196280f54e397c69d32bd4d1f6ae666efdd93773..8ab959dd588b5154b63e133b2e937fa2d0ab8e52 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -180,7 +180,8 @@ public class ServerEntity {
