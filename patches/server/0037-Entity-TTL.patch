@@ -44,10 +44,10 @@ index ca7e0cd9e03d7d8fece1f81f684cec202389dc32..2925529336c6d080c4fe5283463f7dc3
      public static boolean throttleInactiveGoalSelectorTick;
  	private static void inactiveGoalSelectorThrottle() {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 0e5be6b135d3b324603204e4a257148e64f4e07a..36795968f4c296f680f79cc5a795391ae13c64e4 100644
+index e55e17e946291765b1685f5720e78c7944854d3d..505ed0f8f933428192f5fc806ff52d84acea7f99 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -826,6 +826,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -771,6 +771,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public void tick() {
@@ -61,10 +61,10 @@ index 0e5be6b135d3b324603204e4a257148e64f4e07a..36795968f4c296f680f79cc5a795391a
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/EntityType.java b/src/main/java/net/minecraft/world/entity/EntityType.java
-index 1679f0a3d095a7b758b468c77b6d3a4c078b7962..aa5cec6d56d7a8e80861aa4c9b4a74ca3e64be8c 100644
+index ebf05a484175548c0e411adfd35fd1f648925fed..2561e74ffdf595a9b6ae13dcd738662c772db442 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityType.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityType.java
-@@ -301,6 +301,7 @@ public class EntityType<T extends Entity> implements FeatureElement, EntityTypeT
+@@ -302,6 +302,7 @@ public class EntityType<T extends Entity> implements FeatureElement, EntityTypeT
      private final int clientTrackingRange;
      private final int updateInterval;
      public boolean dabEnabled = false; // Pufferfish

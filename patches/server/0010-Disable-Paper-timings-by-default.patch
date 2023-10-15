@@ -5,7 +5,7 @@ Subject: [PATCH] Disable Paper timings by default
 
 
 diff --git a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
-index 3bc7230ca62ebe3426da293e436a962bb0134f85..61f31094ae81fb11a2d5b866ae45637614661e6c 100644
+index a6f58b3457b7477015c5c6d969e7d83017dd3fa1..a27ee205d13dda890646ebf451076f383de0728b 100644
 --- a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 @@ -8,6 +8,7 @@ import net.kyori.adventure.text.Component;
@@ -14,9 +14,9 @@ index 3bc7230ca62ebe3426da293e436a962bb0134f85..61f31094ae81fb11a2d5b866ae456376
  import net.minecraft.network.protocol.game.ServerboundPlaceRecipePacket;
 +import org.bukkit.Bukkit; // Pufferfish
  import org.checkerframework.checker.nullness.qual.Nullable;
+ import org.slf4j.Logger;
  import org.spongepowered.configurate.objectmapping.ConfigSerializable;
- import org.spongepowered.configurate.objectmapping.meta.Comment;
-@@ -17,6 +18,7 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
+@@ -19,6 +20,7 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
  import java.util.List;
  import java.util.Map;
  import java.util.Objects;
@@ -24,18 +24,18 @@ index 3bc7230ca62ebe3426da293e436a962bb0134f85..61f31094ae81fb11a2d5b866ae456376
  
  @SuppressWarnings({"CanBeFinal", "FieldCanBeLocal", "FieldMayBeFinal", "NotNullFieldNotInitialized", "InnerClassMayBeStatic"})
  public class GlobalConfiguration extends ConfigurationPart {
-@@ -91,6 +93,7 @@ public class GlobalConfiguration extends ConfigurationPart {
- 
-     public class Timings extends ConfigurationPart.Post {
+@@ -96,6 +98,7 @@ public class GlobalConfiguration extends ConfigurationPart {
+     @Deprecated(forRemoval = true)
+     public class Timings extends ConfigurationPart {
          public boolean enabled = true;
 +        public boolean reallyEnabled = false;
          public boolean verbose = true;
          public String url = "https://timings.aikar.co/";
          public boolean serverNamePrivacy = false;
-@@ -104,6 +107,14 @@ public class GlobalConfiguration extends ConfigurationPart {
+@@ -109,6 +112,14 @@ public class GlobalConfiguration extends ConfigurationPart {
  
-         @Override
-         public void postProcess() {
+         @PostProcess
+         private void postProcess() {
 +            // Pufferfish start
 +            if (enabled && !reallyEnabled) {
 +                Bukkit.getLogger().log(Level.WARNING, "[Pufferfish] To improve performance, timings have been disabled by default");
