@@ -34,7 +34,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 195351625e55020dd2bf18d96e27061796ce2acc..19a4cde73720bf4e4e2abff5a0dc7075b49e0f17 100644
+index c4cfe270a38170de4c3f0498ff0b6034c0bbbcf8..5d9a1855cdab1a25ad22ad096c68e55143efa821 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 @@ -524,6 +524,7 @@ public class ServerChunkCache extends ChunkSource {
@@ -68,7 +68,7 @@ index 715a622a11b295badb0821376fec721f9c6ecaed..2192db61ced4434c2c643599b5d2dcc1
  
              if (this.isRainingAt(blockposition)) {
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-index 4abec88caab4116cfa318f7b66c6b1a8346a7401..7edc6f1e642d01299117680edc79c67225c2053c 100644
+index 3e9758fa40bf93fe3d315cc66389193bd57bc393..b78476223637722efe12520d3c2e301603abd8a1 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -86,6 +86,18 @@ public class LevelChunk extends ChunkAccess {
@@ -90,7 +90,7 @@ index 4abec88caab4116cfa318f7b66c6b1a8346a7401..7edc6f1e642d01299117680edc79c672
      public LevelChunk(Level world, ChunkPos pos) {
          this(world, pos, UpgradeData.EMPTY, new LevelChunkTicks<>(), new LevelChunkTicks<>(), 0L, (LevelChunkSection[]) null, (LevelChunk.PostLoadProcessor) null, (BlendingData) null);
      }
-@@ -113,6 +125,8 @@ public class LevelChunk extends ChunkAccess {
+@@ -109,6 +121,8 @@ public class LevelChunk extends ChunkAccess {
          this.postLoad = entityLoader;
          this.blockTicks = blockTickScheduler;
          this.fluidTicks = fluidTickScheduler;
