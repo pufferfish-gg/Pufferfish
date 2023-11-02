@@ -5,10 +5,10 @@ Subject: [PATCH] Reduce entity allocations
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index cf5c5908435514809675289b51c6927cecda7553..d2816f8386120bb5cd40fb654a62641c325444d6 100644
+index 764a05ad09921383e4d2a2b6def163046c76dbcf..18abeb44389c4b9550dd5e2fd2efb1911dd369e6 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -436,6 +436,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -437,6 +437,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      // Pufferfish start
      public boolean activatedPriorityReset = false; // DAB
      public int activatedPriority = gg.pufferfish.pufferfish.PufferfishConfig.maximumActivationPrio; // golf score

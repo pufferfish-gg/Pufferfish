@@ -6,7 +6,7 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index a79461457ea19339f47572c70705d655ebc55276..7a021a4e1e6bb8a5009f09f705977b2061a947c1 100644
+index 79beac737c17412913983614bd478d33e3c6ed58..177c7cc42f12150bb3b2f170c17a958442d622d2 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -13,8 +13,12 @@ configurations.named(log4jPlugins.compileClasspathConfigurationName) {
@@ -213,7 +213,7 @@ index 0000000000000000000000000000000000000000..893d8c0946ef71a0561221dd76bffff0
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 97745f0bab8d82d397c6c2a5775aed92bca0a034..bbc30dd035a8b891fbb7f5d32b936c7482f64cde 100644
+index 8f31413c939cc2b0454ad3d9a1b618dbae449d00..273d496dc9bc484e071fce7543059fe7ec0388f2 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1697,7 +1697,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -226,7 +226,7 @@ index 97745f0bab8d82d397c6c2a5775aed92bca0a034..bbc30dd035a8b891fbb7f5d32b936c74
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b7e7e6ed60f55d2ab5e4fcefb3638ad1768c3b7f..ac456c8e1387460ad01d5b9f7e86871f0229537d 100644
+index 5f33d18234c055393255c9c3234c6688af7a455d..e1617df14911d2b25e8045a9c287374dde201af7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -267,7 +267,7 @@ import javax.annotation.Nullable; // Paper
@@ -239,10 +239,10 @@ index b7e7e6ed60f55d2ab5e4fcefb3638ad1768c3b7f..ac456c8e1387460ad01d5b9f7e86871f
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 806fb1064a1769d1251f2a2b04372275754d2aeb..3298aac109e08da4801a6f08aa6f7acfc5e6bf16 100644
+index 548c77592a3520e8053483644eba805079a14f1a..397c10f64db3a4d7296fe18585b56851bc3a1f01 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -462,7 +462,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -485,7 +485,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {

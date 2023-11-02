@@ -43,7 +43,7 @@ index 9a8896f51be5028724563cd5054782477868edef..b3dba80e30268f85befd2495cbf5bc5f
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index bbc30dd035a8b891fbb7f5d32b936c7482f64cde..7c1e00517784d0a7c84182d839fdf6d948c95cf8 100644
+index 273d496dc9bc484e071fce7543059fe7ec0388f2..a4fb47fabdb2ddaa1f0d9dbbca0fbdea18708199 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -308,6 +308,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -56,7 +56,7 @@ index bbc30dd035a8b891fbb7f5d32b936c7482f64cde..7c1e00517784d0a7c84182d839fdf6d9
      public static <S extends MinecraftServer> S spin(Function<Thread, S> serverFactory) {
          AtomicReference<S> atomicreference = new AtomicReference();
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index f68c08702c7400dc32ed40af95db4ce2c2c3f6d6..66aeb0ea388a8c8a08cf33728921061a0c74552f 100644
+index ee71e2751bd3bc0053faef6b10dcf9a2928a711c..462c4eb3c06779f86f66778e9578d3d8f06c3294 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -340,6 +340,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
@@ -68,10 +68,10 @@ index f68c08702c7400dc32ed40af95db4ce2c2c3f6d6..66aeb0ea388a8c8a08cf33728921061a
          }
      }
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 0c2617574e21037d94ac56ad08b490f9bca5c5af..552dccf92c815c1fd4920549d9664fb41f7fb512 100644
+index caa73632aee15583c6b6ed12a668c8f49b794708..65e159d0a47b11cc8669351935ee2416ed069a7f 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -206,7 +206,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -244,7 +244,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
      // Paper end
      // Paper start - optimise chunk tick iteration
      public final it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet<ChunkHolder> needsChangeBroadcasting = new it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet<>();
@@ -81,7 +81,7 @@ index 0c2617574e21037d94ac56ad08b490f9bca5c5af..552dccf92c815c1fd4920549d9664fb4
  
      public ChunkMap(ServerLevel world, LevelStorageSource.LevelStorageAccess session, DataFixer dataFixer, StructureTemplateManager structureTemplateManager, Executor executor, BlockableEventLoop<Runnable> mainThreadExecutor, LightChunkGetter chunkProvider, ChunkGenerator chunkGenerator, ChunkProgressListener worldGenerationProgressListener, ChunkStatusUpdateListener chunkStatusChangeListener, Supplier<DimensionDataStorage> persistentStateManagerFactory, int viewDistance, boolean dsync) {
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 17b6925b46f8386dcfc561483693de516465ec12..c4cfe270a38170de4c3f0498ff0b6034c0bbbcf8 100644
+index 8c33a12ca879c46893150d6adfb8aa4d397c6b4c..4e0ffd64cd2cf978f2ca21bc4e155b4551ba8167 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 @@ -75,6 +75,9 @@ public class ServerChunkCache extends ChunkSource {
