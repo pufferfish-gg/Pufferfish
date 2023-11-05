@@ -5,10 +5,10 @@ Subject: [PATCH] Better checking for useless move packets
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 6670e657e08e130f7e0368f418379fd1ece00cdf..e921b6db8905a8676a45e36564d877075afb081f 100644
+index 35674f92a67f93382103c2766df4b678ba5c862f..d46e61640b241d32df05240dedd2c23f138725e6 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
-@@ -180,7 +180,8 @@ public class ServerEntity {
+@@ -177,7 +177,8 @@ public class ServerEntity {
                      long i1 = this.positionCodec.encodeZ(vec3d);
                      boolean flag6 = k < -32768L || k > 32767L || l < -32768L || l > 32767L || i1 < -32768L || i1 > 32767L;
  
@@ -18,7 +18,7 @@ index 6670e657e08e130f7e0368f418379fd1ece00cdf..e921b6db8905a8676a45e36564d87707
                          if ((!flag2 || !flag3) && !(this.entity instanceof AbstractArrow)) {
                              if (flag2) {
                                  packet1 = new ClientboundMoveEntityPacket.Pos(this.entity.getId(), (short) ((int) k), (short) ((int) l), (short) ((int) i1), this.entity.onGround());
-@@ -194,6 +195,7 @@ public class ServerEntity {
+@@ -191,6 +192,7 @@ public class ServerEntity {
                              flag4 = true;
                              flag5 = true;
                          }

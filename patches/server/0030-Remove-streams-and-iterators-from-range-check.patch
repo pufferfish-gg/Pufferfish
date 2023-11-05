@@ -5,10 +5,10 @@ Subject: [PATCH] Remove streams and iterators from range check
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 60261bd6c56b5fc8f1ed170789727d493122e474..d304f01766bba9b3e9fcd30a7ae4730fd7188875 100644
+index 65e159d0a47b11cc8669351935ee2416ed069a7f..3abec84383a445d3ad0d3b5f613246b6ac7ee741 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -1556,8 +1556,28 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1464,8 +1464,28 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
              return ChunkMap.this.level.getServer().getScaledTrackingDistance(initialDistance);
          }
  
@@ -37,7 +37,7 @@ index 60261bd6c56b5fc8f1ed170789727d493122e474..d304f01766bba9b3e9fcd30a7ae4730f
              Iterator iterator = this.entity.getIndirectPassengers().iterator();
  
              while (iterator.hasNext()) {
-@@ -1569,6 +1589,9 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1477,6 +1497,9 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
                      i = j;
                  }
              }

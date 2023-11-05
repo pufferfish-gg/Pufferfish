@@ -5,23 +5,23 @@ Subject: [PATCH] Use thread unsafe random for mob spawning
 
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index a38c0d4fd1ecb552911bf73f4ab89d891774ddcb..4b371678c75a77d704518b46a4d75ac5b5c5836a 100644
+index 7c94d5cb42c2013248176f31f7dbda2cf0447142..d6124606cb033a77c399a7638eb60005c04462c8 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -273,7 +273,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -210,7 +210,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
  
      public abstract ResourceKey<LevelStem> getTypeKey();
  
 -    protected final io.papermc.paper.util.math.ThreadUnsafeRandom randomTickRandom = new io.papermc.paper.util.math.ThreadUnsafeRandom(java.util.concurrent.ThreadLocalRandom.current().nextLong()); // Pufferfish - move thread unsafe random initialization
 +    protected final io.papermc.paper.util.math.ThreadUnsafeRandom randomTickRandom = new io.papermc.paper.util.math.ThreadUnsafeRandom(java.util.concurrent.ThreadLocalRandom.current().nextLong()); public net.minecraft.util.RandomSource getThreadUnsafeRandom() { return this.randomTickRandom; } // Pufferfish - move thread unsafe random initialization // Pufferfish - getter
  
-     // Pufferfish start - ensure these get inlined
-     private final int minBuildHeight, minSection, height, maxBuildHeight, maxSection;
+     protected Level(WritableLevelData worlddatamutable, ResourceKey<Level> resourcekey, RegistryAccess iregistrycustom, Holder<DimensionType> holder, Supplier<ProfilerFiller> supplier, boolean flag, boolean flag1, long i, int j, org.bukkit.generator.ChunkGenerator gen, org.bukkit.generator.BiomeProvider biomeProvider, org.bukkit.World.Environment env, java.util.function.Function<org.spigotmc.SpigotWorldConfig, io.papermc.paper.configuration.WorldConfiguration> paperWorldConfigCreator, java.util.concurrent.Executor executor) { // Paper - Async-Anti-Xray - Pass executor
+         this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((net.minecraft.world.level.storage.PrimaryLevelData) worlddatamutable).getLevelName()); // Spigot
 diff --git a/src/main/java/net/minecraft/world/level/NaturalSpawner.java b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-index 089dd93d4cd4c1f72e63c4944b3b82c1e2ba732d..5d19ef5231752c6cccc73b9adfb67e53e87baf7a 100644
+index 3cdddda9c0618e95288b81b975d499c8dd30c05f..9c2d62feff1816f5729060c6192269a5b2d34153 100644
 --- a/src/main/java/net/minecraft/world/level/NaturalSpawner.java
 +++ b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-@@ -417,12 +417,12 @@ public final class NaturalSpawner {
+@@ -429,12 +429,12 @@ public final class NaturalSpawner {
          }
      }
  

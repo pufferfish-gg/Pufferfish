@@ -20,17 +20,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index db418d96f8eee731b9ed29e51cb7ac0ff1ad529b..0668648a49be0a999e739ddad66e6e101f166598 100644
+index 961b6927071a6a80f0d15e9e1c25d56a25f73654..b99daeab0d9a22dde4cd8d7395a5471f91ebc9f6 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -54,6 +54,7 @@ dependencies {
+@@ -61,6 +61,7 @@ dependencies {
          exclude(group="org.yaml", module="snakeyaml")
      }
      // Pufferfish end
 +    implementation("com.github.technove:Flare:34637f3f87") // Pufferfish - flare
  
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
-     testImplementation("junit:junit:4.13.2")
+     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 index bd3ca0af0f50b2bf1f1b95d4578c1b05d0694dd8..9ff0f60f03a532dabb8740ad5c44e068d5a9c8bf 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
@@ -819,7 +819,7 @@ index d96399e9bf1a58db5a4a22e58abb99e7660e0694..eb19f679ee498e51d02fe9a961cf0269
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java b/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java
-index e948ec5a573b22645664eb53bc3e9932246544e4..e3845dc3357bbb74885ae3a1a08525adde581235 100644
+index e8e93538dfd71de86515d9405f728db1631e949a..3dff02fd97f001508e2f81192817bf1b0ef92446 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java
 @@ -11,6 +11,7 @@ public class ServerShutdownThread extends Thread {

@@ -5,10 +5,10 @@ Subject: [PATCH] Pufferfish Config and Command
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 9418f84e7f62334f5f7a7310b80ea59f39abfee3..9bbcb198af531a3f95d091ad2138f538e84372e1 100644
+index 177c7cc42f12150bb3b2f170c17a958442d622d2..5b3476affbe08b579cec2dd14763b2782e09da32 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -48,6 +48,13 @@ dependencies {
+@@ -55,6 +55,13 @@ dependencies {
      runtimeOnly("org.apache.maven.resolver:maven-resolver-connector-basic:1.7.3")
      runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.7.3")
  
@@ -20,8 +20,8 @@ index 9418f84e7f62334f5f7a7310b80ea59f39abfee3..9bbcb198af531a3f95d091ad2138f538
 +    // Pufferfish end
 +
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
-     testImplementation("junit:junit:4.13.2")
-     testImplementation("org.hamcrest:hamcrest-library:1.3")
+     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+     testImplementation("org.hamcrest:hamcrest:2.2")
 diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
 index a2f71a6d1a9e98133dff6cd0f625da9435a8af14..ff940e43ca35094bbcae6c7d471d3c4aeb7c1727 100644
 --- a/src/main/java/co/aikar/timings/TimingsExport.java
@@ -252,7 +252,7 @@ index 0000000000000000000000000000000000000000..deb52c185705c4b4186c7bae02f2a827
 +	
 +}
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 9f422cbeaa52b3e6a0a27af4f8ad4ddb7808483f..12ba8ce0a2400c1d6b81964edd7b171c222833dd 100644
+index 2b5d82fbf4e7ec32d0c53dd3e8207b1dba708bbd..ee71e2751bd3bc0053faef6b10dcf9a2928a711c 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -221,6 +221,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
