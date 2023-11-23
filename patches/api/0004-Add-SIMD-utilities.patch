@@ -8,10 +8,10 @@ and API spec stability is NOT guaranteed. If you use this in plugins,
 they WILL break eventually.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 307461526c15921d5e3fbcec63a0014b82e58850..0330a20576c372c29ca4d98a2bc5b01e28303ac3 100644
+index 359cfa1b1a9842b882e3b7688b0fd7c1d09088d3..b9c75a190dbd7a90ac5ef0fbc6e6fe34806acc4e 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -90,6 +90,13 @@ val generateApiVersioningFile by tasks.registering {
+@@ -107,6 +107,13 @@ val generateApiVersioningFile by tasks.registering {
      }
  }
  
