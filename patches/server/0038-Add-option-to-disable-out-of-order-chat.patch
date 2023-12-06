@@ -21,10 +21,10 @@ index 2925529336c6d080c4fe5283463f7dc3b2a40738..d6ed2faae59d035cf96a3842d99b9b80
      }
  
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index e82065aef31050f23eb5a533762346cb1b656704..ef6d8f787cba0db53270adedd923f9a47d435852 100644
+index 3f5a210d7f5882543055be1f063ec1e4d92f96b5..6cc9271ba058f4af759eae34e2f6e9f892b4f6da 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2274,6 +2274,7 @@ public class ServerGamePacketListenerImpl extends ServerCommonPacketListenerImpl
+@@ -2275,6 +2275,7 @@ public class ServerGamePacketListenerImpl extends ServerCommonPacketListenerImpl
      }
  
      private boolean updateChatOrder(Instant timestamp) {
