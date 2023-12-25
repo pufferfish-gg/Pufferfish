@@ -20,15 +20,16 @@ index 2925529336c6d080c4fe5283463f7dc3b2a40738..d6ed2faae59d035cf96a3842d99b9b80
          setComment("misc", "Settings for things that don't belong elsewhere");
      }
  
-diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 3f5a210d7f5882543055be1f063ec1e4d92f96b5..6cc9271ba058f4af759eae34e2f6e9f892b4f6da 100644
---- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-+++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2275,6 +2275,7 @@ public class ServerGamePacketListenerImpl extends ServerCommonPacketListenerImpl
-     }
- 
-     private boolean updateChatOrder(Instant timestamp) {
-+        if (gg.pufferfish.pufferfish.PufferfishConfig.disableOutOfOrderChat) return true;
-         Instant instant1;
- 
-         do {
+diff --git a/src/main/java/net/minecraft/network/chat/SignedMessageChain.java b/src/main/java/net/minecraft/network/chat/SignedMessageChain.java
+index 85a8a687b1568a56e3e646b37ef78b562c1b8a82..69971b2c59e541ac4100b84c84e2972de1b44ca9 100644
+--- a/src/main/java/net/minecraft/network/chat/SignedMessageChain.java
++++ b/src/main/java/net/minecraft/network/chat/SignedMessageChain.java
+@@ -38,7 +38,7 @@ public class SignedMessageChain {
+                 throw new SignedMessageChain.DecodeException(Component.translatable("chat.disabled.chain_broken"), false); // Paper - diff on change (if disconnects, need a new kick event cause)
+             } else if (playerPublicKey.data().hasExpired()) {
+                 throw new SignedMessageChain.DecodeException(Component.translatable("chat.disabled.expiredProfileKey", org.bukkit.event.player.PlayerKickEvent.Cause.EXPIRED_PROFILE_PUBLIC_KEY), false); // Paper - kick event causes
+-            } else if (body.timeStamp().isBefore(this.lastTimeStamp)) {
++            } else if (!gg.pufferfish.pufferfish.PufferfishConfig.disableOutOfOrderChat && body.timeStamp().isBefore(this.lastTimeStamp)) { // Pufferfish
+                 throw new SignedMessageChain.DecodeException(Component.translatable("multiplayer.disconnect.out_of_order_chat", org.bukkit.event.player.PlayerKickEvent.Cause.OUT_OF_ORDER_CHAT), true); // Paper - kick event causes
+             } else {
+                 this.lastTimeStamp = body.timeStamp();

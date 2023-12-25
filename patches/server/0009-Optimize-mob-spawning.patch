@@ -43,10 +43,10 @@ index 9a8896f51be5028724563cd5054782477868edef..b3dba80e30268f85befd2495cbf5bc5f
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 273d496dc9bc484e071fce7543059fe7ec0388f2..a4fb47fabdb2ddaa1f0d9dbbca0fbdea18708199 100644
+index 56281aea40559123f5924bc5844c20f6a0b7b781..d19b2cbcb49a1d1351f039763738bbc16e90ee49 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -308,6 +308,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -314,6 +314,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      // Paper start - lag compensation
      public static final long SERVER_INIT = System.nanoTime();
      // Paper end - lag compensation
@@ -56,7 +56,7 @@ index 273d496dc9bc484e071fce7543059fe7ec0388f2..a4fb47fabdb2ddaa1f0d9dbbca0fbdea
      public static <S extends MinecraftServer> S spin(Function<Thread, S> serverFactory) {
          AtomicReference<S> atomicreference = new AtomicReference();
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index ee71e2751bd3bc0053faef6b10dcf9a2928a711c..462c4eb3c06779f86f66778e9578d3d8f06c3294 100644
+index c5d49461bf1c890352755eb5491e57d5c137bf64..3b8c810a228a59bf02a8557b229e5eca56c16562 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -340,6 +340,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
@@ -81,10 +81,10 @@ index caa73632aee15583c6b6ed12a668c8f49b794708..65e159d0a47b11cc8669351935ee2416
  
      public ChunkMap(ServerLevel world, LevelStorageSource.LevelStorageAccess session, DataFixer dataFixer, StructureTemplateManager structureTemplateManager, Executor executor, BlockableEventLoop<Runnable> mainThreadExecutor, LightChunkGetter chunkProvider, ChunkGenerator chunkGenerator, ChunkProgressListener worldGenerationProgressListener, ChunkStatusUpdateListener chunkStatusChangeListener, Supplier<DimensionDataStorage> persistentStateManagerFactory, int viewDistance, boolean dsync) {
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 8c33a12ca879c46893150d6adfb8aa4d397c6b4c..4e0ffd64cd2cf978f2ca21bc4e155b4551ba8167 100644
+index 44ada45d9bf2d9b48e5de1c3cb1a855902f3884b..89a68d8f7ca91bcb49739658e817851fbbad707a 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-@@ -75,6 +75,9 @@ public class ServerChunkCache extends ChunkSource {
+@@ -73,6 +73,9 @@ public class ServerChunkCache extends ChunkSource {
      final it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap<LevelChunk> loadedChunkMap = new it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap<>(8192, 0.5f);
  
      private final LevelChunk[] lastLoadedChunks = new LevelChunk[4 * 4];
@@ -94,70 +94,50 @@ index 8c33a12ca879c46893150d6adfb8aa4d397c6b4c..4e0ffd64cd2cf978f2ca21bc4e155b45
  
      private static int getChunkCacheKey(int x, int z) {
          return x & 3 | ((z & 3) << 2);
-@@ -530,28 +533,35 @@ public class ServerChunkCache extends ChunkSource {
-             // Paper start - per player mob spawning
-             NaturalSpawner.SpawnState spawnercreature_d; // moved down
-             if ((this.spawnFriendlies || this.spawnEnemies) && this.level.paperConfig().entities.spawning.perPlayerMobSpawns) { // don't count mobs when animals and monsters are disabled
--                // re-set mob counts
--                for (ServerPlayer player : this.level.players) {
--                    // Paper start - per player mob spawning backoff
--                    for (int ii = 0; ii < ServerPlayer.MOBCATEGORY_TOTAL_ENUMS; ii++) {
--                        player.mobCounts[ii] = 0;
--
--                        int newBackoff = player.mobBackoffCounts[ii] - 1; // TODO make configurable bleed // TODO use nonlinear algorithm?
--                        if (newBackoff < 0) {
--                            newBackoff = 0;
-+                // Pufferfish start - moved down when async processing
-+                if (!gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncMobSpawning) {
-+                    // re-set mob counts
-+                    for (ServerPlayer player : this.level.players) {
-+                        // Paper start - per player mob spawning backoff
-+                        for (int ii = 0; ii < ServerPlayer.MOBCATEGORY_TOTAL_ENUMS; ii++) {
-+                            player.mobCounts[ii] = 0;
-+
-+                            int newBackoff = player.mobBackoffCounts[ii] - 1; // TODO make configurable bleed // TODO use nonlinear algorithm?
-+                            if (newBackoff < 0) {
-+                                newBackoff = 0;
-+                            }
-+                            player.mobBackoffCounts[ii] = newBackoff;
+@@ -529,6 +532,7 @@ public class ServerChunkCache extends ChunkSource {
+                 int naturalSpawnChunkCount = k;
+                 NaturalSpawner.SpawnState spawnercreature_d; // moved down
+                 if ((this.spawnFriendlies || this.spawnEnemies) && this.level.paperConfig().entities.spawning.perPlayerMobSpawns) { // don't count mobs when animals and monsters are disabled
++                    if (!gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncMobSpawning) { // Pufferfish - moved down when async processing
+                     // re-set mob counts
+                     for (ServerPlayer player : this.level.players) {
+                         // Paper start - per player mob spawning backoff
+@@ -543,14 +547,18 @@ public class ServerChunkCache extends ChunkSource {
                          }
--                        player.mobBackoffCounts[ii] = newBackoff;
-+                        // Paper end - per player mob spawning backoff
+                         // Paper end - per player mob spawning backoff
                      }
--                    // Paper end - per player mob spawning backoff
-+                    lastSpawnState = NaturalSpawner.createState(l, this.level.getAllEntities(), this::getFullChunk, null, true);
+-                    spawnercreature_d = NaturalSpawner.createState(naturalSpawnChunkCount, this.level.getAllEntities(), this::getFullChunk, null, true);
++                    lastSpawnState = NaturalSpawner.createState(naturalSpawnChunkCount, this.level.getAllEntities(), this::getFullChunk, null, true); // Pufferfish - async mob spawning
++                    } // Pufferfish - (endif) moved down when async processing
+                 } else {
+-                    spawnercreature_d = NaturalSpawner.createState(naturalSpawnChunkCount, this.level.getAllEntities(), this::getFullChunk, !this.level.paperConfig().entities.spawning.perPlayerMobSpawns ? new LocalMobCapCalculator(this.chunkMap) : null, false);
++                    // Pufferfish start - async mob spawning
++                    lastSpawnState = NaturalSpawner.createState(naturalSpawnChunkCount, this.level.getAllEntities(), this::getFullChunk, !this.level.paperConfig().entities.spawning.perPlayerMobSpawns ? new LocalMobCapCalculator(this.chunkMap) : null, false);
++                    _pufferfish_spawnCountsReady.set(true);
++                    // Pufferfish end
                  }
--                spawnercreature_d = NaturalSpawner.createState(l, this.level.getAllEntities(), this::getFullChunk, null, true);
-+                // Pufferfish end
-             } else {
--                spawnercreature_d = NaturalSpawner.createState(l, this.level.getAllEntities(), this::getFullChunk, !this.level.paperConfig().entities.spawning.perPlayerMobSpawns ? new LocalMobCapCalculator(this.chunkMap) : null, false);
-+                // Pufferfish start
-+                lastSpawnState = NaturalSpawner.createState(l, this.level.getAllEntities(), this::getFullChunk, !this.level.paperConfig().entities.spawning.perPlayerMobSpawns ? new LocalMobCapCalculator(this.chunkMap) : null, false);
-+                _pufferfish_spawnCountsReady.set(true);
-+                // Pufferfish end
-             }
-             // Paper end
-             this.level.timings.countNaturalMobs.stopTiming(); // Paper - timings
+                 // Paper end
+                 this.level.timings.countNaturalMobs.stopTiming(); // Paper - timings
  
--            this.lastSpawnState = spawnercreature_d;
-+            //this.lastSpawnState = spawnercreature_d; // Pufferfish - this is managed asynchronously
-             gameprofilerfiller.popPush("filteringLoadedChunks");
-             // Paper - optimise chunk tick iteration
-             // Paper - optimise chunk tick iteration
-@@ -644,8 +654,8 @@ public class ServerChunkCache extends ChunkSource {
-                 // Paper end - optimise chunk tick iteration
-                 if (tick && chunk1.chunkStatus.isOrAfter(net.minecraft.server.level.FullChunkStatus.ENTITY_TICKING)) { // Paper - optimise chunk tick iteration
-                     chunk1.incrementInhabitedTime(j);
--                    if (spawn && flag2 && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isWithinBounds(chunkcoordintpair)) { // Spigot // Paper - optimise chunk tick iteration
--                        NaturalSpawner.spawnForChunk(this.level, chunk1, spawnercreature_d, this.spawnFriendlies, this.spawnEnemies, flag1);
-+                    if (spawn && flag2 && (!gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncMobSpawning || _pufferfish_spawnCountsReady.get()) && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isWithinBounds(chunkcoordintpair)) { // Spigot // Paper - optimise chunk tick iteration // Pufferfish
-+                        NaturalSpawner.spawnForChunk(this.level, chunk1, lastSpawnState, this.spawnFriendlies, this.spawnEnemies, flag1); // Pufferfish
-                     }
+-                this.lastSpawnState = spawnercreature_d;
++                // this.lastSpawnState = spawnercreature_d; // Pufferfish - this is managed asynchronously
+                 gameprofilerfiller.popPush("spawnAndTick");
+                 boolean flag = this.level.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING) && !this.level.players().isEmpty(); // CraftBukkit
  
-                     if (true || this.level.shouldTickBlocksAt(chunkcoordintpair.toLong())) { // Paper - optimise chunk tick iteration
-@@ -691,6 +701,40 @@ public class ServerChunkCache extends ChunkSource {
+@@ -640,8 +648,8 @@ public class ServerChunkCache extends ChunkSource {
+                     if (tick && chunk1.chunkStatus.isOrAfter(net.minecraft.server.level.FullChunkStatus.ENTITY_TICKING)) {
+                         // Paper end - optimise chunk tick iteration
+                         chunk1.incrementInhabitedTime(j);
+-                        if (spawn && flag && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isWithinBounds(chunkcoordintpair)) { // Spigot // Paper - optimise chunk tick iteration
+-                            NaturalSpawner.spawnForChunk(this.level, chunk1, spawnercreature_d, this.spawnFriendlies, this.spawnEnemies, flag1);
++                        if (spawn && flag && (!gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncMobSpawning || _pufferfish_spawnCountsReady.get()) && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isWithinBounds(chunkcoordintpair)) { // Spigot // Paper - optimise chunk tick iteration // Pufferfish
++                            NaturalSpawner.spawnForChunk(this.level, chunk1, lastSpawnState, this.spawnFriendlies, this.spawnEnemies, flag1); // Pufferfish
+                         }
+ 
+                         if (true || this.level.shouldTickBlocksAt(chunkcoordintpair.toLong())) { // Paper - optimise chunk tick iteration
+@@ -688,6 +696,40 @@ public class ServerChunkCache extends ChunkSource {
              gameprofilerfiller.pop();
-             this.chunkMap.tick();
+             gameprofilerfiller.pop();
          }
 +    
 +        // Pufferfish start - optimize mob spawning
