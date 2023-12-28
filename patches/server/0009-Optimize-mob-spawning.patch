@@ -68,10 +68,10 @@ index c5d49461bf1c890352755eb5491e57d5c137bf64..3b8c810a228a59bf02a8557b229e5eca
          }
      }
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index caa73632aee15583c6b6ed12a668c8f49b794708..65e159d0a47b11cc8669351935ee2416ed069a7f 100644
+index d9cd497bc1b654030ff1a597f038b6a881df9f6b..ecd239aebf1384a01cca3374dbc10bf8a7962d93 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -244,7 +244,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -243,7 +243,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
      // Paper end
      // Paper start - optimise chunk tick iteration
      public final it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet<ChunkHolder> needsChangeBroadcasting = new it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet<>();
