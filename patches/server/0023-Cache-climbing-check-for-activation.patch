@@ -5,7 +5,7 @@ Subject: [PATCH] Cache climbing check for activation
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index f22e131d4f95deca7b256b77fe3bed8befc6dfc1..e24e20a63b74e82afb7f911d286b9bdf72d87afb 100644
+index 294ea31d969e9ba0d5fba1bb95096e779e57a74d..0a9a77564d624d66e76637eef509e2f321333dc6 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -142,7 +142,6 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -38,15 +38,15 @@ index f22e131d4f95deca7b256b77fe3bed8befc6dfc1..e24e20a63b74e82afb7f911d286b9bdf
          if (this.isSpectator()) {
              return false;
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index bbe4e303a66851f391a615b5a74ed5f48f38c0f8..c0333ba8e57cd284bb8ab15181da6b39d55872f9 100644
+index 731ccfac5a4cfb1c20e9cf8085fea6069bc3f098..651063863b451d24ffe39f0a4d8db296e58ff585 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -320,7 +320,7 @@ public class ActivationRange
          if ( entity instanceof LivingEntity )
          {
              LivingEntity living = (LivingEntity) entity;
--            if ( living.onClimbable() || living.jumping || living.hurtTime > 0 || living.activeEffects.size() > 0 ) // Paper
-+            if ( living.onClimableCached() || living.jumping || living.hurtTime > 0 || living.activeEffects.size() > 0 ) // Paper // Pufferfish - use cached
+-            if ( living.onClimbable() || living.jumping || living.hurtTime > 0 || living.activeEffects.size() > 0 || living.isFreezing()) // Paper
++            if ( living.onClimableCached() || living.jumping || living.hurtTime > 0 || living.activeEffects.size() > 0 || living.isFreezing() ) // Paper // Pufferfish - use cached
              {
                  return 1; // Paper
              }
