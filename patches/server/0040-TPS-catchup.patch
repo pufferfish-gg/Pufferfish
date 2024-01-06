@@ -24,7 +24,7 @@ index 6755008dc43bf96c1507ce2ae6a066a1b75df760..1ca25529245ed369b8705075a8c2e32f
  	public static boolean enableSuffocationOptimization;
  	private static void suffocationOptimization() {
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 53d0a930ae5ec34c1f3a58e96e92f54dd9c7881c..32f2c4bc66c4c891cf854d96b901b0f3046b34e9 100644
+index 53d0a930ae5ec34c1f3a58e96e92f54dd9c7881c..e940133b0784e0d36e8bc5bb13ecaeacc7927b3a 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1219,6 +1219,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -32,7 +32,7 @@ index 53d0a930ae5ec34c1f3a58e96e92f54dd9c7881c..32f2c4bc66c4c891cf854d96b901b0f3
                  this.mayHaveDelayedTasks = true;
                  this.delayedTasksMaxNextTickTimeNanos = Math.max(Util.getNanos() + i, this.nextTickTimeNanos);
 +                // Pufferfish start - tps catchup
-+                if (gg.pufferfish.pufferfish.PufferfishConfig.tpsCatchup) {
++                if (!gg.pufferfish.pufferfish.PufferfishConfig.tpsCatchup) {
 +                    this.nextTickTimeNanos = curTime + i;
 +                    this.delayedTasksMaxNextTickTimeNanos = nextTickTimeNanos;
 +                }
