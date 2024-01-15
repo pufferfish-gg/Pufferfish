@@ -46,10 +46,10 @@ index 89a68d8f7ca91bcb49739658e817851fbbad707a..5cf74fe0214191d42e74fc104eba150a
                  gameprofilerfiller.popPush("naturalSpawnCount");
                  this.level.timings.countNaturalMobs.startTiming(); // Paper - timings
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index c01a7b44fc29102ed01ed1ca2c4eb6d9ff5afe82..60aa610adff6b500b79d18d9adfa480e43dea58a 100644
+index 56669cf9a02a0bab65e159610e3baa790587f7ff..0508a22b48d88cddf80fcdf9c183d4ff3d755197 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -987,6 +987,8 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -986,6 +986,8 @@ public class ServerLevel extends Level implements WorldGenLevel {
      // private final io.papermc.paper.util.math.ThreadUnsafeRandom randomTickRandom = new io.papermc.paper.util.math.ThreadUnsafeRandom(); // Pufferfish - moved to super
      // Paper end
  
@@ -58,7 +58,7 @@ index c01a7b44fc29102ed01ed1ca2c4eb6d9ff5afe82..60aa610adff6b500b79d18d9adfa480e
      public void tickChunk(LevelChunk chunk, int randomTickSpeed) {
          ChunkPos chunkcoordintpair = chunk.getPos();
          boolean flag = this.isRaining();
-@@ -997,7 +999,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -996,7 +998,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          gameprofilerfiller.push("thunder");
          final BlockPos.MutableBlockPos blockposition = this.chunkTickMutablePosition; // Paper - use mutable to reduce allocation rate, final to force compile fail on change
  
@@ -68,7 +68,7 @@ index c01a7b44fc29102ed01ed1ca2c4eb6d9ff5afe82..60aa610adff6b500b79d18d9adfa480e
  
              if (this.isRainingAt(blockposition)) {
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-index fa170cc1ce7011d201295b89718292d696c7fc24..7fd68d4aba72b15b2e21e5c88b44e677b794fe57 100644
+index 27e8ee4507460b1cc72de692b41562b9f4f13929..1afac69b5bc7055d2adb07aea4755b87b246275c 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -86,6 +86,18 @@ public class LevelChunk extends ChunkAccess {
