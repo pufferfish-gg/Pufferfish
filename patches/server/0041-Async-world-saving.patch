@@ -3,6 +3,8 @@ From: Kevin Raneri <kevin.raneri@gmail.com>
 Date: Mon, 15 Jan 2024 09:59:45 -0600
 Subject: [PATCH] Async world saving
 
+Pulled from https://github.com/PaperMC/Paper/pull/9408, with minor
+modifications to include a config option to enable the feature.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 index 1ca25529245ed369b8705075a8c2e32fa4d9b1d1..b19ff5748941494a7bffe70a3152a0d52a35f94b 100644
