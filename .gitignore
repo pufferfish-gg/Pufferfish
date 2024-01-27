@@ -1,5 +1,6 @@
 pufferfish-api
 pufferfish-server
+paper-api-generator
 
 build/
 .gradle/

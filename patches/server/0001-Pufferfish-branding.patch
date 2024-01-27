@@ -6,7 +6,7 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 444ff797c70b0e285d4272ea2ce3d72453c9bda5..707a547375b2acfa2cafa65e003e16e53b0c0a5b 100644
+index 376e8983fdfdbb6c3e5fd8ad0f6a05e655b622bf..25eecf6bb6a552f05f1c55593b2c1d52ca82b931 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -13,8 +13,12 @@ configurations.named(log4jPlugins.compileClasspathConfigurationName) {
@@ -213,20 +213,20 @@ index 0000000000000000000000000000000000000000..893d8c0946ef71a0561221dd76bffff0
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 016b7628b289fb882f3ec15dd5b0cb4e0af72edc..4a1608bf4e8eb35daddf1ee1951ed89b5663179b 100644
+index 90ae7e8c81f6a9ede8aeaeec3bf784023522cefc..4883e77587b0f8c83faf36d607c5779d0843d43a 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1852,7 +1852,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1855,7 +1855,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
--        return "Paper"; // Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
-+        return "Pufferfish"; // Pufferfish - Pufferfish > // Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
+-        return "Paper"; // Paper
++        return "Paper"; // Pufferfish > // Paper
      }
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 9ef8f911632598fd589368cedde268c8abcad3b6..c18a55463a15f153835e07552b69cc4cf48fa2c8 100644
+index 34cd96dba5f11e64d7c90f4246b513b0ea943aa6..a9d1f387a70800295aa37863dbb9f97337fece84 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -264,7 +264,7 @@ import javax.annotation.Nullable; // Paper
@@ -239,7 +239,7 @@ index 9ef8f911632598fd589368cedde268c8abcad3b6..c18a55463a15f153835e07552b69cc4c
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index ec2396f0e5d62b10450eaa7239a8c5479638b3c3..c909efd2060dc95bd3ecb8c9fec36a1e69a642ff 100644
+index ca5312febcdd467889ad725c0263367bc5fe69f6..91992a5e329ea335d9e60543f9636cb5c3620a0e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 @@ -482,7 +482,7 @@ public final class CraftMagicNumbers implements UnsafeValues {

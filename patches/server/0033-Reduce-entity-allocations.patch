@@ -5,19 +5,19 @@ Subject: [PATCH] Reduce entity allocations
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 08a316d239fd62ad9c6733be64566d2b73521cf5..d9631f4ffb666e450c8e22cfd28ef90f2bf03f39 100644
+index 61ec875c0d0ebc8e149f4fa7c6ae2b126783a07f..373eadd718b0dfcd3ce53ffe3b39ebdcb66a6291 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -443,6 +443,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
-     // Pufferfish start
-     public boolean activatedPriorityReset = false; // DAB
-     public int activatedPriority = gg.pufferfish.pufferfish.PufferfishConfig.maximumActivationPrio; // golf score
-+    public final BlockPos.MutableBlockPos cachedBlockPos = new BlockPos.MutableBlockPos(); // used where needed
-     // Pufferfish end
-     
-     public float getBukkitYaw() {
+@@ -425,6 +425,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+     public boolean fixedPose = false; // Paper - Expand Pose API
+     public boolean activatedPriorityReset = false; // Pufferfish - DAB
+     public int activatedPriority = gg.pufferfish.pufferfish.PufferfishConfig.maximumActivationPrio; // Pufferfish - DAB (golf score)
++    public final BlockPos.MutableBlockPos cachedBlockPos = new BlockPos.MutableBlockPos(); // Pufferfish - reduce entity allocations
+ 
+     public void setOrigin(@javax.annotation.Nonnull Location location) {
+         this.origin = location.toVector();
 diff --git a/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java b/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
-index 7204b973c3ad9239e82355513f6d538107102e48..3087f8359b098682a345399c85395de8a15b6eed 100644
+index 897d7632ecfea40890433474870dd7a5e534d8ab..683c9693754d1a87b7e8fccc757a0d0963351f60 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
 @@ -23,9 +23,11 @@ public class AttributeMap {

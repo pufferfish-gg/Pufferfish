@@ -5,10 +5,10 @@ Subject: [PATCH] Remove lambda from ticking guard
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 4fdfdc929644679bb92bfbf0ea9e486cb7833659..f571a4a8b56a82f17b0af3ae482c7ba7ce30a0b0 100644
+index 46e6b76603b47724dbb3dfc48ff500b4abe23c67..dbe612427b894df9da1335b94163ba9b89b090c0 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -919,7 +919,20 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -914,7 +914,20 @@ public class ServerLevel extends Level implements WorldGenLevel {
                              }
  
                              gameprofilerfiller.push("tick");
@@ -31,22 +31,24 @@ index 4fdfdc929644679bb92bfbf0ea9e486cb7833659..f571a4a8b56a82f17b0af3ae482c7ba7
                          }
                      }
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 9f5a5655c4cef52f006c07f029f14693f6f24231..3bf4aa21e2ad602bf9d85d3fcd4f43e0357ef221 100644
+index 64ed94d308047413a89f9e165d1233dd014e8139..c10efc14ca83f07b27a2f12776ab2fd2a953c5a1 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -1320,13 +1320,13 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1315,14 +1315,14 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
          try {
              tickConsumer.accept(entity);
              MinecraftServer.getServer().executeMidTickTasks(); // Paper - execute chunk tasks mid tick
 -        } catch (Throwable throwable) {
 +        } catch (Throwable throwable) { // Pufferfish - diff on change ServerLevel.tick
              if (throwable instanceof ThreadDeath) throw throwable; // Paper
-             // Paper start - Prevent tile entity and entity crashes
+             // Paper start - Prevent block entity and entity crashes
              final String msg = String.format("Entity threw exception at %s:%s,%s,%s", entity.level().getWorld().getName(), entity.getX(), entity.getY(), entity.getZ());
              MinecraftServer.LOGGER.error(msg, throwable);
-             getCraftServer().getPluginManager().callEvent(new ServerExceptionEvent(new ServerInternalException(msg, throwable)));
+             getCraftServer().getPluginManager().callEvent(new ServerExceptionEvent(new ServerInternalException(msg, throwable))); // Paper - ServerExceptionEvent
 -            entity.discard();
+-            // Paper end - Prevent block entity and entity crashes
 +            entity.discard(); // Pufferfish - diff on change ServerLevel.tick
-             // Paper end
++            // Paper end
          }
      }
+     // Paper start - Option to prevent armor stands from doing entity lookups

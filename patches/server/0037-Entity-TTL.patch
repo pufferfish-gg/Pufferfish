@@ -44,10 +44,10 @@ index ca7e0cd9e03d7d8fece1f81f684cec202389dc32..2925529336c6d080c4fe5283463f7dc3
      public static boolean throttleInactiveGoalSelectorTick;
  	private static void inactiveGoalSelectorThrottle() {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index a821994632f5b1616a3601c44628d86cacad89a7..b753d0a39e9e1a656ab5402bd0105d9e04869ac2 100644
+index 208da3bb3f61d20583e4918ee3ea57ebc0d7de26..1d9331fe9ce7308eda2e7da2ae726810d455f090 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -814,6 +814,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -810,6 +810,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
      }
  
      public void tick() {
@@ -61,7 +61,7 @@ index a821994632f5b1616a3601c44628d86cacad89a7..b753d0a39e9e1a656ab5402bd0105d9e
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/EntityType.java b/src/main/java/net/minecraft/world/entity/EntityType.java
-index ac76194c3e8efeeb6da11450cb520e2b60df6b25..922a579feabeebe11c4e0b735108db005b7f2a28 100644
+index 19de70574a2434f55211c57536c0887b588a0365..ab6cd363231a668c9b16df825a72d3205746ee49 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityType.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityType.java
 @@ -306,6 +306,7 @@ public class EntityType<T extends Entity> implements FeatureElement, EntityTypeT

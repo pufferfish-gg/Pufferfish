@@ -5,14 +5,14 @@ Subject: [PATCH] Fix Paper#6045, block goal shouldn't load chunks
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/MoveToBlockGoal.java b/src/main/java/net/minecraft/world/entity/ai/goal/MoveToBlockGoal.java
-index 34f319ad09276c6f68dde449c79351de0d7d86f5..a719af0b512d9ef243d0d54f3b744b1b1a5f2772 100644
+index 07519c817cc6de04a98198c43a0c2b02ba3141eb..ee66be6e5aa45ec8448b6d30785a6e71200b09e3 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/goal/MoveToBlockGoal.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/goal/MoveToBlockGoal.java
-@@ -119,6 +119,7 @@ public abstract class MoveToBlockGoal extends Goal {
+@@ -120,6 +120,7 @@ public abstract class MoveToBlockGoal extends Goal {
                  for(int m = 0; m <= l; m = m > 0 ? -m : 1 - m) {
                      for(int n = m < l && m > -l ? l : 0; n <= l; n = n > 0 ? -n : 1 - n) {
                          mutableBlockPos.setWithOffset(blockPos, m, k - 1, n);
 +                        if (!this.mob.level().hasChunkAt(mutableBlockPos)) continue; // Pufferfish - if this block isn't loaded, continue
                          if (this.mob.isWithinRestriction(mutableBlockPos) && this.isValidTarget(this.mob.level(), mutableBlockPos)) {
                              this.blockPos = mutableBlockPos;
-                             setTargetPosition(mutableBlockPos.immutable()); // Paper
+                             this.mob.movingTarget = mutableBlockPos == BlockPos.ZERO ? null : mutableBlockPos.immutable(); // Paper

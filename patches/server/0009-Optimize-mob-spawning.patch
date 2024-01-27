@@ -43,20 +43,19 @@ index 9a8896f51be5028724563cd5054782477868edef..b3dba80e30268f85befd2495cbf5bc5f
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 56281aea40559123f5924bc5844c20f6a0b7b781..d19b2cbcb49a1d1351f039763738bbc16e90ee49 100644
+index 4883e77587b0f8c83faf36d607c5779d0843d43a..05bb19ba023d40a0f662e16236ca984464563b48 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -314,6 +314,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
-     // Paper start - lag compensation
-     public static final long SERVER_INIT = System.nanoTime();
-     // Paper end - lag compensation
-+    
+@@ -312,6 +312,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+     public volatile Thread shutdownThread; // Paper
+     public volatile boolean abnormalExit = false; // Paper
+     public static final long SERVER_INIT = System.nanoTime(); // Paper - Lag compensation
 +    public gg.pufferfish.pufferfish.util.AsyncExecutor mobSpawnExecutor = new gg.pufferfish.pufferfish.util.AsyncExecutor("MobSpawning"); // Pufferfish - optimize mob spawning
  
      public static <S extends MinecraftServer> S spin(Function<Thread, S> serverFactory) {
          AtomicReference<S> atomicreference = new AtomicReference();
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index c5d49461bf1c890352755eb5491e57d5c137bf64..3b8c810a228a59bf02a8557b229e5eca56c16562 100644
+index 5491307c433927f695c8fd4317bea1fe07a1cd4d..c5f92c80d7ca1e1c7f5b9304a5a1173ebfd9c269 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -340,6 +340,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
@@ -68,7 +67,7 @@ index c5d49461bf1c890352755eb5491e57d5c137bf64..3b8c810a228a59bf02a8557b229e5eca
          }
      }
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index d9cd497bc1b654030ff1a597f038b6a881df9f6b..ecd239aebf1384a01cca3374dbc10bf8a7962d93 100644
+index 5a7278b093e37b95fb005ad5cc3cac90ac36f8fb..bb9a7c2035cac917ec30725ede76d18a33315e16 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -243,7 +243,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
@@ -81,20 +80,20 @@ index d9cd497bc1b654030ff1a597f038b6a881df9f6b..ecd239aebf1384a01cca3374dbc10bf8
  
      public ChunkMap(ServerLevel world, LevelStorageSource.LevelStorageAccess session, DataFixer dataFixer, StructureTemplateManager structureTemplateManager, Executor executor, BlockableEventLoop<Runnable> mainThreadExecutor, LightChunkGetter chunkProvider, ChunkGenerator chunkGenerator, ChunkProgressListener worldGenerationProgressListener, ChunkStatusUpdateListener chunkStatusChangeListener, Supplier<DimensionDataStorage> persistentStateManagerFactory, int viewDistance, boolean dsync) {
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 44ada45d9bf2d9b48e5de1c3cb1a855902f3884b..89a68d8f7ca91bcb49739658e817851fbbad707a 100644
+index 366c0c9b45a819f7f94ebe3e49b8ab7f9edf9ce7..6bc5c5cd0e784cb75a62f7cec17ce7b77bd1af36 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-@@ -73,6 +73,9 @@ public class ServerChunkCache extends ChunkSource {
-     final it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap<LevelChunk> loadedChunkMap = new it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap<>(8192, 0.5f);
- 
+@@ -77,6 +77,9 @@ public class ServerChunkCache extends ChunkSource {
      private final LevelChunk[] lastLoadedChunks = new LevelChunk[4 * 4];
-+    
+     // Paper end
+ 
 +    public boolean firstRunSpawnCounts = true; // Pufferfish
 +    public final java.util.concurrent.atomic.AtomicBoolean _pufferfish_spawnCountsReady = new java.util.concurrent.atomic.AtomicBoolean(false); // Pufferfish - optimize countmobs
- 
-     private static int getChunkCacheKey(int x, int z) {
-         return x & 3 | ((z & 3) << 2);
-@@ -529,6 +532,7 @@ public class ServerChunkCache extends ChunkSource {
++
+     public ServerChunkCache(ServerLevel world, LevelStorageSource.LevelStorageAccess session, DataFixer dataFixer, StructureTemplateManager structureTemplateManager, Executor workerExecutor, ChunkGenerator chunkGenerator, int viewDistance, int simulationDistance, boolean dsync, ChunkProgressListener worldGenerationProgressListener, ChunkStatusUpdateListener chunkStatusChangeListener, Supplier<DimensionDataStorage> persistentStateManagerFactory) {
+         this.level = world;
+         this.mainThreadProcessor = new ServerChunkCache.MainThreadExecutor(world);
+@@ -521,6 +524,7 @@ public class ServerChunkCache extends ChunkSource {
                  int naturalSpawnChunkCount = k;
                  NaturalSpawner.SpawnState spawnercreature_d; // moved down
                  if ((this.spawnFriendlies || this.spawnEnemies) && this.level.paperConfig().entities.spawning.perPlayerMobSpawns) { // don't count mobs when animals and monsters are disabled
@@ -102,7 +101,7 @@ index 44ada45d9bf2d9b48e5de1c3cb1a855902f3884b..89a68d8f7ca91bcb49739658e817851f
                      // re-set mob counts
                      for (ServerPlayer player : this.level.players) {
                          // Paper start - per player mob spawning backoff
-@@ -543,14 +547,18 @@ public class ServerChunkCache extends ChunkSource {
+@@ -535,14 +539,18 @@ public class ServerChunkCache extends ChunkSource {
                          }
                          // Paper end - per player mob spawning backoff
                      }
@@ -116,7 +115,7 @@ index 44ada45d9bf2d9b48e5de1c3cb1a855902f3884b..89a68d8f7ca91bcb49739658e817851f
 +                    _pufferfish_spawnCountsReady.set(true);
 +                    // Pufferfish end
                  }
-                 // Paper end
+                 // Paper end - Optional per player mob spawns
                  this.level.timings.countNaturalMobs.stopTiming(); // Paper - timings
  
 -                this.lastSpawnState = spawnercreature_d;
@@ -124,7 +123,7 @@ index 44ada45d9bf2d9b48e5de1c3cb1a855902f3884b..89a68d8f7ca91bcb49739658e817851f
                  gameprofilerfiller.popPush("spawnAndTick");
                  boolean flag = this.level.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING) && !this.level.players().isEmpty(); // CraftBukkit
  
-@@ -640,8 +648,8 @@ public class ServerChunkCache extends ChunkSource {
+@@ -632,8 +640,8 @@ public class ServerChunkCache extends ChunkSource {
                      if (tick && chunk1.chunkStatus.isOrAfter(net.minecraft.server.level.FullChunkStatus.ENTITY_TICKING)) {
                          // Paper end - optimise chunk tick iteration
                          chunk1.incrementInhabitedTime(j);
@@ -135,7 +134,7 @@ index 44ada45d9bf2d9b48e5de1c3cb1a855902f3884b..89a68d8f7ca91bcb49739658e817851f
                          }
  
                          if (true || this.level.shouldTickBlocksAt(chunkcoordintpair.toLong())) { // Paper - optimise chunk tick iteration
-@@ -688,6 +696,40 @@ public class ServerChunkCache extends ChunkSource {
+@@ -680,6 +688,40 @@ public class ServerChunkCache extends ChunkSource {
              gameprofilerfiller.pop();
              gameprofilerfiller.pop();
          }

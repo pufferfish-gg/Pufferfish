@@ -8,10 +8,10 @@ require it to be initialized earlier. By moving it to the superclass, we
 initialize it earlier, ensuring that it is available sooner.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index a1fd04399ef61d0257d1e4a6bb627e4a1b7a7ceb..56669cf9a02a0bab65e159610e3baa790587f7ff 100644
+index 6934e9dac0d69c043b73b7c46d59f2d39b37c67f..3e649e24543fbbb6ceed91509f04cb171e713396 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -983,7 +983,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -978,7 +978,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
      }
      // Paper start - optimise random block ticking
      private final BlockPos.MutableBlockPos chunkTickMutablePosition = new BlockPos.MutableBlockPos();
@@ -21,11 +21,11 @@ index a1fd04399ef61d0257d1e4a6bb627e4a1b7a7ceb..56669cf9a02a0bab65e159610e3baa79
  
      public void tickChunk(LevelChunk chunk, int randomTickSpeed) {
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 00ff7de3fe0feb166a792c61aa81a1e201d7e928..d91b422e9e2f572df8b6f107b866e55161a71de3 100644
+index 8f437225d2a4e08ca47873cd42277d9f0f9f5529..0b8e301dc4278017e91b9fedfcf35a0a58228a08 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -212,6 +212,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
-     // Paper end
+@@ -211,6 +211,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+     // Paper end - Use getChunkIfLoadedImmediately
  
      public abstract ResourceKey<LevelStem> getTypeKey();
 +    

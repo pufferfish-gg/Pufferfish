@@ -5,7 +5,7 @@ Subject: [PATCH] More debug for plugins not shutting down tasks
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 0c9d56b81171a50f468d4137dc37ab9f700a9c2b..6550d4ea03b5b56159b19e297f03b0b141c59c62 100644
+index a9d1f387a70800295aa37863dbb9f97337fece84..8344f9f693879639c484edf575c7df14df616776 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1120,6 +1120,11 @@ public final class CraftServer implements Server {
@@ -19,4 +19,4 @@ index 0c9d56b81171a50f468d4137dc37ab9f700a9c2b..6550d4ea03b5b56159b19e297f03b0b1
 +            }
          }
      }
-     // Paper end
+     // Paper end - Wait for Async Tasks during shutdown
