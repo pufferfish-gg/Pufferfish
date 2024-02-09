@@ -43,7 +43,7 @@ index 9a8896f51be5028724563cd5054782477868edef..b3dba80e30268f85befd2495cbf5bc5f
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 4883e77587b0f8c83faf36d607c5779d0843d43a..05bb19ba023d40a0f662e16236ca984464563b48 100644
+index 07cceb0dbb3e3678e1ca821927e7184542935c61..2c654224fd065421d71e465a9ac8dfd57ffa18ee 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -312,6 +312,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -55,10 +55,10 @@ index 4883e77587b0f8c83faf36d607c5779d0843d43a..05bb19ba023d40a0f662e16236ca9844
      public static <S extends MinecraftServer> S spin(Function<Thread, S> serverFactory) {
          AtomicReference<S> atomicreference = new AtomicReference();
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 5491307c433927f695c8fd4317bea1fe07a1cd4d..c5f92c80d7ca1e1c7f5b9304a5a1173ebfd9c269 100644
+index cbc269080ad0f8f08d0619d55ca09386a203d652..435b129c433704c24828d8fb57e14333c9423207 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -340,6 +340,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -341,6 +341,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
                  DedicatedServer.LOGGER.info("JMX monitoring enabled");
              }
  
