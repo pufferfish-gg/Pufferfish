@@ -6,7 +6,7 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 376e8983fdfdbb6c3e5fd8ad0f6a05e655b622bf..25eecf6bb6a552f05f1c55593b2c1d52ca82b931 100644
+index ce3747d8d2a8f4327766cf23d5aaa72cfcb380bc..1fc50ab1a422442ac60a7e93b2c06f60e1ea5dda 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -13,8 +13,12 @@ configurations.named(log4jPlugins.compileClasspathConfigurationName) {
@@ -24,7 +24,7 @@ index 376e8983fdfdbb6c3e5fd8ad0f6a05e655b622bf..25eecf6bb6a552f05f1c55593b2c1d52
      // Paper start
      implementation("org.jline:jline-terminal-jansi:3.21.0")
      implementation("net.minecrell:terminalconsoleappender:1.3.0")
-@@ -69,7 +73,7 @@ tasks.jar {
+@@ -70,7 +74,7 @@ tasks.jar {
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
@@ -33,7 +33,7 @@ index 376e8983fdfdbb6c3e5fd8ad0f6a05e655b622bf..25eecf6bb6a552f05f1c55593b2c1d52
              "Implementation-Vendor" to date, // Paper
              "Specification-Title" to "Bukkit",
              "Specification-Version" to project.version,
-@@ -209,7 +213,5 @@ val runtimeClasspathForRunDev = sourceSets.main.flatMap { src ->
+@@ -210,7 +214,5 @@ val runtimeClasspathForRunDev = sourceSets.main.flatMap { src ->
  }
  tasks.registerRunTask("runDev") {
      description = "Spin up a non-relocated Mojang-mapped test server"
