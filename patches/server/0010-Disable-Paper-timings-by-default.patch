@@ -5,7 +5,7 @@ Subject: [PATCH] Disable Paper timings by default
 
 
 diff --git a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
-index a6f58b3457b7477015c5c6d969e7d83017dd3fa1..a27ee205d13dda890646ebf451076f383de0728b 100644
+index f2e30d8743a97c0541808dc5c03300c0d881b843..0ad3659d205efb66a4caa89ab9ce2a9046fb483d 100644
 --- a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 @@ -8,6 +8,7 @@ import net.kyori.adventure.text.Component;
@@ -24,7 +24,7 @@ index a6f58b3457b7477015c5c6d969e7d83017dd3fa1..a27ee205d13dda890646ebf451076f38
  
  @SuppressWarnings({"CanBeFinal", "FieldCanBeLocal", "FieldMayBeFinal", "NotNullFieldNotInitialized", "InnerClassMayBeStatic"})
  public class GlobalConfiguration extends ConfigurationPart {
-@@ -96,6 +98,7 @@ public class GlobalConfiguration extends ConfigurationPart {
+@@ -97,6 +99,7 @@ public class GlobalConfiguration extends ConfigurationPart {
      @Deprecated(forRemoval = true)
      public class Timings extends ConfigurationPart {
          public boolean enabled = true;
@@ -32,7 +32,7 @@ index a6f58b3457b7477015c5c6d969e7d83017dd3fa1..a27ee205d13dda890646ebf451076f38
          public boolean verbose = true;
          public String url = "https://timings.aikar.co/";
          public boolean serverNamePrivacy = false;
-@@ -109,6 +112,14 @@ public class GlobalConfiguration extends ConfigurationPart {
+@@ -110,6 +113,14 @@ public class GlobalConfiguration extends ConfigurationPart {
  
          @PostProcess
          private void postProcess() {

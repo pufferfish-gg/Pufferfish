@@ -237,10 +237,10 @@ index d6cbe98e67fdbf8db46338a88ab1356dd63b50a3..20dd3a63b2f955b05a75eb240e33ae4c
      int LARGE_MAX_STACK_SIZE = 64;
      int DEFAULT_DISTANCE_LIMIT = 8;
 diff --git a/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecartContainer.java b/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecartContainer.java
-index 6d23c39e4eadf23616080d6d08672e13b5d3c37d..e7115f1635821e0aab32e8aeea6914388dc24639 100644
+index 756d0434472921992c9d84597d7c9c824e93614c..38c573d440946ca7ee6016ef92e9c1605031e611 100644
 --- a/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecartContainer.java
 +++ b/src/main/java/net/minecraft/world/entity/vehicle/AbstractMinecartContainer.java
-@@ -27,7 +27,10 @@ import org.bukkit.inventory.InventoryHolder;
+@@ -28,7 +28,10 @@ import org.bukkit.inventory.InventoryHolder;
  
  public abstract class AbstractMinecartContainer extends AbstractMinecart implements ContainerEntity {
  
@@ -251,7 +251,7 @@ index 6d23c39e4eadf23616080d6d08672e13b5d3c37d..e7115f1635821e0aab32e8aeea691438
      @Nullable
      public ResourceLocation lootTable;
      public long lootTableSeed;
-@@ -89,12 +92,18 @@ public abstract class AbstractMinecartContainer extends AbstractMinecart impleme
+@@ -90,12 +93,18 @@ public abstract class AbstractMinecartContainer extends AbstractMinecart impleme
  
      protected AbstractMinecartContainer(EntityType<?> type, Level world) {
          super(type, world);
@@ -272,7 +272,7 @@ index 6d23c39e4eadf23616080d6d08672e13b5d3c37d..e7115f1635821e0aab32e8aeea691438
      }
  
      @Override
-@@ -156,6 +165,10 @@ public abstract class AbstractMinecartContainer extends AbstractMinecart impleme
+@@ -164,6 +173,10 @@ public abstract class AbstractMinecartContainer extends AbstractMinecart impleme
      protected void readAdditionalSaveData(CompoundTag nbt) {
          super.readAdditionalSaveData(nbt);
          this.lootableData.loadNbt(nbt); // Paper
@@ -284,7 +284,7 @@ index 6d23c39e4eadf23616080d6d08672e13b5d3c37d..e7115f1635821e0aab32e8aeea691438
      }
  
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/ChestBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/ChestBlockEntity.java
-index a71414397bd45ee7bcacfeef0041d80dfa25f114..d66806565770cb03a21794f99e5c4b0f3040b26a 100644
+index 9b1243d96e0694c62fc9e82e9be540bce0d2b3ad..3514022d898a24052c917ebf55dcef3e757d6836 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/ChestBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/ChestBlockEntity.java
 @@ -31,7 +31,10 @@ import org.bukkit.entity.HumanEntity;
@@ -362,10 +362,10 @@ index a71414397bd45ee7bcacfeef0041d80dfa25f114..d66806565770cb03a21794f99e5c4b0f
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index df1c1c27b7c0065f8179d59bdb9de01dde22befa..1ddae39df4e7cb36db412ebdec8ca9d2818450a9 100644
+index cdb739df2a285032d25d84f4464f202a7a3fa578..6b9cd8543a5bfc2b936ba18f66ffd60f2f792e43 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-@@ -47,7 +47,10 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -48,7 +48,10 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
  
      public static final int MOVE_ITEM_SPEED = 8;
      public static final int HOPPER_CONTAINER_SIZE = 5;
@@ -373,10 +373,10 @@ index df1c1c27b7c0065f8179d59bdb9de01dde22befa..1ddae39df4e7cb36db412ebdec8ca9d2
      private NonNullList<ItemStack> items;
 +    private gg.airplane.structs.ItemListWithBitset optimizedItems; // Pufferfish
 +    // Pufferfish end
-     private int cooldownTime;
+     public int cooldownTime;
      private long tickedGameTime;
  
-@@ -83,14 +86,37 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -84,14 +87,37 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
  
      public HopperBlockEntity(BlockPos pos, BlockState state) {
          super(BlockEntityType.HOPPER, pos, state);
@@ -416,7 +416,7 @@ index df1c1c27b7c0065f8179d59bdb9de01dde22befa..1ddae39df4e7cb36db412ebdec8ca9d2
          if (!this.tryLoadLootTable(nbt)) {
              ContainerHelper.loadAllItems(nbt, this.items);
          }
-@@ -491,6 +517,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -492,6 +518,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
      }
  
      private static boolean isFullContainer(Container inventory, Direction direction) {
@@ -424,7 +424,7 @@ index df1c1c27b7c0065f8179d59bdb9de01dde22befa..1ddae39df4e7cb36db412ebdec8ca9d2
          // Paper start - Perf: Optimize Hoppers
          if (inventory instanceof WorldlyContainer worldlyContainer) {
              for (final int slot : worldlyContainer.getSlotsForFace(direction)) {
-@@ -513,7 +540,10 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -514,7 +541,10 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
      }
  
      private static boolean isEmptyContainer(Container inv, Direction facing) {
@@ -436,7 +436,7 @@ index df1c1c27b7c0065f8179d59bdb9de01dde22befa..1ddae39df4e7cb36db412ebdec8ca9d2
      }
  
      public static boolean suckInItems(Level world, Hopper hopper) {
-@@ -713,7 +743,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -714,7 +744,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
  
          if (HopperBlockEntity.canPlaceItemInContainer(to, stack, slot, side)) {
              boolean flag = false;
@@ -445,7 +445,7 @@ index df1c1c27b7c0065f8179d59bdb9de01dde22befa..1ddae39df4e7cb36db412ebdec8ca9d2
  
              if (itemstack1.isEmpty()) {
                  // Spigot start - SPIGOT-6693, InventorySubcontainer#setItem
-@@ -908,7 +938,10 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -909,7 +939,10 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
  
      @Override
      protected void setItems(NonNullList<ItemStack> list) {
@@ -458,7 +458,7 @@ index df1c1c27b7c0065f8179d59bdb9de01dde22befa..1ddae39df4e7cb36db412ebdec8ca9d2
  
      public static void entityInside(Level world, BlockPos pos, BlockState state, Entity entity, HopperBlockEntity blockEntity) {
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java
-index a94300a457b25f0e33a8eeabba6dd5720ca9ab1e..b41635dd0569ff7df909df492d3e850aef7214be 100644
+index f52ccd4f3e062af3c7cc6eaea5b074a3bbd21690..a5cd70b6ada2b44f64db0985483ee5eadc67003f 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java
 @@ -94,12 +94,7 @@ public abstract class RandomizableContainerBlockEntity extends BaseContainerBloc
