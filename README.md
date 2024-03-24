@@ -17,7 +17,6 @@ A highly optimized Paper fork designed for large servers requiring both maximum 
 - **8x Faster Map Rendering** Reduces or eliminates lag spikes caused by plugins like ImageOnMap or ImageMaps
 - **30% faster hoppers** over Paper (Airplane)
 - **Reduced GC times & frequency** from removing useless allocations, which also improves CPU performance (Airplane)
-- **Fast raytracing** which improves performance of any entity which utilizes line of sight, mainly Villagers (Airplane)
 - **Built-in profiler** which has 0 performance hit and easy to read metrics for both server owners and developers (Airplane)
 - Faster crafting, reduction in uselessly loaded chunks, faster entity ticking, faster block ticking, faster bat spawning, and more!
 - Complete compatibility with any plugin compatible with Paper
