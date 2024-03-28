@@ -5,7 +5,7 @@ Subject: [PATCH] Remove lambda from ticking guard
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 46e6b76603b47724dbb3dfc48ff500b4abe23c67..dbe612427b894df9da1335b94163ba9b89b090c0 100644
+index 0918f798f98a6cf9e50fe2f8609f579e3b096266..76cd2f89377d8e0200271fed14ef27b61a4af2b7 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -914,7 +914,20 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -23,7 +23,7 @@ index 46e6b76603b47724dbb3dfc48ff500b4abe23c67..dbe612427b894df9da1335b94163ba9b
 +                            final String msg = String.format("Entity threw exception at %s:%s,%s,%s", entity.level().getWorld().getName(), entity.getX(), entity.getY(), entity.getZ());
 +                            MinecraftServer.LOGGER.error(msg, throwable);
 +                            getCraftServer().getPluginManager().callEvent(new com.destroystokyo.paper.event.server.ServerExceptionEvent(new com.destroystokyo.paper.exception.ServerInternalException(msg, throwable)));
-+                            entity.discard();
++                            entity.discard(org.bukkit.event.entity.EntityRemoveEvent.Cause.DISCARD);
 +                            // Paper end
 +                        }
 +                        // Pufferfish end
@@ -31,10 +31,10 @@ index 46e6b76603b47724dbb3dfc48ff500b4abe23c67..dbe612427b894df9da1335b94163ba9b
                          }
                      }
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 182fdf5eb3884c197e33a617ca5a06eda69ea94d..fe063e4c3ff0b20f3d0c2c92eebdaf0101bac7d7 100644
+index 4bf8ea2937881fedecbfb2924b2a62d9bc0f21fc..309dfe082459518448b3ca90e375587b0c358530 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -1310,13 +1310,13 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1319,13 +1319,13 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
          try {
              tickConsumer.accept(entity);
              MinecraftServer.getServer().executeMidTickTasks(); // Paper - execute chunk tasks mid tick
@@ -45,8 +45,8 @@ index 182fdf5eb3884c197e33a617ca5a06eda69ea94d..fe063e4c3ff0b20f3d0c2c92eebdaf01
              final String msg = String.format("Entity threw exception at %s:%s,%s,%s", entity.level().getWorld().getName(), entity.getX(), entity.getY(), entity.getZ());
              MinecraftServer.LOGGER.error(msg, throwable);
              getCraftServer().getPluginManager().callEvent(new com.destroystokyo.paper.event.server.ServerExceptionEvent(new com.destroystokyo.paper.exception.ServerInternalException(msg, throwable))); // Paper - ServerExceptionEvent
--            entity.discard();
-+            entity.discard(); // Pufferfish - diff on change ServerLevel.tick
+-            entity.discard(org.bukkit.event.entity.EntityRemoveEvent.Cause.DISCARD);
++            entity.discard(org.bukkit.event.entity.EntityRemoveEvent.Cause.DISCARD); // Pufferfish - diff on change ServerLevel.tick
              // Paper end - Prevent block entity and entity crashes
          }
      }

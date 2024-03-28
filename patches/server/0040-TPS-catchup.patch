@@ -24,10 +24,10 @@ index 6755008dc43bf96c1507ce2ae6a066a1b75df760..1ca25529245ed369b8705075a8c2e32f
  	public static boolean enableSuffocationOptimization;
  	private static void suffocationOptimization() {
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index d3ffb0cc49ea6fbc32ceead7be4e7f564f84c889..b888dd7c1581d71382e5917a8a1e42f616875486 100644
+index a37e03278ff69ae1012c7a53774b60a45acb6125..60dad77b824c9b6a45e3a3960eb9d995583f1d28 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1220,6 +1220,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1230,6 +1230,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  this.profiler.popPush("nextTickWait");
                  this.mayHaveDelayedTasks = true;
                  this.delayedTasksMaxNextTickTimeNanos = Math.max(Util.getNanos() + i, this.nextTickTimeNanos);
