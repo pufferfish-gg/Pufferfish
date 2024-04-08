@@ -84,7 +84,7 @@ index 0b7a43b6f2ec9a69281ff38f9bef6e33878be3f8..bd3ca0af0f50b2bf1f1b95d4578c1b05
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index d070591b9ed4d8da1c85b97dc969f7d14d1dea20..0918f798f98a6cf9e50fe2f8609f579e3b096266 100644
+index 0c079381516d68a2d13d5a254a3b232c2a5e3d03..bf1262e00b5101630b636413b2e813d09c74cb1c 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -894,6 +894,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -96,7 +96,7 @@ index d070591b9ed4d8da1c85b97dc969f7d14d1dea20..0918f798f98a6cf9e50fe2f8609f579e
                      if (false && this.shouldDiscardEntity(entity)) { // CraftBukkit - We prevent spawning in general, so this butchering is not needed
                          entity.discard();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index b2b28a8a486e182c7853b27ff5d5dfd896f24c4f..f974ef82e58378d9d50d56c1877a06f1574315ae 100644
+index 8aa9a0503e22ebe395d2d00049dfa1833f0d9349..fd09ba5cae3923f61b6bee8c1a0f9dc23ae7a6ed 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -424,6 +424,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
@@ -359,7 +359,7 @@ index 24044795d8e0f1fb15a4f2f5401f44897092f2a3..96ca567af2d8fb2ba39f995be80b9353
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index c39894e824334f1dc52e0466cf9d84f7e219be70..bdc75da69ce2eb42ab1926ae877d6446668fd66c 100644
+index 3283ed99c35ffed6805567705e0518d9f84feedc..e69f8a8e3331989fef92fa331fbbe9b0af955f77 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -38,6 +38,10 @@ import co.aikar.timings.MinecraftTimings;
@@ -373,7 +373,7 @@ index c39894e824334f1dc52e0466cf9d84f7e219be70..bdc75da69ce2eb42ab1926ae877d6446
  
  public class ActivationRange
  {
-@@ -221,6 +225,25 @@ public class ActivationRange
+@@ -223,6 +227,25 @@ public class ActivationRange
                  }
                  // Paper end - Configurable marker ticking
                  ActivationRange.activateEntity(entity);
@@ -399,7 +399,7 @@ index c39894e824334f1dc52e0466cf9d84f7e219be70..bdc75da69ce2eb42ab1926ae877d6446
              }
              // Paper end
          }
-@@ -237,12 +260,12 @@ public class ActivationRange
+@@ -239,12 +262,12 @@ public class ActivationRange
          if ( MinecraftServer.currentTick > entity.activatedTick )
          {
              if ( entity.defaultActivationState )
