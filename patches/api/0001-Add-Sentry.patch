@@ -5,7 +5,7 @@ Subject: [PATCH] Add Sentry
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index bf01892c248b988531d21d9fb0f74d0adf2205ac..f499b87fcecc01078e1316850d5edf9b8a6c5360 100644
+index 04853c43b99951bf0d4c96ef73724625bdaf018f..1961ce5188d69ab4db860de64cc1bde60c6e2289 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -51,6 +51,7 @@ dependencies {
@@ -14,8 +14,8 @@ index bf01892c248b988531d21d9fb0f74d0adf2205ac..f499b87fcecc01078e1316850d5edf9b
      api("org.slf4j:slf4j-api:$slf4jVersion")
 +    api("io.sentry:sentry:5.4.0") // Pufferfish
  
-     implementation("org.ow2.asm:asm:9.5")
-     implementation("org.ow2.asm:asm-commons:9.5")
+     implementation("org.ow2.asm:asm:9.7")
+     implementation("org.ow2.asm:asm-commons:9.7")
 diff --git a/src/main/java/gg/pufferfish/pufferfish/sentry/SentryContext.java b/src/main/java/gg/pufferfish/pufferfish/sentry/SentryContext.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..10310fdd53de28efb8a8250f6d3b0c8eb08fb68a

@@ -11,10 +11,10 @@ saved for later, so this should be safe assuming plugins don't use it
 for some strange reason.
 
 diff --git a/src/main/java/net/minecraft/world/phys/shapes/EntityCollisionContext.java b/src/main/java/net/minecraft/world/phys/shapes/EntityCollisionContext.java
-index ebe65474a4a05ff1637d7f37ebcfe690af59def5..42142c512b12e5b269c19f1e821c50e7496a5f25 100644
+index 1132658b063c6cd3feb1783ab4d5f5141ab75140..284c76ddb9724b44bb2e93f590685c728e843e6d 100644
 --- a/src/main/java/net/minecraft/world/phys/shapes/EntityCollisionContext.java
 +++ b/src/main/java/net/minecraft/world/phys/shapes/EntityCollisionContext.java
-@@ -19,47 +19,66 @@ public class EntityCollisionContext implements CollisionContext {
+@@ -17,50 +17,69 @@ public class EntityCollisionContext implements CollisionContext {
              return defaultValue;
          }
      };
@@ -45,16 +45,23 @@ index ebe65474a4a05ff1637d7f37ebcfe690af59def5..42142c512b12e5b269c19f1e821c50e7
          this.entity = entity;
      }
  
-     /** @deprecated */
      @Deprecated
      protected EntityCollisionContext(Entity entity) {
--        this(entity.isDescending(), entity.getY(), entity instanceof LivingEntity ? ((LivingEntity)entity).getMainHandItem() : ItemStack.EMPTY, entity instanceof LivingEntity ? ((LivingEntity)entity)::canStandOnFluid : (fluidState) -> {
--            return false;
--        }, entity);
+-        this(
+-            entity.isDescending(),
+-            entity.getY(),
+-            entity instanceof LivingEntity ? ((LivingEntity)entity).getMainHandItem() : ItemStack.EMPTY,
+-            entity instanceof LivingEntity ? ((LivingEntity)entity)::canStandOnFluid : fluidState -> false,
+-            entity
+-        );
 +        // Pufferfish start - remove this
-+        // this(entity.isDescending(), entity.getY(), entity instanceof LivingEntity ? ((LivingEntity)entity).getMainHandItem() : ItemStack.EMPTY, entity instanceof LivingEntity ? ((LivingEntity)entity)::canStandOnFluid : (fluidState) -> {
-+        //     return false;
-+        // }, entity);
++        // this(
++        //     entity.isDescending(),
++        //     entity.getY(),
++        //     entity instanceof LivingEntity ? ((LivingEntity)entity).getMainHandItem() : ItemStack.EMPTY,
++        //     entity instanceof LivingEntity ? ((LivingEntity)entity)::canStandOnFluid : fluidState -> false,
++        //     entity
++        // );
 +        // Pufferfish end
 +        this.entity = entity;
      }
@@ -91,8 +98,8 @@ index ebe65474a4a05ff1637d7f37ebcfe690af59def5..42142c512b12e5b269c19f1e821c50e7
  
      @Override
      public boolean isAbove(VoxelShape shape, BlockPos pos, boolean defaultValue) {
--        return this.entityBottom > (double)pos.getY() + shape.max(Direction.Axis.Y) - (double)1.0E-5F;
-+        return (this.entity == null ? -Double.MAX_VALUE : entity.getY()) > (double)pos.getY() + shape.max(Direction.Axis.Y) - (double)1.0E-5F; // Pufferfish
+-        return this.entityBottom > pos.getY() + shape.max(Direction.Axis.Y) - 1.0E-5F;
++        return (this.entity == null ? -Double.MAX_VALUE : entity.getY()) > (double)pos.getY() + shape.max(Direction.Axis.Y) - 1.0E-5F; // Pufferfish
      }
  
      @Nullable

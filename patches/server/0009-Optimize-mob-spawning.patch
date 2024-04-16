@@ -43,7 +43,7 @@ index 9a8896f51be5028724563cd5054782477868edef..b3dba80e30268f85befd2495cbf5bc5f
 +	
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 07cceb0dbb3e3678e1ca821927e7184542935c61..2c654224fd065421d71e465a9ac8dfd57ffa18ee 100644
+index a6ac7dce4bee306be2f173238cb827b576fdb7d5..a69bc95ae94b26085431215e8a1b95fd15dbcecd 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -312,6 +312,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -67,7 +67,7 @@ index cbc269080ad0f8f08d0619d55ca09386a203d652..435b129c433704c24828d8fb57e14333
          }
      }
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 5a7278b093e37b95fb005ad5cc3cac90ac36f8fb..bb9a7c2035cac917ec30725ede76d18a33315e16 100644
+index 12109446fc76a39faee6cda042ca48b3fd3809f4..6870ac42b6714b2fec86414365da60c1b50aed7e 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -243,7 +243,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
@@ -176,10 +176,10 @@ index 366c0c9b45a819f7f94ebe3e49b8ab7f9edf9ce7..6bc5c5cd0e784cb75a62f7cec17ce7b7
  
      private void getFullChunk(long pos, Consumer<LevelChunk> chunkConsumer) {
 diff --git a/src/main/java/net/minecraft/world/level/entity/EntityTickList.java b/src/main/java/net/minecraft/world/level/entity/EntityTickList.java
-index 4cdfc433df67afcd455422e9baf56f167dd712ae..57fcf3910f45ce371ac2e237b277b1034caaac4e 100644
+index 83a39f900551e39d5af6f17a339a386ddee4feef..0c8c534fc69172387f188af5282accfed7597ac7 100644
 --- a/src/main/java/net/minecraft/world/level/entity/EntityTickList.java
 +++ b/src/main/java/net/minecraft/world/level/entity/EntityTickList.java
-@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
+@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
  import net.minecraft.world.entity.Entity;
  
  public class EntityTickList {

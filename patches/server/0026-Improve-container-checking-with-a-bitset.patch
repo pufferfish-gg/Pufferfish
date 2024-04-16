@@ -458,12 +458,12 @@ index cdb739df2a285032d25d84f4464f202a7a3fa578..6b9cd8543a5bfc2b936ba18f66ffd60f
  
      public static void entityInside(Level world, BlockPos pos, BlockState state, Entity entity, HopperBlockEntity blockEntity) {
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java
-index f52ccd4f3e062af3c7cc6eaea5b074a3bbd21690..a5cd70b6ada2b44f64db0985483ee5eadc67003f 100644
+index dfd1246b735fe64c5beae83567a013861eb00822..fa64bf5ad13c278438039b663ea3134e72108411 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity.java
 @@ -94,12 +94,7 @@ public abstract class RandomizableContainerBlockEntity extends BaseContainerBloc
      public boolean isEmpty() {
-         this.unpackLootTable((Player)null);
+         this.unpackLootTable(null);
          // Paper start - Perf: Optimize Hoppers
 -        for (final ItemStack itemStack : this.getItems()) {
 -            if (!itemStack.isEmpty()) {

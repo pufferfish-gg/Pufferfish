@@ -3,7 +3,7 @@ import io.papermc.paperweight.util.constants.PAPERCLIP_CONFIG
 plugins {
     java
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
-    id("io.papermc.paperweight.patcher") version "1.5.11"
+    id("io.papermc.paperweight.patcher") version "1.5.15"
 }
 
 repositories {
@@ -14,8 +14,8 @@ repositories {
 }
 
 dependencies {
-    remapper("net.fabricmc:tiny-remapper:0.8.10:fat")
-    decompiler("net.minecraftforge:forgeflower:2.0.627.2")
+    remapper("net.fabricmc:tiny-remapper:0.10.1:fat")
+    decompiler("org.vineflower:vineflower:1.11.0-20240412.144930-14")
     paperclip("io.papermc:paperclip:3.0.3")
 }
 

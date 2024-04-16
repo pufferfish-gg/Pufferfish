@@ -5,12 +5,12 @@ Subject: [PATCH] Fix Paper#6045, block goal shouldn't load chunks
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/MoveToBlockGoal.java b/src/main/java/net/minecraft/world/entity/ai/goal/MoveToBlockGoal.java
-index 07519c817cc6de04a98198c43a0c2b02ba3141eb..ee66be6e5aa45ec8448b6d30785a6e71200b09e3 100644
+index de7c3654b5d134e380c0d7e8800beb6c10d8a22a..3e544a1b957e7a9bc2c5548baf7f6499a34151eb 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/goal/MoveToBlockGoal.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/goal/MoveToBlockGoal.java
-@@ -120,6 +120,7 @@ public abstract class MoveToBlockGoal extends Goal {
-                 for(int m = 0; m <= l; m = m > 0 ? -m : 1 - m) {
-                     for(int n = m < l && m > -l ? l : 0; n <= l; n = n > 0 ? -n : 1 - n) {
+@@ -119,6 +119,7 @@ public abstract class MoveToBlockGoal extends Goal {
+                 for (int m = 0; m <= l; m = m > 0 ? -m : 1 - m) {
+                     for (int n = m < l && m > -l ? l : 0; n <= l; n = n > 0 ? -n : 1 - n) {
                          mutableBlockPos.setWithOffset(blockPos, m, k - 1, n);
 +                        if (!this.mob.level().hasChunkAt(mutableBlockPos)) continue; // Pufferfish - if this block isn't loaded, continue
                          if (this.mob.isWithinRestriction(mutableBlockPos) && this.isValidTarget(this.mob.level(), mutableBlockPos)) {

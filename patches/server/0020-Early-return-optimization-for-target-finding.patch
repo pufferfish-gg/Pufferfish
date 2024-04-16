@@ -5,15 +5,15 @@ Subject: [PATCH] Early return optimization for target finding
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/ai/targeting/TargetingConditions.java b/src/main/java/net/minecraft/world/entity/ai/targeting/TargetingConditions.java
-index c8a80c1b2fedff22e8a877d466062375ffb2f0d7..931cbbe41905d7ed3fd46c53d3ddd06a6b9a7c8a 100644
+index d2f0c3b26d4beedb49d86e0242d843590d469d02..28cff997a1b263784e245f692adbff2a888a2d53 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/targeting/TargetingConditions.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/targeting/TargetingConditions.java
-@@ -75,9 +75,18 @@ public class TargetingConditions {
+@@ -76,9 +76,18 @@ public class TargetingConditions {
                  }
  
-                 if (this.range > 0.0D) {
--                    double d = this.testInvisible ? targetEntity.getVisibilityPercent(baseEntity) : 1.0D;
--                    double e = Math.max((this.useFollowRange ? this.getFollowRange(baseEntity) : this.range) * d, 2.0D); // Paper - Fix MC-145656
+                 if (this.range > 0.0) {
+-                    double d = this.testInvisible ? targetEntity.getVisibilityPercent(baseEntity) : 1.0;
+-                    double e = Math.max((this.useFollowRange ? this.getFollowRange(baseEntity) : this.range) * d, 2.0); // Paper - Fix MC-145656
 +                    // Pufferfish start - check range before getting visibility
 +                    // d = invisibility percent, e = follow range adjusted for invisibility, f = distance
                      double f = baseEntity.distanceToSqr(targetEntity.getX(), targetEntity.getY(), targetEntity.getZ());
@@ -23,8 +23,8 @@ index c8a80c1b2fedff22e8a877d466062375ffb2f0d7..931cbbe41905d7ed3fd46c53d3ddd06a
 +                        return false;
 +                    }
 +
-+                    double d = this.testInvisible ? targetEntity.getVisibilityPercent(baseEntity) : 1.0D;
-+                    double e = Math.max((followRangeRaw) * d, 2.0D); // Paper - Fix MC-145656
++                    double d = this.testInvisible ? targetEntity.getVisibilityPercent(baseEntity) : 1.0;
++                    double e = Math.max((followRangeRaw) * d, 2.0); // Paper - Fix MC-145656
 +                    // Pufferfish end
                      if (f > e * e) {
                          return false;

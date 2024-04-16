@@ -84,7 +84,7 @@ index 0b7a43b6f2ec9a69281ff38f9bef6e33878be3f8..bd3ca0af0f50b2bf1f1b95d4578c1b05
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index d070591b9ed4d8da1c85b97dc969f7d14d1dea20..0918f798f98a6cf9e50fe2f8609f579e3b096266 100644
+index 0c079381516d68a2d13d5a254a3b232c2a5e3d03..bf1262e00b5101630b636413b2e813d09c74cb1c 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -894,6 +894,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -96,7 +96,7 @@ index d070591b9ed4d8da1c85b97dc969f7d14d1dea20..0918f798f98a6cf9e50fe2f8609f579e
                      if (false && this.shouldDiscardEntity(entity)) { // CraftBukkit - We prevent spawning in general, so this butchering is not needed
                          entity.discard();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index b2b28a8a486e182c7853b27ff5d5dfd896f24c4f..f974ef82e58378d9d50d56c1877a06f1574315ae 100644
+index 3586eaffcb97cbae27bf9882e59e4d581ae294b8..30de9009218a24606c5672947a6ea285adc1d6fe 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -424,6 +424,8 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
@@ -159,10 +159,10 @@ index 2439f8d48daca7329049436414f06a36b4b79029..1072386fe5e0ea98a941f9bf15fc2782
              this.level().getProfiler().pop();
          }
 diff --git a/src/main/java/net/minecraft/world/entity/ai/behavior/VillagerPanicTrigger.java b/src/main/java/net/minecraft/world/entity/ai/behavior/VillagerPanicTrigger.java
-index 646d9a121d908a2fc3e4e302484dd5cd1bfc6804..e546ecdccde352502e26a8668eaaafe048d6e282 100644
+index 758f62416ca9c02351348ac0d41deeb4624abc0e..69130969c9a434ec2361e573c9a1ec9f462dfda2 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/behavior/VillagerPanicTrigger.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/behavior/VillagerPanicTrigger.java
-@@ -37,7 +37,11 @@ public class VillagerPanicTrigger extends Behavior<Villager> {
+@@ -36,7 +36,11 @@ public class VillagerPanicTrigger extends Behavior<Villager> {
  
      @Override
      protected void tick(ServerLevel world, Villager entity, long time) {
@@ -174,12 +174,12 @@ index 646d9a121d908a2fc3e4e302484dd5cd1bfc6804..e546ecdccde352502e26a8668eaaafe0
 +            // Pufferfish end
              entity.spawnGolemIfNeeded(world, time, 3);
          }
- 
+     }
 diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java b/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
-index 676f5485a4ca9252e911213dcda8d51776b637b6..2d63ee8fef87264d4b61290effa6ba86a787aa61 100644
+index 38af5c7280366fd6ec077f3d914ea5f3ee77451a..d78e1f6191738d426968efc24e734f04b0fc7edb 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
-@@ -53,9 +53,12 @@ public class GoalSelector {
+@@ -52,9 +52,12 @@ public class GoalSelector {
      }
  
      // Paper start
@@ -227,11 +227,11 @@ index b21e180641d17438997a80e5bcb0ec7998d24a2e..33c160994f70f71446d665e748791343
          this.level().getProfiler().pop();
          this.level().getProfiler().push("axolotlActivityUpdate");
 diff --git a/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java b/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
-index 295769d039f2a1e4f48912a60f9dbe267d8992c1..e88b058c0734e436ef24bab6364b206c13e5a9c2 100644
+index a03fb7aa9f4528f4885db88eaf480202d5f54750..1767fd2df8cb37e9c36fa3008b5131ff4bdad12c 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
-@@ -159,9 +159,11 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
- 
+@@ -183,9 +183,11 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
+         }
      }
  
 +    private int behaviorTick = 0; // Pufferfish
@@ -275,11 +275,11 @@ index 5d247ac38fe8a61603b3d934f3000bcda773142b..2e4177cfb02616ef6fa689f6d378976e
          this.level().getProfiler().pop();
          this.level().getProfiler().push("goatActivityUpdate");
 diff --git a/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java b/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
-index 01a2016ac82807d28ffe407b7dbb74bdbcde503e..9921b160fb21f72fbd28fe81ea66fbc3dc05f83f 100644
+index 050ffa4a23feba29fdf4c6a175cdff4e5009027d..1299f93d4f983e6715e447add65df91ef9e9090a 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/hoglin/Hoglin.java
-@@ -128,9 +128,11 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
-         return (Brain<Hoglin>) super.getBrain(); // Paper - decompile fix
+@@ -155,9 +155,11 @@ public class Hoglin extends Animal implements Enemy, HoglinBase {
+         return (Brain<Hoglin>)super.getBrain();
      }
  
 +    private int behaviorTick; // Pufferfish
@@ -359,7 +359,7 @@ index 24044795d8e0f1fb15a4f2f5401f44897092f2a3..96ca567af2d8fb2ba39f995be80b9353
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index c39894e824334f1dc52e0466cf9d84f7e219be70..bdc75da69ce2eb42ab1926ae877d6446668fd66c 100644
+index 3283ed99c35ffed6805567705e0518d9f84feedc..e69f8a8e3331989fef92fa331fbbe9b0af955f77 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -38,6 +38,10 @@ import co.aikar.timings.MinecraftTimings;
@@ -373,7 +373,7 @@ index c39894e824334f1dc52e0466cf9d84f7e219be70..bdc75da69ce2eb42ab1926ae877d6446
  
  public class ActivationRange
  {
-@@ -221,6 +225,25 @@ public class ActivationRange
+@@ -223,6 +227,25 @@ public class ActivationRange
                  }
                  // Paper end - Configurable marker ticking
                  ActivationRange.activateEntity(entity);
@@ -399,7 +399,7 @@ index c39894e824334f1dc52e0466cf9d84f7e219be70..bdc75da69ce2eb42ab1926ae877d6446
              }
              // Paper end
          }
-@@ -237,12 +260,12 @@ public class ActivationRange
+@@ -239,12 +262,12 @@ public class ActivationRange
          if ( MinecraftServer.currentTick > entity.activatedTick )
          {
              if ( entity.defaultActivationState )

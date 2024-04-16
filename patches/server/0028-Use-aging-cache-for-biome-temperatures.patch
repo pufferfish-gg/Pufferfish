@@ -130,17 +130,16 @@ index 0000000000000000000000000000000000000000..a7f297ebb569f7c1f205e967ca485be7
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/level/biome/Biome.java b/src/main/java/net/minecraft/world/level/biome/Biome.java
-index 65012a12e1430956ef55ced56773e6354ac26444..ed439b7e94646141c93a7dd3704d1cdeb5c27e16 100644
+index b865115dc5a8c000521abf668251ab1bd8104505..42af3888a155f114901a90d4028bafed5789f58f 100644
 --- a/src/main/java/net/minecraft/world/level/biome/Biome.java
 +++ b/src/main/java/net/minecraft/world/level/biome/Biome.java
-@@ -66,14 +66,20 @@ public final class Biome {
+@@ -63,13 +63,18 @@ public final class Biome {
      private final BiomeGenerationSettings generationSettings;
      private final MobSpawnSettings mobSettings;
      private final BiomeSpecialEffects specialEffects;
--    private final ThreadLocal<Long2FloatLinkedOpenHashMap> temperatureCache = ThreadLocal.withInitial(() -> {
+-    private final ThreadLocal<Long2FloatLinkedOpenHashMap> temperatureCache = ThreadLocal.withInitial(() -> Util.make(() -> {
 +    // Pufferfish start - use our cache
-+    private final ThreadLocal<gg.airplane.structs.Long2FloatAgingCache> temperatureCache = ThreadLocal.withInitial(() -> {
-         return Util.make(() -> {
++    private final ThreadLocal<gg.airplane.structs.Long2FloatAgingCache> temperatureCache = ThreadLocal.withInitial(() -> Util.make(() -> {
 +            /*
              Long2FloatLinkedOpenHashMap long2FloatLinkedOpenHashMap = new Long2FloatLinkedOpenHashMap(1024, 0.25F) {
                  protected void rehash(int i) {
@@ -148,14 +147,13 @@ index 65012a12e1430956ef55ced56773e6354ac26444..ed439b7e94646141c93a7dd3704d1cde
              };
              long2FloatLinkedOpenHashMap.defaultReturnValue(Float.NaN);
              return long2FloatLinkedOpenHashMap;
-+
 +             */
 +            return new gg.airplane.structs.Long2FloatAgingCache(TEMPERATURE_CACHE_SIZE);
 +            // Pufferfish end
-         });
-     });
+         }));
  
-@@ -118,17 +124,15 @@ public final class Biome {
+     Biome(Biome.ClimateSettings weather, BiomeSpecialEffects effects, BiomeGenerationSettings generationSettings, MobSpawnSettings spawnSettings) {
+@@ -112,17 +117,15 @@ public final class Biome {
      @Deprecated
      public float getTemperature(BlockPos blockPos) {
          long l = blockPos.asLong();
