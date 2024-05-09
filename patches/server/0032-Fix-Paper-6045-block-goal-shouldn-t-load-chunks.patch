@@ -5,10 +5,10 @@ Subject: [PATCH] Fix Paper#6045, block goal shouldn't load chunks
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/MoveToBlockGoal.java b/src/main/java/net/minecraft/world/entity/ai/goal/MoveToBlockGoal.java
-index de7c3654b5d134e380c0d7e8800beb6c10d8a22a..3e544a1b957e7a9bc2c5548baf7f6499a34151eb 100644
+index aee0147649d458b87d92496eda0c1723ebe570d2..89e9ea999d2fbd81a1d74382ef3fcd675fc8b94e 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/goal/MoveToBlockGoal.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/goal/MoveToBlockGoal.java
-@@ -119,6 +119,7 @@ public abstract class MoveToBlockGoal extends Goal {
+@@ -121,6 +121,7 @@ public abstract class MoveToBlockGoal extends Goal {
                  for (int m = 0; m <= l; m = m > 0 ? -m : 1 - m) {
                      for (int n = m < l && m > -l ? l : 0; n <= l; n = n > 0 ? -n : 1 - n) {
                          mutableBlockPos.setWithOffset(blockPos, m, k - 1, n);

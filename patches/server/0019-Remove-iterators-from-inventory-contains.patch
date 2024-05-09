@@ -5,10 +5,10 @@ Subject: [PATCH] Remove iterators from inventory contains
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/player/Inventory.java b/src/main/java/net/minecraft/world/entity/player/Inventory.java
-index 96d664c28738d6090f7067761c2978dd1aa0fd0e..b1c24a02b87aca7b180a6efbce177f2300db49c1 100644
+index ca7fbe4f8c1e1d2fb90095aa35be4dda3029c23e..38c9fc3b740fcfaacae8c39defe2627c7442ca96 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Inventory.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Inventory.java
-@@ -687,6 +687,8 @@ public class Inventory implements Container, Nameable {
+@@ -643,6 +643,8 @@ public class Inventory implements Container, Nameable {
      }
  
      public boolean contains(ItemStack stack) {
@@ -17,17 +17,72 @@ index 96d664c28738d6090f7067761c2978dd1aa0fd0e..b1c24a02b87aca7b180a6efbce177f23
          Iterator iterator = this.compartments.iterator();
  
          while (iterator.hasNext()) {
-@@ -701,6 +703,18 @@ public class Inventory implements Container, Nameable {
+@@ -657,11 +659,26 @@ public class Inventory implements Container, Nameable {
                  }
              }
          }
-+         */
++        */
 +        for (int i = 0; i < this.compartments.size(); i++) {
 +            List<ItemStack> list = this.compartments.get(i);
++
 +            for (int j = 0; j < list.size(); j++) {
 +                ItemStack itemstack1 = list.get(j);
 +
-+                if (!itemstack1.isEmpty() && ItemStack.isSameItemSameTags(itemstack1, stack)) {
++                if (!itemstack1.isEmpty() && ItemStack.isSameItemSameComponents(itemstack1, stack)) {
++                    return true;
++                }
++            }
++        }
++        // Pufferfish end
+ 
+         return false;
+     }
+ 
+     public boolean contains(TagKey<Item> tag) {
++        // Pufferfish start - don't allocate iterators
++        /*
+         Iterator iterator = this.compartments.iterator();
+ 
+         while (iterator.hasNext()) {
+@@ -676,11 +693,26 @@ public class Inventory implements Container, Nameable {
+                 }
+             }
+         }
++        */
++        for (int i = 0; i < this.compartments.size(); i++) {
++            List<ItemStack> list = this.compartments.get(i);
++
++            for (int j = 0; j < list.size(); j++) {
++                ItemStack itemstack = list.get(j);
++
++                if (!itemstack.isEmpty() && itemstack.is(tag)) {
++                    return true;
++                }
++            }
++        }
++        // Pufferfish end
+ 
+         return false;
+     }
+ 
+     public boolean contains(Predicate<ItemStack> predicate) {
++        // Pufferfish start - don't allocate iterators
++        /*
+         Iterator iterator = this.compartments.iterator();
+ 
+         while (iterator.hasNext()) {
+@@ -695,6 +727,19 @@ public class Inventory implements Container, Nameable {
+                 }
+             }
+         }
++        */
++        for (int i = 0; i < this.compartments.size(); i++) {
++            List<ItemStack> list = this.compartments.get(i);
++
++            for (int j = 0; j < list.size(); j++) {
++                ItemStack itemstack = list.get(j);
++
++                if (predicate.test(itemstack)) {
 +                    return true;
 +                }
 +            }

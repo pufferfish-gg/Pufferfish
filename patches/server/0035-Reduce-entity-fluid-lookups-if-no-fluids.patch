@@ -5,10 +5,10 @@ Subject: [PATCH] Reduce entity fluid lookups if no fluids
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 7a408bafbef2c78e3b17b390881be9e5948147ab..8a958d53b099ee3a06f6a9d05429c0b4e67a10d7 100644
+index 7237432ffbbc8769f44b7a2699325b1b16b0adc0..c6d43a50ac116f8f26de1ba37147eec5ed137bbe 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -4424,16 +4424,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -4481,16 +4481,18 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
      }
  
      public boolean updateFluidHeightAndDoFluidPushing(TagKey<Fluid> tag, double speed) {
@@ -34,7 +34,7 @@ index 7a408bafbef2c78e3b17b390881be9e5948147ab..8a958d53b099ee3a06f6a9d05429c0b4
              double d1 = 0.0D;
              boolean flag = this.isPushedByFluid();
              boolean flag1 = false;
-@@ -4441,14 +4443,61 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -4498,14 +4500,61 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
              int k1 = 0;
              BlockPos.MutableBlockPos blockposition_mutableblockposition = new BlockPos.MutableBlockPos();
  
@@ -102,7 +102,7 @@ index 7a408bafbef2c78e3b17b390881be9e5948147ab..8a958d53b099ee3a06f6a9d05429c0b4
  
                              if (d2 >= axisalignedbb.minY) {
                                  flag1 = true;
-@@ -4470,9 +4519,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -4527,9 +4576,12 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
                                  // CraftBukkit end
                              }
                          }
@@ -116,7 +116,7 @@ index 7a408bafbef2c78e3b17b390881be9e5948147ab..8a958d53b099ee3a06f6a9d05429c0b4
              if (vec3d.length() > 0.0D) {
                  if (k1 > 0) {
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
-index 796bbef3544e06b8e7aac7e8ac5f740a2613f4bd..2422ca3ffc6ab7178cacf933b8013f85e7de4bd9 100644
+index a2a5aef769ee8bb638a5a9f3da9812fa4a85dda5..7288261b8924d08e93abecb664e2273c624a325b 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
 @@ -25,6 +25,7 @@ public class LevelChunkSection {

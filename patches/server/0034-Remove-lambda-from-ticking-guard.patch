@@ -5,10 +5,10 @@ Subject: [PATCH] Remove lambda from ticking guard
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 0918f798f98a6cf9e50fe2f8609f579e3b096266..76cd2f89377d8e0200271fed14ef27b61a4af2b7 100644
+index 9efe7a1d1dbb865e2bba57c7e058a3b2a60886ad..377ca8c01864d6817eff30d33403bc15bf85e6d4 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -914,7 +914,20 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -920,7 +920,20 @@ public class ServerLevel extends Level implements WorldGenLevel {
                              }
  
                              gameprofilerfiller.push("tick");
@@ -31,10 +31,10 @@ index 0918f798f98a6cf9e50fe2f8609f579e3b096266..76cd2f89377d8e0200271fed14ef27b6
                          }
                      }
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 4bf8ea2937881fedecbfb2924b2a62d9bc0f21fc..309dfe082459518448b3ca90e375587b0c358530 100644
+index cccdda59e4a57d50fecac9301a80e1bcf4a5c543..876990240293740046c6a6b43aebad6d7d5075d6 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -1319,13 +1319,13 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1310,13 +1310,13 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
          try {
              tickConsumer.accept(entity);
              MinecraftServer.getServer().executeMidTickTasks(); // Paper - execute chunk tasks mid tick

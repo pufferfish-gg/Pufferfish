@@ -130,7 +130,7 @@ index 0000000000000000000000000000000000000000..a7f297ebb569f7c1f205e967ca485be7
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/level/biome/Biome.java b/src/main/java/net/minecraft/world/level/biome/Biome.java
-index b865115dc5a8c000521abf668251ab1bd8104505..42af3888a155f114901a90d4028bafed5789f58f 100644
+index 15f82c9a1ce1fef2e951d1b3c7a65e64b82061ea..f9fbfb63f19decb3b15284306d7edda072e609af 100644
 --- a/src/main/java/net/minecraft/world/level/biome/Biome.java
 +++ b/src/main/java/net/minecraft/world/level/biome/Biome.java
 @@ -63,13 +63,18 @@ public final class Biome {

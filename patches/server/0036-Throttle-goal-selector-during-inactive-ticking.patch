@@ -23,10 +23,10 @@ index 03ef5e6b578aa1e9391e891d3e005b30925eb5a8..ca7e0cd9e03d7d8fece1f81f684cec20
      public static URI profileWebUrl;
      private static void profilerOptions() {
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 1072386fe5e0ea98a941f9bf15fc2782368b2830..4cf2963fdbe9003fd18ac8c2035ccded57c02abd 100644
+index 77f81c59c2229c4debd112cf1fb5cff2293db4f8..9aa42d6ce2c9f64142dd6f35a34319983bf7f3e4 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
-@@ -222,11 +222,13 @@ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -237,11 +237,13 @@ public abstract class Mob extends LivingEntity implements EquipmentUser, Targeti
          return this.lookControl;
      }
  

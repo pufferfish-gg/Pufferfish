@@ -5,10 +5,10 @@ Subject: [PATCH] Use thread unsafe random for mob spawning
 
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index a9500a588387c045739dfe7bdad99f375ef2a4f9..4bf8ea2937881fedecbfb2924b2a62d9bc0f21fc 100644
+index f3e79343500a876cd9fcebacdbf5321cebb96dc7..cccdda59e4a57d50fecac9301a80e1bcf4a5c543 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -216,7 +216,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -213,7 +213,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
  
      public abstract ResourceKey<LevelStem> getTypeKey();
      
@@ -18,10 +18,10 @@ index a9500a588387c045739dfe7bdad99f375ef2a4f9..4bf8ea2937881fedecbfb2924b2a62d9
      protected Level(WritableLevelData worlddatamutable, ResourceKey<Level> resourcekey, RegistryAccess iregistrycustom, Holder<DimensionType> holder, Supplier<ProfilerFiller> supplier, boolean flag, boolean flag1, long i, int j, org.bukkit.generator.ChunkGenerator gen, org.bukkit.generator.BiomeProvider biomeProvider, org.bukkit.World.Environment env, java.util.function.Function<org.spigotmc.SpigotWorldConfig, io.papermc.paper.configuration.WorldConfiguration> paperWorldConfigCreator, java.util.concurrent.Executor executor) { // Paper - create paper world config; Async-Anti-Xray: Pass executor
          this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((net.minecraft.world.level.storage.PrimaryLevelData) worlddatamutable).getLevelName()); // Spigot
 diff --git a/src/main/java/net/minecraft/world/level/NaturalSpawner.java b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-index da7489986848316fed029b71d1bc4e1248c9c9a8..661acdf4b1f33d150b0caf179e925d3162d7be35 100644
+index ed8032495af9ce9c23419224814b8d27e4a97c17..382c5773f773837f8182ee5d4f97f588c15eaacd 100644
 --- a/src/main/java/net/minecraft/world/level/NaturalSpawner.java
 +++ b/src/main/java/net/minecraft/world/level/NaturalSpawner.java
-@@ -425,12 +425,12 @@ public final class NaturalSpawner {
+@@ -408,12 +408,12 @@ public final class NaturalSpawner {
          }
      }
  

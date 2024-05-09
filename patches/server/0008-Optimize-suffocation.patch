@@ -35,10 +35,10 @@ index ac56a5ba83184ee7b24b58cc25aa3d5aa953caee..9a8896f51be5028724563cd505478247
 +	
  }
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 23570a0b1227a840b9c1e6ae326827ea655bb5f7..1f829dd574bed183b589284b42fd2e2e4e1e883f 100644
+index 6e043457a29a890bcefd27fc5bb07c1a7e4e30f7..887b8425a14a09071710b5f5e34d621d47404c28 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -414,7 +414,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -427,7 +427,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
              boolean flag = this instanceof net.minecraft.world.entity.player.Player;
  
              if (!this.level().isClientSide) {
@@ -47,7 +47,7 @@ index 23570a0b1227a840b9c1e6ae326827ea655bb5f7..1f829dd574bed183b589284b42fd2e2e
                      this.hurt(this.damageSources().inWall(), 1.0F);
                  } else if (flag && !this.level().getWorldBorder().isWithinBounds(this.getBoundingBox())) {
                      double d0 = this.level().getWorldBorder().getDistanceToBorder(this) + this.level().getWorldBorder().getDamageSafeZone();
-@@ -1418,6 +1418,19 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -1431,6 +1431,19 @@ public abstract class LivingEntity extends Entity implements Attackable {
          return this.getHealth() <= 0.0F;
      }
  
@@ -68,10 +68,10 @@ index 23570a0b1227a840b9c1e6ae326827ea655bb5f7..1f829dd574bed183b589284b42fd2e2e
      public boolean hurt(DamageSource source, float amount) {
          if (this.isInvulnerableTo(source)) {
 diff --git a/src/main/java/net/minecraft/world/entity/boss/wither/WitherBoss.java b/src/main/java/net/minecraft/world/entity/boss/wither/WitherBoss.java
-index 12440ee2dccc0a697fb403765f2e1b987ccc0283..de2471cfa96a23944f229f33ffdff88b6b7756e4 100644
+index 7ddca52f7fe3f289b4b867e134326b1ead1a2aee..5040b1a7125dd9647a98fd812f558ec3a2171092 100644
 --- a/src/main/java/net/minecraft/world/entity/boss/wither/WitherBoss.java
 +++ b/src/main/java/net/minecraft/world/entity/boss/wither/WitherBoss.java
-@@ -151,6 +151,13 @@ public class WitherBoss extends Monster implements PowerableMob, RangedAttackMob
+@@ -154,6 +154,13 @@ public class WitherBoss extends Monster implements PowerableMob, RangedAttackMob
          this.bossEvent.setName(this.getDisplayName());
      }
  

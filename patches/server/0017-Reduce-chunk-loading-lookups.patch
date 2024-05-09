@@ -20,10 +20,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/world/entity/monster/EnderMan.java b/src/main/java/net/minecraft/world/entity/monster/EnderMan.java
-index b0a97679157a18a3c623ce3b2ae315789772c254..9fc3db543a0c9df502df5fb85012c6aa590e887d 100644
+index 260202fab3ac300552c557b44dcf251f083c6a78..9cf4e2f309e182c69e9592ac606c0ae85a1200b6 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/EnderMan.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/EnderMan.java
-@@ -333,11 +333,17 @@ public class EnderMan extends Monster implements NeutralMob {
+@@ -318,11 +318,17 @@ public class EnderMan extends Monster implements NeutralMob {
      private boolean teleport(double x, double y, double z) {
          BlockPos.MutableBlockPos blockposition_mutableblockposition = new BlockPos.MutableBlockPos(x, y, z);
  

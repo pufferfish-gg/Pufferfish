@@ -20,17 +20,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index d2fafed7154a39b1b90fafaa376066980b0aa059..2bb30cb0d8d476d5e5bb272ee59a90a4e80f0360 100644
+index 0dd1e2e04bf999d2cf798572f8455b722981daca..dd8eaf7117e75d855398e158e265eb7295ca29a6 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -60,6 +60,7 @@ dependencies {
+@@ -57,6 +57,7 @@ dependencies {
          exclude(group="org.yaml", module="snakeyaml")
      }
      // Pufferfish end
 +    implementation("com.github.technove:Flare:34637f3f87") // Pufferfish - flare
  
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
-     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 index bd3ca0af0f50b2bf1f1b95d4578c1b05d0694dd8..9ff0f60f03a532dabb8740ad5c44e068d5a9c8bf 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
@@ -782,7 +782,7 @@ index 0000000000000000000000000000000000000000..029d840e28d67d26d3c0dd6785e25dbf
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java b/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java
-index d96399e9bf1a58db5a4a22e58abb99e7660e0694..eb19f679ee498e51d02fe9a961cf02699cf75848 100644
+index 66bdac50130f523f9dc4379b103b7a469f9ca36b..ef780e0566dbac07da88ba26dc595b49c8ff5ab3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java
 @@ -22,7 +22,8 @@ public class MinecraftInternalPlugin extends PluginBase {

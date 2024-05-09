@@ -24,10 +24,10 @@ index 6755008dc43bf96c1507ce2ae6a066a1b75df760..1ca25529245ed369b8705075a8c2e32f
  	public static boolean enableSuffocationOptimization;
  	private static void suffocationOptimization() {
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index a37e03278ff69ae1012c7a53774b60a45acb6125..60dad77b824c9b6a45e3a3960eb9d995583f1d28 100644
+index 549af8015f4677e67510cc371b3743da68b5f4c6..d62f2cc95a1a2d3976a0b8d7aa5f3251ab572744 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1230,6 +1230,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1239,6 +1239,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  this.profiler.popPush("nextTickWait");
                  this.mayHaveDelayedTasks = true;
                  this.delayedTasksMaxNextTickTimeNanos = Math.max(Util.getNanos() + i, this.nextTickTimeNanos);
@@ -37,6 +37,6 @@ index a37e03278ff69ae1012c7a53774b60a45acb6125..60dad77b824c9b6a45e3a3960eb9d995
 +                    this.delayedTasksMaxNextTickTimeNanos = nextTickTimeNanos;
 +                }
 +                // Pufferfish end
+                 this.startMeasuringTaskExecutionTime();
                  this.waitUntilNextTick();
-                 if (flag) {
-                     this.tickRateManager.endTickWork();
+                 this.finishMeasuringTaskExecutionTime();
