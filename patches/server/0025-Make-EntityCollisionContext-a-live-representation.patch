@@ -11,7 +11,7 @@ saved for later, so this should be safe assuming plugins don't use it
 for some strange reason.
 
 diff --git a/src/main/java/net/minecraft/world/phys/shapes/EntityCollisionContext.java b/src/main/java/net/minecraft/world/phys/shapes/EntityCollisionContext.java
-index 1132658b063c6cd3feb1783ab4d5f5141ab75140..284c76ddb9724b44bb2e93f590685c728e843e6d 100644
+index 88a4a72bb390947dc17e5da09a99b2d1b3ac4621..284c76ddb9724b44bb2e93f590685c728e843e6d 100644
 --- a/src/main/java/net/minecraft/world/phys/shapes/EntityCollisionContext.java
 +++ b/src/main/java/net/minecraft/world/phys/shapes/EntityCollisionContext.java
 @@ -17,50 +17,69 @@ public class EntityCollisionContext implements CollisionContext {
@@ -98,7 +98,7 @@ index 1132658b063c6cd3feb1783ab4d5f5141ab75140..284c76ddb9724b44bb2e93f590685c72
  
      @Override
      public boolean isAbove(VoxelShape shape, BlockPos pos, boolean defaultValue) {
--        return this.entityBottom > pos.getY() + shape.max(Direction.Axis.Y) - 1.0E-5F;
+-        return this.entityBottom > (double)pos.getY() + shape.max(Direction.Axis.Y) - 1.0E-5F;
 +        return (this.entity == null ? -Double.MAX_VALUE : entity.getY()) > (double)pos.getY() + shape.max(Direction.Axis.Y) - 1.0E-5F; // Pufferfish
      }
  
