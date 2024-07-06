@@ -5,10 +5,10 @@ Subject: [PATCH] Reduce entity allocations
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 30de9009218a24606c5672947a6ea285adc1d6fe..0c3a5687f021c8322a6462ff4272a334ac020ff4 100644
+index dba027942070e4f069c2636b1c5bc65a09d5bc39..d10c9b6db4c6c4cebec4a6acc417f4de588cc951 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -426,6 +426,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -432,6 +432,7 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
      public boolean fixedPose = false; // Paper - Expand Pose API
      public boolean activatedPriorityReset = false; // Pufferfish - DAB
      public int activatedPriority = gg.pufferfish.pufferfish.PufferfishConfig.maximumActivationPrio; // Pufferfish - DAB (golf score)
@@ -17,14 +17,14 @@ index 30de9009218a24606c5672947a6ea285adc1d6fe..0c3a5687f021c8322a6462ff4272a334
      public void setOrigin(@javax.annotation.Nonnull Location location) {
          this.origin = location.toVector();
 diff --git a/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java b/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
-index b99a080ab27e24d8131fda931ca70d6d271bb01c..8d6954d05d2bf6d6c1c4953db3127b011a858cec 100644
+index 69992ebc999ea3ff9e47e4e049bcc514c01150ca..2c9aab24b51d2f0a50100089fe72093b501d383a 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
 @@ -23,9 +23,11 @@ public class AttributeMap {
-     private final Map<Attribute, AttributeInstance> attributes = Maps.newHashMap();
-     private final Set<AttributeInstance> dirtyAttributes = Sets.newHashSet();
+     private final Set<AttributeInstance> attributesToSync = new ObjectOpenHashSet<>();
+     private final Set<AttributeInstance> attributesToUpdate = new ObjectOpenHashSet<>();
      private final AttributeSupplier supplier;
-+    private final java.util.function.Function<Attribute, AttributeInstance> createInstance; // Pufferfish
++    private final java.util.function.Function<Holder<Attribute>, AttributeInstance> createInstance; // Pufferfish
  
      public AttributeMap(AttributeSupplier defaultAttributes) {
          this.supplier = defaultAttributes;
@@ -32,15 +32,15 @@ index b99a080ab27e24d8131fda931ca70d6d271bb01c..8d6954d05d2bf6d6c1c4953db3127b01
      }
  
      private void onAttributeModified(AttributeInstance instance) {
-@@ -42,9 +44,10 @@ public class AttributeMap {
-         return this.attributes.values().stream().filter(attribute -> attribute.getAttribute().isClientSyncable()).collect(Collectors.toList());
+@@ -47,9 +49,10 @@ public class AttributeMap {
+         return this.attributes.values().stream().filter(attribute -> attribute.getAttribute().value().isClientSyncable()).collect(Collectors.toList());
      }
  
 +
      @Nullable
-     public AttributeInstance getInstance(Attribute attribute) {
+     public AttributeInstance getInstance(Holder<Attribute> attribute) {
 -        return this.attributes.computeIfAbsent(attribute, attributex -> this.supplier.createInstance(this::onAttributeModified, attributex));
 +        return this.attributes.computeIfAbsent(attribute, this.createInstance); // Pufferfish - cache lambda, as for some reason java allocates it anyways
      }
  
-     @Nullable
+     public boolean hasAttribute(Holder<Attribute> attribute) {

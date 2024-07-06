@@ -150,7 +150,7 @@ index 0000000000000000000000000000000000000000..aa8467b9dda1f7707e41f50ac7b3e9d7
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/level/material/FlowingFluid.java b/src/main/java/net/minecraft/world/level/material/FlowingFluid.java
-index 6d8ff6c06af5545634f255ed17dc1e489ece2548..6411aa4ff6bd4cabb25c426fa8f4a7eedb969c03 100644
+index 1c0712295695727ee9c4d430d4157b8e17cbd71f..6785baf574f233ed1c3bea8d406be8a524d9ff82 100644
 --- a/src/main/java/net/minecraft/world/level/material/FlowingFluid.java
 +++ b/src/main/java/net/minecraft/world/level/material/FlowingFluid.java
 @@ -45,6 +45,8 @@ public abstract class FlowingFluid extends Fluid {
@@ -177,16 +177,16 @@ index 6d8ff6c06af5545634f255ed17dc1e489ece2548..6411aa4ff6bd4cabb25c426fa8f4a7ee
      private final Map<FluidState, VoxelShape> shapes = Maps.newIdentityHashMap();
  
      public FlowingFluid() {}
-@@ -251,6 +261,8 @@ public abstract class FlowingFluid extends Fluid {
-             return false;
-         }
-         // Paper end - optimise collisions
+@@ -240,6 +250,8 @@ public abstract class FlowingFluid extends Fluid {
+     }
+ 
+     private boolean canPassThroughWall(Direction face, BlockGetter world, BlockPos pos, BlockState state, BlockPos fromPos, BlockState fromState) {
 +        // Pufferfish start - modify to use our cache
 +        /*
          Object2ByteLinkedOpenHashMap object2bytelinkedopenhashmap;
  
          if (!state.getBlock().hasDynamicShape() && !fromState.getBlock().hasDynamicShape()) {
-@@ -258,9 +270,16 @@ public abstract class FlowingFluid extends Fluid {
+@@ -247,9 +259,16 @@ public abstract class FlowingFluid extends Fluid {
          } else {
              object2bytelinkedopenhashmap = null;
          }
@@ -203,7 +203,7 @@ index 6d8ff6c06af5545634f255ed17dc1e489ece2548..6411aa4ff6bd4cabb25c426fa8f4a7ee
          if (object2bytelinkedopenhashmap != null) {
              block_a = new Block.BlockStatePairKey(state, fromState, face);
              byte b0 = object2bytelinkedopenhashmap.getAndMoveToFirst(block_a);
-@@ -271,11 +290,22 @@ public abstract class FlowingFluid extends Fluid {
+@@ -260,11 +279,22 @@ public abstract class FlowingFluid extends Fluid {
          } else {
              block_a = null;
          }
@@ -226,7 +226,7 @@ index 6d8ff6c06af5545634f255ed17dc1e489ece2548..6411aa4ff6bd4cabb25c426fa8f4a7ee
          if (object2bytelinkedopenhashmap != null) {
              if (object2bytelinkedopenhashmap.size() == 200) {
                  object2bytelinkedopenhashmap.removeLastByte();
-@@ -283,6 +313,11 @@ public abstract class FlowingFluid extends Fluid {
+@@ -272,6 +302,11 @@ public abstract class FlowingFluid extends Fluid {
  
              object2bytelinkedopenhashmap.putAndMoveToFirst(block_a, (byte) (flag ? 1 : 0));
          }

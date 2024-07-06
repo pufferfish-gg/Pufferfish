@@ -20,10 +20,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/world/entity/ambient/Bat.java b/src/main/java/net/minecraft/world/entity/ambient/Bat.java
-index 6b614818b14ecfc8fc82b523eeb7e21fdf9bf1ba..8820905ac733a8915cc1697259b2bef14d97e471 100644
+index dc27ddf5131e7398a5390a5187261d4c7fb6ccaa..e44af851263f27aa0009b14a60bb2d0642a5ce74 100644
 --- a/src/main/java/net/minecraft/world/entity/ambient/Bat.java
 +++ b/src/main/java/net/minecraft/world/entity/ambient/Bat.java
-@@ -241,13 +241,22 @@ public class Bat extends AmbientCreature {
+@@ -239,13 +239,22 @@ public class Bat extends AmbientCreature {
          }
      }
  
@@ -45,5 +45,5 @@ index 6b614818b14ecfc8fc82b523eeb7e21fdf9bf1ba..8820905ac733a8915cc1697259b2bef1
      }
 +    // Pufferfish end
  
-     @Override
-     protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
+     private void setupAnimationStates() {
+         if (this.isResting()) {

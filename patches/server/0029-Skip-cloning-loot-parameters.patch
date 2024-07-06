@@ -9,7 +9,7 @@ of other times) the constant cloning churns out a lot of useless
 objects.
 
 diff --git a/src/main/java/net/minecraft/world/level/storage/loot/LootParams.java b/src/main/java/net/minecraft/world/level/storage/loot/LootParams.java
-index e43d07ccdd36f0c9f5b8e9c74cf0d87e17eec66a..8e441f7c2b2d911a0c0111aaa231fc6adae08730 100644
+index 37a0002bbe6539648db5219bb373e0404ae48dc0..ca0571d232e102c4b177a1ea44b96f5f0f440211 100644
 --- a/src/main/java/net/minecraft/world/level/storage/loot/LootParams.java
 +++ b/src/main/java/net/minecraft/world/level/storage/loot/LootParams.java
 @@ -21,8 +21,10 @@ public class LootParams {

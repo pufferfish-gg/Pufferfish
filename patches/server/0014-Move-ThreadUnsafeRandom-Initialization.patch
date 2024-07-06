@@ -8,10 +8,10 @@ require it to be initialized earlier. By moving it to the superclass, we
 initialize it earlier, ensuring that it is available sooner.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index bf5e47e8c3706590fdc0731bd9a5858b56d06136..53e5238ef9e58c214de979fcba0ad999fa76236f 100644
+index e079f4db4e4738f60a6fdbdbf5e4d1baf593a62f..a1722759900bd68910af96c6351e2825a6572ac9 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -978,7 +978,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -815,7 +815,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ca.spottedleaf.
      }
      // Paper start - optimise random block ticking
      private final BlockPos.MutableBlockPos chunkTickMutablePosition = new BlockPos.MutableBlockPos();
@@ -21,15 +21,15 @@ index bf5e47e8c3706590fdc0731bd9a5858b56d06136..53e5238ef9e58c214de979fcba0ad999
  
      public void tickChunk(LevelChunk chunk, int randomTickSpeed) {
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index bc89f9e90af3d69872a58c47a4c2545ba91b6ba5..5310141d75aa308903f72aaafe3e3bcb7134db77 100644
+index 0d202ce8eb88bfdb8ca3306593d758fa483d8612..93752fdbcbcbc8dbae8cc9960042cbca5cc2872e 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -215,6 +215,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -205,6 +205,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
      // Paper end
  
      public abstract ResourceKey<LevelStem> getTypeKey();
 +    
 +    protected final io.papermc.paper.util.math.ThreadUnsafeRandom randomTickRandom = new io.papermc.paper.util.math.ThreadUnsafeRandom(java.util.concurrent.ThreadLocalRandom.current().nextLong()); // Pufferfish - move thread unsafe random initialization
  
-     protected Level(WritableLevelData worlddatamutable, ResourceKey<Level> resourcekey, RegistryAccess iregistrycustom, Holder<DimensionType> holder, Supplier<ProfilerFiller> supplier, boolean flag, boolean flag1, long i, int j, org.bukkit.generator.ChunkGenerator gen, org.bukkit.generator.BiomeProvider biomeProvider, org.bukkit.World.Environment env, java.util.function.Function<org.spigotmc.SpigotWorldConfig, io.papermc.paper.configuration.WorldConfiguration> paperWorldConfigCreator, java.util.concurrent.Executor executor) { // Paper - create paper world config; Async-Anti-Xray: Pass executor
-         this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((net.minecraft.world.level.storage.PrimaryLevelData) worlddatamutable).getLevelName()); // Spigot
+     // Paper start - rewrite chunk system
+     private ca.spottedleaf.moonrise.patches.chunk_system.level.entity.EntityLookup entityLookup;

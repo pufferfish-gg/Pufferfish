@@ -5,7 +5,7 @@ Subject: [PATCH] TPS catchup
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 6755008dc43bf96c1507ce2ae6a066a1b75df760..1ca25529245ed369b8705075a8c2e32fa4d9b1d1 100644
+index 2b80bf0d4c8dfe13d4f091d8c9f9e98b8b03061f..3d918b0adedf6c3054c40b327f03941e75c4b517 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -188,6 +188,14 @@ public class PufferfishConfig {
@@ -24,10 +24,10 @@ index 6755008dc43bf96c1507ce2ae6a066a1b75df760..1ca25529245ed369b8705075a8c2e32f
  	public static boolean enableSuffocationOptimization;
  	private static void suffocationOptimization() {
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index a37e03278ff69ae1012c7a53774b60a45acb6125..60dad77b824c9b6a45e3a3960eb9d995583f1d28 100644
+index 2436606600d5d95d2416d69548c0e47adcb2016f..6aca27d477ff3d948fe01d7bfc0774deaea9c846 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1230,6 +1230,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1319,6 +1319,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  this.profiler.popPush("nextTickWait");
                  this.mayHaveDelayedTasks = true;
                  this.delayedTasksMaxNextTickTimeNanos = Math.max(Util.getNanos() + i, this.nextTickTimeNanos);
@@ -37,6 +37,6 @@ index a37e03278ff69ae1012c7a53774b60a45acb6125..60dad77b824c9b6a45e3a3960eb9d995
 +                    this.delayedTasksMaxNextTickTimeNanos = nextTickTimeNanos;
 +                }
 +                // Pufferfish end
+                 this.startMeasuringTaskExecutionTime();
                  this.waitUntilNextTick();
-                 if (flag) {
-                     this.tickRateManager.endTickWork();
+                 this.finishMeasuringTaskExecutionTime();

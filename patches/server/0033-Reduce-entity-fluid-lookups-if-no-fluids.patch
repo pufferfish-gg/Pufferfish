@@ -5,10 +5,10 @@ Subject: [PATCH] Reduce entity fluid lookups if no fluids
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 7a408bafbef2c78e3b17b390881be9e5948147ab..8a958d53b099ee3a06f6a9d05429c0b4e67a10d7 100644
+index d10c9b6db4c6c4cebec4a6acc417f4de588cc951..bef80f0dd5f08f4fe4bf4f021788a4f4d055dea0 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -4424,16 +4424,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -4288,16 +4288,18 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
      }
  
      public boolean updateFluidHeightAndDoFluidPushing(TagKey<Fluid> tag, double speed) {
@@ -34,7 +34,7 @@ index 7a408bafbef2c78e3b17b390881be9e5948147ab..8a958d53b099ee3a06f6a9d05429c0b4
              double d1 = 0.0D;
              boolean flag = this.isPushedByFluid();
              boolean flag1 = false;
-@@ -4441,14 +4443,61 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -4305,14 +4307,61 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
              int k1 = 0;
              BlockPos.MutableBlockPos blockposition_mutableblockposition = new BlockPos.MutableBlockPos();
  
@@ -102,7 +102,7 @@ index 7a408bafbef2c78e3b17b390881be9e5948147ab..8a958d53b099ee3a06f6a9d05429c0b4
  
                              if (d2 >= axisalignedbb.minY) {
                                  flag1 = true;
-@@ -4470,9 +4519,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -4334,9 +4383,12 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
                                  // CraftBukkit end
                              }
                          }
@@ -116,7 +116,7 @@ index 7a408bafbef2c78e3b17b390881be9e5948147ab..8a958d53b099ee3a06f6a9d05429c0b4
              if (vec3d.length() > 0.0D) {
                  if (k1 > 0) {
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
-index 796bbef3544e06b8e7aac7e8ac5f740a2613f4bd..2422ca3ffc6ab7178cacf933b8013f85e7de4bd9 100644
+index 8cd6c1d838e0332125fde3fc36475034aa4effa0..2a7397d23ded7a88368a53c2a0cfe3f99f86d9a6 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
 @@ -25,6 +25,7 @@ public class LevelChunkSection {
@@ -125,9 +125,9 @@ index 796bbef3544e06b8e7aac7e8ac5f740a2613f4bd..2422ca3ffc6ab7178cacf933b8013f85
      private PalettedContainer<Holder<Biome>> biomes;
 +    public short fluidStateCount; // Pufferfish
      public final com.destroystokyo.paper.util.maplist.IBlockDataList tickingList = new com.destroystokyo.paper.util.maplist.IBlockDataList(); // Paper
-     // Paper start - optimise collisions
-     private int specialCollidingBlocks;
-@@ -102,6 +103,7 @@ public class LevelChunkSection {
+ 
+     public LevelChunkSection(PalettedContainer<BlockState> datapaletteblock, PalettedContainer<Holder<Biome>> palettedcontainerro) {
+@@ -86,6 +87,7 @@ public class LevelChunkSection {
  
          if (!fluid.isEmpty()) {
              --this.tickingFluidCount;
@@ -135,19 +135,19 @@ index 796bbef3544e06b8e7aac7e8ac5f740a2613f4bd..2422ca3ffc6ab7178cacf933b8013f85
          }
  
          if (!state.isAir()) {
-@@ -116,6 +118,7 @@ public class LevelChunkSection {
+@@ -100,6 +102,7 @@ public class LevelChunkSection {
  
          if (!fluid1.isEmpty()) {
              ++this.tickingFluidCount;
 +            ++this.fluidStateCount; // Pufferfish
          }
  
-         this.updateBlockCallback(x, y, z, iblockdata1, state); // Paper - optimise collisions
-@@ -162,6 +165,7 @@ public class LevelChunkSection {
+         return iblockdata1;
+@@ -145,6 +148,7 @@ public class LevelChunkSection {
                      if (fluid.isRandomlyTicking()) {
                          this.tickingFluidCount = (short) (this.tickingFluidCount + 1);
                      }
 +                this.fluidStateCount++; // Pufferfish
                  }
  
-                 // Paper start - optimise collisions
+             });
