@@ -67,7 +67,7 @@ index 4b002e8b75d117b726b0de274a76d3596fce015b..692c962193cf9fcc6801fc93f3220bdc
                      Map<String, Map<String, Integer>> map = new HashMap<>();
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishVersionFetcher.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishVersionFetcher.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..893d8c0946ef71a0561221dd76bffff0dc940d56
+index 0000000000000000000000000000000000000000..41aa14445457abe7bdd3880e8667e465a76a4425
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishVersionFetcher.java
 @@ -0,0 +1,136 @@
@@ -103,8 +103,8 @@ index 0000000000000000000000000000000000000000..893d8c0946ef71a0561221dd76bffff0
 +	private static final Logger LOGGER = Logger.getLogger("PufferfishVersionFetcher");
 +	private static final HttpClient client = HttpClient.newHttpClient();
 +	
-+	private static final URI JENKINS_URI = URI.create("https://ci.pufferfish.host/job/Pufferfish-1.20/lastSuccessfulBuild/buildNumber");
-+	private static final String GITHUB_FORMAT = "https://api.github.com/repos/pufferfish-gg/Pufferfish/compare/ver/1.20...%s";
++	private static final URI JENKINS_URI = URI.create("https://ci.pufferfish.host/job/Pufferfish-1.21/lastSuccessfulBuild/buildNumber");
++	private static final String GITHUB_FORMAT = "https://api.github.com/repos/pufferfish-gg/Pufferfish/compare/ver/1.21...%s";
 +	
 +	private static final HttpResponse.BodyHandler<JsonObject> JSON_OBJECT_BODY_HANDLER = responseInfo -> HttpResponse.BodySubscribers
 +			.mapping(
