@@ -35,7 +35,7 @@ index c84ef666a896dc0d154610e1e6360ca5def739fd..a047bcbb9aa47d094f3daeed6708b191
 +	
  }
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index b9cef93fe382b666bec04ca95eeaf2d8acbb3c40..6935d10a9f159c09fef95817b2b5e120f3e1939d 100644
+index 909accac7538e1c0c0c51deb2ee0605697c059d0..d5671ec71d6e68654371470ae44e109457fcdf3e 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -449,7 +449,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
@@ -47,7 +47,7 @@ index b9cef93fe382b666bec04ca95eeaf2d8acbb3c40..6935d10a9f159c09fef95817b2b5e120
                      this.hurt(this.damageSources().inWall(), 1.0F);
                  } else if (flag && !this.level().getWorldBorder().isWithinBounds(this.getBoundingBox())) {
                      double d0 = this.level().getWorldBorder().getDistanceToBorder(this) + this.level().getWorldBorder().getDamageSafeZone();
-@@ -1408,6 +1408,19 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -1409,6 +1409,19 @@ public abstract class LivingEntity extends Entity implements Attackable {
          return this.getHealth() <= 0.0F;
      }
  
