@@ -5,7 +5,7 @@ Subject: [PATCH] Entity TTL
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 04cc1985b4afd05740934bf639509f44ddad36e6..71c728ff4b1c6a036bc777b7a89ba5e98c6505e7 100644
+index 41363201cb7a4e534f07f68de162034d92657a79..226f00765fcc2276348dc7229bda1bea83437b74 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -5,7 +5,10 @@ import java.io.File;
@@ -19,11 +19,10 @@ index 04cc1985b4afd05740934bf639509f44ddad36e6..71c728ff4b1c6a036bc777b7a89ba5e9
  import org.apache.logging.log4j.Level;
  import org.bukkit.configuration.ConfigurationSection;
  import net.minecraft.world.entity.EntityType;
-@@ -253,6 +256,23 @@ public class PufferfishConfig {
+@@ -219,6 +222,23 @@ public class PufferfishConfig {
+ 		setComment("dab", "Optimizes entity brains when", "they're far away from the player");
+ 	}
  
-         setComment("dab", "Optimizes entity brains when", "they're far away from the player");
-     }
-+	
 +	public static Map<String, Integer> projectileTimeouts;
 +	private static void projectileTimeouts() {
 +		// Set some defaults
@@ -34,20 +33,21 @@ index 04cc1985b4afd05740934bf639509f44ddad36e6..71c728ff4b1c6a036bc777b7a89ba5e9
 +				"entity is in this list and it has survived for longer than",
 +				"that number of ticks, then it will be removed. Setting a value to",
 +				"-1 disables this feature.");
-+		
++
 +		for (EntityType<?> entityType : BuiltInRegistries.ENTITY_TYPE) {
 +			String type = EntityType.getKey(entityType).getPath().toUpperCase(Locale.ROOT);
 +			entityType.ttl = config.getInt("entity_timeouts." + type, -1);
 +		}
 +	}
-     
-     public static boolean throttleInactiveGoalSelectorTick;
++
+ 	public static boolean throttleInactiveGoalSelectorTick;
  	private static void inactiveGoalSelectorThrottle() {
+ 		throttleInactiveGoalSelectorTick = getBoolean("inactive-goal-selector-throttle", "inactive-goal-selector-disable", true,
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index bef80f0dd5f08f4fe4bf4f021788a4f4d055dea0..30b27ee860fad8b869483110d523ed1d3a88fdd8 100644
+index 5d1721f49c66bada000b84f847efd87018439602..cb439ab4c1ab5ee018b6e980e7fd1736ac446224 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -828,6 +828,12 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
+@@ -848,6 +848,12 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
      }
  
      public void tick() {

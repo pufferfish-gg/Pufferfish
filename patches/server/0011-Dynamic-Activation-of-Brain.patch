@@ -27,7 +27,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index dbb62c3027a8a2d6f776948291a78b5d1813709b..210f4c1d59758f76585fb04795e8986e8c4485af 100644
+index a047bcbb9aa47d094f3daeed6708b1918b4904de..bef47a5826edaa7f6aa19369e27693dea780042e 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -3,6 +3,12 @@ package gg.pufferfish.pufferfish;
@@ -43,51 +43,53 @@ index dbb62c3027a8a2d6f776948291a78b5d1813709b..210f4c1d59758f76585fb04795e8986e
  import java.lang.reflect.Method;
  import java.lang.reflect.Modifier;
  import java.util.List;
-@@ -208,5 +214,37 @@ public class PufferfishConfig {
-     }
- 
- 
+@@ -180,5 +186,38 @@ public class PufferfishConfig {
+ 				"be left enabled on most servers, but is provided as a",
+ 				"configuration option if the vanilla deviation is undesirable.");
+ 	}
+-	
 -}
-+    public static boolean dearEnabled;
-+    public static int startDistance;
-+    public static int startDistanceSquared;
-+    public static int maximumActivationPrio;
-+    public static int activationDistanceMod;
 +
-+    private static void dynamicActivationOfBrains() throws IOException {
-+        dearEnabled = getBoolean("dab.enabled", "activation-range.enabled", true);
-+        startDistance = getInt("dab.start-distance", "activation-range.start-distance", 12,
-+                "This value determines how far away an entity has to be",
-+                "from the player to start being effected by DEAR.");
-+        startDistanceSquared = startDistance * startDistance;
-+        maximumActivationPrio = getInt("dab.max-tick-freq", "activation-range.max-tick-freq", 20,
-+                "This value defines how often in ticks, the furthest entity",
-+                "will get their pathfinders and behaviors ticked. 20 = 1s");
-+        activationDistanceMod = getInt("dab.activation-dist-mod", "activation-range.activation-dist-mod", 8,
-+                "This value defines how much distance modifies an entity's",
-+                "tick frequency. freq = (distanceToPlayer^2) / (2^value)",
-+                "If you want further away entities to tick less often, use 7.",
-+                "If you want further away entities to tick more often, try 9.");
++	public static boolean dearEnabled;
++	public static int startDistance;
++	public static int startDistanceSquared;
++	public static int maximumActivationPrio;
++	public static int activationDistanceMod;
 +
-+        for (EntityType<?> entityType : BuiltInRegistries.ENTITY_TYPE) {
-+            entityType.dabEnabled = true; // reset all, before setting the ones to true
-+        }
-+        getStringList("dab.blacklisted-entities", "activation-range.blacklisted-entities", Collections.emptyList(), "A list of entities to ignore for activation")
-+                .forEach(name -> EntityType.byString(name).ifPresentOrElse(entityType -> {
-+                    entityType.dabEnabled = false;
-+                }, () -> MinecraftServer.LOGGER.warn("Unknown entity \"" + name + "\"")));
++	private static void dynamicActivationOfBrains() throws IOException {
++		dearEnabled = getBoolean("dab.enabled", "activation-range.enabled", true);
++		startDistance = getInt("dab.start-distance", "activation-range.start-distance", 12,
++				"This value determines how far away an entity has to be",
++				"from the player to start being effected by DEAR.");
++		startDistanceSquared = startDistance * startDistance;
++		maximumActivationPrio = getInt("dab.max-tick-freq", "activation-range.max-tick-freq", 20,
++				"This value defines how often in ticks, the furthest entity",
++				"will get their pathfinders and behaviors ticked. 20 = 1s");
++		activationDistanceMod = getInt("dab.activation-dist-mod", "activation-range.activation-dist-mod", 8,
++				"This value defines how much distance modifies an entity's",
++				"tick frequency. freq = (distanceToPlayer^2) / (2^value)",
++				"If you want further away entities to tick less often, use 7.",
++				"If you want further away entities to tick more often, try 9.");
 +
-+        setComment("dab", "Optimizes entity brains when", "they're far away from the player");
-+    }
++		for (EntityType<?> entityType : BuiltInRegistries.ENTITY_TYPE) {
++			entityType.dabEnabled = true; // reset all, before setting the ones to true
++		}
++		getStringList("dab.blacklisted-entities", "activation-range.blacklisted-entities", Collections.emptyList(), "A list of entities to ignore for activation")
++				.forEach(name -> EntityType.byString(name).ifPresentOrElse(entityType -> {
++					entityType.dabEnabled = false;
++				}, () -> MinecraftServer.LOGGER.warn("Unknown entity \"" + name + "\"")));
 +
- 
++		setComment("dab", "Optimizes entity brains when", "they're far away from the player");
++	}
++
++
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 72747c01bb0ea98deb0625fa3cedd4f5cec48a38..fc862e94af8f6a03436249aa25dce710359c20d4 100644
+index 2fe9d9b38c01d04416843fdd48d3e33899b7de63..26ca25e9b6ae1c6d0ab90686ba07eca170ba08cf 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -731,6 +731,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ca.spottedleaf.
+@@ -715,6 +715,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ca.spottedleaf.
              org.spigotmc.ActivationRange.activateEntities(this); // Spigot
              this.timings.entityTick.startTiming(); // Spigot
              this.entityTickList.forEach((entity) -> {
@@ -96,10 +98,10 @@ index 72747c01bb0ea98deb0625fa3cedd4f5cec48a38..fc862e94af8f6a03436249aa25dce710
                      if (false && this.shouldDiscardEntity(entity)) { // CraftBukkit - We prevent spawning in general, so this butchering is not needed
                          entity.discard();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 804d5f1863fc0bf609517ebb50ad1b0acc2040a9..dba027942070e4f069c2636b1c5bc65a09d5bc39 100644
+index ca95cab3965b37558efa840fb07c5be8be12d01a..89b2b90c0d0de08258e2a5ecced912c1e8a27faf 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -430,6 +430,8 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
+@@ -429,6 +429,8 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
      private UUID originWorld;
      public boolean freezeLocked = false; // Paper - Freeze Tick Lock API
      public boolean fixedPose = false; // Paper - Expand Pose API
@@ -121,7 +123,7 @@ index cb61462d4691a055a4b25f7b953609d8a154fdfe..b2d8a858d8767bd6ca52e0b8db847579
      private String descriptionId;
      @Nullable
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 7b93c6a04cca2ac31d137f06ef83bb08559b10bf..6ff72b0454bb4dc6c24886b54b7183b6c196c2e1 100644
+index bd7c6ce15698aed70376c109ba36f52d6794a2f8..a9387595f64b08ef8297327b666e69fc4948f45a 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
 @@ -236,10 +236,10 @@ public abstract class Mob extends LivingEntity implements EquipmentUser, Leashab
@@ -137,7 +139,7 @@ index 7b93c6a04cca2ac31d137f06ef83bb08559b10bf..6ff72b0454bb4dc6c24886b54b7183b6
              this.targetSelector.tick();
          }
      }
-@@ -927,16 +927,20 @@ public abstract class Mob extends LivingEntity implements EquipmentUser, Leashab
+@@ -925,16 +925,20 @@ public abstract class Mob extends LivingEntity implements EquipmentUser, Leashab
  
          if (i % 2 != 0 && this.tickCount > 1) {
              gameprofilerfiller.push("targetSelector");
@@ -176,7 +178,7 @@ index 758f62416ca9c02351348ac0d41deeb4624abc0e..69130969c9a434ec2361e573c9a1ec9f
          }
      }
 diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java b/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
-index 74d4f653d5c7f1923c59019effd78337402f7025..0329822c1190e3e34ba91a8bc2752c657d487213 100644
+index 9bdbf3e9453bc3ce96d52d04b8cde0d05f7356d8..e32c3120f9c5ddf429d8428c370ff61320a38de6 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/goal/GoalSelector.java
 @@ -43,9 +43,12 @@ public class GoalSelector {

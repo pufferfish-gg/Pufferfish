@@ -5,10 +5,10 @@ Subject: [PATCH] Reduce entity fluid lookups if no fluids
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index d10c9b6db4c6c4cebec4a6acc417f4de588cc951..bef80f0dd5f08f4fe4bf4f021788a4f4d055dea0 100644
+index 4b27390ecca35f68d1d98b665285b19fcddc9b31..5d1721f49c66bada000b84f847efd87018439602 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -4288,16 +4288,18 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
+@@ -4451,16 +4451,18 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
      }
  
      public boolean updateFluidHeightAndDoFluidPushing(TagKey<Fluid> tag, double speed) {
@@ -34,7 +34,7 @@ index d10c9b6db4c6c4cebec4a6acc417f4de588cc951..bef80f0dd5f08f4fe4bf4f021788a4f4
              double d1 = 0.0D;
              boolean flag = this.isPushedByFluid();
              boolean flag1 = false;
-@@ -4305,14 +4307,61 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
+@@ -4468,14 +4470,61 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
              int k1 = 0;
              BlockPos.MutableBlockPos blockposition_mutableblockposition = new BlockPos.MutableBlockPos();
  
@@ -44,8 +44,8 @@ index d10c9b6db4c6c4cebec4a6acc417f4de588cc951..bef80f0dd5f08f4fe4bf4f021788a4f4
 -                        blockposition_mutableblockposition.set(l1, i2, j2);
 -                        FluidState fluid = this.level().getFluidState(blockposition_mutableblockposition);
 +            // Pufferfish start - based off CollisionUtil.getCollisionsForBlocksOrWorldBorder
-+            final int minSection = io.papermc.paper.util.WorldUtil.getMinSection(this.level());
-+            final int maxSection = io.papermc.paper.util.WorldUtil.getMaxSection(this.level());
++            final int minSection = ca.spottedleaf.moonrise.common.util.WorldUtil.getMinSection(this.level());
++            final int maxSection = ca.spottedleaf.moonrise.common.util.WorldUtil.getMaxSection(this.level());
 +            final int minBlock = minSection << 4;
 +            final int maxBlock = (maxSection << 4) | 15;
 +
@@ -102,7 +102,7 @@ index d10c9b6db4c6c4cebec4a6acc417f4de588cc951..bef80f0dd5f08f4fe4bf4f021788a4f4
  
                              if (d2 >= axisalignedbb.minY) {
                                  flag1 = true;
-@@ -4334,9 +4383,12 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
+@@ -4497,9 +4546,12 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
                                  // CraftBukkit end
                              }
                          }
@@ -116,18 +116,18 @@ index d10c9b6db4c6c4cebec4a6acc417f4de588cc951..bef80f0dd5f08f4fe4bf4f021788a4f4
              if (vec3d.length() > 0.0D) {
                  if (k1 > 0) {
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
-index 8cd6c1d838e0332125fde3fc36475034aa4effa0..2a7397d23ded7a88368a53c2a0cfe3f99f86d9a6 100644
+index c3b1caa352b988ec44fa2b2eb0536517711f5460..d1f06d2400bd3bd6852a1257389266020a6296a7 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunkSection.java
-@@ -25,6 +25,7 @@ public class LevelChunkSection {
+@@ -25,6 +25,7 @@ public class LevelChunkSection implements ca.spottedleaf.moonrise.patches.block_
      public final PalettedContainer<BlockState> states;
      // CraftBukkit start - read/write
      private PalettedContainer<Holder<Biome>> biomes;
 +    public short fluidStateCount; // Pufferfish
-     public final com.destroystokyo.paper.util.maplist.IBlockDataList tickingList = new com.destroystokyo.paper.util.maplist.IBlockDataList(); // Paper
  
-     public LevelChunkSection(PalettedContainer<BlockState> datapaletteblock, PalettedContainer<Holder<Biome>> palettedcontainerro) {
-@@ -86,6 +87,7 @@ public class LevelChunkSection {
+     // Paper start - block counting
+     private static final it.unimi.dsi.fastutil.ints.IntArrayList FULL_LIST = new it.unimi.dsi.fastutil.ints.IntArrayList(16*16*16);
+@@ -104,6 +105,7 @@ public class LevelChunkSection implements ca.spottedleaf.moonrise.patches.block_
  
          if (!fluid.isEmpty()) {
              --this.tickingFluidCount;
@@ -135,19 +135,19 @@ index 8cd6c1d838e0332125fde3fc36475034aa4effa0..2a7397d23ded7a88368a53c2a0cfe3f9
          }
  
          if (!state.isAir()) {
-@@ -100,6 +102,7 @@ public class LevelChunkSection {
+@@ -115,6 +117,7 @@ public class LevelChunkSection implements ca.spottedleaf.moonrise.patches.block_
  
          if (!fluid1.isEmpty()) {
              ++this.tickingFluidCount;
 +            ++this.fluidStateCount; // Pufferfish
          }
  
-         return iblockdata1;
-@@ -145,6 +148,7 @@ public class LevelChunkSection {
+         // Paper start - block counting
+@@ -208,6 +211,7 @@ public class LevelChunkSection implements ca.spottedleaf.moonrise.patches.block_
                      if (fluid.isRandomlyTicking()) {
-                         this.tickingFluidCount = (short) (this.tickingFluidCount + 1);
+                         this.tickingFluidCount += paletteCount;
                      }
 +                this.fluidStateCount++; // Pufferfish
                  }
- 
-             });
+             }
+         }

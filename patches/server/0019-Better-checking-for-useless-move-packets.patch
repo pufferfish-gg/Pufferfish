@@ -5,18 +5,18 @@ Subject: [PATCH] Better checking for useless move packets
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 1d849ce4e2c85f149af25318b8ffb6dcef6c6788..2d8ee7016540f665fd7f92a3bf80d3cb8808f681 100644
+index 8ea2f24695f5dad55e21f238b69442513e7a90c6..5a2f7f7cf79dcbb996574e18cad86ebb54bd718e 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
-@@ -181,6 +181,7 @@ public class ServerEntity {
+@@ -193,6 +193,7 @@ public class ServerEntity {
                  boolean flag6 = k < -32768L || k > 32767L || l < -32768L || l > 32767L || i1 < -32768L || i1 > 32767L;
  
-                 if (!flag6 && this.teleportDelay <= 400 && !this.wasRiding && this.wasOnGround == this.entity.onGround()) {
+                 if (!this.forceStateResync && !flag6 && this.teleportDelay <= 400 && !this.wasRiding && this.wasOnGround == this.entity.onGround()) { // Paper - fix desync when a player is added to the tracker
 +                    if (flag2 || flag3 || this.entity instanceof AbstractArrow) { // Pufferfish
                      if ((!flag2 || !flag3) && !(this.entity instanceof AbstractArrow)) {
                          if (flag2) {
                              packet1 = new ClientboundMoveEntityPacket.Pos(this.entity.getId(), (short) ((int) k), (short) ((int) l), (short) ((int) i1), this.entity.onGround());
-@@ -194,6 +195,7 @@ public class ServerEntity {
+@@ -206,6 +207,7 @@ public class ServerEntity {
                          flag4 = true;
                          flag5 = true;
                      }
