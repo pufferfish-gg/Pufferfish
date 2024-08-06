@@ -50,7 +50,7 @@ index 2fe9d9b38c01d04416843fdd48d3e33899b7de63..9c1dbda7c8c879fd4a4cd8356c587891
  
              if (this.isRainingAt(blockposition)) {
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-index 5453b7051337908ac1c8201827c1b5eec9e1608b..1a072de7fc74b590f09a76fa893187196d5322cc 100644
+index 5453b7051337908ac1c8201827c1b5eec9e1608b..8ccd3b8fcaa80f60b91a6c066e312542d349246a 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -86,6 +86,18 @@ public class LevelChunk extends ChunkAccess implements ca.spottedleaf.moonrise.p
@@ -72,16 +72,12 @@ index 5453b7051337908ac1c8201827c1b5eec9e1608b..1a072de7fc74b590f09a76fa89318719
      public LevelChunk(Level world, ChunkPos pos) {
          this(world, pos, UpgradeData.EMPTY, new LevelChunkTicks<>(), new LevelChunkTicks<>(), 0L, (LevelChunkSection[]) null, (LevelChunk.PostLoadProcessor) null, (BlendingData) null);
      }
-@@ -117,6 +129,12 @@ public class LevelChunk extends ChunkAccess implements ca.spottedleaf.moonrise.p
+@@ -117,6 +129,8 @@ public class LevelChunk extends ChunkAccess implements ca.spottedleaf.moonrise.p
          this.debug = !empty && this.level.isDebug();
          this.defaultBlockState = empty ? VOID_AIR_BLOCKSTATE : AIR_BLOCKSTATE;
          // Paper end - get block chunk optimisation
 +
-+        // Pufferfish start - initialize lightning tick
-+        java.util.Random random = new java.util.Random();
-+        random.setSeed(this.level.getSeed());
-+        this.lightningTick = random.nextInt(100000) << 1;
-+        // Pufferfish end
++        this.lightningTick = new java.util.Random().nextInt(100000) << 1; // Pufferfish - initialize lightning tick
      }
  
      // CraftBukkit start
