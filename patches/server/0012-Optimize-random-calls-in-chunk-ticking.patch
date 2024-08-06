@@ -33,42 +33,24 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index fa5f6489a8f682db16722080a4699ca18934935d..422ae9399af2e7557d32493c44581770b89e9c7f 100644
---- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-+++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-@@ -438,6 +438,7 @@ public class ServerChunkCache extends ChunkSource implements ca.spottedleaf.moon
-                 }
-             }
- 
-+            this.level.resetIceAndSnowTick(); // Pufferfish - reset ice & snow tick random
-             if (this.level.tickRateManager().runsNormally()) {
-                 gameprofilerfiller.popPush("naturalSpawnCount");
-                 this.level.timings.countNaturalMobs.startTiming(); // Paper - timings
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index a1722759900bd68910af96c6351e2825a6572ac9..72747c01bb0ea98deb0625fa3cedd4f5cec48a38 100644
+index 2fe9d9b38c01d04416843fdd48d3e33899b7de63..9c1dbda7c8c879fd4a4cd8356c587891d4161bea 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -818,6 +818,8 @@ public class ServerLevel extends Level implements WorldGenLevel, ca.spottedleaf.
-     // private final io.papermc.paper.util.math.ThreadUnsafeRandom randomTickRandom = new io.papermc.paper.util.math.ThreadUnsafeRandom(); // Pufferfish - moved to super
-     // Paper end
- 
-+    private int currentIceAndSnowTick = 0; protected void resetIceAndSnowTick() { this.currentIceAndSnowTick = this.randomTickRandom.nextInt(16); } // Pufferfish
-+
-     public void tickChunk(LevelChunk chunk, int randomTickSpeed) {
-         ChunkPos chunkcoordintpair = chunk.getPos();
-         boolean flag = this.isRaining();
-@@ -828,7 +830,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ca.spottedleaf.
+@@ -861,9 +861,9 @@ public class ServerLevel extends Level implements WorldGenLevel, ca.spottedleaf.
+         int j = chunkcoordintpair.getMinBlockX();
+         int k = chunkcoordintpair.getMinBlockZ();
+         ProfilerFiller gameprofilerfiller = this.getProfiler();
+-
          gameprofilerfiller.push("thunder");
-         final BlockPos.MutableBlockPos blockposition = this.chunkTickMutablePosition; // Paper - use mutable to reduce allocation rate, final to force compile fail on change
- 
 -        if (!this.paperConfig().environment.disableThunder && flag && this.isThundering() && this.spigotConfig.thunderChance > 0 && this.random.nextInt(this.spigotConfig.thunderChance) == 0) { // Spigot // Paper - Option to disable thunder
++
 +        if (!this.paperConfig().environment.disableThunder && flag && this.isThundering() && this.spigotConfig.thunderChance > 0 && /*this.random.nextInt(this.spigotConfig.thunderChance) == 0 &&*/ chunk.shouldDoLightning(this.random)) { // Spigot // Paper - Option to disable thunder // Pufferfish - replace random with shouldDoLightning
-             blockposition.set(this.findLightningTargetAround(this.getBlockRandomPos(j, 0, k, 15))); // Paper
+             BlockPos blockposition = this.findLightningTargetAround(this.getBlockRandomPos(j, 0, k, 15));
  
              if (this.isRainingAt(blockposition)) {
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-index d388fbcbff63928f0e9140c02400a63ba8f19d9c..3455f76b4070d212821a1703b1c49f5287ec6e0c 100644
+index 5453b7051337908ac1c8201827c1b5eec9e1608b..1a072de7fc74b590f09a76fa893187196d5322cc 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -86,6 +86,18 @@ public class LevelChunk extends ChunkAccess implements ca.spottedleaf.moonrise.p
@@ -90,12 +72,16 @@ index d388fbcbff63928f0e9140c02400a63ba8f19d9c..3455f76b4070d212821a1703b1c49f52
      public LevelChunk(Level world, ChunkPos pos) {
          this(world, pos, UpgradeData.EMPTY, new LevelChunkTicks<>(), new LevelChunkTicks<>(), 0L, (LevelChunkSection[]) null, (LevelChunk.PostLoadProcessor) null, (BlendingData) null);
      }
-@@ -109,6 +121,8 @@ public class LevelChunk extends ChunkAccess implements ca.spottedleaf.moonrise.p
-         this.postLoad = entityLoader;
-         this.blockTicks = blockTickScheduler;
-         this.fluidTicks = fluidTickScheduler;
+@@ -117,6 +129,12 @@ public class LevelChunk extends ChunkAccess implements ca.spottedleaf.moonrise.p
+         this.debug = !empty && this.level.isDebug();
+         this.defaultBlockState = empty ? VOID_AIR_BLOCKSTATE : AIR_BLOCKSTATE;
+         // Paper end - get block chunk optimisation
 +
-+        this.lightningTick = this.level.getThreadUnsafeRandom().nextInt(100000) << 1; // Pufferfish - initialize lightning tick
++        // Pufferfish start - initialize lightning tick
++        java.util.Random random = new java.util.Random();
++        random.setSeed(this.level.getSeed());
++        this.lightningTick = random.nextInt(100000) << 1;
++        // Pufferfish end
      }
  
      // CraftBukkit start

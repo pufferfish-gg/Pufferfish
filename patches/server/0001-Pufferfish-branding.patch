@@ -6,7 +6,7 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 1a734293c9416f13324bb0edf8f950c9029f8bc4..a6af685acf3d0ed8d8425fd399e0bc0153bbeae1 100644
+index 421f6b3dc8890d63d2e7aa774d0bf8f7e15890ab..755a1afd0aa36b627b3c7327d6b88806498ba85b 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -13,7 +13,7 @@ configurations.named(log4jPlugins.compileClasspathConfigurationName) {
@@ -18,7 +18,7 @@ index 1a734293c9416f13324bb0edf8f950c9029f8bc4..a6af685acf3d0ed8d8425fd399e0bc01
      // Paper start
      implementation("org.jline:jline-terminal-jansi:3.21.0")
      implementation("net.minecrell:terminalconsoleappender:1.3.0")
-@@ -80,14 +80,14 @@ tasks.jar {
+@@ -84,14 +84,14 @@ tasks.jar {
          val gitBranch = git("rev-parse", "--abbrev-ref", "HEAD").getText().trim() // Paper
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
@@ -209,10 +209,10 @@ index 0000000000000000000000000000000000000000..41aa14445457abe7bdd3880e8667e465
 +}
 \ No newline at end of file
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 3137391cadef7c67019561e65fedd0664e689eae..994153f714a05138a085ced5f04e6ee288a8230e 100644
+index 41c34ffdf9d95a04ed55a1e09ebc78e8cf946777..00918d92a4105cc82a4d871423e516939cad951f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -498,7 +498,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -487,7 +487,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {

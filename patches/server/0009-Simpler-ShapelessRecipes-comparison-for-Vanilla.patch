@@ -24,7 +24,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/src/main/java/net/minecraft/world/item/crafting/ShapelessRecipe.java b/src/main/java/net/minecraft/world/item/crafting/ShapelessRecipe.java
-index 5740296b55827f11c0029e89a86eaab1a24f560c..26d1b1185cc83766daae94a3a020fef3b4bf78dd 100644
+index 213ee4aa988dd4c2a5a7be99b1d13f67338e5209..8e46753af60aa9fd8e4b4c0f955f7a55a77de314 100644
 --- a/src/main/java/net/minecraft/world/item/crafting/ShapelessRecipe.java
 +++ b/src/main/java/net/minecraft/world/item/crafting/ShapelessRecipe.java
 @@ -10,6 +10,7 @@ import net.minecraft.core.HolderLookup;

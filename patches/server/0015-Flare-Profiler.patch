@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 2b31948f6e4406e05c65ab5a26b533ffc605ec1f..76bd6a871b64799e2a50e06a16b2fe7619d77b27 100644
+index fd1ac5dbc39068d4332fd264f3359e4845e529e1..46d58f871c98a9b86f1a03a291cac40031a63e0d 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -53,6 +53,7 @@ dependencies {
@@ -188,7 +188,7 @@ index 0000000000000000000000000000000000000000..401b42e29bccb5251684062f10b2e0f8
 +}
 diff --git a/src/main/java/gg/pufferfish/pufferfish/flare/FlareCommand.java b/src/main/java/gg/pufferfish/pufferfish/flare/FlareCommand.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..3785d1512eb650f91d58903672c059e7449598fc
+index 0000000000000000000000000000000000000000..eec169b4e9eee504c8fe72f066f2d7efb7263bc4
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/flare/FlareCommand.java
 @@ -0,0 +1,136 @@
@@ -197,6 +197,7 @@ index 0000000000000000000000000000000000000000..3785d1512eb650f91d58903672c059e7
 +import co.technove.flare.exceptions.UserReportableException;
 +import co.technove.flare.internal.profiling.ProfileType;
 +import gg.pufferfish.pufferfish.PufferfishConfig;
++import io.papermc.paper.util.MCUtil;
 +import net.kyori.adventure.text.Component;
 +import net.kyori.adventure.text.event.ClickEvent;
 +import net.kyori.adventure.text.format.NamedTextColor;
@@ -208,7 +209,6 @@ index 0000000000000000000000000000000000000000..3785d1512eb650f91d58903672c059e7
 +import org.bukkit.command.Command;
 +import org.bukkit.command.CommandSender;
 +import org.bukkit.command.ConsoleCommandSender;
-+import org.bukkit.craftbukkit.scheduler.MinecraftInternalPlugin;
 +import org.bukkit.util.StringUtil;
 +import org.jetbrains.annotations.NotNull;
 +
@@ -275,7 +275,7 @@ index 0000000000000000000000000000000000000000..3785d1512eb650f91d58903672c059e7
 +                }
 +            }
 +            ProfileType finalProfileType = profileType;
-+            Bukkit.getScheduler().runTaskAsynchronously(new MinecraftInternalPlugin(), () -> {
++            MCUtil.scheduleAsyncTask(() -> {
 +                try {
 +                    if (ProfilingManager.start(finalProfileType)) {
 +                        if (!(sender instanceof ConsoleCommandSender)) {
@@ -419,10 +419,10 @@ index 0000000000000000000000000000000000000000..74aab5eb4b54ffbaf19b8976ffb8ca4a
 +}
 diff --git a/src/main/java/gg/pufferfish/pufferfish/flare/ProfilingManager.java b/src/main/java/gg/pufferfish/pufferfish/flare/ProfilingManager.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..e3f76eb11a261c3347f0cd89b5da309bc2dc82f9
+index 0000000000000000000000000000000000000000..57cf697b0916a3b0ac0232422a5a4ba423427dc3
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/flare/ProfilingManager.java
-@@ -0,0 +1,151 @@
+@@ -0,0 +1,154 @@
 +package gg.pufferfish.pufferfish.flare;
 +
 +import co.technove.flare.Flare;
@@ -438,8 +438,6 @@ index 0000000000000000000000000000000000000000..e3f76eb11a261c3347f0cd89b5da309b
 +import gg.pufferfish.pufferfish.flare.collectors.TPSCollector;
 +import gg.pufferfish.pufferfish.flare.collectors.WorldCountCollector;
 +import org.bukkit.Bukkit;
-+import org.bukkit.craftbukkit.scheduler.MinecraftInternalPlugin;
-+import org.bukkit.scheduler.BukkitTask;
 +import oshi.SystemInfo;
 +import oshi.hardware.CentralProcessor;
 +import oshi.hardware.GlobalMemory;
@@ -451,12 +449,17 @@ index 0000000000000000000000000000000000000000..e3f76eb11a261c3347f0cd89b5da309b
 +import java.net.URI;
 +import java.time.Duration;
 +import java.util.Objects;
++import java.util.concurrent.ScheduledExecutorService;
++import java.util.concurrent.ScheduledFuture;
++import java.util.concurrent.ScheduledThreadPoolExecutor;
++import java.util.concurrent.TimeUnit;
 +import java.util.logging.Level;
 +
 +public class ProfilingManager {
 +
 +    private static Flare currentFlare;
-+    private static BukkitTask currentTask = null;
++    private static ScheduledFuture<?> currentTask = null;
++    private static ScheduledExecutorService ses = new ScheduledThreadPoolExecutor(1);
 +
 +    public static synchronized boolean isProfiling() {
 +        return currentFlare != null && currentFlare.isRunning();
@@ -542,7 +545,7 @@ index 0000000000000000000000000000000000000000..e3f76eb11a261c3347f0cd89b5da309b
 +            throw new UserReportableException("Failed to start Flare, check logs for further details.");
 +        }
 +
-+        currentTask = Bukkit.getScheduler().runTaskLater(new MinecraftInternalPlugin(), ProfilingManager::stop, 20 * 60 * 15);
++        currentTask = ses.schedule(ProfilingManager::stop, 15, TimeUnit.MINUTES);
 +        PufferfishLogger.LOGGER.log(Level.INFO, "Flare has been started: " + getProfilingUri());
 +        return true;
 +    }
@@ -564,7 +567,7 @@ index 0000000000000000000000000000000000000000..e3f76eb11a261c3347f0cd89b5da309b
 +        currentFlare = null;
 +
 +        try {
-+            currentTask.cancel();
++            currentTask.cancel(true);
 +        } catch (Throwable t) {
 +            PufferfishLogger.LOGGER.log(Level.WARNING, "Error occurred stopping Flare", t);
 +        }
@@ -781,43 +784,6 @@ index 0000000000000000000000000000000000000000..029d840e28d67d26d3c0dd6785e25dbf
 +        this.report(TILE_ENTITY_COUNT, tileEntityCount);
 +    }
 +}
-diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java b/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java
-index 66bdac50130f523f9dc4379b103b7a469f9ca36b..ef780e0566dbac07da88ba26dc595b49c8ff5ab3 100644
---- a/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java
-+++ b/src/main/java/org/bukkit/craftbukkit/scheduler/MinecraftInternalPlugin.java
-@@ -22,7 +22,8 @@ public class MinecraftInternalPlugin extends PluginBase {
-     private boolean enabled = true;
- 
-     private final String pluginName;
--    private PluginDescriptionFile pdf;
-+    private org.bukkit.plugin.PluginLogger logger;
-+    private PluginDescriptionFile pdf; // Pufferfish
- 
-     public MinecraftInternalPlugin() {
-         this.pluginName = "Minecraft";
-@@ -81,7 +82,12 @@ public class MinecraftInternalPlugin extends PluginBase {
- 
-     @Override
-     public PluginLogger getLogger() {
--        throw new UnsupportedOperationException("Not supported.");
-+        // Pufferfish start
-+        if (this.logger == null) {
-+            this.logger = new org.bukkit.plugin.PluginLogger(this); // Pufferfish
-+        }
-+        return this.logger;
-+        // Pufferfish end
-     }
- 
-     @Override
-@@ -91,7 +97,7 @@ public class MinecraftInternalPlugin extends PluginBase {
- 
-     @Override
-     public Server getServer() {
--        throw new UnsupportedOperationException("Not supported.");
-+        return org.bukkit.Bukkit.getServer(); // Pufferfish - impl
-     }
- 
-     @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java b/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java
 index e8e93538dfd71de86515d9405f728db1631e949a..3dff02fd97f001508e2f81192817bf1b0ef92446 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java
