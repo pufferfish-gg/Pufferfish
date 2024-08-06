@@ -67,20 +67,24 @@ index 4b002e8b75d117b726b0de274a76d3596fce015b..692c962193cf9fcc6801fc93f3220bdc
                      Map<String, Map<String, Integer>> map = new HashMap<>();
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishVersionFetcher.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishVersionFetcher.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..41aa14445457abe7bdd3880e8667e465a76a4425
+index 0000000000000000000000000000000000000000..06323dcc745aed16123980fc559d7b65c42f1e1c
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishVersionFetcher.java
-@@ -0,0 +1,136 @@
+@@ -0,0 +1,132 @@
 +package gg.pufferfish.pufferfish;
-+
-+import static net.kyori.adventure.text.Component.text;
-+import static net.kyori.adventure.text.format.NamedTextColor.GREEN;
-+import static net.kyori.adventure.text.format.NamedTextColor.RED;
 +
 +import com.destroystokyo.paper.VersionHistoryManager;
 +import com.destroystokyo.paper.util.VersionFetcher;
 +import com.google.gson.Gson;
 +import com.google.gson.JsonObject;
++import io.papermc.paper.ServerBuildInfo;
++import net.kyori.adventure.text.Component;
++import net.kyori.adventure.text.JoinConfiguration;
++import net.kyori.adventure.text.format.NamedTextColor;
++import net.kyori.adventure.text.format.TextDecoration;
++import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
++
 +import java.io.IOException;
 +import java.net.URI;
 +import java.net.http.HttpClient;
@@ -90,13 +94,10 @@ index 0000000000000000000000000000000000000000..41aa14445457abe7bdd3880e8667e465
 +import java.util.concurrent.TimeUnit;
 +import java.util.logging.Level;
 +import java.util.logging.Logger;
-+import net.kyori.adventure.text.Component;
-+import net.kyori.adventure.text.JoinConfiguration;
-+import net.kyori.adventure.text.format.NamedTextColor;
-+import net.kyori.adventure.text.format.TextDecoration;
-+import org.bukkit.craftbukkit.CraftServer;
-+import org.jetbrains.annotations.NotNull;
-+import org.jetbrains.annotations.Nullable;
++
++import static net.kyori.adventure.text.Component.text;
++import static net.kyori.adventure.text.format.NamedTextColor.GREEN;
++import static net.kyori.adventure.text.format.NamedTextColor.RED;
 +
 +public class PufferfishVersionFetcher implements VersionFetcher {
 +	
@@ -119,21 +120,16 @@ index 0000000000000000000000000000000000000000..41aa14445457abe7bdd3880e8667e465
 +	
 +	@Override
 +	public @NotNull Component getVersionMessage(final @NotNull String serverVersion) {
-+		final String[] parts = CraftServer.class.getPackage().getImplementationVersion().split("-");
 +		@NotNull Component component;
-+		
-+		if (parts.length != 3) {
-+			component = text("Unknown server version.", RED);
++
++		if (ServerBuildInfo.buildInfo().buildNumber().isPresent()) {
++			component = this.fetchJenkinsVersion(ServerBuildInfo.buildInfo().buildNumber().getAsInt());
++		} else if (ServerBuildInfo.buildInfo().gitCommit().isPresent()) {
++			component = this.fetchGithubVersion(ServerBuildInfo.buildInfo().gitCommit().get());
 +		} else {
-+			final String versionString = parts[2];
-+			
-+			try {
-+				component = this.fetchJenkinsVersion(Integer.parseInt(versionString));
-+			} catch (NumberFormatException e) {
-+				component = this.fetchGithubVersion(versionString.substring(1, versionString.length() - 1));
-+			}
++			component = text("Unknown server version.", RED);
 +		}
-+		
++
 +		final @Nullable Component history = this.getHistory();
 +		return history != null ? Component
 +				.join(JoinConfiguration.noSeparators(), component, Component.newline(), this.getHistory()) : component;
@@ -187,8 +183,8 @@ index 0000000000000000000000000000000000000000..41aa14445457abe7bdd3880e8667e465
 +		return switch (Math.max(-1, Math.min(1, versionDiff))) {
 +			case -1 -> text("You are running an unsupported version of Pufferfish.", RED);
 +			case 0 -> text("You are on the latest version!", GREEN);
-+			default -> text("You are running " + versionDiff + " version" + (versionDiff == 1 ? "" : "s") + " beyond. " +
-+							"Please update your server when possible to maintain stability, security, and receive the latest optimizations.",
++			default -> text("You are running " + versionDiff + " version" + (versionDiff == 1 ? "" : "s") + " behind. " +
++							"Please update your server when possible to maintain stability and security, and to receive the latest optimizations.",
 +					RED);
 +		};
 +	}
