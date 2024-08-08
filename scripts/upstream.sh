@@ -20,7 +20,7 @@ git add gradle.properties
 
 ./gradlew applyPatches || exit_on_error "An error occurred when merging patches!"
 ./gradlew rebuildPatches || exit_on_error "An error occurred when rebuilding patches!"
-./gradlew createReobfPaperclipJar || exit_on_error "An error occurred when building!"
+./gradlew createMojmapPaperclipJar || exit_on_error "An error occurred when building!"
 
 scripts/upstreamCommit.sh $oldHash $newHash
 
