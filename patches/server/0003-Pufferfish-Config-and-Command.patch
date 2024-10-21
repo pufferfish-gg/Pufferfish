@@ -5,7 +5,7 @@ Subject: [PATCH] Pufferfish Config and Command
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 755a1afd0aa36b627b3c7327d6b88806498ba85b..035ea1e17a4fec2e94c5cee02cf7ffbe88fd4ecf 100644
+index 9b5258aed33c5737abd28a288c3fdbf6ad52ea1c..0dc050cca78b6ccd51e2ab17a46e182f7b3d3a1d 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -47,6 +47,13 @@ dependencies {
@@ -21,7 +21,7 @@ index 755a1afd0aa36b627b3c7327d6b88806498ba85b..035ea1e17a4fec2e94c5cee02cf7ffbe
 +
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
      testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
-     testImplementation("org.hamcrest:hamcrest:2.2")
+     testImplementation("org.junit.platform:junit-platform-suite-engine:1.10.0")
 diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
 index 7620c72a4c243cbeea245203ce03a97cbfa7d922..b35a9f4c5f8960864c402ede8a51fb5ab9c4fcc0 100644
 --- a/src/main/java/co/aikar/timings/TimingsExport.java

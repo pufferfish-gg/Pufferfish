@@ -5,10 +5,10 @@ Subject: [PATCH] Add SIMD utilities
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 035ea1e17a4fec2e94c5cee02cf7ffbe88fd4ecf..fd1ac5dbc39068d4332fd264f3359e4845e529e1 100644
+index 0dc050cca78b6ccd51e2ab17a46e182f7b3d3a1d..6cfa3f9994de36e135658841aa3c091b90a14424 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -78,6 +78,14 @@ paperweight {
+@@ -79,6 +79,14 @@ paperweight {
      craftBukkitPackageVersion.set("v1_21_R1") // also needs to be updated in MappingEnvironment
  }
  
