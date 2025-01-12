@@ -8,7 +8,7 @@ and API spec stability is NOT guaranteed. If you use this in plugins,
 they WILL break eventually.
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index f499b87fcecc01078e1316850d5edf9b8a6c5360..80833c13a2d19e31d6f648e7ef5b3456025e767e 100644
+index 1961ce5188d69ab4db860de64cc1bde60c6e2289..9164120d299d062c62529a7ef74eac0ded367993 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -110,6 +110,13 @@ val generateApiVersioningFile by tasks.registering {
@@ -27,7 +27,7 @@ index f499b87fcecc01078e1316850d5edf9b8a6c5360..80833c13a2d19e31d6f648e7ef5b3456
          into("META-INF/maven/${project.group}/${project.name}")
 diff --git a/src/main/java/gg/pufferfish/pufferfish/simd/SIMDChecker.java b/src/main/java/gg/pufferfish/pufferfish/simd/SIMDChecker.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..ab5fea0b03224bf249352ce340e94704ff713345
+index 0000000000000000000000000000000000000000..3441cdad70da1bd523c5933b1a914688718c2657
 --- /dev/null
 +++ b/src/main/java/gg/pufferfish/pufferfish/simd/SIMDChecker.java
 @@ -0,0 +1,40 @@
@@ -48,7 +48,7 @@ index 0000000000000000000000000000000000000000..ab5fea0b03224bf249352ce340e94704
 +	@Deprecated
 +	public static boolean canEnable(Logger logger) {
 +		try {
-+			if (SIMDDetection.getJavaVersion() != 17 && SIMDDetection.getJavaVersion() != 18 && SIMDDetection.getJavaVersion() != 19) {
++			if (SIMDDetection.getJavaVersion() < 17 || SIMDDetection.getJavaVersion() > 21) {
 +				return false;
 +			} else {
 +				SIMDDetection.testRun = true;
