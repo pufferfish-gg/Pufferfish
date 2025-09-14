@@ -5,10 +5,10 @@ Subject: [PATCH] TPS catchup
 
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index be53079a9965a79c459ae7a769b375033406bd58..3c6962eabeb9cbbbdd9d3a814e890a3d8da102b8 100644
+index fc9e0af4353a3e51a7cce848ea0c280bae2d4f75..614b11696c74795eacf74283a3b89466a273ca12 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1262,6 +1262,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1263,6 +1263,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                      profilerFiller.popPush("nextTickWait");
                      this.mayHaveDelayedTasks = true;
                      this.delayedTasksMaxNextTickTimeNanos = Math.max(Util.getNanos() + l, this.nextTickTimeNanos);
