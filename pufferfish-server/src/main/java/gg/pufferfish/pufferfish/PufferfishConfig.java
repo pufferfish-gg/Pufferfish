@@ -22,6 +22,7 @@ import org.simpleyaml.configuration.comments.CommentType;
 import org.simpleyaml.configuration.file.YamlFile;
 import org.simpleyaml.exceptions.InvalidConfigurationException;
 import org.bukkit.command.SimpleCommandMap;
+import gg.pufferfish.pufferfish.compat.ServerConfigurations;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -55,7 +56,7 @@ public class PufferfishConfig {
 	}
 	
 	public static void load() throws IOException {
-		File configFile = new File("pufferfish.yml");
+		final File configFile = ServerConfigurations.pufferfishConfig;
 		
 		if (configFile.exists()) {
 			try {

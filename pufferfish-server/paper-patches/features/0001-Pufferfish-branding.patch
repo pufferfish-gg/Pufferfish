@@ -58,6 +58,42 @@ index a7d1a959af6a810c0ce6d5baa08e4429e14d4f5b..5eabba2aeb754bd0ae46ddc2c3eed1aa
      private CompletableFuture<ComputedVersion> computedVersion = CompletableFuture.completedFuture(new ComputedVersion(Component.empty(), -1)); // Precompute-- someday move that stuff out of bukkit
  
      public static LiteralCommandNode<CommandSourceStack> create() {
+diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
+index 7675acdca2162e403f4ff523bcdd6efe0cb42d49..32129b7268171a0fc0f06bbf18c3c84f3169f1aa 100644
+--- a/src/main/java/org/bukkit/craftbukkit/Main.java
++++ b/src/main/java/org/bukkit/craftbukkit/Main.java
+@@ -17,6 +17,7 @@ public class Main {
+     public static final java.time.Instant BOOT_TIME = java.time.Instant.now(); // Paper - track initial start time
+     public static boolean useJline = true;
+     public static boolean useConsole = true;
++    public static OptionSet options = null; // Pufferfish - moved up for ServerConfigurations
+ 
+     // Paper start - Reset loggers after shutdown
+     static {
+@@ -158,6 +159,14 @@ public class Main {
+                         .defaultsTo(new File("paper.yml"))
+                         .describedAs("Yml file");
+ 
++                // Pufferfish start - Add the pufferfish config
++                this.acceptsAll(asList("pufferfish", "pufferfish-settings"), "File for Pufferfish settings")
++                        .withRequiredArg()
++                        .ofType(File.class)
++                        .defaultsTo(new File("pufferfish.yml"))
++                        .describedAs("Yml file");
++                // Pufferfish end - Add the pufferfish config
++
+                 this.acceptsAll(asList("add-plugin", "add-extra-plugin-jar"), "Specify paths to extra plugin jars to be loaded in addition to those in the plugins folder. This argument can be specified multiple times, once for each extra plugin jar path.")
+                         .withRequiredArg()
+                         .ofType(File.class)
+@@ -172,7 +181,7 @@ public class Main {
+             }
+         };
+ 
+-        OptionSet options = null;
++        //OptionSet options = null;
+ 
+         try {
+             options = parser.parse(args);
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 index c1aad9203af20102e560571435dfa75150b37c1b..3d1ac30dee0bc9639b7ee994923ace6f2973bbb3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
