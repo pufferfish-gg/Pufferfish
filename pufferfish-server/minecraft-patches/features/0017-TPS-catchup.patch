@@ -5,19 +5,15 @@ Subject: [PATCH] TPS catchup
 
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index fc9e0af4353a3e51a7cce848ea0c280bae2d4f75..614b11696c74795eacf74283a3b89466a273ca12 100644
+index b0c6f7a2388dda2742c6ed5cb774e6ed06d182ff..96b42e14b60fe9cca44a062adab3ff86c8b2d192 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1263,6 +1263,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
-                     profilerFiller.popPush("nextTickWait");
-                     this.mayHaveDelayedTasks = true;
-                     this.delayedTasksMaxNextTickTimeNanos = Math.max(Util.getNanos() + l, this.nextTickTimeNanos);
-+                    // Pufferfish start - tps catchup
-+                    if (!gg.pufferfish.pufferfish.PufferfishConfig.tpsCatchup) {
-+                        this.nextTickTimeNanos = currentTime + l;
-+                        this.delayedTasksMaxNextTickTimeNanos = nextTickTimeNanos;
-+                    }
-+                    // Pufferfish end
-                     this.startMeasuringTaskExecutionTime();
-                     this.waitUntilNextTick();
-                     this.finishMeasuringTaskExecutionTime();
+@@ -1303,7 +1303,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+                     final long ticksBehind = Math.max(1L, this.tickSchedule.getPeriodsAhead(l, tickStart));
+                     final long catchup = (long)Math.max(
+                         1,
+-                        5 //ConfigHolder.getConfig().tickLoop.catchupTicks.getOrDefault(MoonriseConfig.TickLoop.DEFAULT_CATCHUP_TICKS).intValue()
++                        gg.pufferfish.pufferfish.PufferfishConfig.tpsCatchup ? 5 : 1 //ConfigHolder.getConfig().tickLoop.catchupTicks.getOrDefault(MoonriseConfig.TickLoop.DEFAULT_CATCHUP_TICKS).intValue() // Pufferfish - tps catchup
+                     );
+ 
+                     // adjust ticksBehind so that it is not greater-than catchup

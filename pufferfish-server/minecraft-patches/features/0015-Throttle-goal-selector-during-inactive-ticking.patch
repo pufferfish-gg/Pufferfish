@@ -5,10 +5,10 @@ Subject: [PATCH] Throttle goal selector during inactive ticking
 
 
 diff --git a/net/minecraft/world/entity/Mob.java b/net/minecraft/world/entity/Mob.java
-index 321dbb40fbe944eae329b8e9faae24c459d25603..6e1cfdb0462cfaf173d523027c2f903703b3e2dd 100644
+index e1eda6017a1e9abaf7e3b70dcc36e1ef372deb19..38cd477e17a29794c8a26ca01368c60adea7c575 100644
 --- a/net/minecraft/world/entity/Mob.java
 +++ b/net/minecraft/world/entity/Mob.java
-@@ -207,11 +207,13 @@ public abstract class Mob extends LivingEntity implements EquipmentUser, Leashab
+@@ -217,11 +217,13 @@ public abstract class Mob extends LivingEntity implements EquipmentUser, Leashab
          return this.lookControl;
      }
  

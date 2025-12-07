@@ -17,20 +17,20 @@ but is so much cheaper than the suffocation check that it's worth
 keeping it.
 
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 1ba342a1a60951f828034d3ed535b577b3990bf6..577749c8a06ef1679c311b3c1a7ed93076d92f63 100644
+index 025ef0b83e5d481c8b2ef25206cafd30897caabd..8b7fa5c758f8f447779cbd9df75c57c429766b31 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -437,7 +437,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
- 
+@@ -440,7 +440,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+         profilerFiller.push("livingEntityBaseTick");
          if (this.isAlive() && this.level() instanceof ServerLevel serverLevel1) {
              boolean flag = this instanceof Player;
 -            if (this.isInWall()) {
 +            if (shouldCheckForSuffocation() && this.isInWall()) { // Pufferfish - optimize suffocation
                  this.hurtServer(serverLevel1, this.damageSources().inWall(), 1.0F);
              } else if (flag && !serverLevel1.getWorldBorder().isWithinBounds(this.getBoundingBox())) {
-                 double d = serverLevel1.getWorldBorder().getDistanceToBorder(this) + serverLevel1.getWorldBorder().getDamageSafeZone();
-@@ -518,6 +518,19 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
-         profilerFiller.pop();
+                 double d = serverLevel1.getWorldBorder().getDistanceToBorder(this) + serverLevel1.getWorldBorder().getSafeZone();
+@@ -525,6 +525,19 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+         return this.getAirSupply() <= -20;
      }
  
 +    // Pufferfish start - optimize suffocation
@@ -50,10 +50,10 @@ index 1ba342a1a60951f828034d3ed535b577b3990bf6..577749c8a06ef1679c311b3c1a7ed930
      protected float getBlockSpeedFactor() {
          return Mth.lerp((float)this.getAttributeValue(Attributes.MOVEMENT_EFFICIENCY), super.getBlockSpeedFactor(), 1.0F);
 diff --git a/net/minecraft/world/entity/boss/wither/WitherBoss.java b/net/minecraft/world/entity/boss/wither/WitherBoss.java
-index 787b74c5aa02afc4ba95fa1cdaf6cc21b6554b56..322531c93ada829d3e1d51efaf4ffd675124896a 100644
+index 6d304da949f271cf41cf5897e08afd936fdf7bed..7ec1940f78cc40c0f7d0a3fa6aa143ee2f7da266 100644
 --- a/net/minecraft/world/entity/boss/wither/WitherBoss.java
 +++ b/net/minecraft/world/entity/boss/wither/WitherBoss.java
-@@ -136,6 +136,13 @@ public class WitherBoss extends Monster implements RangedAttackMob {
+@@ -137,6 +137,13 @@ public class WitherBoss extends Monster implements RangedAttackMob {
          this.bossEvent.setName(this.getDisplayName());
      }
  

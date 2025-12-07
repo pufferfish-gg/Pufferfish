@@ -5,10 +5,10 @@ Subject: [PATCH] Reduce entity allocations
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 27ab1deb51330c90cef2112b2e28075b2719332d..fe89f4b3eaf73b9b166edb78ec573d410fd12cab 100644
+index 583c0a460e01dd24963ad3345d52b269d0bc98c7..d15cbdf431ff8a22541356e051e70a0ad02335ae 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -366,6 +366,7 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
+@@ -367,6 +367,7 @@ public abstract class Entity implements SyncedDataHolder, DebugValueSource, Name
      private final int despawnTime; // Paper - entity despawn time limit
      public boolean activatedPriorityReset = false; // Pufferfish - DAB
      public int activatedPriority = gg.pufferfish.pufferfish.PufferfishConfig.maximumActivationPrio; // Pufferfish - DAB (golf score)

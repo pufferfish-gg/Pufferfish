@@ -20,11 +20,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/net/minecraft/world/entity/projectile/Projectile.java b/net/minecraft/world/entity/projectile/Projectile.java
-index ee16a05b8b2747ce95fcae1616c96143a5dec74e..04eebc5605e69105e6746ba47f5a22ce3a6075a6 100644
+index cdb73cab0a64f51d65a7420fdac44455c6c77a48..fa154e584af794c7061ce322c21ece1cbe24e36a 100644
 --- a/net/minecraft/world/entity/projectile/Projectile.java
 +++ b/net/minecraft/world/entity/projectile/Projectile.java
-@@ -50,6 +50,36 @@ public abstract class Projectile extends Entity implements TraceableEntity {
-         super(entityType, level);
+@@ -51,6 +51,36 @@ public abstract class Projectile extends Entity implements TraceableEntity {
+         super(type, level);
      }
  
 +    // Pufferfish start
@@ -59,4 +59,4 @@ index ee16a05b8b2747ce95fcae1616c96143a5dec74e..04eebc5605e69105e6746ba47f5a22ce
 +
      protected void setOwner(@Nullable EntityReference<Entity> owner) {
          this.owner = owner;
-     }
+         this.refreshProjectileSource(false); // Paper

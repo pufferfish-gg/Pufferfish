@@ -6,7 +6,7 @@ Subject: [PATCH] Pufferfish branding
 Update branding
 
 diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
-index 6abc57669e87f7f98f3b76af3c0e50825fea6eb1..5ad720b7060b1cd859d6766b5dd63818bf478c60 100644
+index 9f4d73fd321f6f0cd19fdd1b63068d2ea6c0816b..94a8187bda951ff62d26058e73959c437f4da2e8 100644
 --- a/src/main/java/com/destroystokyo/paper/Metrics.java
 +++ b/src/main/java/com/destroystokyo/paper/Metrics.java
 @@ -593,7 +593,7 @@ public class Metrics {
@@ -38,10 +38,10 @@ index 6abc57669e87f7f98f3b76af3c0e50825fea6eb1..5ad720b7060b1cd859d6766b5dd63818
                      entry.put(javaVersion, 1);
  
 diff --git a/src/main/java/io/papermc/paper/command/PaperVersionCommand.java b/src/main/java/io/papermc/paper/command/PaperVersionCommand.java
-index a7d1a959af6a810c0ce6d5baa08e4429e14d4f5b..5eabba2aeb754bd0ae46ddc2c3eed1aace3a6ed3 100644
+index bfacb856623b5cb6af4f1b65ee89200cdfb1ef13..afeb2b0bc30264273a67cc308eee52c91fd5912b 100644
 --- a/src/main/java/io/papermc/paper/command/PaperVersionCommand.java
 +++ b/src/main/java/io/papermc/paper/command/PaperVersionCommand.java
-@@ -8,6 +8,7 @@ import com.mojang.brigadier.context.CommandContext;
+@@ -7,6 +7,7 @@ import com.mojang.brigadier.context.CommandContext;
  import com.mojang.brigadier.suggestion.Suggestions;
  import com.mojang.brigadier.suggestion.SuggestionsBuilder;
  import com.mojang.brigadier.tree.LiteralCommandNode;
@@ -53,13 +53,13 @@ index a7d1a959af6a810c0ce6d5baa08e4429e14d4f5b..5eabba2aeb754bd0ae46ddc2c3eed1aa
      private static final Component FAILED_TO_FETCH = Component.text("Could not fetch version information!", NamedTextColor.RED);
      private static final Component FETCHING = Component.text("Checking version, please wait...", NamedTextColor.WHITE, TextDecoration.ITALIC);
  
--    private final VersionFetcher versionFetcher = new PaperVersionFetcher();
+-    private final VersionFetcher versionFetcher = CraftMagicNumbers.INSTANCE.getVersionFetcher();
 +    private final VersionFetcher versionFetcher = new PufferfishVersionFetcher(); // Pufferfish
      private CompletableFuture<ComputedVersion> computedVersion = CompletableFuture.completedFuture(new ComputedVersion(Component.empty(), -1)); // Precompute-- someday move that stuff out of bukkit
  
      public static LiteralCommandNode<CommandSourceStack> create() {
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index c1aad9203af20102e560571435dfa75150b37c1b..3d1ac30dee0bc9639b7ee994923ace6f2973bbb3 100644
+index f83067eaa4eedc8108460c254782ba45a2933372..2a75d0db49b448533c90c14e5cff651e54a12dbb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 @@ -481,7 +481,7 @@ public final class CraftMagicNumbers implements UnsafeValues {

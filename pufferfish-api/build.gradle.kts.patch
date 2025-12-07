@@ -1,6 +1,6 @@
 --- a/paper-api/build.gradle.kts
 +++ b/paper-api/build.gradle.kts
-@@ -51,6 +_,7 @@
+@@ -50,6 +_,7 @@
      api("org.apache.logging.log4j:log4j-api:$log4jVersion")
      api("org.slf4j:slf4j-api:$slf4jVersion")
      api("com.mojang:brigadier:1.3.10")
@@ -8,7 +8,7 @@
  
      // Deprecate bungeecord-chat in favor of adventure
      api("net.md-5:bungeecord-chat:$bungeeCordChatVersion") {
-@@ -90,7 +_,7 @@
+@@ -89,7 +_,7 @@
      testRuntimeOnly("org.junit.platform:junit-platform-launcher")
  }
  
@@ -17,7 +17,7 @@
  idea {
      module {
          generatedSourceDirs.add(generatedDir.toFile())
-@@ -100,6 +_,10 @@
+@@ -99,6 +_,10 @@
      main {
          java {
              srcDir(generatedDir)
@@ -28,7 +28,7 @@
          }
      }
  }
-@@ -147,6 +_,13 @@
+@@ -146,6 +_,13 @@
      }
  }
  
@@ -42,7 +42,7 @@
  tasks.jar {
      from(generateApiVersioningFile.map { it.outputs.files.singleFile }) {
          into("META-INF/maven/${project.group}/${project.name}")
-@@ -199,11 +_,11 @@
+@@ -198,11 +_,11 @@
      }
  
      // workaround for https://github.com/gradle/gradle/issues/4046
@@ -56,7 +56,7 @@
                  include("**/doc-files/**")
              }
              into("build/docs/javadoc")
-@@ -218,6 +_,7 @@
+@@ -217,6 +_,7 @@
      val provider = objects.newInstance<MockitoAgentProvider>()
      provider.fileCollection.from(mockitoAgent)
      jvmArgumentProviders.add(provider)

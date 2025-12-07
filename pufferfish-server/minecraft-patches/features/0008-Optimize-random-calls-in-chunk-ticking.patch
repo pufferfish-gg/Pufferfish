@@ -34,10 +34,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index dda8d38ef61672cc714d9e5a475f9b0412ed5ff9..6f285bea4b2824ae47f5cedfc1a4021220d582df 100644
+index c0ed4e023b35a076b554fa387e9a2324166b2fae..5cca28cb4536023da5feff97ab2e8f65133373f8 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -943,7 +943,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -982,7 +982,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
          int minBlockZ = pos.getMinBlockZ();
          ProfilerFiller profilerFiller = Profiler.get();
          profilerFiller.push("thunder");
@@ -47,10 +47,10 @@ index dda8d38ef61672cc714d9e5a475f9b0412ed5ff9..6f285bea4b2824ae47f5cedfc1a40212
              if (this.isRainingAt(blockPos)) {
                  DifficultyInstance currentDifficultyAt = this.getCurrentDifficultyAt(blockPos);
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index 75578e6ed7233a03d9b6cd3c6d3997f1c6148392..6f3d50925df95ee3838fcaec337e37d671ead1b9 100644
+index de59760d27280555a334bda4f436164568cffbd6..05177ea162f791bd9247cd28a9bde76d082a7b4f 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
-@@ -124,6 +124,18 @@ public class LevelChunk extends ChunkAccess implements ca.spottedleaf.moonrise.p
+@@ -131,6 +131,18 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
      private final boolean debug;
      private final BlockState defaultBlockState;
  
@@ -69,7 +69,7 @@ index 75578e6ed7233a03d9b6cd3c6d3997f1c6148392..6f3d50925df95ee3838fcaec337e37d6
      @Override
      public final BlockState moonrise$getBlock(final int x, final int y, final int z) {
          return this.getBlockStateFinal(x, y, z);
-@@ -166,6 +178,8 @@ public class LevelChunk extends ChunkAccess implements ca.spottedleaf.moonrise.p
+@@ -173,6 +185,8 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
          this.debug = !empty && this.level.isDebug();
          this.defaultBlockState = empty ? VOID_AIR_BLOCKSTATE : AIR_BLOCKSTATE;
          // Paper end - get block chunk optimisation
