@@ -5,10 +5,10 @@ Subject: [PATCH] Expose findClass for profiler
 
 
 diff --git a/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java b/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
-index 8c5a5043ad8b69d55fa1fc99864767238d435991..ff51f530cd89bc9f987ab2a90d328685ef306dc7 100644
+index c53cac5cbaa65a1c984043f69d159118c80fa6dd..06c7e101796188c0245e4647657b190a5576cd6c 100644
 --- a/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
-@@ -205,6 +205,7 @@ public final class PluginClassLoader extends URLClassLoader implements io.paperm
+@@ -208,6 +208,7 @@ public final class PluginClassLoader extends URLClassLoader implements io.paperm
          throw new ClassNotFoundException(name);
      }
  

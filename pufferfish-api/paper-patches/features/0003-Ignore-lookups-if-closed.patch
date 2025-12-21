@@ -5,7 +5,7 @@ Subject: [PATCH] Ignore lookups if closed
 
 
 diff --git a/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java b/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
-index ff51f530cd89bc9f987ab2a90d328685ef306dc7..87c103a1898d6376fe5faa0e8718fd81e544d2dc 100644
+index 06c7e101796188c0245e4647657b190a5576cd6c..68573002b7aef3a6503f6854dbea052b2061a5d0 100644
 --- a/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
 @@ -51,6 +51,8 @@ public final class PluginClassLoader extends URLClassLoader implements io.paperm
@@ -17,7 +17,7 @@ index ff51f530cd89bc9f987ab2a90d328685ef306dc7..87c103a1898d6376fe5faa0e8718fd81
      static {
          ClassLoader.registerAsParallelCapable();
      }
-@@ -213,7 +215,7 @@ public final class PluginClassLoader extends URLClassLoader implements io.paperm
+@@ -216,7 +218,7 @@ public final class PluginClassLoader extends URLClassLoader implements io.paperm
          }
          Class<?> result = classes.get(name);
  
@@ -26,7 +26,7 @@ index ff51f530cd89bc9f987ab2a90d328685ef306dc7..87c103a1898d6376fe5faa0e8718fd81
              String path = name.replace('.', '/').concat(".class");
              // Add details to zip file errors - help debug classloading
              JarEntry entry;
-@@ -269,6 +271,7 @@ public final class PluginClassLoader extends URLClassLoader implements io.paperm
+@@ -272,6 +274,7 @@ public final class PluginClassLoader extends URLClassLoader implements io.paperm
              this.setClass(name, result); // Paper
          }
  
@@ -34,7 +34,7 @@ index ff51f530cd89bc9f987ab2a90d328685ef306dc7..87c103a1898d6376fe5faa0e8718fd81
          return result;
      }
  
-@@ -283,6 +286,7 @@ public final class PluginClassLoader extends URLClassLoader implements io.paperm
+@@ -286,6 +289,7 @@ public final class PluginClassLoader extends URLClassLoader implements io.paperm
              // Paper end
              super.close();
          } finally {

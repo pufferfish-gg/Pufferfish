@@ -7,7 +7,7 @@ This patch does not add any API that should be used by plugins. Any
 classes and methods added by this patch should NOT be used in plugins.
 
 diff --git a/src/main/java/org/bukkit/map/MapPalette.java b/src/main/java/org/bukkit/map/MapPalette.java
-index 204860b32b4958a2804b2e5bc82f5be099e461f3..69b4f7478f5d403042902f2e818cf516e7e3aba2 100644
+index 76ae2750ff7b04a281d4b794dc1f48dd832db2b6..05eac6ae4e3c01cdcfb9b6610943000010caa151 100644
 --- a/src/main/java/org/bukkit/map/MapPalette.java
 +++ b/src/main/java/org/bukkit/map/MapPalette.java
 @@ -1,6 +1,7 @@
@@ -25,9 +25,9 @@ index 204860b32b4958a2804b2e5bc82f5be099e461f3..69b4f7478f5d403042902f2e818cf516
 -    static final Color[] colors = {
 +    public static final Color[] colors = { // Pufferfish - public access
          // Start generate - MapPalette#colors
-         // @GeneratedFrom 1.21.8
          new Color(0x00000000, true),
-@@ -395,9 +396,15 @@ public final class MapPalette {
+         new Color(0x00000000, true),
+@@ -394,9 +395,15 @@ public final class MapPalette {
          temp.getRGB(0, 0, temp.getWidth(), temp.getHeight(), pixels, 0, temp.getWidth());
  
          byte[] result = new byte[temp.getWidth() * temp.getHeight()];
