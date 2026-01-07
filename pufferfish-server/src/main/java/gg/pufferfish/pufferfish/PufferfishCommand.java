@@ -61,6 +61,8 @@ public class PufferfishCommand extends Command {
             Command.broadcastCommandMessage(sender, prefix + "Pufferfish configuration has been reloaded.");
         } else if (args[0].equalsIgnoreCase("version")) {
             Command.broadcastCommandMessage(sender, prefix + "This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")");
+        } else {
+            sender.sendMessage(prefix + "Usage: " + usageMessage);
         }
 
         return true;
